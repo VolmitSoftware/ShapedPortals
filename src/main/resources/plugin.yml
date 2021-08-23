@@ -1,0 +1,11 @@
+name: ${name}
+version: ${version}
+main: ${main}
+load: STARTUP
+authors: [ cyberpwn ]
+website: volmit.com
+description: Make portals however you like
+libraries:
+  - com.google.code.gson:gson:2.8.7
+api-version: ${apiversion}
+hotload-dependencies: false

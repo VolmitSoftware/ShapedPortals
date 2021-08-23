@@ -1,2 +1,2 @@
 # ShapedPortals
-Make a nether portal, or end portal in any shape (non-square)
+Make a nether portal in any shape (non-square)

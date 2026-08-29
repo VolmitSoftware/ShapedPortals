@@ -1,12 +1,14 @@
 package com.volmit.shapedportals.localization;
 
 import art.arcane.volmlib.util.localization.MessageArgs;
+import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
 import art.arcane.volmlib.util.localization.VolmitLocales;
 import art.arcane.volmlib.util.plugin.ComponentText;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,6 +18,9 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,13 +29,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LanguageServiceTest {
     private static final Pattern PLACEHOLDER = Pattern.compile("\\{([a-z_]+)}");
+    private static final Logger TEST_LOGGER = Logger.getLogger(LanguageServiceTest.class.getName());
 
     @TempDir
     Path temporaryDirectory;
 
     @Test
     void createsOneEditableEnglishLanguageFile() throws IOException {
-        LanguageService service = new LanguageService(temporaryDirectory.toFile());
+        LanguageService service = service();
         LanguageService.PreparedLanguage prepared = service.prepare("en_US");
         service.install(prepared);
         Path file = service.languageFile("en_US").toPath();
@@ -38,8 +44,7 @@ class LanguageServiceTest {
 
         assertThat(prepared.file().toPath()).isEqualTo(file);
         assertThat(file).isRegularFile();
-        assertThat(service.remoteCatalogRevision()).isPresent();
-        assertThat(service.remoteCatalogRevision().orElseThrow()).matches("[0-9a-f]{40}");
+        assertThat(service.remoteCatalogReference()).contains("main");
         assertThat(service.hasRemoteCatalogLocale("fr_FR")).isTrue();
         assertThat(service.hasRemoteCatalogLocale("en_US")).isFalse();
         assertThat(toml)
@@ -61,15 +66,25 @@ class LanguageServiceTest {
     }
 
     @Test
+    void downloadedLanguageIgnoresKeysAddedAfterTheCurrentJar() throws IOException {
+        LanguageService service = service();
+        service.prepare("en_US");
+        String latest = Files.readString(service.languageFile("en_US").toPath())
+                + "\n[future]\nmessage = \"Newer catalog value\"\n";
+
+        service.validateDownloadedContent("es_ES", latest);
+    }
+
+    @Test
     void preservesAnExistingLanguageFileAcrossPrepareAndRestart() throws IOException {
-        LanguageService service = new LanguageService(temporaryDirectory.toFile());
+        LanguageService service = service();
         Path file = service.languageFile("en_US").toPath();
         Files.createDirectories(file.getParent());
         String content = "[runtime]\nprefix = \"&6Local &8> \"\n";
         Files.writeString(file, content, StandardCharsets.UTF_8);
 
         service.install(service.prepare("en_US"));
-        LanguageService restarted = new LanguageService(temporaryDirectory.toFile());
+        LanguageService restarted = service();
         restarted.install(restarted.prepare("en_US"));
 
         assertThat(service.render(ShapedMessages.PREFIX)).contains("Local");
@@ -79,7 +94,7 @@ class LanguageServiceTest {
 
     @Test
     void loadsTheDirectLocaleOverCodeOwnedEnglish() throws IOException {
-        LanguageService service = new LanguageService(temporaryDirectory.toFile());
+        LanguageService service = service();
         Path file = service.languageFile("fr_FR").toPath();
         Files.createDirectories(file.getParent());
         Files.writeString(file, "[runtime]\nprefix = \"&6Portails &8> \"\n", StandardCharsets.UTF_8);
@@ -96,7 +111,7 @@ class LanguageServiceTest {
 
     @Test
     void ignoresUnknownEntriesWithoutChangingTheirBytes() throws IOException {
-        LanguageService service = new LanguageService(temporaryDirectory.toFile());
+        LanguageService service = service();
         Path file = service.languageFile("en_US").toPath();
         Files.createDirectories(file.getParent());
         String content = """
@@ -117,7 +132,7 @@ class LanguageServiceTest {
 
     @Test
     void invalidSelectedFileCanFallBackWithoutBeingReplaced() throws IOException {
-        LanguageService service = new LanguageService(temporaryDirectory.toFile());
+        LanguageService service = service();
         Path file = service.languageFile("fr_FR").toPath();
         Files.createDirectories(file.getParent());
         byte[] invalid = "[runtime]\nprefix = 42\n".getBytes(StandardCharsets.UTF_8);
@@ -134,7 +149,7 @@ class LanguageServiceTest {
 
     @Test
     void rendersLegacyRgbAndMiniMessageWhileKeepingArgumentsLiteral() throws IOException {
-        LanguageService service = new LanguageService(temporaryDirectory.toFile());
+        LanguageService service = service();
         Path file = service.languageFile("en_US").toPath();
         Files.createDirectories(file.getParent());
         Files.writeString(file, "[portal.notice]\nfailed = \"&cFailure &#12ABef\\\\&eLiteral {reason}\"\n",
@@ -154,7 +169,7 @@ class LanguageServiceTest {
 
     @Test
     void discoversRemoteAndSafeDirectCustomLocales() throws IOException {
-        LanguageService service = new LanguageService(temporaryDirectory.toFile());
+        LanguageService service = service();
         service.prepare("en_US");
         Files.writeString(service.languageDirectory().toPath().resolve("pirate.toml"), "");
         Files.writeString(service.languageDirectory().toPath().resolve("notes.txt"), "ignored");
@@ -177,7 +192,7 @@ class LanguageServiceTest {
 
     @Test
     void remoteLocaleIsNotReadyUntilItsDirectFileExists() throws IOException {
-        LanguageService service = new LanguageService(temporaryDirectory.toFile());
+        LanguageService service = service();
 
         assertThat(service.prepare("en_US").selectionReady()).isTrue();
         assertThat(service.prepare("fr_FR").selectionReady()).isFalse();
@@ -189,8 +204,37 @@ class LanguageServiceTest {
     }
 
     @Test
+    void completedDownloadStillActivatesWhenTheHotReloadObserverFails() throws IOException {
+        Logger logger = Logger.getLogger(LanguageServiceTest.class.getName() + ".download");
+        logger.setUseParentHandlers(false);
+        CapturingHandler handler = new CapturingHandler();
+        logger.addHandler(handler);
+        LanguageService service = new LanguageService(temporaryDirectory.toFile(), logger);
+        Path file = service.languageFile("fr_FR").toPath();
+        Files.createDirectories(file.getParent());
+        Files.writeString(file, "[runtime]\nprefix = \"&6Portails &8> \"\n", StandardCharsets.UTF_8);
+        service.setSelfWriteListener((written, content) -> {
+            throw new IllegalStateException("observer failed");
+        });
+        RemoteLanguageCatalog.DownloadResult download = new RemoteLanguageCatalog.DownloadResult(
+                "fr_FR",
+                URI.create("https://raw.githubusercontent.com/VolmitSoftware/ShapedPortals/main/"
+                        + "src/main/resources/languages/fr_FR.toml"),
+                file,
+                null
+        );
+        AtomicReference<RemoteLanguageCatalog.DownloadResult> completed = new AtomicReference<>();
+
+        service.remoteInstallCompleted(file.toFile(), download, completed::set);
+
+        assertThat(completed.get()).isEqualTo(download);
+        assertThat(handler.record()).isNotNull();
+        assertThat(handler.record().getMessage()).contains("continuing with activation");
+    }
+
+    @Test
     void rejectsInvalidMarkupAndPreservesTheFile() throws IOException {
-        LanguageService service = new LanguageService(temporaryDirectory.toFile());
+        LanguageService service = service();
         Path file = service.languageFile("en_US").toPath();
         Files.createDirectories(file.getParent());
         String content = "[command.feedback.reload]\nsuccess = \"<green><bold>Broken {duration} {locale}</green>\"\n";
@@ -204,7 +248,7 @@ class LanguageServiceTest {
 
     @Test
     void editorUpdatesTheDirectFileAndPreservesHeaderAndUnknownValues() throws IOException {
-        LanguageService service = new LanguageService(temporaryDirectory.toFile());
+        LanguageService service = service();
         service.prepare("en_US");
         Path file = service.languageFile("en_US").toPath();
         String original = Files.readString(file) + "\n[unknown]\nenabled = true\n";
@@ -239,6 +283,10 @@ class LanguageServiceTest {
         assertThat(Files.readString(file)).isEqualTo(safe);
     }
 
+    private LanguageService service() {
+        return new LanguageService(temporaryDirectory.toFile(), TEST_LOGGER);
+    }
+
     private Set<String> catalogPlaceholders() {
         return ShapedMessages.catalog().keys().stream()
                 .flatMap(key -> key.placeholders().stream())
@@ -253,5 +301,26 @@ class LanguageServiceTest {
             placeholders.add(matcher.group(1));
         }
         return Set.copyOf(placeholders);
+    }
+
+    private static final class CapturingHandler extends Handler {
+        private LogRecord record;
+
+        @Override
+        public void publish(LogRecord record) {
+            this.record = record;
+        }
+
+        @Override
+        public void flush() {
+        }
+
+        @Override
+        public void close() {
+        }
+
+        private LogRecord record() {
+            return record;
+        }
     }
 }

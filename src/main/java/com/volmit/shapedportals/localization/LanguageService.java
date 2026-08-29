@@ -38,15 +38,19 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -59,15 +63,18 @@ public final class LanguageService {
     private static final Pattern LOCALE_PATTERN = Pattern.compile("[A-Za-z0-9_-]{2,32}");
 
     private final File languageDirectory;
+    private final Logger logger;
     private final LocalizationManager manager;
     private final AtomicReference<File> activeFile;
     private final RemoteLanguageCatalog remoteCatalog;
     private final Throwable remoteCatalogFailure;
+    private final Set<String> announcedDownloads = new HashSet<>();
     private volatile List<String> availableLocales = List.of();
     private volatile BiConsumer<File, String> selfWriteListener;
 
-    public LanguageService(File dataFolder) {
+    public LanguageService(File dataFolder, Logger logger) {
         languageDirectory = new File(dataFolder, "languages");
+        this.logger = Objects.requireNonNull(logger, "logger");
         validateCatalogTemplates();
         manager = new LocalizationManager(LocalizationCandidate.english(CATALOG, ENGLISH_PLURALS));
         activeFile = new AtomicReference<>(languageFile("en_US"));
@@ -264,7 +271,7 @@ public final class LanguageService {
         return Optional.ofNullable(remoteCatalogFailure);
     }
 
-    public Optional<String> remoteCatalogRevision() {
+    public Optional<String> remoteCatalogReference() {
         return remoteCatalog == null ? Optional.empty() : Optional.of(remoteCatalog.revision());
     }
 
@@ -273,7 +280,7 @@ public final class LanguageService {
         return remoteCatalog != null && remoteCatalog.availableLocales().contains(requiredLocale);
     }
 
-    public RemoteLanguageCatalog.RequestState requestRemote(
+    public synchronized RemoteLanguageCatalog.RequestState requestRemote(
             String locale,
             Consumer<RemoteLanguageCatalog.DownloadResult> completion
     ) {
@@ -282,22 +289,31 @@ public final class LanguageService {
         }
         String requiredLocale = canonicalLocale(locale);
         File target = languageFile(requiredLocale);
-        return remoteCatalog.requestInstallIfMissing(
+        RemoteLanguageCatalog.RequestState state = remoteCatalog.requestInstallIfMissing(
                 requiredLocale,
                 target.toPath(),
                 this::validateDownloadedContent,
                 result -> remoteInstallCompleted(target, result, completion)
         );
+        if (state == RemoteLanguageCatalog.RequestState.SCHEDULED) {
+            announcedDownloads.add(requiredLocale);
+            logger.info("Downloading ShapedPortals language " + requiredLocale + " from "
+                    + remoteCatalog.sourceUri(requiredLocale) + "...");
+        }
+        return state;
     }
 
     public void close() {
         selfWriteListener = null;
+        synchronized (this) {
+            announcedDownloads.clear();
+        }
         if (remoteCatalog != null) {
             remoteCatalog.close();
         }
     }
 
-    private void remoteInstallCompleted(
+    void remoteInstallCompleted(
             File target,
             RemoteLanguageCatalog.DownloadResult result,
             Consumer<RemoteLanguageCatalog.DownloadResult> completion
@@ -308,14 +324,29 @@ public final class LanguageService {
                 String content = Files.readString(target.toPath(), StandardCharsets.UTF_8);
                 BiConsumer<File, String> listener = selfWriteListener;
                 if (listener != null) {
-                    listener.accept(target, content);
+                    try {
+                        listener.accept(target, content);
+                    } catch (RuntimeException exception) {
+                        logger.log(Level.WARNING, "Downloaded ShapedPortals language " + result.locale()
+                                + " but failed to register the file with hot reload; continuing with activation",
+                                exception);
+                    }
                 }
             } catch (IOException exception) {
                 delivered = new RemoteLanguageCatalog.DownloadResult(
                         result.locale(), result.source(), result.file(), exception);
             }
         }
+        announceDownloadCompleted(delivered);
         completion.accept(delivered);
+    }
+
+    private synchronized void announceDownloadCompleted(RemoteLanguageCatalog.DownloadResult result) {
+        if (!announcedDownloads.remove(result.locale()) || !result.successful()) {
+            return;
+        }
+        logger.info("Downloaded ShapedPortals language " + result.locale() + " to "
+                + result.file().toAbsolutePath().normalize() + ".");
     }
 
     private PreparedLanguage mutateMessage(String locale, String key, String value) throws IOException {
@@ -478,9 +509,9 @@ public final class LanguageService {
         AtomicFileIO.writeString(target.toPath(), LanguageReferenceRenderer.render(CATALOG, englishHeader(locale)));
     }
 
-    private void validateDownloadedContent(String locale, String content) throws IOException {
-        Map<String, String> values = parseStrictValues(content, locale);
+    void validateDownloadedContent(String locale, String content) throws IOException {
         Set<String> expected = CATALOG.byId().keySet();
+        Map<String, String> values = parseStrictValues(content, locale, expected);
         if (!values.keySet().equals(expected)) {
             throw new IOException("Downloaded locale does not cover the complete ShapedPortals catalog: " + locale);
         }
@@ -492,12 +523,12 @@ public final class LanguageService {
         }
     }
 
-    private Map<String, String> parseStrictValues(String content, String locale) throws IOException {
+    private Map<String, String> parseStrictValues(String content, String locale, Set<String> expected) throws IOException {
         if (content.getBytes(StandardCharsets.UTF_8).length > MAXIMUM_LANGUAGE_BYTES) {
             throw new IOException("Language file exceeds the 2 MiB safety limit");
         }
         try {
-            return TomlLanguageParser.parseText(content);
+            return TomlLanguageParser.parseText(content, expected);
         } catch (IOException exception) {
             throw new IOException("Invalid TOML in " + locale + ".toml: " + exception.getMessage(), exception);
         }

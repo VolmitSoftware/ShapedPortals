@@ -58,7 +58,7 @@ final class ShapedDebugReport {
         value(report, "Active locale", snapshot.activeLocale());
         value(report, "Available locales", String.join(", ", snapshot.availableLocales()));
         value(report, "Language catalog", snapshot.languageCatalogState());
-        value(report, "Pinned language revision", snapshot.languageCatalogRevision());
+        value(report, "Language source reference", snapshot.languageCatalogReference());
         value(report, "Managed portals", snapshot.managedPortals());
         value(report, "Interior cells", snapshot.interiorCells());
         value(report, "Creation attempts", snapshot.portalStats().attempts());

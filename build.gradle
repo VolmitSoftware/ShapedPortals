@@ -7,8 +7,6 @@ import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 
 import java.nio.file.Files
-import java.security.MessageDigest
-import java.util.HexFormat
 
 plugins {
     id 'java-library'
@@ -25,35 +23,19 @@ String relocatedLibraryPackage = 'com.volmit.shapedportals.libs'
 String volmLibCoordinate = providers.gradleProperty('volmLibCoordinate')
     .orElse('com.github.VolmitSoftware:VolmLib:master-SNAPSHOT')
     .get()
-String languageSourceRevision = providers.gradleProperty('languageRevision')
-    .orElse(providers.exec {
-        workingDir(rootDir)
-        commandLine('git', 'rev-parse', 'HEAD')
-    }.standardOutput.asText)
-    .map { String revision ->
-        String normalized = revision.trim().toLowerCase(Locale.ROOT)
-        if (!(normalized ==~ /[0-9a-f]{40}/)) {
-            throw new GradleException('languageRevision must be a full 40-character Git commit SHA.')
-        }
-        normalized
-    }
-    .get()
+String languageSourceReference = 'main'
 List<File> languageSourceFiles = fileTree('src/main/resources/languages') {
     include('*.toml')
 }.files.toList().sort { File left, File right -> left.name <=> right.name }
-Map<String, String> languageSourceHashes = new LinkedHashMap<>()
+List<String> languageSourceLocales = new ArrayList<>(languageSourceFiles.size())
 for (File languageSourceFile : languageSourceFiles) {
     String locale = languageSourceFile.name.substring(0, languageSourceFile.name.length() - '.toml'.length())
-    byte[] digest = MessageDigest.getInstance('SHA-256').digest(Files.readAllBytes(languageSourceFile.toPath()))
-    languageSourceHashes.put(locale, HexFormat.of().formatHex(digest))
+    languageSourceLocales.add(locale)
 }
 def languageSourceManifestTask = tasks.register('generateLanguageSourceManifest', WriteProperties) {
     destinationFile.set(layout.buildDirectory.file('generated/language-source/shapedportals-language-source.properties'))
-    property('revision', languageSourceRevision)
-    property('locales', languageSourceHashes.keySet().join(','))
-    for (Map.Entry<String, String> languageSourceHash : languageSourceHashes.entrySet()) {
-        property('sha256.' + languageSourceHash.key, languageSourceHash.value)
-    }
+    property('revision', languageSourceReference)
+    property('locales', languageSourceLocales.join(','))
 }
 
 java {
@@ -262,14 +244,12 @@ tasks.register('verifyJava17Artifact') {
         if (languageManifest == null) {
             throw new GradleException('Runtime artifact is missing shapedportals-language-source.properties')
         }
-        if (languageManifest.getProperty('revision') != languageSourceRevision
-                || languageManifest.getProperty('locales') != languageSourceHashes.keySet().join(',')) {
+        if (languageManifest.getProperty('revision') != languageSourceReference
+                || languageManifest.getProperty('locales') != languageSourceLocales.join(',')) {
             throw new GradleException('Runtime language source manifest does not match the build source set')
         }
-        for (Map.Entry<String, String> languageSourceHash : languageSourceHashes.entrySet()) {
-            if (languageManifest.getProperty('sha256.' + languageSourceHash.key) != languageSourceHash.value) {
-                throw new GradleException("Runtime language hash does not match ${languageSourceHash.key}")
-            }
+        if (languageManifest.stringPropertyNames().any { String key -> key.startsWith('sha256.') }) {
+            throw new GradleException('Runtime language source manifest must follow the latest main branch')
         }
     }
 }

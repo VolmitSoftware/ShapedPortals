@@ -99,7 +99,7 @@ final class ShapedDebugReportTest {
                 .contains("Rejected event cancelled: 2")
                 .contains("Pending scheduler tasks: 7")
                 .contains("Language catalog: ready")
-                .contains("Pinned language revision: 30e3b4eea5852ffa879d8371d556cd4b9b9fdbe7")
+                .contains("Language source reference: 30e3b4eea5852ffa879d8371d556cd4b9b9fdbe7")
                 .contains("Portal registry details")
                 .contains("Records in loaded worlds: 1")
                 .contains("Records in unavailable worlds: 0")

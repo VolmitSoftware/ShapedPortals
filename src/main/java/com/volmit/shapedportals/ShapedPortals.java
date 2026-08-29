@@ -7,6 +7,7 @@ import com.volmit.shapedportals.command.CommandService;
 import com.volmit.shapedportals.config.ConfigHotReloadService;
 import com.volmit.shapedportals.config.ConfigRepository;
 import com.volmit.shapedportals.config.ConfigService;
+import com.volmit.shapedportals.config.ShapedPortalsConfig;
 import com.volmit.shapedportals.debug.ShapedDebugService;
 import com.volmit.shapedportals.gui.ConfigEditorGui;
 import com.volmit.shapedportals.integration.ShapedPortalsIntegrationMetrics;
@@ -27,6 +28,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 
 public final class ShapedPortals extends JavaPlugin {
@@ -49,7 +51,7 @@ public final class ShapedPortals extends JavaPlugin {
         long startedNanos = System.nanoTime();
         try {
             configService = new ConfigService(getDataFolder());
-            languageService = new LanguageService(getDataFolder());
+            languageService = new LanguageService(getDataFolder(), getLogger());
             installInitialConfiguration();
             metricsService = new MetricsService(this);
             metricsService.reconfigure(configService.runtime().metricsEnabled());
@@ -170,7 +172,18 @@ public final class ShapedPortals extends JavaPlugin {
         requestConfiguredLanguage();
     }
 
-    public void installPreparedLanguage(LanguageService.PreparedLanguage preparedLanguage) {
+    public synchronized void applyConfigurationEdit(
+            Consumer<ShapedPortalsConfig> mutation,
+            LanguageService.PreparedLanguage preparedLanguage
+    ) throws IOException {
+        configService.update(mutation);
+        if (preparedLanguage != null) {
+            languageService.install(preparedLanguage);
+        }
+        configurationInstalled();
+    }
+
+    public synchronized void installPreparedLanguage(LanguageService.PreparedLanguage preparedLanguage) {
         languageService.install(preparedLanguage);
         configurationInstalled();
     }
@@ -249,7 +262,6 @@ public final class ShapedPortals extends JavaPlugin {
             getLogger().warning(languageFailureMessage(result, "the current verified language remains active"));
             return;
         }
-        getLogger().info("Downloaded verified ShapedPortals locale " + requestedLocale + ".");
         if (!FoliaScheduler.runGlobal(this, () -> activateDownloadedLanguage(requestedLocale))) {
             getLogger().warning("Downloaded locale " + requestedLocale
                     + " will activate on the next reload or restart because scheduling was unavailable.");

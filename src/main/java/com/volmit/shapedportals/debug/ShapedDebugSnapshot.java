@@ -41,7 +41,7 @@ record ShapedDebugSnapshot(
         String activeLocale,
         List<String> availableLocales,
         String languageCatalogState,
-        String languageCatalogRevision,
+        String languageCatalogReference,
         boolean activeLocaleInRemoteCatalog,
         String senderType,
         ShapedPortalsConfig config,

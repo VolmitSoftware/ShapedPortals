@@ -149,7 +149,7 @@ public final class ShapedDebugService {
                 plugin.getConfigService().runtime().language(),
                 plugin.getLanguageService().availableLocales(),
                 languageCatalogState(),
-                plugin.getLanguageService().remoteCatalogRevision().orElse("unavailable"),
+                plugin.getLanguageService().remoteCatalogReference().orElse("unavailable"),
                 plugin.getLanguageService().hasRemoteCatalogLocale(plugin.getConfigService().runtime().language()),
                 sender instanceof Player ? "player" : "console-or-other",
                 plugin.getConfigService().editableCopy(),

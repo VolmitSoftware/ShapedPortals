@@ -65,4 +65,4 @@ plugins/ShapedPortals/
 └── debug/shapedportals-debug-<time>.txt    locally saved `/sp debug` reports
 ```
 
-`config.toml` and installed language files hot-reload. Repository locales are checksum-verified only when first installed and are never automatically replaced after local edits.
+`config.toml` and installed language files hot-reload. A missing repository locale is fetched from the latest `main` language directory, validated, installed once, and activated by the original selection; the console reports its source URL and final path. Existing files and local edits are never automatically replaced.

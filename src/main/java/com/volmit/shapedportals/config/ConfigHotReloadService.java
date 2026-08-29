@@ -19,6 +19,8 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BooleanSupplier;
 import java.util.logging.Level;
 
 public final class ConfigHotReloadService implements AutoCloseable {
@@ -104,19 +106,16 @@ public final class ConfigHotReloadService implements AutoCloseable {
 
     private void applySnapshots(Set<ConfigHotloadEngine.StableContentSnapshot> snapshots) {
         boolean enabled = configService.runtime().hotReloadEnabled();
-        boolean applied = !enabled || plugin.reloadAll(false);
-        for (ConfigHotloadEngine.StableContentSnapshot snapshot : snapshots) {
-            engine.processSnapshotChange(snapshot, ignored -> applied, null);
-        }
-        if (!enabled) {
+        ReloadOutcome outcome = processSnapshots(engine, snapshots, enabled, () -> plugin.reloadAll(false));
+        if (outcome == ReloadOutcome.NOT_ATTEMPTED || outcome == ReloadOutcome.DISABLED) {
             return;
         }
-        if (applied) {
+        if (outcome == ReloadOutcome.APPLIED) {
             plugin.getLogger().info("Applied ShapedPortals configuration file changes.");
         } else {
             plugin.getLogger().warning("Rejected ShapedPortals file changes; the last known good settings remain active.");
         }
-        notifyOperators(applied);
+        notifyOperators(outcome == ReloadOutcome.APPLIED);
     }
 
     private void configureEngine() {
@@ -147,12 +146,48 @@ public final class ConfigHotReloadService implements AutoCloseable {
     }
 
     private boolean isManagedFile(File file) {
+        return isManagedFile(file, configService.configFile(), plugin.getLanguageService().activeFile());
+    }
+
+    static ReloadOutcome processSnapshots(
+            ConfigHotloadEngine engine,
+            Set<ConfigHotloadEngine.StableContentSnapshot> snapshots,
+            boolean enabled,
+            BooleanSupplier reload
+    ) {
+        AtomicBoolean attempted = new AtomicBoolean();
+        AtomicReference<Boolean> result = new AtomicReference<>();
+        for (ConfigHotloadEngine.StableContentSnapshot snapshot : snapshots) {
+            engine.processSnapshotChange(snapshot, ignored -> {
+                attempted.set(true);
+                if (!enabled) {
+                    return true;
+                }
+                Boolean existing = result.get();
+                if (existing != null) {
+                    return existing;
+                }
+                boolean applied = reload.getAsBoolean();
+                result.set(applied);
+                return applied;
+            }, null);
+        }
+        if (!attempted.get()) {
+            return ReloadOutcome.NOT_ATTEMPTED;
+        }
+        if (!enabled) {
+            return ReloadOutcome.DISABLED;
+        }
+        return Boolean.TRUE.equals(result.get()) ? ReloadOutcome.APPLIED : ReloadOutcome.REJECTED;
+    }
+
+    static boolean isManagedFile(File file, File configFile, File activeLanguageFile) {
         if (file == null) {
             return false;
         }
         File absolute = file.getAbsoluteFile();
-        return absolute.equals(configService.configFile().getAbsoluteFile())
-                || plugin.getLanguageService().isLanguageFile(absolute);
+        return absolute.equals(configFile.getAbsoluteFile())
+                || absolute.equals(activeLanguageFile.getAbsoluteFile());
     }
 
     private String readFile(File file) {
@@ -170,5 +205,12 @@ public final class ConfigHotReloadService implements AutoCloseable {
         } catch (IOException exception) {
             return null;
         }
+    }
+
+    enum ReloadOutcome {
+        NOT_ATTEMPTED,
+        DISABLED,
+        APPLIED,
+        REJECTED
     }
 }

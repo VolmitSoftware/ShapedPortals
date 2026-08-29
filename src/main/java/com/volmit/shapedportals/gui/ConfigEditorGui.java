@@ -793,25 +793,35 @@ public final class ConfigEditorGui implements Listener {
                     return;
                 }
             }
-            configService.update(operation.mutation());
-            if (preparedLanguage == null) {
-                plugin.configurationInstalled();
-            } else {
-                plugin.installPreparedLanguage(preparedLanguage);
-            }
-            clearSelection(operation);
-            scheduleResult(operation.player(), () -> {
-                MessageArgs arguments = MessageArgs.builder()
-                        .untrusted("setting", plainName(operation.setting()))
-                        .build();
-                showConfigResult(operation.player(), ShapedMessages.CONFIG_SAVED, arguments);
-                openDestination(operation);
-            });
+            applyPreparedSave(operation, preparedLanguage);
         } catch (IOException | RuntimeException exception) {
-            plugin.getLogger().log(Level.SEVERE,
-                    "Failed to save ShapedPortals setting " + operation.setting().path(), exception);
-            scheduleFailure(operation, reason(exception));
+            saveFailed(operation, exception);
         }
+    }
+
+    private boolean applyPreparedSave(
+            SaveOperation operation,
+            LanguageService.PreparedLanguage preparedLanguage
+    ) throws IOException {
+        if (!isCurrentSelection(operation)) {
+            return false;
+        }
+        plugin.applyConfigurationEdit(operation.mutation(), preparedLanguage);
+        clearSelection(operation);
+        scheduleResult(operation.player(), () -> {
+            MessageArgs arguments = MessageArgs.builder()
+                    .untrusted("setting", plainName(operation.setting()))
+                    .build();
+            showConfigResult(operation.player(), ShapedMessages.CONFIG_SAVED, arguments);
+            openDestination(operation);
+        });
+        return true;
+    }
+
+    private void saveFailed(SaveOperation operation, Exception exception) {
+        plugin.getLogger().log(Level.SEVERE,
+                "Failed to save ShapedPortals setting " + operation.setting().path(), exception);
+        scheduleFailure(operation, reason(exception));
     }
 
     private void requestLanguageDownload(SaveOperation operation, String locale) {
@@ -824,7 +834,7 @@ public final class ConfigEditorGui implements Listener {
             return;
         }
         if (state == RemoteLanguageCatalog.RequestState.CURRENT) {
-            submitSave(operation);
+            submitLanguageActivation(operation, locale, false);
             return;
         }
         scheduleFailure(operation, languageRequestFailure(state));
@@ -838,7 +848,7 @@ public final class ConfigEditorGui implements Listener {
             return;
         }
         if (result.successful()) {
-            submitSave(operation);
+            submitLanguageActivation(operation, result.locale(), true);
             return;
         }
         Throwable failure = result.failure();
@@ -850,6 +860,33 @@ public final class ConfigEditorGui implements Listener {
                 : "Unable to fetch language file " + result.locale() + " from " + result.source() + ": " + detail;
         plugin.getLogger().warning(failureMessage + "; the configured language was not changed");
         scheduleFailure(operation, "the language download or verification failed; the previous language remains active");
+    }
+
+    private void submitLanguageActivation(SaveOperation operation, String locale, boolean downloaded) {
+        try {
+            writer.execute(() -> activateLanguageOffThread(operation, locale, downloaded));
+        } catch (RejectedExecutionException exception) {
+            scheduleFailure(operation, "the editor is shutting down");
+        }
+    }
+
+    private void activateLanguageOffThread(SaveOperation operation, String locale, boolean downloaded) {
+        if (!isCurrentSelection(operation)) {
+            return;
+        }
+        try {
+            LanguageService.PreparedLanguage preparedLanguage = language.prepare(locale);
+            if (!preparedLanguage.selectionReady()) {
+                scheduleFailure(operation, "the downloaded language file is not available");
+                return;
+            }
+            if (applyPreparedSave(operation, preparedLanguage) && downloaded) {
+                plugin.getLogger().info("Activated ShapedPortals language " + preparedLanguage.locale()
+                        + " after download.");
+            }
+        } catch (IOException | RuntimeException exception) {
+            saveFailed(operation, exception);
+        }
     }
 
     private String languageRequestFailure(RemoteLanguageCatalog.RequestState state) {

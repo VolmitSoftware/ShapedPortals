@@ -1,0 +1,235 @@
+# Ngôn ngữ ShapedPortals: vi_VI
+# Tệp này chỉ được tải xuống khi chưa tồn tại; hãy sửa trực tiếp languages/vi_VI.toml.
+# Thay đổi cục bộ không bao giờ bị tự động thay thế; mục còn thiếu dùng tiếng Anh.
+# Màu: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B và [RRGGBB]. MiniMessage vẫn dùng được cho định dạng tùy chỉnh.
+# Mỗi chỗ giữ chỗ chỉ thuộc về các thông báo cụ thể. Chỉ giữ các mã đã có trong thông báo và không đổi tên chúng.
+# Lệnh: {argument}=đối số ngoài dự kiến; {command}=đường dẫn lệnh; {key}=khóa tham số; {parameter}=tên tham số; {type}=kiểu; {usage}=cách dùng lệnh.
+# Hoạt động: {attempts}=lần thử tạo; {created}=số đã tạo hoặc thời điểm tạo; {rejected}=lần bị từ chối; {enabled}=trạng thái tạo; {hot_reload}=trạng thái tải lại; {scheduler}=bộ lập lịch.
+# Cổng: {portal}=mã định danh; {portals}=số được quản lý; {id}=ID ngắn; {uuid}=UUID đầy đủ; {world}=thế giới; {axis}=trục; {x}/{y}/{z}=tọa độ neo; {blocks}=ô cổng; {cells}=tất cả ô; {creator}=người tạo; {materials}=vật liệu khung đã ghi.
+# Danh sách: {matches}=cổng khớp; {seconds}=thời hạn xác nhận tính bằng giây.
+# Cấu hình: {category}=danh mục; {setting}=tên cài đặt; {status}=dấu chọn; {value}=giá trị hiện tại, mặc định hoặc thô; {language}=ngôn ngữ đang dùng; {locale}=mã vùng; {name}=tên đầy đủ của ngôn ngữ.
+# Trình sửa ngôn ngữ: {variables}=chỗ giữ chỗ hợp lệ; {old}=giá trị trước; {new}=giá trị mới.
+# Khác: {duration}=mili giây; {path}=đường dẫn báo cáo cục bộ; {url}=URL công khai; {reason}=lý do lỗi.
+# Tiền tố: {prefix}=giá trị runtime.prefix toàn cục. Xóa {prefix} khỏi từng thông báo nếu không muốn hiện ở thông báo đó.
+# Thêm dấu gạch chéo ngược trước & hoặc [ để hiển thị ký tự theo nghĩa đen.
+
+[runtime]
+prefix = "&d&lShapedPortals&r &8›&r "
+player_only = "{prefix}&cChỉ người chơi mới có thể sử dụng lệnh này.&r"
+
+[runtime.permission]
+denied = "{prefix}&cBạn không có quyền thực hiện thao tác này.&r"
+
+[runtime.hot_reload]
+success = "{prefix}&aĐã áp dụng các thay đổi trong tệp cấu hình và ngôn ngữ.&r"
+failed = "{prefix}&cĐã từ chối thay đổi tệp; các thiết lập hợp lệ gần nhất vẫn đang hoạt động.&r"
+
+[command.feedback.reload]
+success = "{prefix}&aĐã tải lại trong &f{duration}&r&a mili giây.&r &7Ngôn ngữ:&r &f{locale}&r"
+failed = "{prefix}&cTải lại thất bại sau {duration} mili giây.&r &7Các thiết lập hợp lệ gần nhất vẫn đang hoạt động; hãy xem toàn bộ lỗi trong bảng điều khiển.&r"
+
+[command.feedback.config]
+opened = "{prefix}&aĐã mở trình chỉnh sửa cấu hình đầy đủ trong trò chơi.&r"
+saved = "{prefix}&aĐã lưu và áp dụng &f{setting}&r&a.&r"
+save_failed = "{prefix}&cKhông thể áp dụng &f{setting}&r&c: {reason}&r"
+
+[command.feedback]
+failed = "{prefix}&cKhông thể hoàn tất lệnh. Hãy xem bảng điều khiển để biết chi tiết.&r"
+
+[command.feedback.debug]
+started = "{prefix}&7Đang thu thập thông tin chẩn đoán máy chủ và ShapedPortals…&r"
+busy = "{prefix}&eMột báo cáo chẩn đoán ShapedPortals đang được tạo.&r"
+saved = "{prefix}&aĐã lưu báo cáo chẩn đoán tại &f{path}&r&a.&r"
+uploaded = "{prefix}&aĐã tải báo cáo chẩn đoán lên:&r &b&n{url}&r"
+link_hover = "&7Mở báo cáo mclo.gs công khai.&r"
+upload_failed = "{prefix}&eBáo cáo cục bộ đã được lưu nhưng không thể tải lên mclo.gs. Hãy xem bảng điều khiển để biết chi tiết.&r"
+failed = "{prefix}&cKhông thể tạo báo cáo chẩn đoán. Hãy xem bảng điều khiển để biết chi tiết.&r"
+
+[command.status]
+header = "{prefix}&d&lTrạng thái ShapedPortals&r"
+config = "{prefix}&7Tạo cổng:&r {enabled} &8|&r &7Ngôn ngữ:&r &f{language}&r &8|&r &7Tải lại tức thời:&r {hot_reload}"
+portals = "{prefix}&7Cổng được quản lý:&r &f{portals}&r &8|&r &7Khối bên trong:&r &f{cells}&r"
+attempts = "{prefix}&7Số lần thử:&r &f{attempts}&r &8|&r &7Đã tạo:&r &a{created}&r &8|&r &7Đã từ chối:&r &c{rejected}&r"
+compatibility = "{prefix}&7Gói dựng:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Bộ lập lịch:&r &f{scheduler}&r"
+
+[command.description]
+root = "Trợ giúp và quản trị ShapedPortals"
+config = "Mở trình chỉnh sửa cấu hình đầy đủ trong trò chơi"
+language = "Chọn một ngôn ngữ ShapedPortals khả dụng"
+debug = "Tạo báo cáo chẩn đoán ShapedPortals toàn diện"
+portals = "Liệt kê mọi cổng được quản lý và lối tắt dịch chuyển của chúng"
+teleport = "Dịch chuyển an toàn đến cạnh một cổng được quản lý hoặc liệt kê cổng nếu bỏ trống"
+status = "Hiển thị thống kê cổng được quản lý và số lần thử"
+
+[command.parameter]
+locale = "Mã vùng ngôn ngữ khả dụng"
+page = "Trang danh sách cổng được đánh số từ một"
+portal = "UUID cổng, tiền tố duy nhất hoặc list"
+
+[portal.notice]
+created = "{prefix}&dĐã tạo một cổng tùy hình với {blocks} khối bên trong.&r"
+failed = "{prefix}&cKhung này không thể trở thành cổng tùy hình: &f{reason}&r&c.&r"
+
+[portal.navigation.confirm]
+unsafe = "{prefix}&cKhông có vị trí đứng an toàn bên cạnh &f{portal}&r&c. &eNhấp lại vào cùng cổng trong vòng &f{seconds}&r&e giây để vẫn dịch chuyển vào bên trong.&r"
+
+[portal.navigation.list]
+frame_policy_note = "&8  ⚠&r &eKhung hiện có dùng &f{materials}&r&e; các vật liệu này không thể tạo cổng mới.&r"
+empty = "&eChưa đăng ký cổng tùy hình được quản lý nào.&r"
+entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Vị trí:&r &f{x}, {y}, {z}&r &8•&r &7Trục:&r &f{axis}&r &8•&r &7Ô:&r &f{blocks}&r\n&8  └&r &7Người tạo:&r &f{creator}&r &8•&r &7Đã tạo:&r &f{created}&r"
+hover = "&7UUID:&r &f{uuid}&r\n&aNhấp để dịch chuyển đến cổng này.&r"
+
+[portal.navigation.error]
+not_found = "{prefix}&cKhông có cổng được quản lý nào khớp với &f{portal}&r&c.&r"
+ambiguous = "{prefix}&cTiền tố &f{portal}&r&c khớp với {matches} cổng. Hãy nhập thêm ký tự của UUID.&r"
+removed = "{prefix}&cCổng đó không còn được đăng ký.&r"
+world_unavailable = "{prefix}&cThế giới của cổng &f{world}&r&c hiện không khả dụng.&r"
+destination_unavailable = "{prefix}&cĐiểm đến của cổng tạm thời không khả dụng.&r"
+inactive = "{prefix}&cCổng đó không còn hoạt động. Việc kiểm tra tính toàn vẹn đã được đưa vào hàng đợi.&r"
+no_safe_landing = "{prefix}&cKhông có chỗ đứng an toàn bên cạnh cổng đó.&r"
+
+[portal.navigation.teleport]
+preparing = "{prefix}&7Đang chuẩn bị điểm đến cho &f{portal}&r&7…&r"
+success = "{prefix}&aĐã dịch chuyển đến cạnh &f{portal}&r&a trong &f{world}&r&a.&r"
+failed = "{prefix}&cQuá trình dịch chuyển đến cổng chưa hoàn tất. Có thể một phần bổ trợ khác đã hủy thao tác.&r"
+
+[hud]
+title = "&d&lShapedPortals&r"
+success = "&aThành công&r"
+failure = "&cThao tác thất bại&r"
+info = "&dShapedPortals&r"
+
+[gui.title]
+root = "&5Cấu hình ShapedPortals&r"
+category = "&5ShapedPortals&r &8›&r {category}"
+
+[gui.category]
+general = "&dChung&r"
+portal = "&dQuy tắc cổng&r"
+effects = "&dHiệu ứng&r"
+hot_reload = "&dTải lại tức thời&r"
+integrity = "&dTính toàn vẹn&r"
+presentation = "&dTrình bày&r"
+debug = "&dChẩn đoán&r"
+
+languages = "&dNgôn ngữ&r"
+
+[gui.navigation]
+back = "&eQuay lại&r"
+reload = "&bTải lại tệp&r"
+close = "&cĐóng&r"
+
+[gui.lore]
+state = "&7Hiện tại:&r {value}"
+toggle = "&8Nhấp để bật hoặc tắt.&r"
+number = "&8Trái +1, phải -1, shift ×10, thả để nhập.&r"
+text = "&8Nhấp để nhập giá trị mới trong trò chuyện.&r"
+language = "&8Nhấp để chọn ngôn ngữ khả dụng hoặc nhập mã vùng.&r"
+category = "&8Nhấp để sửa mọi thiết lập trong mục này.&r"
+
+[gui.prompt]
+request = "{prefix}&eNhập giá trị mới cho &f{setting}&r&e trong trò chuyện.&r"
+list = "{prefix}&7Phân tách các mục bằng dấu phẩy. Nhập &fnone&r&7 để dùng danh sách trống.&r"
+cancel = "{prefix}&7Nhập &fcancel&r&7 để dừng. Yêu cầu này hết hạn sau 60 giây.&r"
+cancelled = "{prefix}&eĐã hủy chỉnh sửa cấu hình.&r"
+timeout = "{prefix}&eChỉnh sửa cấu hình đã hết hạn mà không thay đổi gì.&r"
+
+[gui.language]
+type = "&7Nhập tên mã vùng trong trò chuyện để tạo hoặc chọn mã đó.&r"
+option = "{status} &f{locale}&r &8—&r &7{name}&r"
+hover = "&7Nhấp để chọn &f{locale}&r&7.&r"
+empty = "&eKhông tìm thấy ngôn ngữ khả dụng; hãy nhập tên mã vùng để tạo một ngôn ngữ.&r"
+current = "&7Giá trị hiện tại:&r {value}"
+variables = "&7Biến / chỗ giữ chỗ hiện tại:&r &f{variables}&r"
+changed = "&f{old}&r &7đã đổi thành&r &f{new}&r"
+
+[gui.setting.general]
+enabled = "&dTạo cổng&r"
+language = "&dMã vùng ngôn ngữ đang dùng&r"
+require_create_permission = "&dYêu cầu quyền tạo&r"
+failure_feedback = "&dPhản hồi khi tạo cổng thất bại&r"
+
+[gui.setting.metrics]
+enabled = "&dThống kê bStats ẩn danh&r"
+
+[gui.setting.portal]
+minimum_interior_blocks = "&dSố khối bên trong tối thiểu&r"
+maximum_interior_blocks = "&dSố khối bên trong tối đa&r"
+maximum_width = "&dChiều rộng tối đa&r"
+maximum_height = "&dChiều cao tối đa&r"
+frame_materials = "&dVật liệu khung&r"
+interior_materials = "&dVật liệu bên trong&r"
+ignition_causes = "&dNguyên nhân kích hoạt&r"
+allowed_worlds = "&dThế giới được phép&r"
+denied_worlds = "&dThế giới bị từ chối&r"
+deduplication_millis = "&dThời gian khử trùng lặp (mili giây)&r"
+
+[gui.setting.effects]
+creation_sound = "&dÂm thanh tạo cổng&r"
+creation_sound_type = "&dLoại âm thanh tạo cổng&r"
+creation_sound_volume = "&dÂm lượng tạo cổng&r"
+creation_sound_pitch = "&dCao độ âm thanh tạo cổng&r"
+
+[gui.setting.hot_reload]
+enabled = "&dTải lại tức thời&r"
+poll_interval_millis = "&dKhoảng thăm dò (mili giây)&r"
+cooldown_millis = "&dThời gian chờ lưu (mili giây)&r"
+notify_operators = "&dThông báo cho quản trị viên&r"
+
+[gui.setting.integrity]
+enabled = "&dDịch vụ toàn vẹn&r"
+check_interval_ticks = "&dKhoảng kiểm tra (tick)&r"
+maximum_checks_per_cycle = "&dSố lần kiểm tra tối đa mỗi chu kỳ&r"
+
+[gui.setting.presentation]
+splash_screen = "&dMàn hình chào khi khởi động&r"
+command_sounds = "&dÂm thanh lệnh&r"
+command_overlays = "&dLớp phủ lệnh&r"
+portal_notices = "&dKênh thông báo cổng&r"
+overlay_duration_ticks = "&dThời lượng lớp phủ (tick)&r"
+title_fade_in_ticks = "&dThời gian tiêu đề hiện dần (tick)&r"
+title_stay_ticks = "&dThời gian tiêu đề duy trì (tick)&r"
+title_fade_out_ticks = "&dThời gian tiêu đề mờ dần (tick)&r"
+
+[gui.setting.debug]
+upload_enabled = "&dTải báo cáo gỡ lỗi lên mclo.gs&r"
+
+[director.help]
+category = "Danh mục lệnh"
+command_group = "Nhóm lệnh. Nhấp để mở."
+no_description = "Không có mô tả"
+no_parameters = "Không có tham số. Nhấp để điền sẵn lệnh."
+no_subcommands = "Không có lệnh con trên trang này."
+parameters_hover = "Di chuột qua các tham số để tìm hiểu thêm."
+
+[director.help.navigation]
+back = "Quay lại"
+page = "Trang"
+
+[director.help.navigation.next]
+hover = "Trang sau"
+
+[director.help.navigation.parent]
+hover = "Quay lại nhóm lệnh cha"
+
+[director.help.navigation.previous]
+hover = "Trang trước"
+
+[director.help.parameter]
+default = "Mặc định là \"{value}\" nếu không được chỉ định."
+optional = "Tham số này là tùy chọn."
+required = "Tham số này là bắt buộc."
+type = "Tham số này có kiểu {type}."
+
+[director.runtime.error]
+conversion_failed = "Không thể chuyển \"{value}\" thành {type} cho {parameter}"
+default_parse_failed = "Không thể phân tích giá trị mặc định của tham số {parameter}"
+execution_failed = "Không thể thực thi lệnh {command}: {reason}"
+invalid_origin = "Không thể chạy lệnh này từ nguồn này."
+missing_argument = "Thiếu đối số \"{parameter}\" ({type})"
+unexpected_argument = "Đối số không mong đợi \"{argument}\". Các tham số tùy chọn phải được chỉ định bằng khóa, ví dụ seed=123"
+unclosed_group = "Thiếu dấu \"]\" đóng cho tham số {key}"
+unknown_parameter = "Khóa tham số không xác định: {key}"
+
+[director.runtime]
+usage = "Cách dùng: {usage}"

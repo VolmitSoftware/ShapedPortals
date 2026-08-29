@@ -1,0 +1,235 @@
+# ShapedPortals の言語: ja-JP
+# このファイルは存在しない場合にのみダウンロードされます。languages/ja-JP.toml を直接編集してください。
+# ローカルの変更は自動的に上書きされません。未指定の項目は英語で補完されます。
+# 色: &0-&f、&k-&r、&#RRGGBB、&xRRGGBB、&x&R&R&G&G&B&B、[RRGGBB]。独自書式には MiniMessage も使用できます。
+# プレースホルダーはメッセージごとに固有です。各メッセージに元からあるものだけを残し、名前を変更しないでください。
+# コマンド: {argument}=予期しない引数; {command}=コマンド経路; {key}=パラメーターキー; {parameter}=パラメーター名; {type}=型; {usage}=使用法。
+# 実行状態: {attempts}=作成試行数; {created}=作成数または作成日時; {rejected}=拒否数; {enabled}=作成状態; {hot_reload}=ホットリロード状態; {scheduler}=スケジューラー。
+# ポータル: {portal}=識別子; {portals}=管理数; {id}=短縮 ID; {uuid}=完全な UUID; {world}=ワールド; {axis}=軸; {x}/{y}/{z}=アンカー座標; {blocks}=ポータルセル数; {cells}=全管理セル数; {creator}=作成者; {materials}=記録されたフレーム素材。
+# 一覧: {matches}=一致するポータル数; {seconds}=確認期限（秒）。
+# 設定: {category}=カテゴリ; {setting}=設定名; {status}=選択記号; {value}=現在値、既定値、または入力値; {language}=使用中の言語; {locale}=ロケール; {name}=言語の正式名。
+# 言語エディター: {variables}=使用可能なプレースホルダー; {old}=変更前の値; {new}=変更後の値。
+# その他: {duration}=経過ミリ秒; {path}=ローカル報告書のパス; {url}=公開 URL; {reason}=失敗理由.
+# 接頭辞: {prefix}=グローバルな runtime.prefix の値です。個別のメッセージから {prefix} を削除すると、その場所だけ非表示になります。
+# & または [ の前にバックスラッシュを付けると、その文字をそのまま表示できます。
+
+[command.description]
+config = "完全なゲーム内設定エディターを開く"
+debug = "包括的なShapedPortals診断レポートを作成"
+language = "利用可能な ShapedPortals 言語を選択"
+portals = "すべての管理ポータルとそのテレポートショートカットを一覧表示"
+root = "ShapedPortalsヘルプと管理"
+status = "管理されたポータルと試行統計を表示"
+teleport = "管理ポータルの近くに安全にテレポートするか、省略した場合はポータルを一覧表示"
+
+[command.feedback.config]
+opened = "{prefix}&aゲーム内の完全な設定エディターを開きました。&r"
+save_failed = "{prefix}&c&f{setting}&r&cを適用できませんでした:{reason}&r"
+saved = "{prefix}&a&f{setting}&r&aを保存して適用しました。&r"
+
+[command.feedback.debug]
+busy = "{prefix}&eShapedPortals診断レポートはすでに作成中です。&r"
+failed = "{prefix}&c診断レポートを作成できませんでした。詳細はコンソールを確認してください。&r"
+link_hover = "&7公開mclo.gsレポートを開きます。&r"
+saved = "{prefix}&a診断レポートを&f{path}&r&aに保存しました。&r"
+started = "{prefix}&7サーバーとShapedPortalsの診断をキャプチャしています…&r"
+upload_failed = "{prefix}&eローカルレポートは保存されましたが、mclo.gsのアップロードに失敗しました。詳細はコンソールを確認してください。&r"
+uploaded = "{prefix}&a診断レポートをアップロードしました:&r&b&n{url}&r"
+
+[command.feedback]
+failed = "{prefix}&cコマンドを完了できませんでした。詳細はコンソールを参照してください。&r"
+
+[command.feedback.reload]
+failed = "{prefix}&c{duration}ミリ秒後の再読み込みに失敗しました。&r&7最後に確認された正常な設定は依然として有効です；完全なコンソールエラーを参照してください。&r"
+success = "{prefix}&a&f{duration}&r&aミリ秒で再読み込みされました。&r&7ロケール:&r&f{locale}&r"
+
+[command.parameter]
+locale = "利用可能な言語ロケール"
+page = "1始まりのポータル一覧ページ"
+portal = "ポータルUUID、ユニーク接頭辞、または一覧"
+
+[command.status]
+attempts = "{prefix}&7試行回数:&r&f{attempts}&r&8|&r&7作成日:&r&a{created}&r&8|&r&7拒否:&r&c{rejected}&r"
+compatibility = "{prefix}&7成果物:&r&fJava 17 / Bukkit 1.20.1+&r&8|&r&7スケジューラ:&r&f{scheduler}&r"
+config = "{prefix}&7作成:&r{enabled}&8|&r&7言語:&r&f{language}&r&8|&r&7ホットリロード:&r{hot_reload}"
+header = "{prefix}&d&lShapedPortals実行時&r"
+portals = "{prefix}&7管理されたポータル:&r&f{portals}&r&8|&r&7インテリアセル:&r&f{cells}&r"
+
+[director.help]
+category = "コマンド分類"
+command_group = "コマンドグループ。クリックして開きます。"
+no_description = "説明はありません"
+no_parameters = "パラメーターはありません。クリックしてコマンドを入力します。"
+no_subcommands = "このページにサブコマンドはありません。"
+parameters_hover = "パラメータにカーソルを合わせると詳細が表示されます。"
+
+[director.help.navigation]
+back = "戻る"
+page = "ページ"
+
+[director.help.navigation.next]
+hover = "次のページ"
+
+[director.help.navigation.parent]
+hover = "親コマンドグループに戻る"
+
+[director.help.navigation.previous]
+hover = "前のページ"
+
+[director.help.parameter]
+default = "未指定の場合は \"{value}\" になります。"
+optional = "このパラメータは任意です。"
+required = "このパラメータは必須です。"
+type = "このパラメータの型は {type} です。"
+
+[director.runtime.error]
+conversion_failed = "\"{value}\" を {parameter} 用の {type} に変換できません"
+default_parse_failed = "パラメーター {parameter} のデフォルト値を解析できません"
+execution_failed = "コマンド {command} の実行に失敗しました: {reason}"
+invalid_origin = "この実行元からはコマンドを実行できません。"
+missing_argument = "引数 \"{parameter}\" ({type}) が必要です"
+unclosed_group = "パラメータ {key} の閉じかっこ \"]\" がありません"
+unexpected_argument = "予期しない引数 \"{argument}\"。オプションのパラメーターはキー付きで指定してください。例: seed=123"
+unknown_parameter = "不明なパラメーターキー: {key}"
+
+[director.runtime]
+usage = "使用法: {usage}"
+
+[gui.category]
+debug = "&d診断&r"
+effects = "&d効果&r"
+general = "&d一般&r"
+hot_reload = "&dホットリロード&r"
+integrity = "&d整合性&r"
+portal = "&dポータルルール&r"
+presentation = "&dプレゼンテーション&r"
+languages = "&d言語&r"
+
+[gui.language]
+empty = "&e利用可能な言語が見つかりませんでした。ロケール名を入力して作成してください。&r"
+hover = "&7クリックして&f{locale}&r&7を選択します。&r"
+option = "{status} &f{locale}&r &8—&r &7{name}&r"
+type = "&7チャットにロケール名を入力して作成または選択します。&r"
+current = "&7現在の値:&r {value}"
+variables = "&7現在の変数 / プレースホルダー:&r &f{variables}&r"
+changed = "&f{old}&r &7を&r &f{new}&r &7に変更しました&r"
+
+[gui.lore]
+category = "&8このカテゴリのすべての設定を編集するにはクリックしてください。&r"
+language = "&8利用可能な言語を選択するか、ロケールを入力するにはクリックしてください。&r"
+number = "&8左 +1、右 -1、Shift ×10、タイプにドロップ.&r"
+state = "&7現在:&r{value}"
+text = "&8チャットで新しい値を入力するにはクリックしてください。&r"
+toggle = "&8切り替えるにはクリック.&r"
+
+
+[gui.navigation]
+back = "&e戻る&r"
+close = "&c閉じる&r"
+reload = "&bファイルをリロード&r"
+
+[gui.prompt]
+cancel = "{prefix}&7停止するには&fcancel&r&7と入力してください。このプロンプトは60秒で期限切れになります。&r"
+cancelled = "{prefix}&e設定の編集をキャンセルしました。&r"
+list = "{prefix}&7リストの項目をカンマで区切ってください。空のリストには&fnone&r&7と入力してください。&r"
+request = "{prefix}&eチャットで&f{setting}&r&eの新しい値を入力してください。&r"
+timeout = "{prefix}&e設定編集は何も変更せずに期限切れになりました。&r"
+
+[gui.setting.debug]
+upload_enabled = "&dデバッグレポートをアップロードmclo.gs&r"
+
+[gui.setting.effects]
+creation_sound = "&d作成音&r"
+creation_sound_pitch = "&d作成音のピッチ&r"
+creation_sound_type = "&d作成音の種類&r"
+creation_sound_volume = "&d作成音の音量&r"
+
+[gui.setting.general]
+enabled = "&dポータル作成&r"
+failure_feedback = "&dポータル失敗のフィードバック&r"
+language = "&dアクティブな言語ロケール&r"
+require_create_permission = "&d作成権限を要求&r"
+
+[gui.setting.metrics]
+enabled = "&d匿名のbStats統計&r"
+
+[gui.setting.hot_reload]
+cooldown_millis = "&d保存クールダウンミリ秒&r"
+enabled = "&dホットリロード&r"
+notify_operators = "&dオペレーターに通知&r"
+poll_interval_millis = "&dポーリング間隔ミリ秒&r"
+
+[gui.setting.integrity]
+check_interval_ticks = "&d間隔チェックのティック&r"
+enabled = "&d整合性サービス&r"
+maximum_checks_per_cycle = "&dサイクルごとの最大チェック数&r"
+
+[gui.setting.portal]
+allowed_worlds = "&d許可された世界&r"
+deduplication_millis = "&d二重処理防止ミリ秒&r"
+denied_worlds = "&d禁止された世界&r"
+frame_materials = "&dフレーム材質&r"
+ignition_causes = "&d点火原因&r"
+interior_materials = "&dインテリア素材&r"
+maximum_height = "&d最大高さ&r"
+maximum_interior_blocks = "&d最大内部ブロック数&r"
+maximum_width = "&d最大幅&r"
+minimum_interior_blocks = "&d最小内部ブロック数&r"
+
+[gui.setting.presentation]
+command_overlays = "&dコマンドオーバーレイ&r"
+command_sounds = "&dコマンド音&r"
+overlay_duration_ticks = "&dオーバーレイの持続ティック数&r"
+portal_notices = "&dポータル通知チャンネル&r"
+splash_screen = "&d起動スプラッシュ画面&r"
+title_fade_in_ticks = "&dタイトルのフェードインティック&r"
+title_fade_out_ticks = "&dタイトルのフェードアウトティック&r"
+title_stay_ticks = "&dタイトルの表示ティック&r"
+
+[gui.title]
+category = "&5ShapedPortals&r&8›&r{category}"
+root = "&5ShapedPortals設定&r"
+
+[hud]
+failure = "&c操作に失敗しました&r"
+info = "&dShapedPortals&r"
+success = "&a成功&r"
+title = "&d&lShapedPortals&r"
+
+[portal.navigation.confirm]
+unsafe = "{prefix}&c&f{portal}&r&cの隣に安全な足場がありません。 &e&f{seconds}&r&e秒以内に同じポータルをもう一度クリックすると、ポータル内へ強制的にテレポートします。&r"
+
+[portal.navigation.error]
+ambiguous = "{prefix}&c接頭辞&f{portal}&r&cは{matches}ポータルと一致します。UUIDのさらに詳細を入力してください。&r"
+destination_unavailable = "{prefix}&cポータル宛先は一時的に利用できません。&r"
+inactive = "{prefix}&cTポータルは現在はアクティブではありません。その整合性チェックはキューに入れられています。&r"
+no_safe_landing = "{prefix}&cNそのポータルの隣には安全な立場は存在しません。&r"
+not_found = "{prefix}&c管理されたポータルは見つかりません&f{portal}&r&c.&r"
+removed = "{prefix}&cそのポータルはもはや登録されていません。&r"
+world_unavailable = "{prefix}&cポータルワールド&f{world}&r&cは現在利用できません。&r"
+
+[portal.navigation.list]
+frame_policy_note = "&8  ⚠&r &e既存のフレームは &f{materials}&r&e を使用しています。この素材では新しいポータルを作成できません。&r"
+empty = "&e管理された形状のポータルは登録されていません。&r"
+entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7場所:&r &f{x}, {y}, {z}&r &8•&r &7軸:&r &f{axis}&r &8•&r &7セル:&r &f{blocks}&r\n&8  └&r &7作成者:&r &f{creator}&r &8•&r &7作成日時:&r &f{created}&r"
+hover = "&7UUID:&r&f{uuid}&r\n&aこのポータルにテレポートするにはクリックしてください。&r"
+
+[portal.navigation.teleport]
+failed = "{prefix}&cポータルへのテレポートを完了できませんでした。別のプラグインによってキャンセルされた可能性があります。&r"
+preparing = "{prefix}&7&f{portal}&r&7の修復先...&r"
+success = "{prefix}&a&f{world}&r&aにある&f{portal}&r&aのそばへテレポートしました。&r"
+
+[portal.notice]
+created = "{prefix}&d{blocks}内部ブロックで形作られたポータルを作成しました.&r"
+failed = "{prefix}&cそのフレームは形作られたポータルにはなりません:&f{reason}&r&c.&r"
+
+[runtime.hot_reload]
+failed = "{prefix}&cファイルの変更は拒否されました；最後に確認された正常な設定が有効のままです。&r"
+success = "{prefix}&a構成および言語ファイルの変更が適用されました。&r"
+
+[runtime.permission]
+denied = "{prefix}&cそれを行う権限がありません。&r"
+
+[runtime]
+player_only = "{prefix}&cこのコマンドはプレイヤーのみ使用できます。&r"
+prefix = "&d&lShapedPortals&r&8›&r "

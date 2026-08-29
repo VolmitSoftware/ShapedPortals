@@ -1,0 +1,235 @@
+# שפת ShapedPortals: he_IL
+# הקובץ יורד רק אם הוא חסר; יש לערוך ישירות את languages/he_IL.toml.
+# שינויים מקומיים לעולם אינם מוחלפים אוטומטית; ערכים חסרים משתמשים באנגלית.
+# צבעים: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B וגם [RRGGBB]. ניתן להשתמש גם ב-MiniMessage לעיצוב מותאם.
+# מצייני המקום שייכים להודעות מסוימות. יש להשאיר רק את המציינים שכבר מופיעים בהודעה ולא לשנות את שמם.
+# פקודות: {argument}=ארגומנט לא צפוי; {command}=נתיב פקודה; {key}=מפתח פרמטר; {parameter}=שם פרמטר; {type}=סוג; {usage}=אופן שימוש.
+# זמן ריצה: {attempts}=ניסיונות יצירה; {created}=כמות שנוצרה או זמן יצירה; {rejected}=ניסיונות שנדחו; {enabled}=מצב יצירה; {hot_reload}=מצב טעינה חמה; {scheduler}=מתזמן.
+# פורטלים: {portal}=מזהה; {portals}=כמות מנוהלת; {id}=מזהה קצר; {uuid}=UUID מלא; {world}=עולם; {axis}=ציר; {x}/{y}/{z}=קואורדינטות עוגן; {blocks}=תאי פורטל; {cells}=כל התאים; {creator}=יוצר; {materials}=חומרי המסגרת שנרשמו.
+# רשימות: {matches}=פורטלים תואמים; {seconds}=חלון אישור בשניות.
+# הגדרות: {category}=קטגוריה; {setting}=שם הגדרה; {status}=סימן בחירה; {value}=ערך נוכחי, ברירת מחדל או גולמי; {language}=שפה פעילה; {locale}=אזור שפה; {name}=שם השפה המלא.
+# עורך שפה: {variables}=מצייני מקום תקינים; {old}=הערך הקודם; {new}=הערך החדש.
+# אחר: {duration}=אלפיות שנייה; {path}=נתיב דוח מקומי; {url}=כתובת דוח ציבורית; {reason}=סיבת כשל.
+# קידומת: {prefix}=הערך הגלובלי runtime.prefix. הסירו את {prefix} מהודעה מסוימת כדי להסתיר אותה רק שם.
+# כדי להציג & או [ כלשונם, יש להוסיף לפניהם לוכסן הפוך.
+
+[runtime]
+prefix = "&d&lShapedPortals&r &8›&r "
+player_only = "{prefix}&cרק שחקן יכול להשתמש בפקודה זו.&r"
+
+[runtime.permission]
+denied = "{prefix}&cאין לך הרשאה לבצע פעולה זו.&r"
+
+[runtime.hot_reload]
+success = "{prefix}&aהשינויים בקובצי התצורה והשפה הוחלו.&r"
+failed = "{prefix}&cהשינויים בקבצים נדחו; ההגדרות התקינות האחרונות נשארו פעילות.&r"
+
+[command.feedback.reload]
+success = "{prefix}&aהטעינה מחדש הושלמה בתוך &f{duration}&r&a אלפיות שנייה.&r &7שפה:&r &f{locale}&r"
+failed = "{prefix}&cהטעינה מחדש נכשלה לאחר {duration} אלפיות שנייה.&r &7ההגדרות התקינות האחרונות עדיין פעילות; פרטי השגיאה המלאים מופיעים במסוף.&r"
+
+[command.feedback.config]
+opened = "{prefix}&aעורך התצורה המלא בתוך המשחק נפתח.&r"
+saved = "{prefix}&aההגדרה &f{setting}&r&a נשמרה והוחלה.&r"
+save_failed = "{prefix}&cלא ניתן להחיל את &f{setting}&r&c: {reason}&r"
+
+[command.feedback]
+failed = "{prefix}&cלא ניתן להשלים את הפקודה. פרטים נוספים מופיעים במסוף.&r"
+
+[command.feedback.debug]
+started = "{prefix}&7נאספים נתוני אבחון של השרת ושל ShapedPortals…&r"
+busy = "{prefix}&eדוח אבחון של ShapedPortals כבר נמצא בתהליך יצירה.&r"
+saved = "{prefix}&aדוח האבחון נשמר במיקום &f{path}&r&a.&r"
+uploaded = "{prefix}&aדוח האבחון הועלה:&r &b&n{url}&r"
+link_hover = "&7פתיחת דוח mclo.gs הציבורי.&r"
+upload_failed = "{prefix}&eהדוח המקומי נשמר, אך ההעלאה אל mclo.gs נכשלה. פרטים נוספים מופיעים במסוף.&r"
+failed = "{prefix}&cלא ניתן ליצור את דוח האבחון. פרטים נוספים מופיעים במסוף.&r"
+
+[command.status]
+header = "{prefix}&d&lמצב הפעולה של ShapedPortals&r"
+config = "{prefix}&7יצירה:&r {enabled} &8|&r &7שפה:&r &f{language}&r &8|&r &7טעינה חמה:&r {hot_reload}"
+portals = "{prefix}&7פורטלים מנוהלים:&r &f{portals}&r &8|&r &7בלוקים פנימיים:&r &f{cells}&r"
+attempts = "{prefix}&7ניסיונות:&r &f{attempts}&r &8|&r &7נוצרו:&r &a{created}&r &8|&r &7נדחו:&r &c{rejected}&r"
+compatibility = "{prefix}&7קובץ בנוי:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7מתזמן:&r &f{scheduler}&r"
+
+[command.description]
+root = "עזרה וניהול של ShapedPortals"
+config = "פתיחת עורך התצורה המלא בתוך המשחק"
+language = "בחירת שפת ShapedPortals זמינה"
+debug = "יצירת דוח אבחון מקיף של ShapedPortals"
+portals = "הצגת כל הפורטלים המנוהלים וקיצורי ההשתגרות אליהם"
+teleport = "השתגרות בטוחה ליד פורטל מנוהל, או הצגת פורטלים אם לא צוין יעד"
+status = "הצגת נתונים סטטיסטיים של פורטלים מנוהלים וניסיונות"
+
+[command.parameter]
+locale = "אזור שפה זמין"
+page = "עמוד רשימת פורטלים שמספרו מתחיל באחד"
+portal = "UUID של פורטל, תחילית ייחודית או list"
+
+[portal.notice]
+created = "{prefix}&dנוצר פורטל מעוצב עם {blocks} בלוקים פנימיים.&r"
+failed = "{prefix}&cלא ניתן להפוך את המסגרת הזו לפורטל מעוצב: &f{reason}&r&c.&r"
+
+[portal.navigation.confirm]
+unsafe = "{prefix}&cאין מקום בטוח לעמוד ליד &f{portal}&r&c. &eלחצו שוב על אותו פורטל בתוך &f{seconds}&r&e שניות כדי להשתגר לתוכו בכל זאת.&r"
+
+[portal.navigation.list]
+frame_policy_note = "&8  ⚠&r &eהמסגרת הקיימת משתמשת ב-&f{materials}&r&e, שלא ניתן ליצור מהם שערים חדשים.&r"
+empty = "&eלא רשומים פורטלים מעוצבים מנוהלים.&r"
+entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7מיקום:&r &f{x}, {y}, {z}&r &8•&r &7ציר:&r &f{axis}&r &8•&r &7תאים:&r &f{blocks}&r\n&8  └&r &7יוצר:&r &f{creator}&r &8•&r &7נוצר:&r &f{created}&r"
+hover = "&7UUID:&r &f{uuid}&r\n&aלחצו כדי להשתגר אל פורטל זה.&r"
+
+[portal.navigation.error]
+not_found = "{prefix}&cלא נמצא פורטל מנוהל התואם ל-&f{portal}&r&c.&r"
+ambiguous = "{prefix}&cהתחילית &f{portal}&r&c תואמת ל-{matches} פורטלים. הזינו חלק ארוך יותר של ה-UUID.&r"
+removed = "{prefix}&cפורטל זה אינו רשום עוד.&r"
+world_unavailable = "{prefix}&cעולם הפורטל &f{world}&r&c אינו זמין כעת.&r"
+destination_unavailable = "{prefix}&cיעד הפורטל אינו זמין באופן זמני.&r"
+inactive = "{prefix}&cפורטל זה אינו פעיל עוד. בדיקת התקינות שלו נוספה לתור.&r"
+no_safe_landing = "{prefix}&cאין מקום בטוח לעמוד ליד פורטל זה.&r"
+
+[portal.navigation.teleport]
+preparing = "{prefix}&7היעד עבור &f{portal}&r&7 בהכנה…&r"
+success = "{prefix}&aהשתגרת ליד &f{portal}&r&a בעולם &f{world}&r&a.&r"
+failed = "{prefix}&cההשתגרות לפורטל לא הושלמה. ייתכן שתוסף אחר ביטל אותה.&r"
+
+[hud]
+title = "&d&lShapedPortals&r"
+success = "&aהצלחה&r"
+failure = "&cהפעולה נכשלה&r"
+info = "&dShapedPortals&r"
+
+[gui.title]
+root = "&5תצורת ShapedPortals&r"
+category = "&5ShapedPortals&r &8›&r {category}"
+
+[gui.category]
+general = "&dכללי&r"
+portal = "&dכללי פורטל&r"
+effects = "&dאפקטים&r"
+hot_reload = "&dטעינה חמה&r"
+integrity = "&dתקינות&r"
+presentation = "&dתצוגה&r"
+debug = "&dאבחון&r"
+
+languages = "&dשפות&r"
+
+[gui.navigation]
+back = "&eחזרה&r"
+reload = "&bטעינת הקבצים מחדש&r"
+close = "&cסגירה&r"
+
+[gui.lore]
+state = "&7נוכחי:&r {value}"
+toggle = "&8לחצו כדי להחליף מצב.&r"
+number = "&8שמאל +1, ימין -1, Shift ×10, השלכה כדי להקליד.&r"
+text = "&8לחצו כדי להקליד ערך חדש בצ׳אט.&r"
+language = "&8לחצו כדי לבחור שפה זמינה או להקליד אזור שפה.&r"
+category = "&8לחצו כדי לערוך כל הגדרה בקטגוריה זו.&r"
+
+[gui.prompt]
+request = "{prefix}&eהקלידו בצ׳אט ערך חדש עבור &f{setting}&r&e.&r"
+list = "{prefix}&7הפרידו פריטי רשימה בפסיקים. הקלידו &fnone&r&7 עבור רשימה ריקה.&r"
+cancel = "{prefix}&7הקלידו &fcancel&r&7 כדי לעצור. הבקשה תפוג בתוך 60 שניות.&r"
+cancelled = "{prefix}&eעריכת התצורה בוטלה.&r"
+timeout = "{prefix}&eזמן עריכת התצורה פג מבלי ששונה דבר.&r"
+
+[gui.language]
+type = "&7הקלידו בצ׳אט שם של אזור שפה כדי ליצור או לבחור אותו.&r"
+option = "{status} &f{locale}&r &8—&r &7{name}&r"
+hover = "&7לחצו כדי לבחור את &f{locale}&r&7.&r"
+empty = "&eלא נמצאו שפות זמינות; הקלידו שם אזור שפה כדי ליצור אחת.&r"
+current = "&7ערך נוכחי:&r {value}"
+variables = "&7משתנים / מצייני מקום נוכחיים:&r &f{variables}&r"
+changed = "&f{old}&r &7שונה ל-&r &f{new}&r"
+
+[gui.setting.general]
+enabled = "&dיצירת פורטלים&r"
+language = "&dאזור השפה הפעיל&r"
+require_create_permission = "&dדרישת הרשאת יצירה&r"
+failure_feedback = "&dמשוב על כשל בפורטל&r"
+
+[gui.setting.metrics]
+enabled = "&dמדדי bStats אנונימיים&r"
+
+[gui.setting.portal]
+minimum_interior_blocks = "&dמספר בלוקים פנימיים מזערי&r"
+maximum_interior_blocks = "&dמספר בלוקים פנימיים מרבי&r"
+maximum_width = "&dרוחב מרבי&r"
+maximum_height = "&dגובה מרבי&r"
+frame_materials = "&dחומרי מסגרת&r"
+interior_materials = "&dחומרים פנימיים&r"
+ignition_causes = "&dגורמי הצתה&r"
+allowed_worlds = "&dעולמות מותרים&r"
+denied_worlds = "&dעולמות אסורים&r"
+deduplication_millis = "&dאלפיות שנייה למניעת כפילויות&r"
+
+[gui.setting.effects]
+creation_sound = "&dצליל יצירה&r"
+creation_sound_type = "&dסוג צליל היצירה&r"
+creation_sound_volume = "&dעוצמת צליל היצירה&r"
+creation_sound_pitch = "&dגובה צליל היצירה&r"
+
+[gui.setting.hot_reload]
+enabled = "&dטעינה חמה&r"
+poll_interval_millis = "&dמרווח בדיקה באלפיות שנייה&r"
+cooldown_millis = "&dהשהיית שמירה באלפיות שנייה&r"
+notify_operators = "&dהודעה למפעילים&r"
+
+[gui.setting.integrity]
+enabled = "&dשירות תקינות&r"
+check_interval_ticks = "&dמרווח בדיקה בטיקים&r"
+maximum_checks_per_cycle = "&dמספר בדיקות מרבי במחזור&r"
+
+[gui.setting.presentation]
+splash_screen = "&dמסך פתיחה בהפעלה&r"
+command_sounds = "&dצלילי פקודות&r"
+command_overlays = "&dשכבות פקודה&r"
+portal_notices = "&dערוצי הודעות פורטל&r"
+overlay_duration_ticks = "&dמשך שכבה בטיקים&r"
+title_fade_in_ticks = "&dהופעת כותרת בטיקים&r"
+title_stay_ticks = "&dמשך הצגת כותרת בטיקים&r"
+title_fade_out_ticks = "&dהיעלמות כותרת בטיקים&r"
+
+[gui.setting.debug]
+upload_enabled = "&dהעלאת דוחות ניפוי שגיאות אל mclo.gs&r"
+
+[director.help]
+category = "קטגוריית פקודות"
+command_group = "קבוצת פקודות. לחצו כדי לפתוח."
+no_description = "לא סופק תיאור"
+no_parameters = "אין פרמטרים. לחצו כדי למלא את הפקודה מראש."
+no_subcommands = "אין פקודות משנה בעמוד זה."
+parameters_hover = "רחפו מעל הפרמטרים כדי ללמוד עוד."
+
+[director.help.navigation]
+back = "חזרה"
+page = "עמוד"
+
+[director.help.navigation.next]
+hover = "העמוד הבא"
+
+[director.help.navigation.parent]
+hover = "חזרה לקבוצת פקודות האב"
+
+[director.help.navigation.previous]
+hover = "העמוד הקודם"
+
+[director.help.parameter]
+default = "ברירת המחדל היא \"{value}\" אם לא הוגדר."
+optional = "פרמטר זה הוא אופציונלי."
+required = "פרמטר זה הוא חובה."
+type = "פרמטר זה הוא מסוג {type}."
+
+[director.runtime.error]
+conversion_failed = "לא ניתן להמיר את \"{value}\" ל-{type} עבור {parameter}"
+default_parse_failed = "לא ניתן לנתח את ערך ברירת המחדל של הפרמטר {parameter}"
+execution_failed = "הפעלת הפקודה {command} נכשלה: {reason}"
+invalid_origin = "לא ניתן להריץ פקודה זו ממקור זה."
+missing_argument = "חסר ארגומנט \"{parameter}\" ({type})"
+unexpected_argument = "ארגומנט לא צפוי \"{argument}\". פרמטרים אופציונליים חייבים להינתן עם מפתח, לדוגמה seed=123"
+unclosed_group = "חסר סוגר \"]\" עבור הפרמטר {key}"
+unknown_parameter = "מפתח פרמטר לא ידוע: {key}"
+
+[director.runtime]
+usage = "שימוש: {usage}"

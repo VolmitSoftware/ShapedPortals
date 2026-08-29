@@ -1,0 +1,235 @@
+# ShapedPortals kalba: lt_LT
+# Šis failas atsisiunčiamas tik tada, kai jo nėra; redaguokite languages/lt_LT.toml tiesiogiai.
+# Vietiniai pakeitimai niekada automatiškai nekeičiami; trūkstamos reikšmės naudoja anglų kalbą.
+# Spalvos: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B ir [RRGGBB]. Pasirinktiniam formatavimui galima naudoti MiniMessage.
+# Vietos žymekliai priklauso konkretiems pranešimams. Palikite tik jau esančius žymeklius ir jų nepervadinkite.
+# Komandos: {argument}=netikėtas argumentas; {command}=komandos kelias; {key}=parametro raktas; {parameter}=parametro vardas; {type}=tipas; {usage}=komandos naudojimas.
+# Vykdymas: {attempts}=kūrimo bandymai; {created}=sukurtų skaičius arba laikas; {rejected}=atmesti bandymai; {enabled}=kūrimo būsena; {hot_reload}=karštojo įkėlimo būsena; {scheduler}=planavimo sistema.
+# Portalai: {portal}=identifikatorius; {portals}=valdomų skaičius; {id}=trumpas ID; {uuid}=visas UUID; {world}=pasaulis; {axis}=ašis; {x}/{y}/{z}=inkaro koordinatės; {blocks}=portalo langeliai; {cells}=visi langeliai; {creator}=kūrėjas; {materials}=įrašytos rėmo medžiagos.
+# Sąrašai: {matches}=atitinkantys portalai; {seconds}=patvirtinimo laikas sekundėmis.
+# Konfigūracija: {category}=kategorija; {setting}=nuostatos vardas; {status}=pasirinkimo žyma; {value}=dabartinė, numatytoji arba neapdorota reikšmė; {language}=aktyvi kalba; {locale}=lokalė; {name}=visas kalbos pavadinimas.
+# Kalbos redaktorius: {variables}=galimi vietos žymekliai; {old}=ankstesnė reikšmė; {new}=nauja reikšmė.
+# Kita: {duration}=milisekundės; {path}=vietinio pranešimo kelias; {url}=viešas URL; {reason}=klaidos priežastis.
+# Priešdėlis: {prefix}=visuotinė runtime.prefix reikšmė. Pašalinkite {prefix} iš atskiro pranešimo, kad jame jo nerodytų.
+# Norėdami & arba [ rodyti tiesiogiai, prieš juos rašykite pasvirąjį brūkšnį atgal.
+
+[runtime]
+prefix = "&d&lShapedPortals&r &8›&r "
+player_only = "{prefix}&cŠią komandą gali naudoti tik žaidėjas.&r"
+
+[runtime.permission]
+denied = "{prefix}&cNeturite leidimo to daryti.&r"
+
+[runtime.hot_reload]
+success = "{prefix}&aKonfigūracijos ir kalbos failų pakeitimai pritaikyti.&r"
+failed = "{prefix}&cFailų pakeitimai atmesti; lieka aktyvūs paskutiniai tinkami nustatymai.&r"
+
+[command.feedback.reload]
+success = "{prefix}&aIš naujo įkelta per &f{duration}&r&a ms.&r &7Kalba:&r &f{locale}&r"
+failed = "{prefix}&cPakartotinis įkėlimas nepavyko po {duration} ms.&r &7Paskutiniai tinkami nustatymai tebėra aktyvūs; visą klaidą rasite konsolėje.&r"
+
+[command.feedback.config]
+opened = "{prefix}&aAtidarytas visas žaidimo konfigūracijos redaktorius.&r"
+saved = "{prefix}&aNustatymas &f{setting}&r&a išsaugotas ir pritaikytas.&r"
+save_failed = "{prefix}&cNepavyko pritaikyti &f{setting}&r&c: {reason}&r"
+
+[command.feedback]
+failed = "{prefix}&cKomandos įvykdyti nepavyko. Išsamesnę informaciją rasite konsolėje.&r"
+
+[command.feedback.debug]
+started = "{prefix}&7Renkama serverio ir ShapedPortals diagnostikos informacija…&r"
+busy = "{prefix}&eShapedPortals diagnostikos ataskaita jau kuriama.&r"
+saved = "{prefix}&aDiagnostikos ataskaita išsaugota faile &f{path}&r&a.&r"
+uploaded = "{prefix}&aDiagnostikos ataskaita įkelta:&r &b&n{url}&r"
+link_hover = "&7Atidaryti viešą mclo.gs ataskaitą.&r"
+upload_failed = "{prefix}&eVietinė ataskaita išsaugota, bet įkelti į mclo.gs nepavyko. Išsamesnę informaciją rasite konsolėje.&r"
+failed = "{prefix}&cDiagnostikos ataskaitos sukurti nepavyko. Išsamesnę informaciją rasite konsolėje.&r"
+
+[command.status]
+header = "{prefix}&d&lShapedPortals būsena&r"
+config = "{prefix}&7Kūrimas:&r {enabled} &8|&r &7Kalba:&r &f{language}&r &8|&r &7Automatinis įkėlimas:&r {hot_reload}"
+portals = "{prefix}&7Valdomi portalai:&r &f{portals}&r &8|&r &7Vidiniai langeliai:&r &f{cells}&r"
+attempts = "{prefix}&7Bandymai:&r &f{attempts}&r &8|&r &7Sukurta:&r &a{created}&r &8|&r &7Atmesta:&r &c{rejected}&r"
+compatibility = "{prefix}&7Artefaktas:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Planuoklis:&r &f{scheduler}&r"
+
+[command.description]
+root = "ShapedPortals pagalba ir administravimas"
+config = "Atidaryti visą žaidimo konfigūracijos redaktorių"
+language = "Pasirinkti prieinamą ShapedPortals kalbą"
+debug = "Sukurti išsamią ShapedPortals diagnostikos ataskaitą"
+portals = "Išvardyti visus valdomus portalus ir jų persikėlimo nuorodas"
+teleport = "Saugiai persikelti šalia valdomo portalo arba, jei nenurodytas, išvardyti portalus"
+status = "Rodyti valdomų portalų ir bandymų statistiką"
+
+[command.parameter]
+locale = "Prieinamos kalbos lokalė"
+page = "Portalo sąrašo puslapis, skaičiuojamas nuo vieno"
+portal = "Portalo UUID, unikali pradžia arba list"
+
+[portal.notice]
+created = "{prefix}&dSukurtas formos portalas su {blocks} vidiniais blokais.&r"
+failed = "{prefix}&cŠis rėmas negali tapti formos portalu: &f{reason}&r&c.&r"
+
+[portal.navigation.confirm]
+unsafe = "{prefix}&cŠalia &f{portal}&r&c nėra saugios vietos atsistoti. &ePer &f{seconds}&r&e sekundes dar kartą spustelėkite tą patį portalą, kad vis tiek persikeltumėte į jo vidų.&r"
+
+[portal.navigation.list]
+frame_policy_note = "&8  ⚠&r &eEsamas rėmas naudoja &f{materials}&r&e; iš šių medžiagų naujų portalų kurti nebegalima.&r"
+empty = "&eValdomų formos portalų nėra užregistruota.&r"
+entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Vieta:&r &f{x}, {y}, {z}&r &8•&r &7Ašis:&r &f{axis}&r &8•&r &7Langeliai:&r &f{blocks}&r\n&8  └&r &7Kūrėjas:&r &f{creator}&r &8•&r &7Sukurta:&r &f{created}&r"
+hover = "&7UUID:&r &f{uuid}&r\n&aSpustelėkite, kad persikeltumėte į šį portalą.&r"
+
+[portal.navigation.error]
+not_found = "{prefix}&cNė vienas valdomas portalas neatitinka &f{portal}&r&c.&r"
+ambiguous = "{prefix}&cPradžia &f{portal}&r&c atitinka {matches} portalus. Įveskite daugiau UUID simbolių.&r"
+removed = "{prefix}&cŠis portalas nebėra užregistruotas.&r"
+world_unavailable = "{prefix}&cPortalo pasaulis &f{world}&r&c šiuo metu nepasiekiamas.&r"
+destination_unavailable = "{prefix}&cPortalo paskirties vieta laikinai nepasiekiama.&r"
+inactive = "{prefix}&cŠis portalas nebėra aktyvus. Jo vientisumo patikra įtraukta į eilę.&r"
+no_safe_landing = "{prefix}&cŠalia šio portalo nėra saugios vietos stovėti.&r"
+
+[portal.navigation.teleport]
+preparing = "{prefix}&7Ruošiama &f{portal}&r&7 paskirties vieta…&r"
+success = "{prefix}&aPersikėlėte šalia &f{portal}&r&a pasaulyje &f{world}&r&a.&r"
+failed = "{prefix}&cPersikėlimas prie portalo nebuvo baigtas. Jį galėjo atšaukti kitas papildinys.&r"
+
+[hud]
+title = "&d&lShapedPortals&r"
+success = "&aPavyko&r"
+failure = "&cVeiksmas nepavyko&r"
+info = "&dShapedPortals&r"
+
+[gui.title]
+root = "&5ShapedPortals konfigūracija&r"
+category = "&5ShapedPortals&r &8›&r {category}"
+
+[gui.category]
+general = "&dBendrieji&r"
+portal = "&dPortalų taisyklės&r"
+effects = "&dEfektai&r"
+hot_reload = "&dAutomatinis įkėlimas&r"
+integrity = "&dVientisumas&r"
+presentation = "&dPateikimas&r"
+debug = "&dDiagnostika&r"
+
+languages = "&dKalbos&r"
+
+[gui.navigation]
+back = "&eAtgal&r"
+reload = "&bIš naujo įkelti failus&r"
+close = "&cUždaryti&r"
+
+[gui.lore]
+state = "&7Dabartinė reikšmė:&r {value}"
+toggle = "&8Spustelėkite, kad perjungtumėte.&r"
+number = "&8Kairysis +1, dešinysis -1, Shift ×10, išmeskite norėdami įvesti.&r"
+text = "&8Spustelėkite ir pokalbyje įveskite naują reikšmę.&r"
+language = "&8Spustelėkite norėdami pasirinkti prieinamą kalbą arba įveskite lokalę.&r"
+category = "&8Spustelėkite norėdami redaguoti kiekvieną šios kategorijos nustatymą.&r"
+
+[gui.prompt]
+request = "{prefix}&ePokalbyje įveskite naują &f{setting}&r&e reikšmę.&r"
+list = "{prefix}&7Sąrašo elementus atskirkite kableliais. Jei norite tuščio sąrašo, įveskite &fnone&r&7.&r"
+cancel = "{prefix}&7Norėdami sustabdyti, įveskite &fcancel&r&7. Ši užklausa baigsis po 60 sekundžių.&r"
+cancelled = "{prefix}&eKonfigūracijos redagavimas atšauktas.&r"
+timeout = "{prefix}&eKonfigūracijos redagavimo laikas baigėsi nieko nepakeitus.&r"
+
+[gui.language]
+type = "&7Pokalbyje įveskite lokalės pavadinimą, kad ją sukurtumėte arba pasirinktumėte.&r"
+option = "{status} &f{locale}&r &8—&r &7{name}&r"
+hover = "&7Spustelėkite norėdami pasirinkti &f{locale}&r&7.&r"
+empty = "&ePrieinamų kalbų nerasta; įveskite lokalės pavadinimą, kad sukurtumėte naują.&r"
+current = "&7Dabartinė reikšmė:&r {value}"
+variables = "&7Dabartiniai kintamieji / vietos žymekliai:&r &f{variables}&r"
+changed = "&f{old}&r &7pakeista į&r &f{new}&r"
+
+[gui.setting.general]
+enabled = "&dPortalų kūrimas&r"
+language = "&dAktyvi kalbos lokalė&r"
+require_create_permission = "&dReikalauti kūrimo leidimo&r"
+failure_feedback = "&dPranešimai apie portalo klaidas&r"
+
+[gui.setting.metrics]
+enabled = "&dAnoniminė bStats statistika&r"
+
+[gui.setting.portal]
+minimum_interior_blocks = "&dMažiausias vidinių blokų skaičius&r"
+maximum_interior_blocks = "&dDidžiausias vidinių blokų skaičius&r"
+maximum_width = "&dDidžiausias plotis&r"
+maximum_height = "&dDidžiausias aukštis&r"
+frame_materials = "&dRėmo medžiagos&r"
+interior_materials = "&dVidaus medžiagos&r"
+ignition_causes = "&dUždegimo priežastys&r"
+allowed_worlds = "&dLeidžiami pasauliai&r"
+denied_worlds = "&dDraudžiami pasauliai&r"
+deduplication_millis = "&dPasikartojimo slopinimas milisekundėmis&r"
+
+[gui.setting.effects]
+creation_sound = "&dSukūrimo garsas&r"
+creation_sound_type = "&dSukūrimo garso tipas&r"
+creation_sound_volume = "&dSukūrimo garso garsumas&r"
+creation_sound_pitch = "&dSukūrimo garso tonas&r"
+
+[gui.setting.hot_reload]
+enabled = "&dAutomatinis įkėlimas&r"
+poll_interval_millis = "&dTikrinimo intervalas milisekundėmis&r"
+cooldown_millis = "&dIšsaugojimo laukimas milisekundėmis&r"
+notify_operators = "&dPranešti operatoriams&r"
+
+[gui.setting.integrity]
+enabled = "&dVientisumo paslauga&r"
+check_interval_ticks = "&dTikrinimo intervalas tikais&r"
+maximum_checks_per_cycle = "&dDaugiausia patikrų per ciklą&r"
+
+[gui.setting.presentation]
+splash_screen = "&dPaleidimo ekranas&r"
+command_sounds = "&dKomandų garsai&r"
+command_overlays = "&dKomandų perdangos&r"
+portal_notices = "&dPortalo pranešimų kanalai&r"
+overlay_duration_ticks = "&dPerdangos trukmė tikais&r"
+title_fade_in_ticks = "&dPavadinimo pasirodymas tikais&r"
+title_stay_ticks = "&dPavadinimo rodymo trukmė tikais&r"
+title_fade_out_ticks = "&dPavadinimo išnykimas tikais&r"
+
+[gui.setting.debug]
+upload_enabled = "&dĮkelti derinimo ataskaitas į mclo.gs&r"
+
+[director.help]
+category = "Komandų kategorija"
+command_group = "Komandų grupė. Spustelėkite, kad atidarytumėte."
+no_description = "Aprašymas nepateiktas"
+no_parameters = "Parametrų nėra. Spustelėkite, kad iš anksto užpildytumėte komandą."
+no_subcommands = "Šiame puslapyje nėra antrinių komandų."
+parameters_hover = "Užveskite pelės žymeklį ant parametrų, kad sužinotumėte daugiau."
+
+[director.help.navigation]
+back = "Atgal"
+page = "Puslapis"
+
+[director.help.navigation.next]
+hover = "Kitas puslapis"
+
+[director.help.navigation.parent]
+hover = "Grįžti į pirminę komandų grupę"
+
+[director.help.navigation.previous]
+hover = "Ankstesnis puslapis"
+
+[director.help.parameter]
+default = "Jei nenurodyta, numatytoji reikšmė yra \"{value}\"."
+optional = "Šis parametras yra neprivalomas."
+required = "Šis parametras yra privalomas."
+type = "Šio parametro tipas yra {type}."
+
+[director.runtime.error]
+conversion_failed = "Reikšmės \"{value}\" nepavyko konvertuoti į {type} parametrui {parameter}"
+default_parse_failed = "Nepavyko nuskaityti parametro {parameter} numatytosios reikšmės"
+execution_failed = "Nepavyko įvykdyti komandos {command}: {reason}"
+invalid_origin = "Šios komandos negalima vykdyti iš šio šaltinio."
+missing_argument = "Trūksta argumento \"{parameter}\" ({type})"
+unexpected_argument = "Netikėtas argumentas \"{argument}\". Pasirenkami parametrai turi būti nurodyti su raktu, pvz. seed=123"
+unclosed_group = "Trūksta uždarančio \"]\" parametrui {key}"
+unknown_parameter = "Nežinomas parametro raktas: {key}"
+
+[director.runtime]
+usage = "Naudojimas: {usage}"

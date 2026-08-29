@@ -1,0 +1,235 @@
+# Язык ShapedPortals: ru_RU
+# Этот файл загружается только при отсутствии; редактируйте languages/ru_RU.toml напрямую.
+# Локальные изменения никогда не заменяются автоматически; для отсутствующих значений используется английский.
+# Цвета: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B и [RRGGBB]. Для своего оформления также доступен MiniMessage.
+# Заполнители относятся к конкретным сообщениям. Оставляйте только уже имеющиеся заполнители и не переименовывайте их.
+# Команды: {argument}=неожиданный аргумент; {command}=путь команды; {key}=ключ параметра; {parameter}=имя параметра; {type}=тип; {usage}=использование команды.
+# Выполнение: {attempts}=попытки создания; {created}=число созданных или время создания; {rejected}=отклонённые попытки; {enabled}=состояние создания; {hot_reload}=состояние перезагрузки; {scheduler}=планировщик.
+# Порталы: {portal}=идентификатор; {portals}=число управляемых; {id}=короткий ID; {uuid}=полный UUID; {world}=мир; {axis}=ось; {x}/{y}/{z}=координаты якоря; {blocks}=ячейки портала; {cells}=все ячейки; {creator}=создатель; {materials}=записанные материалы рамки.
+# Списки: {matches}=совпавшие порталы; {seconds}=время подтверждения в секундах.
+# Настройки: {category}=категория; {setting}=название настройки; {status}=метка выбора; {value}=текущее, стандартное или исходное значение; {language}=активный язык; {locale}=локаль; {name}=полное название языка.
+# Редактор языка: {variables}=допустимые заполнители; {old}=предыдущее значение; {new}=новое значение.
+# Прочее: {duration}=миллисекунды; {path}=путь локального отчёта; {url}=публичный URL; {reason}=причина ошибки.
+# Префикс: {prefix}=глобальное значение runtime.prefix. Удалите {prefix} из отдельного сообщения, чтобы скрыть его только там.
+# Чтобы показать & или [ буквально, поставьте перед символом обратную косую черту.
+
+[runtime]
+prefix = "&d&lShapedPortals&r &8›&r "
+player_only = "{prefix}&cЭту команду может использовать только игрок.&r"
+
+[runtime.permission]
+denied = "{prefix}&cУ вас нет разрешения на это действие.&r"
+
+[runtime.hot_reload]
+success = "{prefix}&aИзменения конфигурации и языковых файлов применены.&r"
+failed = "{prefix}&cИзменения файлов отклонены; последние корректные настройки остаются активными.&r"
+
+[command.feedback.reload]
+success = "{prefix}&aПерезагрузка выполнена за &f{duration}&r&a мс.&r &7Язык:&r &f{locale}&r"
+failed = "{prefix}&cПерезагрузка завершилась ошибкой через {duration} мс.&r &7Последние корректные настройки всё ещё активны; подробности смотрите в консоли.&r"
+
+[command.feedback.config]
+opened = "{prefix}&aОткрыт полный внутриигровой редактор конфигурации.&r"
+saved = "{prefix}&aПараметр &f{setting}&r&a сохранён и применён.&r"
+save_failed = "{prefix}&cНе удалось применить &f{setting}&r&c: {reason}&r"
+
+[command.feedback]
+failed = "{prefix}&cНе удалось выполнить команду. Подробности смотрите в консоли.&r"
+
+[command.feedback.debug]
+started = "{prefix}&7Сбор диагностических данных сервера и ShapedPortals…&r"
+busy = "{prefix}&eДиагностический отчёт ShapedPortals уже создаётся.&r"
+saved = "{prefix}&aДиагностический отчёт сохранён в &f{path}&r&a.&r"
+uploaded = "{prefix}&aДиагностический отчёт загружен:&r &b&n{url}&r"
+link_hover = "&7Открыть общедоступный отчёт mclo.gs.&r"
+upload_failed = "{prefix}&eЛокальный отчёт сохранён, но загрузка на mclo.gs не удалась. Подробности смотрите в консоли.&r"
+failed = "{prefix}&cНе удалось создать диагностический отчёт. Подробности смотрите в консоли.&r"
+
+[command.status]
+header = "{prefix}&d&lСостояние ShapedPortals&r"
+config = "{prefix}&7Создание:&r {enabled} &8|&r &7Язык:&r &f{language}&r &8|&r &7Горячая перезагрузка:&r {hot_reload}"
+portals = "{prefix}&7Управляемые порталы:&r &f{portals}&r &8|&r &7Внутренние блоки:&r &f{cells}&r"
+attempts = "{prefix}&7Попытки:&r &f{attempts}&r &8|&r &7Создано:&r &a{created}&r &8|&r &7Отклонено:&r &c{rejected}&r"
+compatibility = "{prefix}&7Артефакт:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Планировщик:&r &f{scheduler}&r"
+
+[command.description]
+root = "Справка и администрирование ShapedPortals"
+config = "Открыть полный внутриигровой редактор конфигурации"
+language = "Выбрать доступный язык ShapedPortals"
+debug = "Создать подробный диагностический отчёт ShapedPortals"
+portals = "Показать все управляемые порталы и команды телепортации к ним"
+teleport = "Безопасно телепортироваться рядом с управляемым порталом или показать список порталов, если он не указан"
+status = "Показать статистику управляемых порталов и попыток"
+
+[command.parameter]
+locale = "Доступная языковая локаль"
+page = "Номер страницы списка порталов, начиная с единицы"
+portal = "UUID портала, уникальный префикс или list"
+
+[portal.notice]
+created = "{prefix}&dСоздан фигурный портал с {blocks} внутренними блоками.&r"
+failed = "{prefix}&cЭта рамка не может стать фигурным порталом: &f{reason}&r&c.&r"
+
+[portal.navigation.confirm]
+unsafe = "{prefix}&cРядом с &f{portal}&r&c нет безопасного места. &eНажмите на тот же портал ещё раз в течение &f{seconds}&r&e секунд, чтобы всё равно телепортироваться внутрь него.&r"
+
+[portal.navigation.list]
+frame_policy_note = "&8  ⚠&r &eСуществующая рамка использует &f{materials}&r&e; из этих материалов нельзя создавать новые порталы.&r"
+empty = "&eУправляемые фигурные порталы не зарегистрированы.&r"
+entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Местоположение:&r &f{x}, {y}, {z}&r &8•&r &7Ось:&r &f{axis}&r &8•&r &7Ячейки:&r &f{blocks}&r\n&8  └&r &7Создатель:&r &f{creator}&r &8•&r &7Создан:&r &f{created}&r"
+hover = "&7UUID:&r &f{uuid}&r\n&aНажмите, чтобы телепортироваться к этому порталу.&r"
+
+[portal.navigation.error]
+not_found = "{prefix}&cУправляемый портал &f{portal}&r&c не найден.&r"
+ambiguous = "{prefix}&cПрефиксу &f{portal}&r&c соответствуют {matches} порталов. Введите больше символов UUID.&r"
+removed = "{prefix}&cЭтот портал больше не зарегистрирован.&r"
+world_unavailable = "{prefix}&cМир портала &f{world}&r&c сейчас недоступен.&r"
+destination_unavailable = "{prefix}&cМесто назначения портала временно недоступно.&r"
+inactive = "{prefix}&cЭтот портал больше не активен. Проверка его целостности поставлена в очередь.&r"
+no_safe_landing = "{prefix}&cРядом с этим порталом нет безопасного места для телепортации.&r"
+
+[portal.navigation.teleport]
+preparing = "{prefix}&7Подготовка места назначения для &f{portal}&r&7…&r"
+success = "{prefix}&aВы телепортированы рядом с &f{portal}&r&a в мире &f{world}&r&a.&r"
+failed = "{prefix}&cТелепортация к порталу не завершена. Возможно, её отменил другой плагин.&r"
+
+[hud]
+title = "&d&lShapedPortals&r"
+success = "&aУспешно&r"
+failure = "&cДействие не выполнено&r"
+info = "&dShapedPortals&r"
+
+[gui.title]
+root = "&5Настройка ShapedPortals&r"
+category = "&5ShapedPortals&r &8›&r {category}"
+
+[gui.category]
+general = "&dОбщие&r"
+portal = "&dПравила порталов&r"
+effects = "&dЭффекты&r"
+hot_reload = "&dГорячая перезагрузка&r"
+integrity = "&dЦелостность&r"
+presentation = "&dОтображение&r"
+debug = "&dДиагностика&r"
+
+languages = "&dЯзыки&r"
+
+[gui.navigation]
+back = "&eНазад&r"
+reload = "&bПерезагрузить файлы&r"
+close = "&cЗакрыть&r"
+
+[gui.lore]
+state = "&7Текущее значение:&r {value}"
+toggle = "&8Нажмите, чтобы переключить.&r"
+number = "&8ЛКМ +1, ПКМ -1, Shift ×10, выбросить для ввода.&r"
+text = "&8Нажмите, чтобы ввести новое значение в чат.&r"
+language = "&8Нажмите, чтобы выбрать доступный язык или ввести локаль.&r"
+category = "&8Нажмите, чтобы изменить все параметры этой категории.&r"
+
+[gui.prompt]
+request = "{prefix}&eВведите в чат новое значение для &f{setting}&r&e.&r"
+list = "{prefix}&7Разделяйте элементы списка запятыми. Введите &fnone&r&7, чтобы очистить список.&r"
+cancel = "{prefix}&7Введите &fcancel&r&7 для отмены. Запрос истечёт через 60 секунд.&r"
+cancelled = "{prefix}&eИзменение конфигурации отменено.&r"
+timeout = "{prefix}&eВремя изменения конфигурации истекло, ничего не изменено.&r"
+
+[gui.language]
+type = "&7Введите название локали в чат, чтобы создать или выбрать её.&r"
+option = "{status} &f{locale}&r &8—&r &7{name}&r"
+hover = "&7Нажмите, чтобы выбрать &f{locale}&r&7.&r"
+empty = "&eДоступные языки не найдены; введите название локали, чтобы создать её.&r"
+current = "&7Текущее значение:&r {value}"
+variables = "&7Текущие переменные / заполнители:&r &f{variables}&r"
+changed = "&f{old}&r &7изменено на&r &f{new}&r"
+
+[gui.setting.general]
+enabled = "&dСоздание порталов&r"
+language = "&dАктивная языковая локаль&r"
+require_create_permission = "&dТребовать разрешение на создание&r"
+failure_feedback = "&dСообщения об ошибках порталов&r"
+
+[gui.setting.metrics]
+enabled = "&dАнонимная статистика bStats&r"
+
+[gui.setting.portal]
+minimum_interior_blocks = "&dМинимум внутренних блоков&r"
+maximum_interior_blocks = "&dМаксимум внутренних блоков&r"
+maximum_width = "&dМаксимальная ширина&r"
+maximum_height = "&dМаксимальная высота&r"
+frame_materials = "&dМатериалы рамки&r"
+interior_materials = "&dМатериалы внутренней части&r"
+ignition_causes = "&dПричины зажигания&r"
+allowed_worlds = "&dРазрешённые миры&r"
+denied_worlds = "&dЗапрещённые миры&r"
+deduplication_millis = "&dИнтервал дедупликации в миллисекундах&r"
+
+[gui.setting.effects]
+creation_sound = "&dЗвук создания&r"
+creation_sound_type = "&dТип звука создания&r"
+creation_sound_volume = "&dГромкость звука создания&r"
+creation_sound_pitch = "&dВысота звука создания&r"
+
+[gui.setting.hot_reload]
+enabled = "&dГорячая перезагрузка&r"
+poll_interval_millis = "&dИнтервал опроса в миллисекундах&r"
+cooldown_millis = "&dЗадержка сохранения в миллисекундах&r"
+notify_operators = "&dУведомлять операторов&r"
+
+[gui.setting.integrity]
+enabled = "&dСлужба целостности&r"
+check_interval_ticks = "&dИнтервал проверки в тиках&r"
+maximum_checks_per_cycle = "&dМаксимум проверок за цикл&r"
+
+[gui.setting.presentation]
+splash_screen = "&dЗаставка при запуске&r"
+command_sounds = "&dЗвуки команд&r"
+command_overlays = "&dНаложения команд&r"
+portal_notices = "&dКаналы уведомлений портала&r"
+overlay_duration_ticks = "&dДлительность наложения в тиках&r"
+title_fade_in_ticks = "&dПоявление заголовка в тиках&r"
+title_stay_ticks = "&dПоказ заголовка в тиках&r"
+title_fade_out_ticks = "&dИсчезновение заголовка в тиках&r"
+
+[gui.setting.debug]
+upload_enabled = "&dЗагружать отладочные отчёты на mclo.gs&r"
+
+[director.help]
+category = "Категория команд"
+command_group = "Группа команд. Нажмите, чтобы открыть."
+no_description = "Описание не указано"
+no_parameters = "Параметров нет. Нажмите, чтобы предварительно заполнить команду."
+no_subcommands = "На этой странице нет подкоманд."
+parameters_hover = "Наведите курсор на параметры, чтобы узнать больше."
+
+[director.help.navigation]
+back = "Назад"
+page = "Страница"
+
+[director.help.navigation.next]
+hover = "Следующая страница"
+
+[director.help.navigation.parent]
+hover = "Вернуться к родительской группе команд"
+
+[director.help.navigation.previous]
+hover = "Предыдущая страница"
+
+[director.help.parameter]
+default = "Если не задан, используется значение \"{value}\"."
+optional = "Этот параметр является необязательным."
+required = "Этот параметр является обязательным."
+type = "Этот параметр имеет тип {type}."
+
+[director.runtime.error]
+conversion_failed = "Невозможно преобразовать \"{value}\" в {type} для {parameter}"
+default_parse_failed = "Невозможно разобрать значение по умолчанию параметра {parameter}"
+execution_failed = "Не удалось выполнить команду {command}: {reason}"
+invalid_origin = "Эту команду нельзя выполнить из данного источника."
+missing_argument = "Отсутствует аргумент \"{parameter}\" ({type})"
+unexpected_argument = "Неожиданный аргумент \"{argument}\". Необязательные параметры должны задаваться с ключом, например seed=123"
+unclosed_group = "Отсутствует закрывающая скобка \"]\" для параметра {key}"
+unknown_parameter = "Неизвестный ключ параметра: {key}"
+
+[director.runtime]
+usage = "Использование: {usage}"

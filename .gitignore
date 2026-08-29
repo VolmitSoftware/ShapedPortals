@@ -3,4 +3,6 @@
 
 .idea/
 
+/.codegraph/
+
 build/

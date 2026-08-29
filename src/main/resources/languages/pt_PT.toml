@@ -1,0 +1,235 @@
+# Idioma do ShapedPortals: pt_PT
+# Este ficheiro é transferido apenas quando falta; edita diretamente languages/pt_PT.toml.
+# As alterações locais nunca são substituídas automaticamente; as entradas ausentes usam inglês.
+# Cores: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B e [RRGGBB]. O MiniMessage continua disponível para formatação personalizada.
+# Os marcadores pertencem a mensagens específicas. Mantém apenas os marcadores já presentes e nunca alteres os seus nomes.
+# Comandos: {argument}=argumento inesperado; {command}=caminho do comando; {key}=chave do parâmetro; {parameter}=nome do parâmetro; {type}=tipo; {usage}=utilização do comando.
+# Execução: {attempts}=tentativas de criação; {created}=quantidade criada ou data de criação; {rejected}=tentativas rejeitadas; {enabled}=estado de criação; {hot_reload}=estado do recarregamento; {scheduler}=agendador.
+# Portais: {portal}=identificador; {portals}=quantidade gerida; {id}=ID curto; {uuid}=UUID completo; {world}=mundo; {axis}=eixo; {x}/{y}/{z}=coordenadas da âncora; {blocks}=células do portal; {cells}=todas as células; {creator}=criador; {materials}=materiais de moldura registados.
+# Listas: {matches}=portais correspondentes; {seconds}=prazo de confirmação em segundos.
+# Configuração: {category}=categoria; {setting}=nome da definição; {status}=marca de seleção; {value}=valor atual, predefinido ou bruto; {language}=idioma ativo; {locale}=região; {name}=nome completo do idioma.
+# Editor de idioma: {variables}=marcadores válidos; {old}=valor anterior; {new}=valor novo.
+# Outros: {duration}=milissegundos; {path}=caminho do relatório local; {url}=URL público; {reason}=motivo da falha.
+# Prefixo: {prefix}=o valor global runtime.prefix. Remove {prefix} de uma mensagem para o ocultar apenas aí.
+# Coloca uma barra inversa antes de & ou [ para apresentar o carácter literalmente.
+
+[runtime]
+prefix = "&d&lShapedPortals&r &8›&r "
+player_only = "{prefix}&cEste comando só pode ser utilizado por um jogador.&r"
+
+[runtime.permission]
+denied = "{prefix}&cNão tens permissão para fazer isso.&r"
+
+[runtime.hot_reload]
+success = "{prefix}&aAs alterações à configuração e aos ficheiros de idioma foram aplicadas.&r"
+failed = "{prefix}&cAs alterações aos ficheiros foram rejeitadas; as últimas definições válidas permanecem ativas.&r"
+
+[command.feedback.reload]
+success = "{prefix}&aRecarregado em &f{duration}&r&a ms.&r &7Idioma:&r &f{locale}&r"
+failed = "{prefix}&cO recarregamento falhou após {duration} ms.&r &7As últimas definições válidas permanecem ativas; consulta o erro completo na consola.&r"
+
+[command.feedback.config]
+opened = "{prefix}&aO editor completo de configuração no jogo foi aberto.&r"
+saved = "{prefix}&aA definição &f{setting}&r&a foi guardada e aplicada.&r"
+save_failed = "{prefix}&cNão foi possível aplicar &f{setting}&r&c: {reason}&r"
+
+[command.feedback]
+failed = "{prefix}&cNão foi possível concluir o comando. Consulta a consola para obter detalhes.&r"
+
+[command.feedback.debug]
+started = "{prefix}&7A recolher diagnósticos do servidor e do ShapedPortals…&r"
+busy = "{prefix}&eJá está a ser criado um relatório de diagnóstico do ShapedPortals.&r"
+saved = "{prefix}&aO relatório de diagnóstico foi guardado em &f{path}&r&a.&r"
+uploaded = "{prefix}&aRelatório de diagnóstico carregado:&r &b&n{url}&r"
+link_hover = "&7Abrir o relatório público no mclo.gs.&r"
+upload_failed = "{prefix}&eO relatório local foi guardado, mas o envio para o mclo.gs falhou. Consulta a consola para obter detalhes.&r"
+failed = "{prefix}&cNão foi possível criar o relatório de diagnóstico. Consulta a consola para obter detalhes.&r"
+
+[command.status]
+header = "{prefix}&d&lEstado do ShapedPortals&r"
+config = "{prefix}&7Criação:&r {enabled} &8|&r &7Idioma:&r &f{language}&r &8|&r &7Recarregamento automático:&r {hot_reload}"
+portals = "{prefix}&7Portais geridos:&r &f{portals}&r &8|&r &7Células interiores:&r &f{cells}&r"
+attempts = "{prefix}&7Tentativas:&r &f{attempts}&r &8|&r &7Criados:&r &a{created}&r &8|&r &7Rejeitados:&r &c{rejected}&r"
+compatibility = "{prefix}&7Artefacto:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Agendador:&r &f{scheduler}&r"
+
+[command.description]
+root = "Ajuda e administração do ShapedPortals"
+config = "Abrir o editor completo de configuração no jogo"
+language = "Selecionar um idioma ShapedPortals disponível"
+debug = "Criar um relatório de diagnóstico completo do ShapedPortals"
+portals = "Listar todos os portais geridos e o respetivo atalho de teletransporte"
+teleport = "Teletransportar em segurança para junto de um portal gerido ou listar os portais quando omitido"
+status = "Mostrar estatísticas de portais geridos e tentativas"
+
+[command.parameter]
+locale = "Região do idioma disponível"
+page = "Página da lista de portais, começando em um"
+portal = "UUID do portal, prefixo exclusivo ou list"
+
+[portal.notice]
+created = "{prefix}&dFoi criado um portal moldado com {blocks} blocos interiores.&r"
+failed = "{prefix}&cEsta moldura não pode tornar-se um portal moldado: &f{reason}&r&c.&r"
+
+[portal.navigation.confirm]
+unsafe = "{prefix}&cNão existe um local seguro junto de &f{portal}&r&c. &eClica novamente no mesmo portal dentro de &f{seconds}&r&e segundos para te teletransportares para o seu interior mesmo assim.&r"
+
+[portal.navigation.list]
+frame_policy_note = "&8  ⚠&r &eA moldura existente usa &f{materials}&r&e; estes materiais não podem criar novos portais.&r"
+empty = "&eNão existem portais moldados geridos registados.&r"
+entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Localização:&r &f{x}, {y}, {z}&r &8•&r &7Eixo:&r &f{axis}&r &8•&r &7Células:&r &f{blocks}&r\n&8  └&r &7Criador:&r &f{creator}&r &8•&r &7Criado:&r &f{created}&r"
+hover = "&7UUID:&r &f{uuid}&r\n&aClica para te teletransportares para este portal.&r"
+
+[portal.navigation.error]
+not_found = "{prefix}&cNenhum portal gerido corresponde a &f{portal}&r&c.&r"
+ambiguous = "{prefix}&cO prefixo &f{portal}&r&c corresponde a {matches} portais. Introduz mais caracteres do UUID.&r"
+removed = "{prefix}&cEste portal já não está registado.&r"
+world_unavailable = "{prefix}&cO mundo do portal &f{world}&r&c não está disponível neste momento.&r"
+destination_unavailable = "{prefix}&cO destino do portal está temporariamente indisponível.&r"
+inactive = "{prefix}&cEste portal já não está ativo. A sua verificação de integridade foi colocada em fila.&r"
+no_safe_landing = "{prefix}&cNão existe um local seguro para ficar junto deste portal.&r"
+
+[portal.navigation.teleport]
+preparing = "{prefix}&7A preparar o destino para &f{portal}&r&7…&r"
+success = "{prefix}&aFoste teletransportado para junto de &f{portal}&r&a em &f{world}&r&a.&r"
+failed = "{prefix}&cO teletransporte do portal não foi concluído. Pode ter sido cancelado por outro plugin.&r"
+
+[hud]
+title = "&d&lShapedPortals&r"
+success = "&aSucesso&r"
+failure = "&cA ação falhou&r"
+info = "&dShapedPortals&r"
+
+[gui.title]
+root = "&5Configuração do ShapedPortals&r"
+category = "&5ShapedPortals&r &8›&r {category}"
+
+[gui.category]
+general = "&dGeral&r"
+portal = "&dRegras dos portais&r"
+effects = "&dEfeitos&r"
+hot_reload = "&dRecarregamento automático&r"
+integrity = "&dIntegridade&r"
+presentation = "&dApresentação&r"
+debug = "&dDiagnóstico&r"
+
+languages = "&dIdiomas&r"
+
+[gui.navigation]
+back = "&eVoltar&r"
+reload = "&bRecarregar ficheiros&r"
+close = "&cFechar&r"
+
+[gui.lore]
+state = "&7Atual:&r {value}"
+toggle = "&8Clica para alternar.&r"
+number = "&8Esquerdo +1, direito -1, Shift ×10, larga para escrever.&r"
+text = "&8Clica para escrever um novo valor no chat.&r"
+language = "&8Clica para escolher um idioma disponível ou escreve uma região.&r"
+category = "&8Clica para editar todas as definições desta categoria.&r"
+
+[gui.prompt]
+request = "{prefix}&eEscreve um novo valor para &f{setting}&r&e no chat.&r"
+list = "{prefix}&7Separa os itens da lista com vírgulas. Escreve &fnone&r&7 para uma lista vazia.&r"
+cancel = "{prefix}&7Escreve &fcancel&r&7 para parar. Este pedido expira em 60 segundos.&r"
+cancelled = "{prefix}&eEdição da configuração cancelada.&r"
+timeout = "{prefix}&eA edição da configuração expirou sem alterar nada.&r"
+
+[gui.language]
+type = "&7Escreve uma região no chat para a criar ou selecionar.&r"
+option = "{status} &f{locale}&r &8—&r &7{name}&r"
+hover = "&7Clica para selecionar &f{locale}&r&7.&r"
+empty = "&eNão foram encontrados idiomas disponíveis; escreve uma região para criar um.&r"
+current = "&7Valor atual:&r {value}"
+variables = "&7Variáveis / marcadores atuais:&r &f{variables}&r"
+changed = "&f{old}&r &7foi alterado para&r &f{new}&r"
+
+[gui.setting.general]
+enabled = "&dCriação de portais&r"
+language = "&dRegião de idioma ativa&r"
+require_create_permission = "&dExigir permissão de criação&r"
+failure_feedback = "&dInformação sobre falhas do portal&r"
+
+[gui.setting.metrics]
+enabled = "&dMétricas anónimas do bStats&r"
+
+[gui.setting.portal]
+minimum_interior_blocks = "&dMínimo de blocos interiores&r"
+maximum_interior_blocks = "&dMáximo de blocos interiores&r"
+maximum_width = "&dLargura máxima&r"
+maximum_height = "&dAltura máxima&r"
+frame_materials = "&dMateriais da moldura&r"
+interior_materials = "&dMateriais interiores&r"
+ignition_causes = "&dCausas de ignição&r"
+allowed_worlds = "&dMundos permitidos&r"
+denied_worlds = "&dMundos negados&r"
+deduplication_millis = "&dDeduplicação em milissegundos&r"
+
+[gui.setting.effects]
+creation_sound = "&dSom de criação&r"
+creation_sound_type = "&dTipo de som de criação&r"
+creation_sound_volume = "&dVolume do som de criação&r"
+creation_sound_pitch = "&dTom do som de criação&r"
+
+[gui.setting.hot_reload]
+enabled = "&dRecarregamento automático&r"
+poll_interval_millis = "&dIntervalo de verificação em milissegundos&r"
+cooldown_millis = "&dEspera de gravação em milissegundos&r"
+notify_operators = "&dNotificar operadores&r"
+
+[gui.setting.integrity]
+enabled = "&dServiço de integridade&r"
+check_interval_ticks = "&dIntervalo de verificação em ticks&r"
+maximum_checks_per_cycle = "&dMáximo de verificações por ciclo&r"
+
+[gui.setting.presentation]
+splash_screen = "&dEcrã de arranque&r"
+command_sounds = "&dSons dos comandos&r"
+command_overlays = "&dSobreposições dos comandos&r"
+portal_notices = "&dCanais de avisos dos portais&r"
+overlay_duration_ticks = "&dDuração da sobreposição em ticks&r"
+title_fade_in_ticks = "&dAparecimento do título em ticks&r"
+title_stay_ticks = "&dPermanência do título em ticks&r"
+title_fade_out_ticks = "&dDesaparecimento do título em ticks&r"
+
+[gui.setting.debug]
+upload_enabled = "&dEnviar relatórios de depuração para mclo.gs&r"
+
+[director.help]
+category = "Categoria de comandos"
+command_group = "Grupo de comandos. Clique para abrir."
+no_description = "Nenhuma descrição fornecida"
+no_parameters = "Sem parâmetros. Clique para preencher previamente o comando."
+no_subcommands = "Não existem subcomandos nesta página."
+parameters_hover = "Passe o cursor sobre os parâmetros para saber mais."
+
+[director.help.navigation]
+back = "Voltar"
+page = "Página"
+
+[director.help.navigation.next]
+hover = "Página seguinte"
+
+[director.help.navigation.parent]
+hover = "Voltar ao grupo de comandos principal"
+
+[director.help.navigation.previous]
+hover = "Página anterior"
+
+[director.help.parameter]
+default = "Predefinição \"{value}\" se não for definido."
+optional = "Este parâmetro é opcional."
+required = "Este parâmetro é obrigatório."
+type = "Este parâmetro é do tipo {type}."
+
+[director.runtime.error]
+conversion_failed = "Não foi possível converter \"{value}\" em {type} para {parameter}"
+default_parse_failed = "Não foi possível interpretar o valor predefinido do parâmetro {parameter}"
+execution_failed = "Falha ao executar o comando {command}: {reason}"
+invalid_origin = "Este comando não pode ser executado a partir desta origem."
+missing_argument = "Falta o argumento \"{parameter}\" ({type})"
+unexpected_argument = "Argumento inesperado \"{argument}\". Os parâmetros opcionais devem ser indicados por chave, por ex. seed=123"
+unclosed_group = "Falta o \"]\" de fecho para o parâmetro {key}"
+unknown_parameter = "Chave de parâmetro desconhecida: {key}"
+
+[director.runtime]
+usage = "Utilização: {usage}"

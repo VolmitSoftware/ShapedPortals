@@ -1,150 +1,337 @@
-/*
- * Iris is a World Generator for Minecraft Bukkit Servers
- * Copyright (c) 2021 Arcane Arts (Volmit Software)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+import org.gradle.api.attributes.Usage
+import org.gradle.api.attributes.java.TargetJvmVersion
+import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.api.tasks.Copy
+import org.gradle.api.tasks.WriteProperties
+import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.guardsquare:proguard-gradle:7.1.0'
-    }
-}
+import java.nio.file.Files
+import java.security.MessageDigest
+import java.util.HexFormat
 
 plugins {
-    id 'java'
-    id 'io.freefair.lombok' version '5.2.1'
-    id "com.github.johnrengelman.shadow" version "7.0.0"
+    id 'java-library'
+    id 'maven-publish'
+    id 'com.gradleup.shadow' version '9.0.0-rc3'
 }
 
-group 'com.volmit'
-version '1.0'
-def apiVersion = '1.17'
-def name = getRootProject().getName() // See settings.gradle
-def main = 'com.volmit.shapedportals.ShapedPortals'
-// You need to also set command usage, aliases and description in src/main/resources/plugin.yml
+group = 'com.volmit'
+version = '2.0.0'
 
-// ADD YOURSELF AS A NEW LINE IF YOU WANT YOUR OWN BUILD TASK GENERATED
-// ==============================================================
-registerCustomOutputTask('Cyberpwn', 'C://Users/cyberpwn/Documents/development/server/plugins', name)
-registerCustomOutputTask('ArcaneArts', 'C://Users/arcane/Documents/development/server/plugins', name)
-// ==============================================================
-
-def dependsDir = "${buildDir}/libs/dependencies/" as String
-
-def registerCustomOutputTask(name, path, plugin) {
-    tasks.register('build' + name, Copy) {
-        group('development')
-        outputs.upToDateWhen { false }
-        dependsOn ':shadowJar'
-        from(file('build/libs/' + plugin + '-' + version + '-all.jar'))
-        into(file(path))
-        rename { String fileName ->
-            fileName.replace(plugin + '-' + version + '-all.jar', plugin + ".jar")
+String mainClass = 'com.volmit.shapedportals.ShapedPortals'
+String apiVersion = '1.20'
+String relocatedLibraryPackage = 'com.volmit.shapedportals.libs'
+String volmLibCoordinate = providers.gradleProperty('volmLibCoordinate')
+    .orElse('com.github.VolmitSoftware:VolmLib:master-SNAPSHOT')
+    .get()
+String languageSourceRevision = providers.gradleProperty('languageRevision')
+    .orElse(providers.exec {
+        workingDir(rootDir)
+        commandLine('git', 'rev-parse', 'HEAD')
+    }.standardOutput.asText)
+    .map { String revision ->
+        String normalized = revision.trim().toLowerCase(Locale.ROOT)
+        if (!(normalized ==~ /[0-9a-f]{40}/)) {
+            throw new GradleException('languageRevision must be a full 40-character Git commit SHA.')
         }
+        normalized
+    }
+    .get()
+List<File> languageSourceFiles = fileTree('src/main/resources/languages') {
+    include('*.toml')
+}.files.toList().sort { File left, File right -> left.name <=> right.name }
+Map<String, String> languageSourceHashes = new LinkedHashMap<>()
+for (File languageSourceFile : languageSourceFiles) {
+    String locale = languageSourceFile.name.substring(0, languageSourceFile.name.length() - '.toml'.length())
+    byte[] digest = MessageDigest.getInstance('SHA-256').digest(Files.readAllBytes(languageSourceFile.toPath()))
+    languageSourceHashes.put(locale, HexFormat.of().formatHex(digest))
+}
+def languageSourceManifestTask = tasks.register('generateLanguageSourceManifest', WriteProperties) {
+    destinationFile.set(layout.buildDirectory.file('generated/language-source/shapedportals-language-source.properties'))
+    property('revision', languageSourceRevision)
+    property('locales', languageSourceHashes.keySet().join(','))
+    for (Map.Entry<String, String> languageSourceHash : languageSourceHashes.entrySet()) {
+        property('sha256.' + languageSourceHash.key, languageSourceHash.value)
     }
 }
 
-file(jar.archiveFile.get().getAsFile().getParentFile().getParentFile().getParentFile().getAbsolutePath() + '/build/resources/main/plugin.yml').delete()
-
-shadowJar
-{
-    minimize()
-    append("plugin.yml")
-    relocate 'com.dfsek.paralithic', 'com.volmit.iris.util.paralithic'
-    relocate 'io.papermc.lib', 'com.volmit.iris.util.paper'
-    dependencies {
-        include(dependency('io.papermc:paperlib'))
-        include(dependency('com.dfsek:Paralithic'))
-        include(dependency('net.kyori:'))
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
     }
+    withSourcesJar()
 }
 
-processResources {
-    filesMatching('**/plugin.yml') {
-        expand(
-                'name': name.toString(),
-                'version': version.toString(),
-                'main': main.toString(),
-                'apiversion': apiVersion.toString()
-        )
-    }
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs.add('-parameters')
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('compileJava', JavaCompile).configure {
+    options.release.set(17)
+}
+
+tasks.named('compileTestJava', JavaCompile).configure {
+    options.release.set(17)
 }
 
 repositories {
-    maven {
-        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-        content {
-            includeGroup 'org.spigotmc'
-        }
-    }
-    maven {
-        url 'https://papermc.io/repo/repository/maven-public/'
-        content {
-            includeGroup 'io.papermc'
-        }
-    }
-    maven {
-        url 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
-        content {
-            includeGroup 'me.clip'
-        }
-    }
-    maven {
-        url 'https://oss.sonatype.org/content/repositories/snapshots/'
-        content {
-            includeGroup 'net.kyori'
-        }
-    }
-    maven {
-        url 'https://repo.jeff-media.de/maven2'
-        content {
-            includeGroup 'de.jeff_media'
-        }
-    }
-    maven { url 'https://jitpack.io' }
-    maven {
-        url 'https://repo.codemc.io/repository/maven-releases'
-        content {
-            includeGroup 'com.dfsek'
-        }
-    }
     mavenCentral()
-    mavenLocal()
     maven {
-        allowInsecureProtocol true
-        url 'http://archive.arcane.art/repository/arcane'
+        url = uri('https://hub.spigotmc.org/nexus/content/repositories/snapshots/')
+    }
+    maven {
+        url = uri('https://repo.papermc.io/repository/maven-public/')
+    }
+    maven {
+        url = uri('https://jitpack.io')
         content {
-            includeGroup 'org.bukkit.craftbukkit'
-            includeGroup 'io.th0rgal'
+            includeGroupByRegex('com\\.github\\.VolmitSoftware.*')
         }
     }
+}
 
-    // Uncomment this line if the build is failing because of missing dependencies
-    // Its slow but it will resolve any cached dependencies until we can find an alternative repo
-    // maven { allowInsecureProtocol true, url 'http://archive.arcane.art/repository/arcane'}
+configurations {
+    currentPaperCompatibility {
+        canBeConsumed = false
+        canBeResolved = true
+        attributes {
+            attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_API))
+            attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 25)
+        }
+    }
+    currentSpigotCompatibility {
+        canBeConsumed = false
+        canBeResolved = true
+        attributes {
+            attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_API))
+            attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 25)
+        }
+    }
 }
 
 dependencies {
-    // Provided or Classpath
-    compileOnly 'org.projectlombok:lombok:1.18.20'
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
-    implementation 'org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'
+    compileOnly('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
+    implementation(volmLibCoordinate) {
+        changing = true
+        transitive = false
+    }
+    implementation('com.google.code.gson:gson:2.10.1')
+    implementation('com.moandjiezana.toml:toml4j:0.7.2')
+    implementation('net.kyori:adventure-api:4.26.1')
+    implementation('net.kyori:adventure-text-minimessage:4.26.1')
+    implementation('net.kyori:adventure-text-serializer-legacy:4.26.1')
+    implementation('net.kyori:adventure-text-serializer-plain:4.26.1')
 
-    // Dynamically Loaded
-    implementation 'com.google.code.gson:gson:2.8.7'
+    currentPaperCompatibility('io.papermc.paper:paper-api:26.1.2.build.74-stable')
+    currentSpigotCompatibility('org.spigotmc:spigot-api:26.2-R0.1-SNAPSHOT')
+
+    testImplementation(platform('org.junit:junit-bom:5.13.4'))
+    testImplementation('org.junit.jupiter:junit-jupiter')
+    testImplementation('org.assertj:assertj-core:3.27.4')
+    testImplementation('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
+    testRuntimeOnly('org.junit.platform:junit-platform-launcher')
+}
+
+tasks.register('compileCurrentPaperCompatibility', JavaCompile) {
+    source = sourceSets.main.java
+    classpath = configurations.currentPaperCompatibility + files(sourceSets.main.compileClasspath.filter { File dependency ->
+        !dependency.name.startsWith('spigot-api-')
+    })
+    destinationDirectory.set(layout.buildDirectory.dir('classes/java/currentPaperCompatibility'))
+    options.annotationProcessorPath = configurations.annotationProcessor
+    options.compilerArgs.add('-parameters')
+    options.encoding = 'UTF-8'
+    options.release.set(25)
+}
+
+tasks.register('compileCurrentSpigotCompatibility', JavaCompile) {
+    source = sourceSets.main.java
+    classpath = configurations.currentSpigotCompatibility + files(sourceSets.main.compileClasspath.filter { File dependency ->
+        !dependency.name.startsWith('spigot-api-')
+    })
+    destinationDirectory.set(layout.buildDirectory.dir('classes/java/currentSpigotCompatibility'))
+    options.annotationProcessorPath = configurations.annotationProcessor
+    options.compilerArgs.add('-parameters')
+    options.encoding = 'UTF-8'
+    options.release.set(25)
+}
+
+tasks.named('processResources').configure {
+    dependsOn(languageSourceManifestTask)
+    exclude('languages/*.toml')
+    from(languageSourceManifestTask)
+    Map<String, String> pluginProperties = [
+        name      : rootProject.name,
+        version   : project.version.toString(),
+        main      : mainClass,
+        apiVersion: apiVersion
+    ]
+    inputs.properties(pluginProperties)
+    filesMatching('plugin.yml') {
+        expand(pluginProperties)
+    }
+}
+
+tasks.named('jar').configure {
+    archiveClassifier.set('thin')
+}
+
+tasks.named('shadowJar', com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar).configure {
+    archiveClassifier.set('')
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    relocate('art.arcane.volmlib', "${relocatedLibraryPackage}.volmlib")
+    relocate('com.google.gson', "${relocatedLibraryPackage}.gson")
+    relocate('com.moandjiezana.toml', "${relocatedLibraryPackage}.toml")
+    relocate('net.kyori', "${relocatedLibraryPackage}.kyori") {
+        skipStringConstants = true
+    }
+}
+
+tasks.named('test').configure {
+    useJUnitPlatform()
+    systemProperty('shapedportals.projectDir', layout.projectDirectory.asFile.absolutePath)
+}
+
+tasks.register('verifyJava17Artifact') {
+    dependsOn(tasks.named('shadowJar'))
+    inputs.file(tasks.named('shadowJar').flatMap { it.archiveFile })
+    doLast {
+        File artifact = tasks.named('shadowJar').get().archiveFile.get().asFile
+        java.util.zip.ZipFile archive = new java.util.zip.ZipFile(artifact)
+        int pluginMetadataCount = 0
+        int maximumClassMajor = 0
+        boolean bStatsMetricsClassPresent = false
+        Set<String> bundledLanguages = new TreeSet<>()
+        Properties languageManifest = null
+        try {
+            Enumeration<? extends java.util.zip.ZipEntry> entries = archive.entries()
+            while (entries.hasMoreElements()) {
+                java.util.zip.ZipEntry entry = entries.nextElement()
+                String path = entry.name
+                if (path == 'plugin.yml') {
+                    pluginMetadataCount++
+                }
+                if (!entry.directory && path.startsWith('languages/') && path.endsWith('.toml')) {
+                    bundledLanguages.add(path.substring('languages/'.length(), path.length() - '.toml'.length()))
+                }
+                if (!entry.directory && path == 'shapedportals-language-source.properties') {
+                    languageManifest = new Properties()
+                    archive.getInputStream(entry).withCloseable { InputStream input -> languageManifest.load(input) }
+                }
+                if (path.startsWith('art/arcane/volmlib/')) {
+                    throw new GradleException("Unrelocated VolmLib class in shaded artifact: ${path}")
+                }
+                if (path.startsWith('org/bstats/')) {
+                    throw new GradleException("Unpackaged bStats class in shaded artifact: ${path}")
+                }
+                if (path == 'com/volmit/shapedportals/metrics/Metrics.class') {
+                    bStatsMetricsClassPresent = true
+                }
+                if (!entry.directory && path.endsWith('.class')) {
+                    DataInputStream input = new DataInputStream(archive.getInputStream(entry))
+                    try {
+                        int magic = input.readInt()
+                        input.readUnsignedShort()
+                        int major = input.readUnsignedShort()
+                        if (Integer.toUnsignedLong(magic) != 0xCAFEBABEL) {
+                            throw new GradleException("Invalid class header in shaded artifact: ${path}")
+                        }
+                        maximumClassMajor = Math.max(maximumClassMajor, major)
+                    } finally {
+                        input.close()
+                    }
+                }
+            }
+        } finally {
+            archive.close()
+        }
+        if (pluginMetadataCount != 1) {
+            throw new GradleException("Expected one plugin.yml, found ${pluginMetadataCount}")
+        }
+        if (maximumClassMajor > 61) {
+            throw new GradleException("Shaded artifact contains class major ${maximumClassMajor}; Java 17 allows at most 61")
+        }
+        if (!bStatsMetricsClassPresent) {
+            throw new GradleException('Shaded artifact does not contain the package-isolated bStats Metrics class')
+        }
+        if (!bundledLanguages.isEmpty()) {
+            throw new GradleException("Runtime artifact contains language resources: ${bundledLanguages}")
+        }
+        if (languageManifest == null) {
+            throw new GradleException('Runtime artifact is missing shapedportals-language-source.properties')
+        }
+        if (languageManifest.getProperty('revision') != languageSourceRevision
+                || languageManifest.getProperty('locales') != languageSourceHashes.keySet().join(',')) {
+            throw new GradleException('Runtime language source manifest does not match the build source set')
+        }
+        for (Map.Entry<String, String> languageSourceHash : languageSourceHashes.entrySet()) {
+            if (languageManifest.getProperty('sha256.' + languageSourceHash.key) != languageSourceHash.value) {
+                throw new GradleException("Runtime language hash does not match ${languageSourceHash.key}")
+            }
+        }
+    }
+}
+
+tasks.named('check').configure {
+    dependsOn(tasks.named('compileCurrentPaperCompatibility'))
+    dependsOn(tasks.named('compileCurrentSpigotCompatibility'))
+    dependsOn(tasks.named('verifyJava17Artifact'))
+}
+
+def reactApiPackTask = tasks.register('copyReactApiPack', Copy) {
+    from('src/main/resources/react-api-packs/shapedportals-runtime.toml')
+    into(layout.buildDirectory.dir('distributions/react-api-packs'))
+}
+
+tasks.named('build').configure {
+    dependsOn(tasks.named('shadowJar'))
+    dependsOn(reactApiPackTask)
+}
+
+publishing {
+    publications {
+        shapedPortals(MavenPublication) {
+            groupId = project.group.toString()
+            artifactId = 'shapedportals'
+            version = project.version.toString()
+            artifact(tasks.named('shadowJar'))
+            artifact(tasks.named('sourcesJar'))
+            pom {
+                name = 'ShapedPortals'
+                description = 'Arbitrary-shape Nether portals for Spigot, Paper, and Folia.'
+                url = 'https://github.com/VolmitSoftware/ShapedPortals'
+            }
+        }
+    }
+}
+
+tasks.named('publishToMavenLocal').configure {
+    dependsOn(tasks.named('check'))
+    dependsOn(reactApiPackTask)
+}
+
+def buildSwiftSwampTask = tasks.register('buildSwiftSwamp', Copy) {
+    group = 'development'
+    description = 'Builds, verifies, and stages ShapedPortals in the workspace BUILDS directory.'
+    outputs.upToDateWhen { false }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    dependsOn(tasks.named('check'), tasks.named('shadowJar'))
+    from(tasks.named('shadowJar').flatMap { it.archiveFile })
+    into(file('C://VolmitSoftware/BUILDS'))
+    rename { String ignored -> 'ShapedPortals.jar' }
+}
+
+tasks.named('build').configure {
+    finalizedBy(buildSwiftSwampTask)
+}
+
+tasks.named('publishToMavenLocal').configure {
+    finalizedBy(buildSwiftSwampTask)
+}
+
+configurations.configureEach {
+    resolutionStrategy.cacheChangingModulesFor(0, 'seconds')
+    resolutionStrategy.cacheDynamicVersionsFor(0, 'seconds')
 }

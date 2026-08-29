@@ -1,0 +1,235 @@
+# ShapedPortals 語言：zh_TW
+# 此檔案僅在缺少時下載；請直接編輯 languages/zh_TW.toml。
+# 本機變更絕不會被自動取代；缺少的項目使用英文。
+# 顏色：&0-&f、&k-&r、&#RRGGBB、&xRRGGBB、&x&R&R&G&G&B&B 和 [RRGGBB]。自訂格式仍可使用 MiniMessage。
+# 佔位符僅適用於特定訊息。只保留訊息中原有的佔位符，且絕不能更改名稱。
+# 指令：{argument}=意外引數；{command}=指令路徑；{key}=參數鍵；{parameter}=參數名稱；{type}=類型；{usage}=指令用法。
+# 執行狀態：{attempts}=建立嘗試數；{created}=建立數或建立時間；{rejected}=拒絕數；{enabled}=建立狀態；{hot_reload}=熱重載狀態；{scheduler}=排程器。
+# 傳送門：{portal}=識別碼；{portals}=管理數量；{id}=短 ID；{uuid}=完整 UUID；{world}=世界；{axis}=軸；{x}/{y}/{z}=錨點座標；{blocks}=傳送門格數；{cells}=全部管理格數；{creator}=建立者；{materials}=記錄的框架材料。
+# 清單：{matches}=符合的傳送門數；{seconds}=確認時限（秒）。
+# 設定：{category}=編輯器分類；{setting}=設定名稱；{status}=選取標記；{value}=目前值、預設值或原始值；{language}=目前語言；{locale}=地區設定; {name}=語言完整名稱。
+# 語言編輯器：{variables}=可用佔位符；{old}=舊值；{new}=新值。
+# 其他：{duration}=毫秒；{path}=本機報告路徑；{url}=公開報告網址；{reason}=失敗原因.
+# 前綴：{prefix}=全域 runtime.prefix 值。從個別訊息中移除 {prefix}，即可只在該處隱藏前綴。
+# 在 & 或 [ 前加上反斜線可按原樣顯示該字元。
+
+[command.description]
+config = "打開完整的遊戲內配置編輯器"
+debug = "創建全面的ShapedPortals診斷報告"
+language = "選擇可用的 ShapedPortals 語言"
+portals = "列出所有管理的傳送門及其傳送快捷方式"
+root = "ShapedPortals幫助與管理"
+status = "顯示已管理傳送門和嘗試統計"
+teleport = "安全傳送到管理的傳送門旁或在省略時列出傳送門"
+
+[command.feedback.config]
+opened = "{prefix}&a已開啟完整的遊戲內設定編輯器。&r"
+save_failed = "{prefix}&c無法套用&f{setting}&r&c：{reason}&r"
+saved = "{prefix}&a已儲存並套用&f{setting}&r&a。&r"
+
+[command.feedback.debug]
+busy = "{prefix}&eShapedPortals診斷報告已在建立中。&r"
+failed = "{prefix}&c無法建立診斷報告。詳情請參閱控制台。&r"
+link_hover = "&7打開公開的mclo.gs報告。&r"
+saved = "{prefix}&a已將診斷報告儲存至&f{path}&r&a。&r"
+started = "{prefix}&7正在擷取伺服器和ShapedPortals診斷資訊…&r"
+upload_failed = "{prefix}&e本地報告已存，但mclo.gs上傳失敗。詳情請參閱控制台。&r"
+uploaded = "{prefix}&a已上傳診斷報告：&r&b&n{url}&r"
+
+[command.feedback]
+failed = "{prefix}&c命令無法完成。請查看控制台以獲取詳情。&r"
+
+[command.feedback.reload]
+failed = "{prefix}&c重新加載在{duration}毫秒後失敗。&r&7最後一次已知的良好設定仍然有效；請參閱完整控制台錯誤信息。&r"
+success = "{prefix}&a已在&f{duration}&r&a毫秒內重新加載。&r&7語系：&r&f{locale}&r"
+
+[command.parameter]
+locale = "可用的語言地區"
+page = "從一開始編號的傳送門列表頁"
+portal = "傳送門UUID、唯一前綴或列表"
+
+[command.status]
+attempts = "{prefix}&7嘗試次數:&r&f{attempts}&r&8|&r&7建立日期:&r&a{created}&r&8|&r&7拒絕:&r&c{rejected}&r"
+compatibility = "{prefix}&7工件:&r&fJava 17 / Bukkit 1.20.1+&r&8|&r&7排程者:&r&f{scheduler}&r"
+config = "{prefix}&7建立：&r{enabled}&8|&r&7語言：&r&f{language}&r&8|&r&7熱重載：&r{hot_reload}"
+header = "{prefix}&d&lShapedPortals執行狀態&r"
+portals = "{prefix}&7已管理傳送門：&r&f{portals}&r&8|&r&7內部方塊：&r&f{cells}&r"
+
+[director.help]
+category = "指令類別"
+command_group = "命令群組。點擊以開啟。"
+no_description = "未提供說明"
+no_parameters = "無參數。點擊以預先填入命令。"
+no_subcommands = "此頁面沒有子命令。"
+parameters_hover = "將滑鼠懸停在參數上以瞭解更多。"
+
+[director.help.navigation]
+back = "返回"
+page = "頁面"
+
+[director.help.navigation.next]
+hover = "下一頁"
+
+[director.help.navigation.parent]
+hover = "返回上層命令群組"
+
+[director.help.navigation.previous]
+hover = "上一頁"
+
+[director.help.parameter]
+default = "未指定時預設為 \"{value}\"。"
+optional = "此參數為可選項。"
+required = "此參數為必填項。"
+type = "此參數的類型為 {type}。"
+
+[director.runtime.error]
+conversion_failed = "無法將 \"{value}\" 轉換為 {parameter} 所需的 {type}"
+default_parse_failed = "無法解析參數 {parameter} 的預設值"
+execution_failed = "執行指令 {command} 失敗: {reason}"
+invalid_origin = "無法從此來源執行該指令。"
+missing_argument = "缺少參數 \"{parameter}\" ({type})"
+unclosed_group = "引數 {key} 缺少閉合的 \"]\""
+unexpected_argument = "意外參數 \"{argument}\"。選用參數必須使用鍵指定，例如 seed=123"
+unknown_parameter = "未知參數鍵: {key}"
+
+[director.runtime]
+usage = "用法: {usage}"
+
+[gui.category]
+debug = "&d診斷&r"
+effects = "&d效果&r"
+general = "&d一般&r"
+hot_reload = "&d熱重載&r"
+integrity = "&d完整性&r"
+portal = "&d入口規則&r"
+presentation = "&d展示&r"
+languages = "&d語言&r"
+
+[gui.language]
+empty = "&e未找到可用語言；輸入區域名稱以建立一個。&r"
+hover = "&7點擊以選擇&f{locale}&r&7。&r"
+option = "{status} &f{locale}&r &8—&r &7{name}&r"
+type = "&7在聊天中輸入一個區域名稱以創建或選擇它。&r"
+current = "&7目前值：&r {value}"
+variables = "&7目前的變數 / 佔位符：&r &f{variables}&r"
+changed = "&f{old}&r &7已變更為&r &f{new}&r"
+
+[gui.lore]
+category = "&8點擊以編輯此類別中的所有設定。&r"
+language = "&8點擊以選擇可用語言或輸入語言區域。&r"
+number = "&8左 +1，右 -1，Shift ×10，拖動至類型。&r"
+state = "&7當前：&r{value}"
+text = "&8點擊以在聊天中輸入新數值。&r"
+toggle = "&8點擊以切換。&r"
+
+
+[gui.navigation]
+back = "&e返回&r"
+close = "&c關閉&r"
+reload = "&b重新加載文件&r"
+
+[gui.prompt]
+cancel = "{prefix}&7輸入&fcancel&r&7以停止。本提示會在 60 秒後失效。&r"
+cancelled = "{prefix}&e配置編輯已取消。&r"
+list = "{prefix}&7用逗號分隔列表條目。輸入&fnone&r&7表示列表為空。&r"
+request = "{prefix}&e在聊天中輸入&f{setting}&r&e的新數值。&r"
+timeout = "{prefix}&e配置編輯到期且未更改任何內容。&r"
+
+[gui.setting.debug]
+upload_enabled = "&d上傳除錯報告至mclo.gs&r"
+
+[gui.setting.effects]
+creation_sound = "&d創建音效&r"
+creation_sound_pitch = "&d創建音效音調&r"
+creation_sound_type = "&d創建音效類型&r"
+creation_sound_volume = "&d創建音效音量&r"
+
+[gui.setting.general]
+enabled = "&d建立傳送門&r"
+failure_feedback = "&d傳送門失敗回饋&r"
+language = "&d活躍語言地區&r"
+require_create_permission = "&d需要創建權限&r"
+
+[gui.setting.metrics]
+enabled = "&d匿名 bStats 統計&r"
+
+[gui.setting.hot_reload]
+cooldown_millis = "&d保存冷卻毫秒&r"
+enabled = "&d熱加載&r"
+notify_operators = "&d通知操作員&r"
+poll_interval_millis = "&d輪詢間隔毫秒&r"
+
+[gui.setting.integrity]
+check_interval_ticks = "&d檢查間隔刻度&r"
+enabled = "&d完整性服務&r"
+maximum_checks_per_cycle = "&d每個週期的最大檢查次數&r"
+
+[gui.setting.portal]
+allowed_worlds = "&d允許世界&r"
+deduplication_millis = "&d去重毫秒&r"
+denied_worlds = "&d禁止世界&r"
+frame_materials = "&d框架材料&r"
+ignition_causes = "&d點火原因&r"
+interior_materials = "&d內部材料&r"
+maximum_height = "&d最大高度&r"
+maximum_interior_blocks = "&d最大內部區塊&r"
+maximum_width = "&d最大寬度&r"
+minimum_interior_blocks = "&d最小內部區塊&r"
+
+[gui.setting.presentation]
+command_overlays = "&d指令覆蓋層&r"
+command_sounds = "&d指令音效&r"
+overlay_duration_ticks = "&d覆蓋層持續刻度&r"
+portal_notices = "&d入口通知頻道&r"
+splash_screen = "&d啟動閃屏&r"
+title_fade_in_ticks = "&d標題淡入刻度&r"
+title_fade_out_ticks = "&d標題淡出刻度&r"
+title_stay_ticks = "&d標題停留刻度&r"
+
+[gui.title]
+category = "&5ShapedPortals&r&8›&r{category}"
+root = "&5ShapedPortals配置&r"
+
+[hud]
+failure = "&c操作失敗&r"
+info = "&dShapedPortals&r"
+success = "&a成功&r"
+title = "&d&lShapedPortals&r"
+
+[portal.navigation.confirm]
+unsafe = "{prefix}&c&f{portal}&r&c旁邊沒有安全的站立空間。&e若仍要傳送到門內，請在&f{seconds}&r&e秒內再次點擊同一個傳送門。&r"
+
+[portal.navigation.error]
+ambiguous = "{prefix}&c前綴&f{portal}&r&c匹配{matches}個傳送門。請輸入更多UUID.&r"
+destination_unavailable = "{prefix}&c該傳送門目的地暫時無法使用。&r"
+inactive = "{prefix}&c該傳送門已不再啟用。其完整性檢查已排入隊列。&r"
+no_safe_landing = "{prefix}&c在該傳送門旁沒有安全的站立空間。&r"
+not_found = "{prefix}&c沒有符合的管理傳送門&f{portal}&r&c.&r"
+removed = "{prefix}&c該傳送門已不再註冊.&r"
+world_unavailable = "{prefix}&c傳送門世界&f{world}&r&c目前無法使用.&r"
+
+[portal.navigation.list]
+frame_policy_note = "&8  ⚠&r &e現有框架使用 &f{materials}&r&e；這些材料無法再用於建立新傳送門。&r"
+empty = "&e未註冊任何已管理的異形傳送門。&r"
+entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7位置:&r &f{x}, {y}, {z}&r &8•&r &7軸:&r &f{axis}&r &8•&r &7單元:&r &f{blocks}&r\n&8  └&r &7建立者:&r &f{creator}&r &8•&r &7建立時間:&r &f{created}&r"
+hover = "&7UUID:&r&f{uuid}&r\n&a點擊以傳送至此傳送門。&r"
+
+[portal.navigation.teleport]
+failed = "{prefix}&c傳送門傳送未完成。可能已被其他插件取消。&r"
+preparing = "{prefix}&7正在準備目的地&f{portal}&r&7…&r"
+success = "{prefix}&a已傳送至&f{portal}&r&a旁的&f{world}&r&a。&r"
+
+[portal.notice]
+created = "{prefix}&d已建立一個內部由{blocks}方塊組成的成形傳送門.&r"
+failed = "{prefix}&c該框架無法成為成形傳送門:&f{reason}&r&c.&r"
+
+[runtime.hot_reload]
+failed = "{prefix}&c文件更改被拒絕；最後一次已知的良好設定仍然有效。&r"
+success = "{prefix}&a已應用配置和語言文件更改。&r"
+
+[runtime.permission]
+denied = "{prefix}&c您沒有權限執行此操作。&r"
+
+[runtime]
+player_only = "{prefix}&c此指令僅能由玩家使用。&r"
+prefix = "&d&lShapedPortals&r&8›&r "

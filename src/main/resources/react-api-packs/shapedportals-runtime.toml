@@ -1,0 +1,122 @@
+schema = "react.plugin-api/v1"
+id = "volmit.shapedportals-runtime"
+version = "1.0.0"
+name = "ShapedPortals Runtime"
+authors = ["Volmit Software"]
+enabled = true
+trusted = false
+targetPlugin = "ShapedPortals"
+targetVersions = ["2.*"]
+
+[[metrics]]
+id = "managed-portals"
+displayName = "Managed Portals"
+kind = "gauge"
+unit = " portals"
+icon = "NETHER_PORTAL"
+decimals = 0
+sampleEveryMs = 1000
+staleAfterMs = 15000
+
+[metrics.source]
+type = "integration"
+pluginId = "shapedportals"
+key = "shapedportals.managed-portals"
+foliaSafe = true
+
+[[metrics]]
+id = "interior-cells"
+displayName = "Portal Interior Cells"
+kind = "gauge"
+unit = " blocks"
+icon = "CRYING_OBSIDIAN"
+decimals = 0
+sampleEveryMs = 1000
+staleAfterMs = 15000
+
+[metrics.source]
+type = "integration"
+pluginId = "shapedportals"
+key = "shapedportals.interior-cells"
+foliaSafe = true
+
+[[metrics]]
+id = "creation-attempt-rate"
+displayName = "Portal Creation Attempts"
+kind = "rate"
+unit = " attempts/s"
+icon = "FLINT_AND_STEEL"
+decimals = 2
+sampleEveryMs = 1000
+staleAfterMs = 15000
+
+[metrics.source]
+type = "integration"
+pluginId = "shapedportals"
+key = "shapedportals.creation-attempts-total"
+foliaSafe = true
+
+[metrics.transform]
+mode = "delta-per-second"
+minimum = 0.0
+
+[[metrics]]
+id = "created-portal-rate"
+displayName = "Created Portals"
+kind = "rate"
+unit = " portals/s"
+icon = "FIRE_CHARGE"
+decimals = 2
+sampleEveryMs = 1000
+staleAfterMs = 15000
+
+[metrics.source]
+type = "integration"
+pluginId = "shapedportals"
+key = "shapedportals.created-portals-total"
+foliaSafe = true
+
+[metrics.transform]
+mode = "delta-per-second"
+minimum = 0.0
+
+[[metrics]]
+id = "rejected-attempt-rate"
+displayName = "Rejected Portal Attempts"
+kind = "rate"
+unit = " attempts/s"
+icon = "BARRIER"
+decimals = 2
+sampleEveryMs = 1000
+staleAfterMs = 15000
+
+[metrics.source]
+type = "integration"
+pluginId = "shapedportals"
+key = "shapedportals.rejected-attempts-total"
+foliaSafe = true
+
+[metrics.transform]
+mode = "delta-per-second"
+minimum = 0.0
+
+[[metrics]]
+id = "creation-success"
+displayName = "Portal Creation Success"
+kind = "percent"
+unit = " %"
+icon = "LIME_DYE"
+decimals = 1
+sampleEveryMs = 1000
+staleAfterMs = 15000
+
+[metrics.source]
+type = "integration"
+pluginId = "shapedportals"
+key = "shapedportals.creation-success-percent"
+foliaSafe = true
+
+[metrics.transform]
+mode = "value"
+minimum = 0.0
+maximum = 100.0

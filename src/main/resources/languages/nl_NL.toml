@@ -1,0 +1,235 @@
+# ShapedPortals-taal: nl_NL
+# Dit bestand wordt alleen gedownload als het ontbreekt; bewerk languages/nl_NL.toml rechtstreeks.
+# Lokale wijzigingen worden nooit automatisch vervangen; ontbrekende waarden gebruiken Engels.
+# Kleuren: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B en [RRGGBB]. MiniMessage blijft beschikbaar voor eigen opmaak.
+# Tijdelijke aanduidingen horen bij specifieke berichten. Behoud alleen de al aanwezige aanduidingen en hernoem ze nooit.
+# Opdrachten: {argument}=onverwacht argument; {command}=opdrachtpad; {key}=parametersleutel; {parameter}=parameternaam; {type}=type; {usage}=opdrachtgebruik.
+# Uitvoering: {attempts}=aanmaakpogingen; {created}=aantal aangemaakt of aanmaaktijd; {rejected}=afgewezen pogingen; {enabled}=aanmaakstatus; {hot_reload}=hot-reloadstatus; {scheduler}=planner.
+# Portalen: {portal}=aanduiding; {portals}=beheerd aantal; {id}=korte ID; {uuid}=volledige UUID; {world}=wereld; {axis}=as; {x}/{y}/{z}=ankercoördinaten; {blocks}=portaalcellen; {cells}=alle beheerde cellen; {creator}=maker; {materials}=opgenomen framematerialen.
+# Lijsten: {matches}=overeenkomende portalen; {seconds}=bevestigingstijd in seconden.
+# Configuratie: {category}=categorie; {setting}=instellingsnaam; {status}=selectiemarkering; {value}=huidige, standaard- of ruwe waarde; {language}=actieve taal; {locale}=landinstelling; {name}=volledige taalnaam.
+# Taaleditor: {variables}=geldige tijdelijke aanduidingen; {old}=vorige waarde; {new}=nieuwe waarde.
+# Overig: {duration}=milliseconden; {path}=lokaal rapportpad; {url}=openbare URL; {reason}=foutreden.
+# Voorvoegsel: {prefix}=de globale waarde runtime.prefix. Verwijder {prefix} uit één bericht om het alleen daar te verbergen.
+# Zet een backslash voor & of [ om het teken letterlijk weer te geven.
+
+[runtime]
+prefix = "&d&lShapedPortals&r &8›&r "
+player_only = "{prefix}&cDeze opdracht kan alleen door een speler worden gebruikt.&r"
+
+[runtime.permission]
+denied = "{prefix}&cJe hebt geen toestemming om dat te doen.&r"
+
+[runtime.hot_reload]
+success = "{prefix}&aDe wijzigingen aan de configuratie en taalbestanden zijn toegepast.&r"
+failed = "{prefix}&cDe bestandswijzigingen zijn geweigerd; de laatst geldige instellingen blijven actief.&r"
+
+[command.feedback.reload]
+success = "{prefix}&aOpnieuw geladen in &f{duration}&r&a ms.&r &7Taal:&r &f{locale}&r"
+failed = "{prefix}&cOpnieuw laden is na {duration} ms mislukt.&r &7De laatst geldige instellingen blijven actief; bekijk de volledige fout in de console.&r"
+
+[command.feedback.config]
+opened = "{prefix}&aDe volledige configuratie-editor in het spel is geopend.&r"
+saved = "{prefix}&a&f{setting}&r&a is opgeslagen en toegepast.&r"
+save_failed = "{prefix}&c&f{setting}&r&c kon niet worden toegepast: {reason}&r"
+
+[command.feedback]
+failed = "{prefix}&cDe opdracht kon niet worden uitgevoerd. Bekijk de console voor meer informatie.&r"
+
+[command.feedback.debug]
+started = "{prefix}&7Diagnostische gegevens van de server en ShapedPortals worden verzameld…&r"
+busy = "{prefix}&eEr wordt al een diagnostisch rapport voor ShapedPortals gemaakt.&r"
+saved = "{prefix}&aHet diagnostische rapport is opgeslagen in &f{path}&r&a.&r"
+uploaded = "{prefix}&aDiagnostisch rapport geüpload:&r &b&n{url}&r"
+link_hover = "&7Open het openbare rapport op mclo.gs.&r"
+upload_failed = "{prefix}&eHet lokale rapport is opgeslagen, maar uploaden naar mclo.gs is mislukt. Bekijk de console voor meer informatie.&r"
+failed = "{prefix}&cHet diagnostische rapport kon niet worden gemaakt. Bekijk de console voor meer informatie.&r"
+
+[command.status]
+header = "{prefix}&d&lShapedPortals-status&r"
+config = "{prefix}&7Aanmaken:&r {enabled} &8|&r &7Taal:&r &f{language}&r &8|&r &7Automatisch herladen:&r {hot_reload}"
+portals = "{prefix}&7Beheerde portalen:&r &f{portals}&r &8|&r &7Binnencellen:&r &f{cells}&r"
+attempts = "{prefix}&7Pogingen:&r &f{attempts}&r &8|&r &7Aangemaakt:&r &a{created}&r &8|&r &7Geweigerd:&r &c{rejected}&r"
+compatibility = "{prefix}&7Artefact:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Planner:&r &f{scheduler}&r"
+
+[command.description]
+root = "Hulp en beheer voor ShapedPortals"
+config = "De volledige configuratie-editor in het spel openen"
+language = "Een beschikbare ShapedPortals-taal selecteren"
+debug = "Een uitgebreid diagnostisch rapport voor ShapedPortals maken"
+portals = "Alle beheerde portalen en hun teleportatiesnelkoppeling weergeven"
+teleport = "Veilig naast een beheerd portaal teleporteren of zonder invoer de portalen weergeven"
+status = "Statistieken van beheerde portalen en pogingen weergeven"
+
+[command.parameter]
+locale = "Beschikbare landinstelling"
+page = "Pagina van de portalenlijst, beginnend bij één"
+portal = "Portaal-UUID, uniek voorvoegsel of list"
+
+[portal.notice]
+created = "{prefix}&dEen gevormd portaal met {blocks} binnenblokken is aangemaakt.&r"
+failed = "{prefix}&cDit frame kan geen gevormd portaal worden: &f{reason}&r&c.&r"
+
+[portal.navigation.confirm]
+unsafe = "{prefix}&cNaast &f{portal}&r&c is geen veilige plek om te staan. &eKlik binnen &f{seconds}&r&e seconden opnieuw op hetzelfde portaal om er toch in te teleporteren.&r"
+
+[portal.navigation.list]
+frame_policy_note = "&8  ⚠&r &eHet bestaande frame gebruikt &f{materials}&r&e; daarmee kunnen geen nieuwe portalen worden gemaakt.&r"
+empty = "&eEr zijn geen beheerde gevormde portalen geregistreerd.&r"
+entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Locatie:&r &f{x}, {y}, {z}&r &8•&r &7As:&r &f{axis}&r &8•&r &7Cellen:&r &f{blocks}&r\n&8  └&r &7Maker:&r &f{creator}&r &8•&r &7Aangemaakt:&r &f{created}&r"
+hover = "&7UUID:&r &f{uuid}&r\n&aKlik om naar dit portaal te teleporteren.&r"
+
+[portal.navigation.error]
+not_found = "{prefix}&cGeen beheerd portaal komt overeen met &f{portal}&r&c.&r"
+ambiguous = "{prefix}&cHet voorvoegsel &f{portal}&r&c komt overeen met {matches} portalen. Voer meer tekens van de UUID in.&r"
+removed = "{prefix}&cDit portaal is niet meer geregistreerd.&r"
+world_unavailable = "{prefix}&cDe portaalwereld &f{world}&r&c is momenteel niet beschikbaar.&r"
+destination_unavailable = "{prefix}&cDe bestemming van het portaal is tijdelijk niet beschikbaar.&r"
+inactive = "{prefix}&cDit portaal is niet meer actief. De integriteitscontrole is in de wachtrij geplaatst.&r"
+no_safe_landing = "{prefix}&cEr is geen veilige plek om naast dit portaal te staan.&r"
+
+[portal.navigation.teleport]
+preparing = "{prefix}&7Bestemming voor &f{portal}&r&7 wordt voorbereid…&r"
+success = "{prefix}&aJe bent naast &f{portal}&r&a in &f{world}&r&a geteleporteerd.&r"
+failed = "{prefix}&cDe portaalteleportatie is niet voltooid. Mogelijk is deze door een andere plug-in geannuleerd.&r"
+
+[hud]
+title = "&d&lShapedPortals&r"
+success = "&aGeslaagd&r"
+failure = "&cActie mislukt&r"
+info = "&dShapedPortals&r"
+
+[gui.title]
+root = "&5ShapedPortals-configuratie&r"
+category = "&5ShapedPortals&r &8›&r {category}"
+
+[gui.category]
+general = "&dAlgemeen&r"
+portal = "&dPortaalregels&r"
+effects = "&dEffecten&r"
+hot_reload = "&dAutomatisch herladen&r"
+integrity = "&dIntegriteit&r"
+presentation = "&dPresentatie&r"
+debug = "&dDiagnostiek&r"
+
+languages = "&dTalen&r"
+
+[gui.navigation]
+back = "&eTerug&r"
+reload = "&bBestanden opnieuw laden&r"
+close = "&cSluiten&r"
+
+[gui.lore]
+state = "&7Huidig:&r {value}"
+toggle = "&8Klik om te wisselen.&r"
+number = "&8Links +1, rechts -1, shift ×10, laat vallen om te typen.&r"
+text = "&8Klik om een nieuwe waarde in de chat te typen.&r"
+language = "&8Klik om een beschikbare taal te kiezen of typ een landinstelling.&r"
+category = "&8Klik om elke instelling in deze categorie te bewerken.&r"
+
+[gui.prompt]
+request = "{prefix}&eTyp een nieuwe waarde voor &f{setting}&r&e in de chat.&r"
+list = "{prefix}&7Scheid lijstitems met komma's. Typ &fnone&r&7 voor een lege lijst.&r"
+cancel = "{prefix}&7Typ &fcancel&r&7 om te stoppen. Deze invoer verloopt na 60 seconden.&r"
+cancelled = "{prefix}&eConfiguratiebewerking geannuleerd.&r"
+timeout = "{prefix}&eDe configuratiebewerking is verlopen zonder iets te wijzigen.&r"
+
+[gui.language]
+type = "&7Typ een landinstelling in de chat om deze aan te maken of te selecteren.&r"
+option = "{status} &f{locale}&r &8—&r &7{name}&r"
+hover = "&7Klik om &f{locale}&r&7 te selecteren.&r"
+empty = "&eEr zijn geen beschikbare talen gevonden; typ een landinstelling om er een te maken.&r"
+current = "&7Huidige waarde:&r {value}"
+variables = "&7Huidige variabelen / tijdelijke aanduidingen:&r &f{variables}&r"
+changed = "&f{old}&r &7is gewijzigd naar&r &f{new}&r"
+
+[gui.setting.general]
+enabled = "&dPortalen aanmaken&r"
+language = "&dActieve landinstelling&r"
+require_create_permission = "&dToestemming voor aanmaken vereisen&r"
+failure_feedback = "&dFeedback bij portaalfouten&r"
+
+[gui.setting.metrics]
+enabled = "&dAnonieme bStats-statistieken&r"
+
+[gui.setting.portal]
+minimum_interior_blocks = "&dMinimumaantal binnenblokken&r"
+maximum_interior_blocks = "&dMaximumaantal binnenblokken&r"
+maximum_width = "&dMaximale breedte&r"
+maximum_height = "&dMaximale hoogte&r"
+frame_materials = "&dFramematerialen&r"
+interior_materials = "&dBinnenmaterialen&r"
+ignition_causes = "&dOntstekingsoorzaken&r"
+allowed_worlds = "&dToegestane werelden&r"
+denied_worlds = "&dGeweigerde werelden&r"
+deduplication_millis = "&dOntdubbeling in milliseconden&r"
+
+[gui.setting.effects]
+creation_sound = "&dAanmaakgeluid&r"
+creation_sound_type = "&dType aanmaakgeluid&r"
+creation_sound_volume = "&dVolume van aanmaakgeluid&r"
+creation_sound_pitch = "&dToonhoogte van aanmaakgeluid&r"
+
+[gui.setting.hot_reload]
+enabled = "&dAutomatisch herladen&r"
+poll_interval_millis = "&dControle-interval in milliseconden&r"
+cooldown_millis = "&dWachttijd voor opslaan in milliseconden&r"
+notify_operators = "&dOperators op de hoogte stellen&r"
+
+[gui.setting.integrity]
+enabled = "&dIntegriteitsservice&r"
+check_interval_ticks = "&dControle-interval in ticks&r"
+maximum_checks_per_cycle = "&dMaximaal aantal controles per cyclus&r"
+
+[gui.setting.presentation]
+splash_screen = "&dOpstartscherm&r"
+command_sounds = "&dOpdrachtgeluiden&r"
+command_overlays = "&dOpdrachtoverlays&r"
+portal_notices = "&dKanalen voor portaalmeldingen&r"
+overlay_duration_ticks = "&dOverlayduur in ticks&r"
+title_fade_in_ticks = "&dInvagen van titel in ticks&r"
+title_stay_ticks = "&dWeergaveduur van titel in ticks&r"
+title_fade_out_ticks = "&dUitvagen van titel in ticks&r"
+
+[gui.setting.debug]
+upload_enabled = "&dDebugrapporten uploaden naar mclo.gs&r"
+
+[director.help]
+category = "Commandocategorie"
+command_group = "Opdrachtgroep. Klik om te openen."
+no_description = "Geen beschrijving opgegeven"
+no_parameters = "Geen parameters. Klik om de opdracht vooraf in te vullen."
+no_subcommands = "Geen subopdrachten op deze pagina."
+parameters_hover = "Beweeg de muis over de parameters voor meer informatie."
+
+[director.help.navigation]
+back = "Terug"
+page = "Pagina"
+
+[director.help.navigation.next]
+hover = "Volgende pagina"
+
+[director.help.navigation.parent]
+hover = "Terug naar de bovenliggende opdrachtgroep"
+
+[director.help.navigation.previous]
+hover = "Vorige pagina"
+
+[director.help.parameter]
+default = "Standaard \"{value}\" indien niet opgegeven."
+optional = "Deze parameter is optioneel."
+required = "Deze parameter is verplicht."
+type = "Deze parameter is van het type {type}."
+
+[director.runtime.error]
+conversion_failed = "Kan \"{value}\" voor {parameter} niet naar {type} converteren"
+default_parse_failed = "Kan de standaardwaarde voor parameter {parameter} niet verwerken"
+execution_failed = "Opdracht {command} kon niet worden uitgevoerd: {reason}"
+invalid_origin = "Deze opdracht kan niet vanuit deze bron worden uitgevoerd."
+missing_argument = "Ontbrekend argument \"{parameter}\" ({type})"
+unexpected_argument = "Onverwacht argument \"{argument}\". Optionele parameters moeten met een sleutel worden opgegeven, bijv. seed=123"
+unclosed_group = "Ontbrekende sluitende \"]\" voor parameter {key}"
+unknown_parameter = "Onbekende parametersleutel: {key}"
+
+[director.runtime]
+usage = "Gebruik: {usage}"

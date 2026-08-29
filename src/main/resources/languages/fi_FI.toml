@@ -1,0 +1,235 @@
+# ShapedPortals-kieli: fi_FI
+# Tämä tiedosto ladataan vain, jos se puuttuu; muokkaa tiedostoa languages/fi_FI.toml suoraan.
+# Paikallisia muutoksia ei korvata automaattisesti; puuttuvat kohdat käyttävät englantia.
+# Värit: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B ja [RRGGBB]. MiniMessage toimii myös omissa muotoiluissa.
+# Paikkamerkit ovat viestikohtaisia. Säilytä vain viestissä jo olevat paikkamerkit täsmälleen ennallaan.
+# Komennot: {argument}=odottamaton argumentti; {command}=komentopolku; {key}=parametriavain; {parameter}=parametrin nimi; {type}=tyyppi; {usage}=komennon käyttö.
+# Suoritus: {attempts}=luontiyritykset; {created}=luotujen määrä tai luontiaika; {rejected}=hylätyt yritykset; {enabled}=luonnin tila; {hot_reload}=pikalatauksen tila; {scheduler}=ajastin.
+# Portaalit: {portal}=tunniste; {portals}=hallittujen määrä; {id}=lyhyt ID; {uuid}=täysi UUID; {world}=maailma; {axis}=akseli; {x}/{y}/{z}=ankkurin koordinaatit; {blocks}=portaalisolut; {cells}=kaikki solut; {creator}=luoja; {materials}=tallennetut kehysmateriaalit.
+# Luettelot: {matches}=vastaavat portaalit; {seconds}=vahvistusaika sekunteina.
+# Asetukset: {category}=luokka; {setting}=asetuksen nimi; {status}=valintamerkki; {value}=nykyinen, oletus- tai raaka-arvo; {language}=aktiivinen kieli; {locale}=kielitunnus; {name}=kielen koko nimi.
+# Kielieditori: {variables}=sallitut paikkamerkit; {old}=edellinen arvo; {new}=uusi arvo.
+# Muut: {duration}=millisekunnit; {path}=paikallisen raportin polku; {url}=julkinen URL; {reason}=virheen syy.
+# Etuliite: {prefix}=yleinen runtime.prefix-arvo. Poista {prefix} yksittäisestä viestistä piilottaaksesi sen siinä.
+# Näytä & tai [ kirjaimellisesti lisäämällä eteen kenoviiva.
+
+[runtime]
+prefix = "&d&lShapedPortals&r &8›&r "
+player_only = "{prefix}&cVain pelaaja voi käyttää tätä komentoa.&r"
+
+[runtime.permission]
+denied = "{prefix}&cSinulla ei ole oikeutta tehdä sitä.&r"
+
+[runtime.hot_reload]
+success = "{prefix}&aAsetusten ja kielitiedostojen muutokset otettiin käyttöön.&r"
+failed = "{prefix}&cTiedostomuutokset hylättiin; viimeksi toimineet asetukset pysyvät käytössä.&r"
+
+[command.feedback.reload]
+success = "{prefix}&aLadattiin uudelleen &f{duration}&r&a ms:ssa.&r &7Kieli:&r &f{locale}&r"
+failed = "{prefix}&cUudelleenlataus epäonnistui {duration} ms:n jälkeen.&r &7Viimeksi toimineet asetukset pysyvät käytössä; katso koko virhe konsolista.&r"
+
+[command.feedback.config]
+opened = "{prefix}&aKattava pelinsisäinen asetuseditori avattiin.&r"
+saved = "{prefix}&aAsetus &f{setting}&r&a tallennettiin ja otettiin käyttöön.&r"
+save_failed = "{prefix}&cAsetusta &f{setting}&r&c ei voitu ottaa käyttöön: {reason}&r"
+
+[command.feedback]
+failed = "{prefix}&cKomentoa ei voitu suorittaa. Katso lisätiedot konsolista.&r"
+
+[command.feedback.debug]
+started = "{prefix}&7Kerätään palvelimen ja ShapedPortalsin diagnostiikkatietoja…&r"
+busy = "{prefix}&eShapedPortalsin diagnostiikkaraporttia luodaan jo.&r"
+saved = "{prefix}&aDiagnostiikkaraportti tallennettiin tiedostoon &f{path}&r&a.&r"
+uploaded = "{prefix}&aDiagnostiikkaraportti lähetettiin:&r &b&n{url}&r"
+link_hover = "&7Avaa julkinen mclo.gs-raportti.&r"
+upload_failed = "{prefix}&ePaikallinen raportti tallennettiin, mutta lähetys mclo.gs-palveluun epäonnistui. Katso lisätiedot konsolista.&r"
+failed = "{prefix}&cDiagnostiikkaraporttia ei voitu luoda. Katso lisätiedot konsolista.&r"
+
+[command.status]
+header = "{prefix}&d&lShapedPortalsin tila&r"
+config = "{prefix}&7Luonti:&r {enabled} &8|&r &7Kieli:&r &f{language}&r &8|&r &7Automaattinen lataus:&r {hot_reload}"
+portals = "{prefix}&7Hallinnoidut portaalit:&r &f{portals}&r &8|&r &7Sisäsolut:&r &f{cells}&r"
+attempts = "{prefix}&7Yritykset:&r &f{attempts}&r &8|&r &7Luotu:&r &a{created}&r &8|&r &7Hylätty:&r &c{rejected}&r"
+compatibility = "{prefix}&7Artefakti:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Ajastin:&r &f{scheduler}&r"
+
+[command.description]
+root = "ShapedPortalsin ohje ja hallinta"
+config = "Avaa kattava pelinsisäinen asetuseditori"
+language = "Valitse käytettävissä oleva ShapedPortals-kieli"
+debug = "Luo kattava ShapedPortals-diagnostiikkaraportti"
+portals = "Luettele kaikki hallinnoidut portaalit ja niiden teleporttipikavalinnat"
+teleport = "Teleporttaa turvallisesti hallinnoidun portaalin viereen tai luettele portaalit, jos tunnus puuttuu"
+status = "Näytä hallinnoitujen portaalien ja yritysten tilastot"
+
+[command.parameter]
+locale = "Käytettävissä olevan kielen tunnus"
+page = "Portaaliluettelon sivu numerosta yksi alkaen"
+portal = "Portaalin UUID, yksilöllinen alku tai list"
+
+[portal.notice]
+created = "{prefix}&dMuotoiltu portaali luotiin käyttäen {blocks} sisälohkoa.&r"
+failed = "{prefix}&cTuosta kehyksestä ei voi tehdä muotoiltua portaalia: &f{reason}&r&c.&r"
+
+[portal.navigation.confirm]
+unsafe = "{prefix}&cPortaalin &f{portal}&r&c vieressä ei ole turvallista seisomapaikkaa. &eNapsauta samaa portaalia uudelleen &f{seconds}&r&e sekunnin kuluessa teleportataksesi siihen silti.&r"
+
+[portal.navigation.list]
+frame_policy_note = "&8  ⚠&r &eNykyinen kehys käyttää materiaaleja &f{materials}&r&e, joilla ei voi luoda uusia portaaleja.&r"
+empty = "&eHallinnoituja muotoiltuja portaaleja ei ole rekisteröity.&r"
+entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Sijainti:&r &f{x}, {y}, {z}&r &8•&r &7Akseli:&r &f{axis}&r &8•&r &7Solut:&r &f{blocks}&r\n&8  └&r &7Luoja:&r &f{creator}&r &8•&r &7Luotu:&r &f{created}&r"
+hover = "&7UUID:&r &f{uuid}&r\n&aNapsauta teleportataksesi tälle portaalille.&r"
+
+[portal.navigation.error]
+not_found = "{prefix}&cMikään hallinnoitu portaali ei vastaa tunnusta &f{portal}&r&c.&r"
+ambiguous = "{prefix}&cAlku &f{portal}&r&c vastaa {matches} portaalia. Anna UUID:stä useampi merkki.&r"
+removed = "{prefix}&cTätä portaalia ei ole enää rekisteröity.&r"
+world_unavailable = "{prefix}&cPortaalin maailma &f{world}&r&c ei ole tällä hetkellä käytettävissä.&r"
+destination_unavailable = "{prefix}&cPortaalin kohde ei ole tilapäisesti käytettävissä.&r"
+inactive = "{prefix}&cTämä portaali ei ole enää aktiivinen. Sen eheystarkistus on asetettu jonoon.&r"
+no_safe_landing = "{prefix}&cTämän portaalin vieressä ei ole turvallista seisomapaikkaa.&r"
+
+[portal.navigation.teleport]
+preparing = "{prefix}&7Valmistellaan kohdetta portaalille &f{portal}&r&7…&r"
+success = "{prefix}&aSinut teleportattiin portaalin &f{portal}&r&a viereen maailmassa &f{world}&r&a.&r"
+failed = "{prefix}&cPortaaliin teleporttaus ei valmistunut. Toinen lisäosa saattoi peruuttaa sen.&r"
+
+[hud]
+title = "&d&lShapedPortals&r"
+success = "&aOnnistui&r"
+failure = "&cToiminto epäonnistui&r"
+info = "&dShapedPortals&r"
+
+[gui.title]
+root = "&5ShapedPortalsin asetukset&r"
+category = "&5ShapedPortals&r &8›&r {category}"
+
+[gui.category]
+general = "&dYleiset&r"
+portal = "&dPortaalisäännöt&r"
+effects = "&dTehosteet&r"
+hot_reload = "&dAutomaattinen lataus&r"
+integrity = "&dEheys&r"
+presentation = "&dEsitys&r"
+debug = "&dDiagnostiikka&r"
+
+languages = "&dKielet&r"
+
+[gui.navigation]
+back = "&eTakaisin&r"
+reload = "&bLataa tiedostot uudelleen&r"
+close = "&cSulje&r"
+
+[gui.lore]
+state = "&7Nykyinen:&r {value}"
+toggle = "&8Napsauta vaihtaaksesi.&r"
+number = "&8Vasen +1, oikea -1, vaihto ×10, pudota kirjoittaaksesi.&r"
+text = "&8Napsauta kirjoittaaksesi uuden arvon chattiin.&r"
+language = "&8Napsauta valitaksesi käytettävissä olevan kielen tai kirjoita kielitunnus.&r"
+category = "&8Napsauta muokataksesi tämän luokan kaikkia asetuksia.&r"
+
+[gui.prompt]
+request = "{prefix}&eKirjoita asetuksen &f{setting}&r&e uusi arvo chattiin.&r"
+list = "{prefix}&7Erota luettelon kohdat pilkuilla. Kirjoita &fnone&r&7, jos haluat tyhjän luettelon.&r"
+cancel = "{prefix}&7Kirjoita &fcancel&r&7 lopettaaksesi. Kehote vanhenee 60 sekunnissa.&r"
+cancelled = "{prefix}&eAsetusten muokkaus peruutettiin.&r"
+timeout = "{prefix}&eAsetusten muokkaus vanheni muuttamatta mitään.&r"
+
+[gui.language]
+type = "&7Kirjoita kielitunnus chattiin luodaksesi tai valitaksesi sen.&r"
+option = "{status} &f{locale}&r &8—&r &7{name}&r"
+hover = "&7Napsauta valitaksesi kielen &f{locale}&r&7.&r"
+empty = "&eKäytettävissä olevia kieliä ei löytynyt; kirjoita kielitunnus luodaksesi sellaisen.&r"
+current = "&7Nykyinen arvo:&r {value}"
+variables = "&7Nykyiset muuttujat / paikkamerkit:&r &f{variables}&r"
+changed = "&f{old}&r &7muutettiin arvoon&r &f{new}&r"
+
+[gui.setting.general]
+enabled = "&dPortaalien luonti&r"
+language = "&dAktiivinen kielitunnus&r"
+require_create_permission = "&dVaadi luontioikeus&r"
+failure_feedback = "&dPortaalivirheiden palaute&r"
+
+[gui.setting.metrics]
+enabled = "&dAnonyymit bStats-mittarit&r"
+
+[gui.setting.portal]
+minimum_interior_blocks = "&dSisälohkojen vähimmäismäärä&r"
+maximum_interior_blocks = "&dSisälohkojen enimmäismäärä&r"
+maximum_width = "&dEnimmäisleveys&r"
+maximum_height = "&dEnimmäiskorkeus&r"
+frame_materials = "&dKehysmateriaalit&r"
+interior_materials = "&dSisämateriaalit&r"
+ignition_causes = "&dSyttymissyyt&r"
+allowed_worlds = "&dSallitut maailmat&r"
+denied_worlds = "&dEstetyt maailmat&r"
+deduplication_millis = "&dKaksoiskappaleiden esto millisekunteina&r"
+
+[gui.setting.effects]
+creation_sound = "&dLuontiääni&r"
+creation_sound_type = "&dLuontiäänen tyyppi&r"
+creation_sound_volume = "&dLuontiäänen voimakkuus&r"
+creation_sound_pitch = "&dLuontiäänen korkeus&r"
+
+[gui.setting.hot_reload]
+enabled = "&dAutomaattinen lataus&r"
+poll_interval_millis = "&dTarkistusväli millisekunteina&r"
+cooldown_millis = "&dTallennuksen odotusaika millisekunteina&r"
+notify_operators = "&dIlmoita operaattoreille&r"
+
+[gui.setting.integrity]
+enabled = "&dEheyspalvelu&r"
+check_interval_ticks = "&dTarkistusväli tickeinä&r"
+maximum_checks_per_cycle = "&dTarkistuksia enintään kierrosta kohti&r"
+
+[gui.setting.presentation]
+splash_screen = "&dKäynnistyksen aloitusnäkymä&r"
+command_sounds = "&dKomentojen äänet&r"
+command_overlays = "&dKomentojen peittokuvat&r"
+portal_notices = "&dPortaali-ilmoitusten kanavat&r"
+overlay_duration_ticks = "&dPeittokuvan kesto tickeinä&r"
+title_fade_in_ticks = "&dOtsikon häivytys sisään tickeinä&r"
+title_stay_ticks = "&dOtsikon näyttöaika tickeinä&r"
+title_fade_out_ticks = "&dOtsikon häivytys ulos tickeinä&r"
+
+[gui.setting.debug]
+upload_enabled = "&dLähetä virheraportit mclo.gs-palveluun&r"
+
+[director.help]
+category = "Komentokategoria"
+command_group = "Komentoryhmä. Avaa napsauttamalla."
+no_description = "Kuvausta ei ole annettu"
+no_parameters = "Ei parametreja. Esitäytä komento napsauttamalla."
+no_subcommands = "Tällä sivulla ei ole alikomentoja."
+parameters_hover = "Vie hiiri parametrien päälle saadaksesi lisätietoja."
+
+[director.help.navigation]
+back = "Takaisin"
+page = "Sivu"
+
+[director.help.navigation.next]
+hover = "Seuraava sivu"
+
+[director.help.navigation.parent]
+hover = "Palaa ylempään komentoryhmään"
+
+[director.help.navigation.previous]
+hover = "Edellinen sivu"
+
+[director.help.parameter]
+default = "Oletusarvo on \"{value}\", jos sitä ei määritetä."
+optional = "Tämä parametri on valinnainen."
+required = "Tämä parametri on pakollinen."
+type = "Tämän parametrin tyyppi on {type}."
+
+[director.runtime.error]
+conversion_failed = "Arvoa \"{value}\" ei voi muuntaa tyypiksi {type} parametrille {parameter}"
+default_parse_failed = "Parametrin {parameter} oletusarvoa ei voi jäsentää"
+execution_failed = "Komennon {command} suoritus epäonnistui: {reason}"
+invalid_origin = "Tätä komentoa ei voi suorittaa tästä lähteestä."
+missing_argument = "Puuttuva argumentti \"{parameter}\" ({type})"
+unexpected_argument = "Odottamaton argumentti \"{argument}\". Valinnaiset parametrit on annettava avaimella, esim. seed=123"
+unclosed_group = "Sulkeva \"]\" puuttuu parametrilta {key}"
+unknown_parameter = "Tuntematon parametriavain: {key}"
+
+[director.runtime]
+usage = "Käyttö: {usage}"

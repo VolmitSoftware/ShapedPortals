@@ -1,278 +1,317 @@
 package com.volmit.shapedportals;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Orientable;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
+import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
+import art.arcane.volmlib.util.scheduling.FoliaScheduler;
+import art.arcane.volmlib.util.scheduling.SchedulerUtils;
+import com.volmit.shapedportals.command.CommandService;
+import com.volmit.shapedportals.config.ConfigHotReloadService;
+import com.volmit.shapedportals.config.ConfigRepository;
+import com.volmit.shapedportals.config.ConfigService;
+import com.volmit.shapedportals.debug.ShapedDebugService;
+import com.volmit.shapedportals.gui.ConfigEditorGui;
+import com.volmit.shapedportals.integration.ShapedPortalsIntegrationMetrics;
+import com.volmit.shapedportals.integration.ShapedPortalsIntegrationService;
+import com.volmit.shapedportals.localization.LanguageService;
+import com.volmit.shapedportals.metrics.MetricsService;
+import com.volmit.shapedportals.portal.PortalEventListener;
+import com.volmit.shapedportals.portal.PortalIntegrityService;
+import com.volmit.shapedportals.portal.PortalNavigationService;
+import com.volmit.shapedportals.portal.PortalRegistry;
+import com.volmit.shapedportals.portal.PortalService;
+import com.volmit.shapedportals.portal.PortalStats;
+import com.volmit.shapedportals.presentation.PresentationService;
+import com.volmit.shapedportals.util.SplashScreen;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.world.PortalCreateEvent;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.io.IOException;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 
-public class ShapedPortals extends JavaPlugin implements Listener {
-    private Set<Player> creating = new HashSet<>();
-    private Config config = loadConfig();
+public final class ShapedPortals extends JavaPlugin {
+    private ConfigService configService;
+    private LanguageService languageService;
+    private ConfigHotReloadService hotReloadService;
+    private PortalRegistry portalRegistry;
+    private PortalStats portalStats;
+    private PortalIntegrityService integrityService;
+    private PortalNavigationService navigationService;
+    private ConfigEditorGui configEditor;
+    private PresentationService presentationService;
+    private ShapedDebugService debugService;
+    private MetricsService metricsService;
+    private ShapedPortalsIntegrationService integrationService;
+    private final Set<String> pendingLanguageActivations = ConcurrentHashMap.newKeySet();
 
-    public void onEnable()
-    {
-        getServer().getPluginManager().registerEvents(this, this);
-    }
+    @Override
+    public void onEnable() {
+        long startedNanos = System.nanoTime();
+        try {
+            configService = new ConfigService(getDataFolder());
+            languageService = new LanguageService(getDataFolder());
+            installInitialConfiguration();
+            metricsService = new MetricsService(this);
+            metricsService.reconfigure(configService.runtime().metricsEnabled());
+            presentationService = new PresentationService(this, configService, languageService);
+            getServer().getPluginManager().registerEvents(presentationService, this);
 
-    public void onDisable()
-    {
-        HandlerList.unregisterAll((Plugin) this);
-    }
+            portalRegistry = new PortalRegistry(getDataFolder(),
+                    exception -> getLogger().log(Level.SEVERE, "Portal registry persistence failed", exception));
+            portalRegistry.load();
+            portalStats = new PortalStats();
+            integrationService = new ShapedPortalsIntegrationService(
+                    this, new ShapedPortalsIntegrationMetrics(portalRegistry, portalStats));
+            integrationService.register();
+            integrityService = new PortalIntegrityService(this, configService, portalRegistry);
+            navigationService = new PortalNavigationService(new PortalNavigationService.Dependencies(
+                    this, configService, portalRegistry, integrityService, languageService));
+            PortalService portalService = new PortalService(
+                    this, configService, presentationService, portalRegistry, portalStats);
+            PortalEventListener portalListener = new PortalEventListener(
+                    portalService, portalRegistry, integrityService);
+            getServer().getPluginManager().registerEvents(portalListener, this);
 
-    private Config loadConfig() {
-        File file = new File(getDataFolder(), "config.json");
-        file.getParentFile().mkdirs();
-        Config config = new Config();
+            configEditor = new ConfigEditorGui(this, configService, languageService, presentationService);
+            getServer().getPluginManager().registerEvents(configEditor, this);
+            debugService = new ShapedDebugService(this);
+            new CommandService(this).register();
 
-        if(file.exists())
-        {
-            try
-            {
-                BufferedReader b = new BufferedReader(new FileReader(file));
-                StringBuilder c = new StringBuilder();
-                String l;
-
-                while((l = b.readLine()) != null)
-                {
-                    c.append(l);
-                }
-
-                b.close();
-                config = new Gson().fromJson(c.toString(), Config.class);
+            integrityService.start();
+            hotReloadService = new ConfigHotReloadService(this, configService);
+            hotReloadService.start();
+            languageService.remoteCatalogFailure().ifPresent(failure -> getLogger().log(
+                    Level.WARNING,
+                    "Remote language catalog is unavailable; code-owned English and installed local language files remain active",
+                    failure
+            ));
+            requestConfiguredLanguage();
+            long startupMillis = (System.nanoTime() - startedNanos) / 1_000_000L;
+            if (configService.runtime().splashScreen()) {
+                SplashScreen.print(this, true, startupMillis);
             }
-
-            catch(Throwable ignored)
-            {
-
+            getLogger().info("ShapedPortals ready in " + startupMillis + " ms with " + schedulerName()
+                    + " scheduling and " + portalRegistry.portalCount() + " managed portals.");
+        } catch (Throwable exception) {
+            getLogger().log(Level.SEVERE, "ShapedPortals could not enable safely", exception);
+            if (configService != null && configService.runtime().splashScreen()) {
+                SplashScreen.print(this, false, (System.nanoTime() - startedNanos) / 1_000_000L);
             }
-        }
-
-        try
-        {
-            PrintWriter pw = new PrintWriter(file);
-            pw.println(new GsonBuilder().setPrettyPrinting().create().toJson(config));
-            pw.close();
-        }
-
-        catch(Throwable ignored)
-        {
-
-        }
-
-        return config;
-    }
-
-
-    @SuppressWarnings("RedundantCollectionOperation")
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void on(PortalCreateEvent e)
-    {
-        if(config.creationSounds && !e.getBlocks().isEmpty())
-        {
-            e.getWorld().playSound(e.getBlocks().get((int) (Math.random() * (e.getBlocks().size() - 1)))
-                    .getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 0.6f, 0.67f);
-        }
-
-        if(e.getReason().equals(PortalCreateEvent.CreateReason.FIRE))
-        {
-            if(e.getEntity() != null && e.getEntity() instanceof Player && creating.contains((Player)e.getEntity()))
-            {
-                creating.remove((Player)e.getEntity());
-            }
+            getServer().getPluginManager().disablePlugin(this);
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void on(BlockPlaceEvent e)
-    {
-        if(e.getBlockPlaced().getType().equals(Material.FIRE))
-        {
-            if(!config.enablePortals)
-            {
-                return;
-            }
-
-            creating.add(e.getPlayer());
-            getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
-                if(creating.contains(e.getPlayer()))
-                {
-                    creating.remove(e.getPlayer());
-                    //noinspection deprecation
-                    getServer().getScheduler().scheduleAsyncDelayedTask(this, ()
-                            -> constructNetherPortal(e.getBlockPlaced(), e.getPlayer(), PortalCreateEvent.CreateReason.FIRE));
-                }
-            },1);
+    @Override
+    public void onDisable() {
+        pendingLanguageActivations.clear();
+        HandlerList.unregisterAll(this);
+        if (integrationService != null) {
+            integrationService.unregister();
+        }
+        if (hotReloadService != null) {
+            hotReloadService.close();
+        }
+        if (languageService != null) {
+            languageService.close();
+        }
+        if (integrityService != null) {
+            integrityService.stop();
+        }
+        if (configEditor != null) {
+            configEditor.shutdown();
+        }
+        if (debugService != null) {
+            debugService.shutdown();
+        }
+        if (presentationService != null) {
+            presentationService.shutdown();
+        }
+        if (metricsService != null) {
+            metricsService.close();
+        }
+        SchedulerUtils.cancelPluginTasks(this);
+        if (portalRegistry != null) {
+            portalRegistry.close();
         }
     }
 
-    private void spread(Block cursor, List<Block> blocks, boolean x, AtomicBoolean fail)
-    {
-        if(blocks.size() > config.maxNetherPortalBlocks)
-        {
-            fail.set(true);
+    public synchronized boolean reloadAll(boolean notifyConsole) {
+        try {
+            ConfigRepository.PreparedConfig preparedConfig = configService.prepareFromDisk();
+            LanguageService.PreparedLanguage preparedLanguage = languageService.prepare(
+                    preparedConfig.runtime().language());
+            if (!preparedLanguage.selectionReady()) {
+                requestPendingLanguage(preparedLanguage.locale());
+                getLogger().warning("The requested language " + preparedLanguage.locale()
+                        + " is not verified yet; the previous configuration and language remain active");
+                return false;
+            }
+            configService.install(preparedConfig);
+            languageService.install(preparedLanguage);
+            configurationInstalled();
+            if (notifyConsole) {
+                getLogger().info("Reloaded ShapedPortals configuration and language files.");
+            }
+            return true;
+        } catch (IOException | RuntimeException exception) {
+            getLogger().log(Level.SEVERE,
+                    "ShapedPortals reload failed; the previous runtime configuration remains active", exception);
+            return false;
         }
+    }
 
-        if(fail.get())
-        {
+    public void configurationInstalled() {
+        if (metricsService != null) {
+            metricsService.reconfigure(configService.runtime().metricsEnabled());
+        }
+        if (hotReloadService != null) {
+            hotReloadService.requestReconfigure();
+        }
+        requestConfiguredLanguage();
+    }
+
+    public void installPreparedLanguage(LanguageService.PreparedLanguage preparedLanguage) {
+        languageService.install(preparedLanguage);
+        configurationInstalled();
+    }
+
+    public String schedulerName() {
+        return FoliaScheduler.isFoliaThreading(getServer()) ? "Folia region" : "Bukkit main-thread";
+    }
+
+    public ConfigService getConfigService() {
+        return configService;
+    }
+
+    public LanguageService getLanguageService() {
+        return languageService;
+    }
+
+    public PortalRegistry getPortalRegistry() {
+        return portalRegistry;
+    }
+
+    public PortalStats getPortalStats() {
+        return portalStats;
+    }
+
+    public PortalNavigationService getNavigationService() {
+        return navigationService;
+    }
+
+    public ConfigEditorGui getConfigEditor() {
+        return configEditor;
+    }
+
+    public PresentationService getPresentationService() {
+        return presentationService;
+    }
+
+    public ShapedDebugService getDebugService() {
+        return debugService;
+    }
+
+    public MetricsService getMetricsService() {
+        return metricsService;
+    }
+
+    public ShapedPortalsIntegrationService getIntegrationService() {
+        return integrationService;
+    }
+
+    private void installInitialConfiguration() throws IOException {
+        ConfigRepository.PreparedConfig preparedConfig = configService.prepareFromDisk();
+        configService.install(preparedConfig);
+        try {
+            LanguageService.PreparedLanguage preparedLanguage = languageService.prepare(
+                    preparedConfig.runtime().language());
+            languageService.install(preparedLanguage);
+        } catch (IOException | RuntimeException exception) {
+            getLogger().log(
+                    Level.WARNING,
+                    "Configured language could not be loaded; ShapedPortals is continuing with code-owned English",
+                    exception
+            );
+            languageService.install(languageService.englishFallback(preparedConfig.runtime().language()));
+        }
+    }
+
+    private void requestConfiguredLanguage() {
+        if (languageService == null || configService == null) {
             return;
         }
+        String locale = configService.runtime().language();
+        languageService.requestRemote(locale, result -> remoteLanguageCompleted(locale, result));
+    }
 
-        blocks.add(cursor);
-        Block[] test = new Block[]{cursor.getRelative(BlockFace.UP),
-                cursor.getRelative(BlockFace.DOWN),
-                cursor.getRelative(x ? BlockFace.EAST : BlockFace.SOUTH),
-                cursor.getRelative(x ? BlockFace.WEST : BlockFace.NORTH)};
-
-        for(Block i : test)
-        {
-            if(blocks.contains(i))
-            {
-                continue;
-            }
-
-            if(couldBePortal(i))
-            {
-                spread(i, blocks, x, fail);
-            }
-
-            else if(!isNetherPortalBlock(i))
-            {
-                fail.set(true);
-            }
-
-            if(fail.get())
-            {
-                return;
-            }
+    private void remoteLanguageCompleted(String requestedLocale, RemoteLanguageCatalog.DownloadResult result) {
+        if (!result.successful()) {
+            getLogger().warning(languageFailureMessage(result, "the current verified language remains active"));
+            return;
+        }
+        getLogger().info("Downloaded verified ShapedPortals locale " + requestedLocale + ".");
+        if (!FoliaScheduler.runGlobal(this, () -> activateDownloadedLanguage(requestedLocale))) {
+            getLogger().warning("Downloaded locale " + requestedLocale
+                    + " will activate on the next reload or restart because scheduling was unavailable.");
         }
     }
 
-    private boolean couldBePortal(Block b)
-    {
-        return !b.getType().isSolid()
-                && (b.getType().isAir()
-                || (b.getType().equals(Material.FIRE) || b.getType().equals(Material.SOUL_FIRE))
+    private void activateDownloadedLanguage(String requestedLocale) {
+        if (!isEnabled() || !requestedLocale.equalsIgnoreCase(configService.runtime().language())) {
+            return;
+        }
+        reloadAll(false);
+    }
+
+    private void requestPendingLanguage(String locale) {
+        if (!pendingLanguageActivations.add(locale)) {
+            return;
+        }
+        RemoteLanguageCatalog.RequestState state = languageService.requestRemote(
+                locale,
+                result -> pendingLanguageCompleted(locale, result)
         );
+        if (state == RemoteLanguageCatalog.RequestState.SCHEDULED
+                || state == RemoteLanguageCatalog.RequestState.IN_FLIGHT) {
+            return;
+        }
+        pendingLanguageActivations.remove(locale);
+        if (state == RemoteLanguageCatalog.RequestState.CURRENT) {
+            schedulePendingLanguageReload(locale);
+            return;
+        }
+        getLogger().warning("Unable to prepare language file " + locale + " (" + state.name().toLowerCase()
+                + "); the previous configuration and language remain active");
     }
 
-    @SuppressWarnings("ConstantConditions")
-    public void constructNetherPortal(Block fire, Entity potentialCreator, PortalCreateEvent.CreateReason reason) {
-        boolean x = false;
-        World w = fire.getWorld();
-        List<Block> blocks = new ArrayList<>();
-
-        for(int i = fire.getY()-1; i >= w.getMinHeight(); i--)
-        {
-            Block findRing = w.getBlockAt(fire.getX(), i, fire.getZ());
-            if(isNetherPortalBlock(findRing))
-            {
-                if((isNetherPortalBlock(findRing.getRelative(BlockFace.NORTH))
-                        || isNetherPortalBlock(findRing.getRelative(BlockFace.SOUTH)))
-
-                        || (isNetherPortalBlock(findRing.getRelative(BlockFace.UP).getRelative(BlockFace.NORTH))
-                        || isNetherPortalBlock(findRing.getRelative(BlockFace.UP).getRelative(BlockFace.SOUTH)))
-
-                        || (isNetherPortalBlock(findRing.getRelative(BlockFace.DOWN).getRelative(BlockFace.NORTH))
-                        || isNetherPortalBlock(findRing.getRelative(BlockFace.DOWN).getRelative(BlockFace.SOUTH)))
-
-                )
-                {
-                    x = false;
-                }
-
-                else if((isNetherPortalBlock(findRing.getRelative(BlockFace.EAST))
-                        || isNetherPortalBlock(findRing.getRelative(BlockFace.WEST)))
-
-                        || (isNetherPortalBlock(findRing.getRelative(BlockFace.UP).getRelative(BlockFace.EAST))
-                        || isNetherPortalBlock(findRing.getRelative(BlockFace.UP).getRelative(BlockFace.WEST)))
-
-                        || (isNetherPortalBlock(findRing.getRelative(BlockFace.DOWN).getRelative(BlockFace.EAST))
-                        || isNetherPortalBlock(findRing.getRelative(BlockFace.DOWN).getRelative(BlockFace.WEST))))
-                {
-                    x =  true;
-                }
-
-                else
-                {
-                    return;
-                }
-
-                break;
-            }
+    private void pendingLanguageCompleted(String locale, RemoteLanguageCatalog.DownloadResult result) {
+        pendingLanguageActivations.remove(locale);
+        if (!result.successful()) {
+            getLogger().warning(languageFailureMessage(
+                    result,
+                    "the previous configuration and language remain active"
+            ));
+            return;
         }
+        schedulePendingLanguageReload(locale);
+    }
 
-        AtomicBoolean fail = new AtomicBoolean();
-        spread(fire, blocks, x, fail);
-
-        if(!fail.get())
-        {
-            boolean finalX = x;
-            getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
-                List<BlockState> states = new ArrayList<>();
-                BlockData b = createNetherPortalBlock(finalX);
-                for(Block i : blocks)
-                {
-                    BlockState state = i.getState();
-                    state.setBlockData(b);
-                    states.add(state);
-                }
-
-                PortalCreateEvent c = new PortalCreateEvent(states, w, potentialCreator, reason);
-                getServer().getPluginManager().callEvent(c);
-                if(!c.isCancelled())
-                {
-                    for(BlockState i : states)
-                    {
-                        i.update(true);
-                    }
-                }
-            });
+    private void schedulePendingLanguageReload(String locale) {
+        if (!FoliaScheduler.runGlobal(this, () -> reloadAll(false))) {
+            getLogger().warning("Downloaded locale " + locale
+                    + " could not activate because scheduling was unavailable");
         }
     }
 
-    public BlockData createNetherPortalBlock(boolean x)
-    {
-        Orientable b = (Orientable) Material.NETHER_PORTAL.createBlockData();
-        b.setAxis(x ? Axis.X : Axis.Z);
-        return b;
+    private String languageFailureMessage(RemoteLanguageCatalog.DownloadResult result, String outcome) {
+        Throwable failure = result.failure();
+        String detail = failure == null || failure.getMessage() == null || failure.getMessage().isBlank()
+                ? "unknown download failure"
+                : failure.getMessage();
+        String failureMessage = detail.startsWith("Unable to fetch language file ")
+                ? detail
+                : "Unable to fetch language file " + result.locale() + " from " + result.source() + ": " + detail;
+        return failureMessage + "; " + outcome;
     }
 
-    private boolean isNetherPortalBlock(Block b)
-    {
-        return b.getType().equals(Material.OBSIDIAN)
-                || (config.allowCryingObsidian && b.getType().equals(Material.CRYING_OBSIDIAN));
-    }
-
-    @SuppressWarnings("FieldMayBeFinal")
-    static class Config
-    {
-        private boolean creationSounds = true;
-        private boolean enablePortals = true;
-        private boolean allowCryingObsidian = true;
-        private int maxNetherPortalBlocks = 32;
-    }
 }

@@ -1,0 +1,235 @@
+# ShapedPortals dili: tr_TR
+# Bu dosya yalnızca eksikse indirilir; languages/tr_TR.toml dosyasını doğrudan düzenleyin.
+# Yerel değişiklikler otomatik olarak değiştirilmez; eksik değerler İngilizceyi kullanır.
+# Renkler: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B ve [RRGGBB]. Özel biçimlendirme için MiniMessage da kullanılabilir.
+# Yer tutucular iletiye özeldir. Yalnızca iletide zaten bulunan yer tutucuları koruyun ve adlarını değiştirmeyin.
+# Komutlar: {argument}=beklenmeyen argüman; {command}=komut yolu; {key}=parametre anahtarı; {parameter}=parametre adı; {type}=tür; {usage}=komut kullanımı.
+# Çalışma: {attempts}=oluşturma denemeleri; {created}=oluşturulan sayı veya zaman; {rejected}=reddedilen denemeler; {enabled}=oluşturma durumu; {hot_reload}=yeniden yükleme durumu; {scheduler}=zamanlayıcı.
+# Portallar: {portal}=tanımlayıcı; {portals}=yönetilen sayı; {id}=kısa ID; {uuid}=tam UUID; {world}=dünya; {axis}=eksen; {x}/{y}/{z}=çapa koordinatları; {blocks}=portal hücreleri; {cells}=tüm hücreler; {creator}=oluşturan; {materials}=kaydedilmiş çerçeve malzemeleri.
+# Listeler: {matches}=eşleşen portallar; {seconds}=saniye cinsinden onay süresi.
+# Yapılandırma: {category}=kategori; {setting}=ayar adı; {status}=seçim işareti; {value}=geçerli, varsayılan veya ham değer; {language}=etkin dil; {locale}=yerel ayar; {name}=dilin tam adı.
+# Dil düzenleyici: {variables}=geçerli yer tutucular; {old}=önceki değer; {new}=yeni değer.
+# Diğer: {duration}=milisaniye; {path}=yerel rapor yolu; {url}=genel URL; {reason}=hata nedeni.
+# Önek: {prefix}=genel runtime.prefix değeri. Yalnızca belirli bir iletide gizlemek için o iletiden {prefix} öğesini kaldırın.
+# & veya [ karakterini olduğu gibi göstermek için önüne ters eğik çizgi koyun.
+
+[runtime]
+prefix = "&d&lShapedPortals&r &8›&r "
+player_only = "{prefix}&cBu komut yalnızca bir oyuncu tarafından kullanılabilir.&r"
+
+[runtime.permission]
+denied = "{prefix}&cBunu yapmak için izniniz yok.&r"
+
+[runtime.hot_reload]
+success = "{prefix}&aYapılandırma ve dil dosyası değişiklikleri uygulandı.&r"
+failed = "{prefix}&cDosya değişiklikleri reddedildi; son geçerli ayarlar etkin kalmaya devam ediyor.&r"
+
+[command.feedback.reload]
+success = "{prefix}&a&f{duration}&r&a ms içinde yeniden yüklendi.&r &7Dil:&r &f{locale}&r"
+failed = "{prefix}&cYeniden yükleme {duration} ms sonra başarısız oldu.&r &7Son geçerli ayarlar hâlâ etkin; ayrıntılı hata için konsola bakın.&r"
+
+[command.feedback.config]
+opened = "{prefix}&aEksiksiz oyun içi yapılandırma düzenleyicisi açıldı.&r"
+saved = "{prefix}&a&f{setting}&r&a kaydedildi ve uygulandı.&r"
+save_failed = "{prefix}&c&f{setting}&r&c uygulanamadı: {reason}&r"
+
+[command.feedback]
+failed = "{prefix}&cKomut tamamlanamadı. Ayrıntılar için konsola bakın.&r"
+
+[command.feedback.debug]
+started = "{prefix}&7Sunucu ve ShapedPortals tanı bilgileri toplanıyor…&r"
+busy = "{prefix}&eBir ShapedPortals tanı raporu zaten oluşturuluyor.&r"
+saved = "{prefix}&aTanı raporu &f{path}&r&a konumuna kaydedildi.&r"
+uploaded = "{prefix}&aTanı raporu yüklendi:&r &b&n{url}&r"
+link_hover = "&7Herkese açık mclo.gs raporunu açın.&r"
+upload_failed = "{prefix}&eYerel rapor kaydedildi ancak mclo.gs yüklemesi başarısız oldu. Ayrıntılar için konsola bakın.&r"
+failed = "{prefix}&cTanı raporu oluşturulamadı. Ayrıntılar için konsola bakın.&r"
+
+[command.status]
+header = "{prefix}&d&lShapedPortals çalışma durumu&r"
+config = "{prefix}&7Oluşturma:&r {enabled} &8|&r &7Dil:&r &f{language}&r &8|&r &7Canlı yeniden yükleme:&r {hot_reload}"
+portals = "{prefix}&7Yönetilen portallar:&r &f{portals}&r &8|&r &7İç bloklar:&r &f{cells}&r"
+attempts = "{prefix}&7Denemeler:&r &f{attempts}&r &8|&r &7Oluşturulan:&r &a{created}&r &8|&r &7Reddedilen:&r &c{rejected}&r"
+compatibility = "{prefix}&7Derleme:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Zamanlayıcı:&r &f{scheduler}&r"
+
+[command.description]
+root = "ShapedPortals yardım ve yönetimi"
+config = "Eksiksiz oyun içi yapılandırma düzenleyicisini aç"
+language = "Kullanılabilir bir ShapedPortals dili seç"
+debug = "Kapsamlı bir ShapedPortals tanı raporu oluştur"
+portals = "Yönetilen tüm portalları ve ışınlanma kısayollarını listele"
+teleport = "Yönetilen bir portalın yanına güvenle ışınlan veya belirtilmezse portalları listele"
+status = "Yönetilen portal ve deneme istatistiklerini göster"
+
+[command.parameter]
+locale = "Kullanılabilir dil yerel ayarı"
+page = "Birden başlayan portal listesi sayfası"
+portal = "Portal UUID değeri, benzersiz önek veya list"
+
+[portal.notice]
+created = "{prefix}&d{blocks} iç bloğa sahip şekilli bir portal oluşturuldu.&r"
+failed = "{prefix}&cBu çerçeve şekilli bir portala dönüşemez: &f{reason}&r&c.&r"
+
+[portal.navigation.confirm]
+unsafe = "{prefix}&c&f{portal}&r&c yanında güvenli bir durma alanı yok. &eYine de içine ışınlanmak için &f{seconds}&r&e saniye içinde aynı portala tekrar tıklayın.&r"
+
+[portal.navigation.list]
+frame_policy_note = "&8  ⚠&r &eMevcut çerçeve &f{materials}&r&e kullanıyor; bu malzemelerle yeni portal oluşturulamaz.&r"
+empty = "&eKayıtlı yönetilen şekilli portal yok.&r"
+entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Konum:&r &f{x}, {y}, {z}&r &8•&r &7Eksen:&r &f{axis}&r &8•&r &7Hücreler:&r &f{blocks}&r\n&8  └&r &7Oluşturan:&r &f{creator}&r &8•&r &7Oluşturuldu:&r &f{created}&r"
+hover = "&7UUID:&r &f{uuid}&r\n&aBu portala ışınlanmak için tıklayın.&r"
+
+[portal.navigation.error]
+not_found = "{prefix}&c&f{portal}&r&c ile eşleşen yönetilen bir portal yok.&r"
+ambiguous = "{prefix}&c&f{portal}&r&c öneki {matches} portalla eşleşiyor. UUID değerinin daha fazlasını girin.&r"
+removed = "{prefix}&cBu portal artık kayıtlı değil.&r"
+world_unavailable = "{prefix}&c&f{world}&r&c portal dünyası şu anda kullanılamıyor.&r"
+destination_unavailable = "{prefix}&cPortal hedefi geçici olarak kullanılamıyor.&r"
+inactive = "{prefix}&cBu portal artık etkin değil. Bütünlük denetimi sıraya alındı.&r"
+no_safe_landing = "{prefix}&cBu portalın yanında güvenli bir durma alanı yok.&r"
+
+[portal.navigation.teleport]
+preparing = "{prefix}&7&f{portal}&r&7 için hedef hazırlanıyor…&r"
+success = "{prefix}&a&f{world}&r&a dünyasındaki &f{portal}&r&a portalının yanına ışınlandınız.&r"
+failed = "{prefix}&cPortal ışınlanması tamamlanmadı. Başka bir eklenti tarafından iptal edilmiş olabilir.&r"
+
+[hud]
+title = "&d&lShapedPortals&r"
+success = "&aBaşarılı&r"
+failure = "&cİşlem başarısız&r"
+info = "&dShapedPortals&r"
+
+[gui.title]
+root = "&5ShapedPortals Yapılandırması&r"
+category = "&5ShapedPortals&r &8›&r {category}"
+
+[gui.category]
+general = "&dGenel&r"
+portal = "&dPortal Kuralları&r"
+effects = "&dEfektler&r"
+hot_reload = "&dCanlı Yeniden Yükleme&r"
+integrity = "&dBütünlük&r"
+presentation = "&dSunum&r"
+debug = "&dTanılama&r"
+
+languages = "&dDiller&r"
+
+[gui.navigation]
+back = "&eGeri&r"
+reload = "&bDosyaları yeniden yükle&r"
+close = "&cKapat&r"
+
+[gui.lore]
+state = "&7Geçerli:&r {value}"
+toggle = "&8Değiştirmek için tıklayın.&r"
+number = "&8Sol +1, sağ -1, shift ×10, yazmak için bırakma tuşu.&r"
+text = "&8Sohbette yeni bir değer yazmak için tıklayın.&r"
+language = "&8Kullanılabilir bir dil seçmek veya yerel ayar yazmak için tıklayın.&r"
+category = "&8Bu kategorideki her ayarı düzenlemek için tıklayın.&r"
+
+[gui.prompt]
+request = "{prefix}&eSohbette &f{setting}&r&e için yeni bir değer yazın.&r"
+list = "{prefix}&7Liste girdilerini virgülle ayırın. Boş bir liste için &fnone&r&7 yazın.&r"
+cancel = "{prefix}&7Durdurmak için &fcancel&r&7 yazın. Bu istem 60 saniye içinde sona erer.&r"
+cancelled = "{prefix}&eYapılandırma düzenlemesi iptal edildi.&r"
+timeout = "{prefix}&eYapılandırma düzenlemesinin süresi hiçbir şey değişmeden doldu.&r"
+
+[gui.language]
+type = "&7Bir dil ayarı oluşturmak veya seçmek için sohbete adını yazın.&r"
+option = "{status} &f{locale}&r &8—&r &7{name}&r"
+hover = "&7&f{locale}&r&7 seçmek için tıklayın.&r"
+empty = "&eKullanılabilir dil bulunamadı; oluşturmak için bir yerel ayar adı yazın.&r"
+current = "&7Geçerli değer:&r {value}"
+variables = "&7Geçerli değişkenler / yer tutucular:&r &f{variables}&r"
+changed = "&f{old}&r &7değerinden&r &f{new}&r &7değerine değiştirildi&r"
+
+[gui.setting.general]
+enabled = "&dPortal oluşturma&r"
+language = "&dEtkin dil yerel ayarı&r"
+require_create_permission = "&dOluşturma izni gerektir&r"
+failure_feedback = "&dPortal hatası geri bildirimi&r"
+
+[gui.setting.metrics]
+enabled = "&dAnonim bStats istatistikleri&r"
+
+[gui.setting.portal]
+minimum_interior_blocks = "&dEn az iç blok&r"
+maximum_interior_blocks = "&dEn fazla iç blok&r"
+maximum_width = "&dEn fazla genişlik&r"
+maximum_height = "&dEn fazla yükseklik&r"
+frame_materials = "&dÇerçeve malzemeleri&r"
+interior_materials = "&dİç alan malzemeleri&r"
+ignition_causes = "&dAteşleme nedenleri&r"
+allowed_worlds = "&dİzin verilen dünyalar&r"
+denied_worlds = "&dReddedilen dünyalar&r"
+deduplication_millis = "&dTekilleştirme milisaniyesi&r"
+
+[gui.setting.effects]
+creation_sound = "&dOluşturma sesi&r"
+creation_sound_type = "&dOluşturma sesi türü&r"
+creation_sound_volume = "&dOluşturma sesi seviyesi&r"
+creation_sound_pitch = "&dOluşturma sesi perdesi&r"
+
+[gui.setting.hot_reload]
+enabled = "&dCanlı yeniden yükleme&r"
+poll_interval_millis = "&dYoklama aralığı (milisaniye)&r"
+cooldown_millis = "&dKaydetme bekleme süresi (milisaniye)&r"
+notify_operators = "&dOperatörleri bilgilendir&r"
+
+[gui.setting.integrity]
+enabled = "&dBütünlük hizmeti&r"
+check_interval_ticks = "&dDenetim aralığı (tik)&r"
+maximum_checks_per_cycle = "&dDöngü başına en fazla denetim&r"
+
+[gui.setting.presentation]
+splash_screen = "&dBaşlangıç karşılama ekranı&r"
+command_sounds = "&dKomut sesleri&r"
+command_overlays = "&dKomut katmanları&r"
+portal_notices = "&dPortal bildirim kanalları&r"
+overlay_duration_ticks = "&dKatman süresi (tik)&r"
+title_fade_in_ticks = "&dBaşlık belirme süresi (tik)&r"
+title_stay_ticks = "&dBaşlık kalma süresi (tik)&r"
+title_fade_out_ticks = "&dBaşlık kaybolma süresi (tik)&r"
+
+[gui.setting.debug]
+upload_enabled = "&dHata ayıklama raporlarını mclo.gs üzerine yükle&r"
+
+[director.help]
+category = "Komut kategorisi"
+command_group = "Komut grubu. Açmak için tıklayın."
+no_description = "Açıklama sağlanmadı"
+no_parameters = "Parametre yok. Komutu önceden doldurmak için tıklayın."
+no_subcommands = "Bu sayfada alt komut yok."
+parameters_hover = "Daha fazla bilgi için imleci parametrelerin üzerine getirin."
+
+[director.help.navigation]
+back = "Geri"
+page = "Sayfa"
+
+[director.help.navigation.next]
+hover = "Sonraki sayfa"
+
+[director.help.navigation.parent]
+hover = "Üst komut grubuna dön"
+
+[director.help.navigation.previous]
+hover = "Önceki sayfa"
+
+[director.help.parameter]
+default = "Belirtilmezse varsayılan değer \"{value}\" olur."
+optional = "Bu parametre isteğe bağlıdır."
+required = "Bu parametre zorunludur."
+type = "Bu parametrenin türü {type}."
+
+[director.runtime.error]
+conversion_failed = "\"{value}\", {parameter} için {type} türüne dönüştürülemiyor"
+default_parse_failed = "{parameter} parametresinin varsayılan değeri ayrıştırılamıyor"
+execution_failed = "{command} komutu çalıştırılamadı: {reason}"
+invalid_origin = "Bu komut bu kaynaktan çalıştırılamaz."
+missing_argument = "Eksik bağımsız değişken \"{parameter}\" ({type})"
+unexpected_argument = "Beklenmeyen bağımsız değişken \"{argument}\". İsteğe bağlı parametreler anahtarla belirtilmelidir, ör. seed=123"
+unclosed_group = "{key} parametresi için kapanış \"]\" karakteri eksik"
+unknown_parameter = "Bilinmeyen parametre anahtarı: {key}"
+
+[director.runtime]
+usage = "Kullanım: {usage}"

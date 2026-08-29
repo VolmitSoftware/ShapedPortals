@@ -1,11 +1,37 @@
 name: ${name}
 version: ${version}
 main: ${main}
-load: STARTUP
-authors: [ cyberpwn ]
-website: volmit.com
-description: Make portals however you like
-libraries:
-  - com.google.code.gson:gson:2.8.7
-api-version: ${apiversion}
-hotload-dependencies: false
+api-version: '${apiVersion}'
+folia-supported: true
+authors:
+  - Volmit Software
+website: https://volmit.com
+description: Create durable Nether portals with arbitrary vertical frame shapes.
+commands:
+  shapedportals:
+    aliases: [shapedportal, sp]
+    description: ShapedPortals help and administration
+    usage: /shapedportals
+
+permissions:
+  shapedportals.create:
+    description: Allows igniting shaped portals
+    default: true
+  shapedportals.command:
+    description: Allows viewing ShapedPortals help and status
+    default: true
+  shapedportals.config:
+    description: Allows editing ShapedPortals configuration in game
+    default: op
+  shapedportals.debug:
+    description: Allows creating and optionally uploading ShapedPortals diagnostic reports
+    default: op
+  shapedportals.portals:
+    description: Allows listing managed portals and their locations
+    default: op
+  shapedportals.teleport:
+    description: Allows teleporting safely beside managed portals
+    default: op
+  shapedportals.teleport.unsafe:
+    description: Allows confirming a teleport into an unsafe position beside a managed portal
+    default: op

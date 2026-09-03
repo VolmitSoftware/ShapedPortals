@@ -23,11 +23,15 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Orientable;
+import org.bukkit.block.data.type.EndPortalFrame;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockCanBuildEvent;
 import org.bukkit.event.world.PortalCreateEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -43,6 +47,7 @@ public final class PortalService {
     private final PresentationService presentation;
     private final PortalRegistry registry;
     private final PortalStats stats;
+    private final Constructor<BlockCanBuildEvent> blockCanBuildConstructor;
     private final Map<BlockKey, Long> recentIgnitions = new ConcurrentHashMap<>();
 
     public PortalService(
@@ -57,6 +62,7 @@ public final class PortalService {
         this.presentation = presentation;
         this.registry = registry;
         this.stats = stats;
+        blockCanBuildConstructor = resolveBlockCanBuildConstructor();
     }
 
     public void attempt(Block ignition, Entity creator, String cause) {
@@ -86,6 +92,26 @@ public final class PortalService {
             if (creator instanceof Player player) {
                 fail(player, "the owning region was unavailable");
             }
+        }
+    }
+
+    public void attemptEnd(Block changedFrame, Player creator) {
+        RuntimeConfig config = configService.runtime();
+        if (!config.enabled() || !config.endPortalCreation() || !config.allowsWorld(changedFrame.getWorld())) {
+            return;
+        }
+        if (isDuplicate(changedFrame, config.deduplicationMillis())) {
+            return;
+        }
+        boolean hasCreatePermission = creator.hasPermission("shapedportals.create");
+        Location location = changedFrame.getLocation();
+        String creatorName = creator.getName();
+        boolean scheduled = FoliaScheduler.runRegion(plugin, location,
+                () -> attemptEndOwned(location, creator, creatorName, hasCreatePermission), 1L);
+        if (!scheduled) {
+            stats.attempted();
+            stats.rejected(RejectionReason.REGION_SCHEDULING_UNAVAILABLE);
+            fail(creator, "the owning region was unavailable");
         }
     }
 
@@ -122,7 +148,7 @@ public final class PortalService {
         List<BlockPosition> interior = absolutePositions(ignition, shape.axis(), shape.interior());
         List<BlockPosition> frame = absolutePositions(ignition, shape.axis(), shape.frame());
         World world = ignition.getWorld();
-        BlockData portalData = createPortalData(shape.axis());
+        BlockData portalData = PortalType.NETHER.createBlockData(shape.axis());
         List<BlockState> originals = new ArrayList<>(interior.size());
         List<BlockState> proposed = new ArrayList<>(interior.size());
         for (BlockPosition position : interior) {
@@ -199,7 +225,197 @@ public final class PortalService {
         }
         if (creator instanceof Player player) {
             MessageArgs arguments = MessageArgs.builder().trusted("blocks", interior.size()).build();
-            presentation.portal(player, ShapedMessages.PORTAL_CREATED, arguments, FeedbackTone.SUCCESS);
+            presentation.portalCreated(player, PortalType.NETHER, arguments);
+        }
+    }
+
+    private void attemptEndOwned(Location frameLocation, Player creator, String creatorName,
+                                 boolean hasCreatePermission) {
+        RuntimeConfig config = configService.runtime();
+        Block changedFrame = frameLocation.getBlock();
+        if (!config.enabled() || !config.endPortalCreation() || !config.allowsWorld(changedFrame.getWorld())) {
+            return;
+        }
+        if (changedFrame.getType() != Material.END_PORTAL_FRAME
+                || !(changedFrame.getBlockData() instanceof EndPortalFrame frameData)
+                || !frameData.hasEye()) {
+            return;
+        }
+
+        EndShape selected = analyzeEnd(changedFrame, config);
+        if (selected == null || !selected.result().valid()) {
+            return;
+        }
+        PortalShape shape = selected.result().shape();
+        List<BlockPosition> interior = absolutePositions(selected.origin(), PortalAxis.Y, shape.interior());
+        World world = changedFrame.getWorld();
+        if (interior.stream().anyMatch(position -> position.block(world).getType() == Material.END_PORTAL)) {
+            return;
+        }
+        if (config.requireCreatePermission() && !hasCreatePermission) {
+            failPermission(creator);
+            return;
+        }
+
+        stats.attempted();
+        List<BlockPosition> frame = absolutePositions(selected.origin(), PortalAxis.Y, shape.frame());
+        BlockData portalData = PortalType.END.createBlockData(PortalAxis.Y);
+        if (!canBuildEndPortal(creator, world, interior, portalData)) {
+            stats.rejected(RejectionReason.EVENT_CANCELLED);
+            fail(creator, "another plugin denied one or more portal blocks");
+            return;
+        }
+
+        EndShape revalidated = analyzeEnd(changedFrame, config);
+        if (revalidated == null || !revalidated.result().valid()
+                || !revalidated.origin().equals(selected.origin())
+                || !revalidated.result().shape().equals(shape)) {
+            stats.rejected(RejectionReason.FRAME_CHANGED);
+            fail(creator, "the frame changed during creation");
+            return;
+        }
+
+        List<BlockState> originals = interior.stream()
+                .map(position -> position.block(world).getState())
+                .toList();
+        PortalRecord record = new PortalRecord(
+                PortalRecord.CURRENT_SCHEMA_VERSION,
+                UUID.randomUUID(),
+                world.getUID(),
+                world.getName(),
+                PortalAxis.Y,
+                BlockPosition.from(selected.origin()),
+                interior,
+                frame,
+                frame.stream().map(position -> position.block(world).getType()).toList(),
+                System.currentTimeMillis(),
+                creatorName
+        );
+        if (!registry.register(record, false)) {
+            stats.rejected(RejectionReason.OVERLAPPING_PORTAL);
+            fail(creator, "the shape overlaps an existing managed portal");
+            return;
+        }
+
+        try {
+            for (BlockPosition position : interior) {
+                position.block(world).setBlockData(portalData.clone(), false);
+            }
+        } catch (Throwable exception) {
+            registry.unregister(record.id());
+            restore(originals);
+            plugin.getLogger().log(Level.SEVERE, "Failed to commit shaped End portal " + record.id(), exception);
+            stats.rejected(RejectionReason.WORLD_MUTATION_FAILED);
+            fail(creator, "the world mutation failed");
+            return;
+        }
+
+        registry.requestSave();
+        stats.created();
+        if (config.endCreationSound()) {
+            world.playSound(frameLocation, config.endCreationSoundType(), SoundCategory.BLOCKS,
+                    config.endCreationSoundVolume(), config.endCreationSoundPitch());
+        }
+        presentation.portalCreated(creator, PortalType.END,
+                MessageArgs.builder().trusted("blocks", interior.size()).build());
+    }
+
+    private EndShape analyzeEnd(Block changedFrame, RuntimeConfig config) {
+        List<Block> candidates = List.of(
+                changedFrame.getRelative(1, 0, 0),
+                changedFrame.getRelative(-1, 0, 0),
+                changedFrame.getRelative(0, 0, 1),
+                changedFrame.getRelative(0, 0, -1)
+        );
+        EndShape selected = null;
+        Set<BlockPosition> selectedInterior = Set.of();
+        Set<BlockPosition> selectedFrame = Set.of();
+        for (Block candidate : candidates) {
+            EndShape scan = new EndShape(candidate, scanEnd(candidate, config));
+            if (!scan.result().valid()) {
+                continue;
+            }
+            Set<BlockPosition> interior = Set.copyOf(absolutePositions(
+                    candidate, PortalAxis.Y, scan.result().shape().interior()));
+            Set<BlockPosition> frame = Set.copyOf(absolutePositions(
+                    candidate, PortalAxis.Y, scan.result().shape().frame()));
+            if (selected == null) {
+                selected = scan;
+                selectedInterior = interior;
+                selectedFrame = frame;
+                continue;
+            }
+            if (!selectedInterior.equals(interior) || !selectedFrame.equals(frame)) {
+                return null;
+            }
+        }
+        return selected;
+    }
+
+    private ShapeScanResult scanEnd(Block origin, RuntimeConfig config) {
+        World world = origin.getWorld();
+        return PortalShapeScanner.scan(PortalAxis.Y, point -> {
+            int x = origin.getX() + point.horizontal();
+            int y = origin.getY();
+            int z = origin.getZ() + point.vertical();
+            if (FoliaScheduler.isFoliaThreading(plugin.getServer())
+                    && !FoliaScheduler.isOwnedByCurrentRegion(world, x >> 4, z >> 4)) {
+                return PortalCell.UNOWNED;
+            }
+            Block block = world.getBlockAt(x, y, z);
+            if (block.getBlockData() instanceof EndPortalFrame endFrame && endFrame.hasEye()) {
+                return PortalCell.FRAME;
+            }
+            Material material = block.getType();
+            if (material == Material.END_PORTAL || config.endInteriorMaterials().contains(material)) {
+                return PortalCell.INTERIOR;
+            }
+            return PortalCell.BLOCKED;
+        }, config.endScanLimits());
+    }
+
+    private boolean canBuildEndPortal(Player creator, World world, List<BlockPosition> interior, BlockData portalData) {
+        Player eventPlayer = FoliaScheduler.isFoliaThreading(plugin.getServer())
+                && !FoliaScheduler.isOwnedByCurrentRegion(creator) ? null : creator;
+        for (BlockPosition position : interior) {
+            Block block = position.block(world);
+            BlockCanBuildEvent event = createBlockCanBuildEvent(block, eventPlayer, portalData.clone());
+            if (event == null) {
+                return false;
+            }
+            plugin.getServer().getPluginManager().callEvent(event);
+            if (!event.isBuildable()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private Constructor<BlockCanBuildEvent> resolveBlockCanBuildConstructor() {
+        try {
+            return BlockCanBuildEvent.class.getConstructor(
+                    Block.class, Player.class, BlockData.class, boolean.class, EquipmentSlot.class);
+        } catch (NoSuchMethodException ignored) {
+        }
+        try {
+            return BlockCanBuildEvent.class.getConstructor(
+                    Block.class, Player.class, BlockData.class, boolean.class);
+        } catch (NoSuchMethodException exception) {
+            throw new IllegalStateException("No supported BlockCanBuildEvent constructor is available", exception);
+        }
+    }
+
+    private BlockCanBuildEvent createBlockCanBuildEvent(Block block, Player player, BlockData data) {
+        try {
+            if (blockCanBuildConstructor.getParameterCount() == 5) {
+                return blockCanBuildConstructor.newInstance(block, player, data, true, EquipmentSlot.HAND);
+            }
+            return blockCanBuildConstructor.newInstance(block, player, data, true);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException exception) {
+            plugin.getLogger().log(Level.SEVERE,
+                    "Failed to create a build-permission event for shaped End portal block " + block.getLocation(),
+                    exception);
+            return null;
         }
     }
 
@@ -262,20 +478,16 @@ public final class PortalService {
     private List<BlockPosition> absolutePositions(Block origin, PortalAxis axis, Set<GridPoint> points) {
         return points.stream()
                 .map(point -> new BlockPosition(
-                        axis == PortalAxis.X ? origin.getX() + point.horizontal() : origin.getX(),
-                        origin.getY() + point.vertical(),
-                        axis == PortalAxis.Z ? origin.getZ() + point.horizontal() : origin.getZ()
+                        axis == PortalAxis.X || axis == PortalAxis.Y
+                                ? origin.getX() + point.horizontal() : origin.getX(),
+                        axis == PortalAxis.Y ? origin.getY() : origin.getY() + point.vertical(),
+                        axis == PortalAxis.Z ? origin.getZ() + point.horizontal()
+                                : axis == PortalAxis.Y ? origin.getZ() + point.vertical() : origin.getZ()
                 ))
                 .sorted(Comparator.comparingInt(BlockPosition::y)
                         .thenComparingInt(BlockPosition::x)
                         .thenComparingInt(BlockPosition::z))
                 .toList();
-    }
-
-    private BlockData createPortalData(PortalAxis axis) {
-        Orientable portal = (Orientable) Material.NETHER_PORTAL.createBlockData();
-        portal.setAxis(axis.bukkitAxis());
-        return portal;
     }
 
     private Entity eventCreator(Entity creator) {
@@ -338,5 +550,8 @@ public final class PortalService {
                 plugin.getLogger().log(Level.SEVERE, "Failed to roll back portal block at " + original.getLocation(), exception);
             }
         }
+    }
+
+    private record EndShape(Block origin, ShapeScanResult result) {
     }
 }

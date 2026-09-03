@@ -67,8 +67,13 @@ page = "Seitennummer der Portalliste, beginnend bei eins"
 portal = "Portal-UUID, eindeutiges Präfix oder list"
 
 [portal.notice]
-created = "{prefix}&dEin geformtes Portal mit {blocks} Innenblöcken wurde erstellt.&r"
+nether_created = "{prefix}&dEin geformtes Portal mit {blocks} Innenblöcken wurde erstellt.&r"
+end_created = "{prefix}&5End&r &dEin geformtes Portal mit {blocks} Innenblöcken wurde erstellt.&r"
 failed = "{prefix}&cDieser Rahmen kann kein geformtes Portal werden: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cNeben &f{portal}&r&c gibt es keinen sicheren Standplatz. &eKlicke innerhalb von &f{seconds}&r&e Sekunden erneut auf dasselbe Portal, um dich trotzdem hinein zu teleportieren.&r"
@@ -76,7 +81,7 @@ unsafe = "{prefix}&cNeben &f{portal}&r&c gibt es keinen sicheren Standplatz. &eK
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eDer bestehende Rahmen verwendet &f{materials}&r&e; damit können keine neuen Portale erstellt werden.&r"
 empty = "&eEs sind keine verwalteten geformten Portale registriert.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Ort:&r &f{x}, {y}, {z}&r &8•&r &7Achse:&r &f{axis}&r &8•&r &7Zellen:&r &f{blocks}&r\n&8  └&r &7Ersteller:&r &f{creator}&r &8•&r &7Erstellt:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Ort:&r &f{x}, {y}, {z}&r &8•&r &7Achse:&r &f{axis}&r &8•&r &7Zellen:&r &f{blocks}&r\n&8  └&r &7Ersteller:&r &f{creator}&r &8•&r &7Erstellt:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aKlicke, um dich zu diesem Portal zu teleportieren.&r"
 
 [portal.navigation.error]
@@ -153,22 +158,32 @@ failure_feedback = "&dRückmeldung bei Portalfehlern&r"
 enabled = "&dAnonyme bStats-Metriken&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dMinimale Anzahl Innenblöcke&r"
-maximum_interior_blocks = "&dMaximale Anzahl Innenblöcke&r"
-maximum_width = "&dMaximale Breite&r"
-maximum_height = "&dMaximale Höhe&r"
-frame_materials = "&dRahmenmaterialien&r"
-interior_materials = "&dInnenmaterialien&r"
+minimum_interior_blocks = "&dNether Minimale Anzahl Innenblöcke&r"
+maximum_interior_blocks = "&dNether Maximale Anzahl Innenblöcke&r"
+maximum_width = "&dNether Maximale Breite&r"
+maximum_height = "&dNether Maximale Höhe&r"
+frame_materials = "&dNether Rahmenmaterialien&r"
+interior_materials = "&dNether Innenmaterialien&r"
 ignition_causes = "&dZündursachen&r"
 allowed_worlds = "&dErlaubte Welten&r"
 denied_worlds = "&dGesperrte Welten&r"
 deduplication_millis = "&dDeduplizierung in Millisekunden&r"
+end_portal_creation = "&dEnd Portalerstellung&r"
+end_minimum_interior_blocks = "&dEnd Minimale Anzahl Innenblöcke&r"
+end_maximum_interior_blocks = "&dEnd Maximale Anzahl Innenblöcke&r"
+end_maximum_width = "&dEnd Maximale Breite&r"
+end_maximum_length = "&dEnd Maximale Breite&r"
+end_interior_materials = "&dEnd Innenmaterialien&r"
 
 [gui.setting.effects]
-creation_sound = "&dErstellungston&r"
-creation_sound_type = "&dArt des Erstellungstons&r"
-creation_sound_volume = "&dLautstärke des Erstellungstons&r"
-creation_sound_pitch = "&dTonhöhe des Erstellungstons&r"
+creation_sound = "&dNether Erstellungston&r"
+creation_sound_type = "&dNether Art des Erstellungstons&r"
+creation_sound_volume = "&dNether Lautstärke des Erstellungstons&r"
+creation_sound_pitch = "&dNether Tonhöhe des Erstellungstons&r"
+end_creation_sound = "&dEnd Erstellungston&r"
+end_creation_sound_type = "&dEnd Art des Erstellungstons&r"
+end_creation_sound_volume = "&dEnd Lautstärke des Erstellungstons&r"
+end_creation_sound_pitch = "&dEnd Tonhöhe des Erstellungstons&r"
 
 [gui.setting.hot_reload]
 enabled = "&dAutomatisches Neuladen&r"
@@ -186,6 +201,8 @@ splash_screen = "&dStartbildschirm&r"
 command_sounds = "&dBefehlstöne&r"
 command_overlays = "&dBefehlseinblendungen&r"
 portal_notices = "&dKanäle für Portalhinweise&r"
+nether_creation_notices = "&dNether Kanäle für Portalhinweise&r"
+end_creation_notices = "&dEnd Kanäle für Portalhinweise&r"
 overlay_duration_ticks = "&dEinblenddauer in Ticks&r"
 title_fade_in_ticks = "&dTiteleinblendung in Ticks&r"
 title_stay_ticks = "&dTitelanzeigedauer in Ticks&r"

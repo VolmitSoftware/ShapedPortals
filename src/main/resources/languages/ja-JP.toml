@@ -139,10 +139,14 @@ timeout = "{prefix}&e設定編集は何も変更せずに期限切れになり�
 upload_enabled = "&dデバッグレポートをアップロードmclo.gs&r"
 
 [gui.setting.effects]
-creation_sound = "&d作成音&r"
-creation_sound_pitch = "&d作成音のピッチ&r"
-creation_sound_type = "&d作成音の種類&r"
-creation_sound_volume = "&d作成音の音量&r"
+creation_sound = "&dNether 作成音&r"
+creation_sound_pitch = "&dNether 作成音のピッチ&r"
+end_creation_sound = "&dEnd 作成音&r"
+end_creation_sound_type = "&dEnd 作成音の種類&r"
+end_creation_sound_volume = "&dEnd 作成音の音量&r"
+end_creation_sound_pitch = "&dEnd 作成音のピッチ&r"
+creation_sound_type = "&dNether 作成音の種類&r"
+creation_sound_volume = "&dNether 作成音の音量&r"
 
 [gui.setting.general]
 enabled = "&dポータル作成&r"
@@ -167,20 +171,28 @@ maximum_checks_per_cycle = "&dサイクルごとの最大チェック数&r"
 [gui.setting.portal]
 allowed_worlds = "&d許可された世界&r"
 deduplication_millis = "&d二重処理防止ミリ秒&r"
+end_portal_creation = "&dEnd ポータル作成&r"
+end_minimum_interior_blocks = "&dEnd 最小内部ブロック数&r"
+end_maximum_interior_blocks = "&dEnd 最大内部ブロック数&r"
+end_maximum_width = "&dEnd 最大幅&r"
+end_maximum_length = "&dEnd 最大幅&r"
+end_interior_materials = "&dEnd インテリア素材&r"
 denied_worlds = "&d禁止された世界&r"
-frame_materials = "&dフレーム材質&r"
+frame_materials = "&dNether フレーム材質&r"
 ignition_causes = "&d点火原因&r"
-interior_materials = "&dインテリア素材&r"
-maximum_height = "&d最大高さ&r"
-maximum_interior_blocks = "&d最大内部ブロック数&r"
-maximum_width = "&d最大幅&r"
-minimum_interior_blocks = "&d最小内部ブロック数&r"
+interior_materials = "&dNether インテリア素材&r"
+maximum_height = "&dNether 最大高さ&r"
+maximum_interior_blocks = "&dNether 最大内部ブロック数&r"
+maximum_width = "&dNether 最大幅&r"
+minimum_interior_blocks = "&dNether 最小内部ブロック数&r"
 
 [gui.setting.presentation]
 command_overlays = "&dコマンドオーバーレイ&r"
 command_sounds = "&dコマンド音&r"
 overlay_duration_ticks = "&dオーバーレイの持続ティック数&r"
 portal_notices = "&dポータル通知チャンネル&r"
+nether_creation_notices = "&dNether ポータル通知チャンネル&r"
+end_creation_notices = "&dEnd ポータル通知チャンネル&r"
 splash_screen = "&d起動スプラッシュ画面&r"
 title_fade_in_ticks = "&dタイトルのフェードインティック&r"
 title_fade_out_ticks = "&dタイトルのフェードアウトティック&r"
@@ -195,6 +207,10 @@ failure = "&c操作に失敗しました&r"
 info = "&dShapedPortals&r"
 success = "&a成功&r"
 title = "&d&lShapedPortals&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&c&f{portal}&r&cの隣に安全な足場がありません。 &e&f{seconds}&r&e秒以内に同じポータルをもう一度クリックすると、ポータル内へ強制的にテレポートします。&r"
@@ -211,7 +227,7 @@ world_unavailable = "{prefix}&cポータルワールド&f{world}&r&cは現在利
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &e既存のフレームは &f{materials}&r&e を使用しています。この素材では新しいポータルを作成できません。&r"
 empty = "&e管理された形状のポータルは登録されていません。&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7場所:&r &f{x}, {y}, {z}&r &8•&r &7軸:&r &f{axis}&r &8•&r &7セル:&r &f{blocks}&r\n&8  └&r &7作成者:&r &f{creator}&r &8•&r &7作成日時:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7場所:&r &f{x}, {y}, {z}&r &8•&r &7軸:&r &f{axis}&r &8•&r &7セル:&r &f{blocks}&r\n&8  └&r &7作成者:&r &f{creator}&r &8•&r &7作成日時:&r &f{created}&r"
 hover = "&7UUID:&r&f{uuid}&r\n&aこのポータルにテレポートするにはクリックしてください。&r"
 
 [portal.navigation.teleport]
@@ -220,7 +236,8 @@ preparing = "{prefix}&7&f{portal}&r&7の修復先...&r"
 success = "{prefix}&a&f{world}&r&aにある&f{portal}&r&aのそばへテレポートしました。&r"
 
 [portal.notice]
-created = "{prefix}&d{blocks}内部ブロックで形作られたポータルを作成しました.&r"
+nether_created = "{prefix}&d{blocks}内部ブロックで形作られたポータルを作成しました.&r"
+end_created = "{prefix}&5End&r &d{blocks}内部ブロックで形作られたポータルを作成しました.&r"
 failed = "{prefix}&cそのフレームは形作られたポータルにはなりません:&f{reason}&r&c.&r"
 
 [runtime.hot_reload]

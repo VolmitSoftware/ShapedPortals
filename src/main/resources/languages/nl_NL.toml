@@ -67,8 +67,13 @@ page = "Pagina van de portalenlijst, beginnend bij één"
 portal = "Portaal-UUID, uniek voorvoegsel of list"
 
 [portal.notice]
-created = "{prefix}&dEen gevormd portaal met {blocks} binnenblokken is aangemaakt.&r"
+nether_created = "{prefix}&dEen gevormd portaal met {blocks} binnenblokken is aangemaakt.&r"
+end_created = "{prefix}&5End&r &dEen gevormd portaal met {blocks} binnenblokken is aangemaakt.&r"
 failed = "{prefix}&cDit frame kan geen gevormd portaal worden: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cNaast &f{portal}&r&c is geen veilige plek om te staan. &eKlik binnen &f{seconds}&r&e seconden opnieuw op hetzelfde portaal om er toch in te teleporteren.&r"
@@ -76,7 +81,7 @@ unsafe = "{prefix}&cNaast &f{portal}&r&c is geen veilige plek om te staan. &eKli
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eHet bestaande frame gebruikt &f{materials}&r&e; daarmee kunnen geen nieuwe portalen worden gemaakt.&r"
 empty = "&eEr zijn geen beheerde gevormde portalen geregistreerd.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Locatie:&r &f{x}, {y}, {z}&r &8•&r &7As:&r &f{axis}&r &8•&r &7Cellen:&r &f{blocks}&r\n&8  └&r &7Maker:&r &f{creator}&r &8•&r &7Aangemaakt:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Locatie:&r &f{x}, {y}, {z}&r &8•&r &7As:&r &f{axis}&r &8•&r &7Cellen:&r &f{blocks}&r\n&8  └&r &7Maker:&r &f{creator}&r &8•&r &7Aangemaakt:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aKlik om naar dit portaal te teleporteren.&r"
 
 [portal.navigation.error]
@@ -153,22 +158,32 @@ failure_feedback = "&dFeedback bij portaalfouten&r"
 enabled = "&dAnonieme bStats-statistieken&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dMinimumaantal binnenblokken&r"
-maximum_interior_blocks = "&dMaximumaantal binnenblokken&r"
-maximum_width = "&dMaximale breedte&r"
-maximum_height = "&dMaximale hoogte&r"
-frame_materials = "&dFramematerialen&r"
-interior_materials = "&dBinnenmaterialen&r"
+minimum_interior_blocks = "&dNether Minimumaantal binnenblokken&r"
+maximum_interior_blocks = "&dNether Maximumaantal binnenblokken&r"
+maximum_width = "&dNether Maximale breedte&r"
+maximum_height = "&dNether Maximale hoogte&r"
+frame_materials = "&dNether Framematerialen&r"
+interior_materials = "&dNether Binnenmaterialen&r"
 ignition_causes = "&dOntstekingsoorzaken&r"
 allowed_worlds = "&dToegestane werelden&r"
 denied_worlds = "&dGeweigerde werelden&r"
 deduplication_millis = "&dOntdubbeling in milliseconden&r"
+end_portal_creation = "&dEnd Portalen aanmaken&r"
+end_minimum_interior_blocks = "&dEnd Minimumaantal binnenblokken&r"
+end_maximum_interior_blocks = "&dEnd Maximumaantal binnenblokken&r"
+end_maximum_width = "&dEnd Maximale breedte&r"
+end_maximum_length = "&dEnd Maximale breedte&r"
+end_interior_materials = "&dEnd Binnenmaterialen&r"
 
 [gui.setting.effects]
-creation_sound = "&dAanmaakgeluid&r"
-creation_sound_type = "&dType aanmaakgeluid&r"
-creation_sound_volume = "&dVolume van aanmaakgeluid&r"
-creation_sound_pitch = "&dToonhoogte van aanmaakgeluid&r"
+creation_sound = "&dNether Aanmaakgeluid&r"
+creation_sound_type = "&dNether Type aanmaakgeluid&r"
+creation_sound_volume = "&dNether Volume van aanmaakgeluid&r"
+creation_sound_pitch = "&dNether Toonhoogte van aanmaakgeluid&r"
+end_creation_sound = "&dEnd Aanmaakgeluid&r"
+end_creation_sound_type = "&dEnd Type aanmaakgeluid&r"
+end_creation_sound_volume = "&dEnd Volume van aanmaakgeluid&r"
+end_creation_sound_pitch = "&dEnd Toonhoogte van aanmaakgeluid&r"
 
 [gui.setting.hot_reload]
 enabled = "&dAutomatisch herladen&r"
@@ -186,6 +201,8 @@ splash_screen = "&dOpstartscherm&r"
 command_sounds = "&dOpdrachtgeluiden&r"
 command_overlays = "&dOpdrachtoverlays&r"
 portal_notices = "&dKanalen voor portaalmeldingen&r"
+nether_creation_notices = "&dNether Kanalen voor portaalmeldingen&r"
+end_creation_notices = "&dEnd Kanalen voor portaalmeldingen&r"
 overlay_duration_ticks = "&dOverlayduur in ticks&r"
 title_fade_in_ticks = "&dInvagen van titel in ticks&r"
 title_stay_ticks = "&dWeergaveduur van titel in ticks&r"

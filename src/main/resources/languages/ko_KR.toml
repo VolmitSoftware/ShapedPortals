@@ -139,10 +139,14 @@ timeout = "{prefix}&e변경 없이 구성 편집이 만료되었습니다.&r"
 upload_enabled = "&d디버그 보고서를 업로드mclo.gs&r"
 
 [gui.setting.effects]
-creation_sound = "&d생성 소리&r"
-creation_sound_pitch = "&d생성 소리 피치&r"
-creation_sound_type = "&d생성 소리 유형&r"
-creation_sound_volume = "&d생성 소리 볼륨&r"
+creation_sound = "&dNether 생성 소리&r"
+creation_sound_pitch = "&dNether 생성 소리 피치&r"
+end_creation_sound = "&dEnd 생성 소리&r"
+end_creation_sound_type = "&dEnd 생성 소리 유형&r"
+end_creation_sound_volume = "&dEnd 생성 소리 볼륨&r"
+end_creation_sound_pitch = "&dEnd 생성 소리 피치&r"
+creation_sound_type = "&dNether 생성 소리 유형&r"
+creation_sound_volume = "&dNether 생성 소리 볼륨&r"
 
 [gui.setting.general]
 enabled = "&d포털 생성&r"
@@ -167,20 +171,28 @@ maximum_checks_per_cycle = "&d사이클 당 최대 확인 횟수&r"
 [gui.setting.portal]
 allowed_worlds = "&d허용된 월드&r"
 deduplication_millis = "&d중복 제거 밀리초&r"
+end_portal_creation = "&dEnd 포털 생성&r"
+end_minimum_interior_blocks = "&dEnd 최소 내부 블록&r"
+end_maximum_interior_blocks = "&dEnd 최대 내부 블록&r"
+end_maximum_width = "&dEnd 최대 너비&r"
+end_maximum_length = "&dEnd 최대 너비&r"
+end_interior_materials = "&dEnd 실내 재료&r"
 denied_worlds = "&d거부된 월드&r"
-frame_materials = "&d프레임 재료&r"
+frame_materials = "&dNether 프레임 재료&r"
 ignition_causes = "&d점화 원인&r"
-interior_materials = "&d실내 재료&r"
-maximum_height = "&d최대 높이&r"
-maximum_interior_blocks = "&d최대 내부 블록&r"
-maximum_width = "&d최대 너비&r"
-minimum_interior_blocks = "&d최소 내부 블록&r"
+interior_materials = "&dNether 실내 재료&r"
+maximum_height = "&dNether 최대 높이&r"
+maximum_interior_blocks = "&dNether 최대 내부 블록&r"
+maximum_width = "&dNether 최대 너비&r"
+minimum_interior_blocks = "&dNether 최소 내부 블록&r"
 
 [gui.setting.presentation]
 command_overlays = "&d명령 오버레이&r"
 command_sounds = "&d명령음&r"
 overlay_duration_ticks = "&d오버레이 지속 시간 틱&r"
 portal_notices = "&d포털 알림 채널&r"
+nether_creation_notices = "&dNether 포털 알림 채널&r"
+end_creation_notices = "&dEnd 포털 알림 채널&r"
 splash_screen = "&d시작 스플래시 화면&r"
 title_fade_in_ticks = "&d제목 페이드인 틱&r"
 title_fade_out_ticks = "&d제목 페이드아웃 틱&r"
@@ -195,6 +207,10 @@ failure = "&c작업 실패&r"
 info = "&dShapedPortals&r"
 success = "&a성공&r"
 title = "&d&lShapedPortals&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&c&f{portal}&r&c 옆에 안전하게 설 수 있는 공간이 없습니다. &e같은 포털을 &f{seconds}&r&e초 이내에 다시 클릭하면 안전 여부와 관계없이 포털 안으로 순간이동합니다.&r"
@@ -211,7 +227,7 @@ world_unavailable = "{prefix}&c포털 세계&f{world}&r&c는 현재 이용할 �
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &e기존 프레임은 &f{materials}&r&e을(를) 사용하며, 이 재료로는 새 포털을 만들 수 없습니다.&r"
 empty = "&e등록된 관리형 형성 포털이 없습니다.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7위치:&r &f{x}, {y}, {z}&r &8•&r &7축:&r &f{axis}&r &8•&r &7셀:&r &f{blocks}&r\n&8  └&r &7생성자:&r &f{creator}&r &8•&r &7생성일:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7위치:&r &f{x}, {y}, {z}&r &8•&r &7축:&r &f{axis}&r &8•&r &7셀:&r &f{blocks}&r\n&8  └&r &7생성자:&r &f{creator}&r &8•&r &7생성일:&r &f{created}&r"
 hover = "&7UUID:&r&f{uuid}&r\n&a이 포털로 순간이동하려면 클릭하세요.&r"
 
 [portal.navigation.teleport]
@@ -220,7 +236,8 @@ preparing = "{prefix}&7&f{portal}&r&7… 목적지를 준비 중입니다.&r"
 success = "{prefix}&a&f{world}&r&a에서&f{portal}&r&a옆으로 순간이동되었습니다.&r"
 
 [portal.notice]
-created = "{prefix}&d{blocks}내부 블록으로 형태가 있는 포털을 생성했습니다.&r"
+nether_created = "{prefix}&d{blocks}내부 블록으로 형태가 있는 포털을 생성했습니다.&r"
+end_created = "{prefix}&5End&r &d{blocks}내부 블록으로 형태가 있는 포털을 생성했습니다.&r"
 failed = "{prefix}&c그 프레임은 형태가 있는 포털이 될 수 없습니다:&f{reason}&r&c.&r"
 
 [runtime.hot_reload]

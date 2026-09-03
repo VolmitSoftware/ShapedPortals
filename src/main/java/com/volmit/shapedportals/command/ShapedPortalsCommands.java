@@ -41,23 +41,8 @@ public final class ShapedPortalsCommands {
     }
 
     @Director(name = "language", sync = true, description = "Select an available ShapedPortals language", descriptionKey = "command.description.language")
-    public void language(
-            @Param(name = "locale", description = "Available language locale", descriptionKey = "command.parameter.locale", customHandler = ShapedPortalsCommandHandlers.Language.class) String locale,
-            @Param(name = "sender", contextual = true) CommandSender sender
-    ) {
-        Player player = languagePlayer(sender);
-        if (player == null) {
-            return;
-        }
-        plugin.getConfigEditor().selectLanguage(player, locale);
-    }
-
-    public void languageMenu(CommandSender sender, int page, boolean preserveEditorPrompt) {
-        Player player = languagePlayer(sender);
-        if (player == null) {
-            return;
-        }
-        plugin.getConfigEditor().openLanguagePicker(player, page, preserveEditorPrompt);
+    public void language(@Param(name = "sender", contextual = true) CommandSender sender) {
+        plugin.getLanguageSwitcher().open(sender);
     }
 
     @Director(name = "debug", sync = true, description = "Create a comprehensive ShapedPortals diagnostic report", descriptionKey = "command.description.debug")
@@ -112,24 +97,24 @@ public final class ShapedPortalsCommands {
         RuntimeConfig config = plugin.getConfigService().runtime();
         PortalStats.Snapshot stats = plugin.getPortalStats().snapshot();
         ArrayList<String> entries = new ArrayList<>();
-        entries.add(statusEntry(language, ShapedMessages.STATUS_CONFIG, MessageArgs.builder()
+        entries.add(statusEntry(sender, language, ShapedMessages.STATUS_CONFIG, MessageArgs.builder()
                 .trusted("enabled", state(config.enabled()))
                 .untrusted("language", config.language())
                 .trusted("hot_reload", state(config.hotReloadEnabled()))
                 .build()));
-        entries.add(statusEntry(language, ShapedMessages.STATUS_PORTALS, MessageArgs.builder()
+        entries.add(statusEntry(sender, language, ShapedMessages.STATUS_PORTALS, MessageArgs.builder()
                 .trusted("portals", plugin.getPortalRegistry().portalCount())
                 .trusted("cells", plugin.getPortalRegistry().interiorCellCount())
                 .build()));
-        entries.add(statusEntry(language, ShapedMessages.STATUS_ATTEMPTS, MessageArgs.builder()
+        entries.add(statusEntry(sender, language, ShapedMessages.STATUS_ATTEMPTS, MessageArgs.builder()
                 .trusted("attempts", stats.attempts())
                 .trusted("created", stats.created())
                 .trusted("rejected", stats.rejected())
                 .build()));
-        entries.add(statusEntry(language, ShapedMessages.STATUS_COMPATIBILITY, MessageArgs.builder()
+        entries.add(statusEntry(sender, language, ShapedMessages.STATUS_COMPATIBILITY, MessageArgs.builder()
                 .untrusted("scheduler", plugin.schedulerName())
                 .build()));
-        String title = ComponentText.markup(language.renderWithoutPrefix(
+        String title = ComponentText.markup(language.renderWithoutPrefix(sender,
                 ShapedMessages.STATUS_HEADER,
                 MessageArgs.empty()
         )).plain();
@@ -144,24 +129,12 @@ public final class ShapedPortalsCommands {
         DirectorMiniMenu.deliverContent(sender, menu, ChatMenuStyle.theme(), language.directorResolver());
     }
 
-    private Player languagePlayer(CommandSender sender) {
-        if (!sender.hasPermission("shapedportals.config")) {
-            plugin.getPresentationService().command(sender, ShapedMessages.NO_PERMISSION, FeedbackTone.FAILURE);
-            return null;
-        }
-        if (!(sender instanceof Player player)) {
-            plugin.getPresentationService().command(sender, ShapedMessages.PLAYER_ONLY, FeedbackTone.FAILURE);
-            return null;
-        }
-        return player;
-    }
-
     private String state(boolean enabled) {
         return enabled ? "&aenabled&r" : "&cdisabled&r";
     }
 
-    private String statusEntry(LanguageService language, TextKey key, MessageArgs arguments) {
-        ComponentText content = ComponentText.markup(language.renderWithoutPrefix(key, arguments));
+    private String statusEntry(CommandSender sender, LanguageService language, TextKey key, MessageArgs arguments) {
+        ComponentText content = ComponentText.markup(language.renderWithoutPrefix(sender, key, arguments));
         return ChatMenuStyle.entry(content).miniMessage();
     }
 }

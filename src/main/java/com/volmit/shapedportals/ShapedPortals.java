@@ -1,5 +1,7 @@
 package com.volmit.shapedportals;
 
+import art.arcane.volmlib.util.localization.BukkitLanguageSwitcher;
+import art.arcane.volmlib.util.localization.LocalizationSnapshot;
 import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
 import art.arcane.volmlib.util.scheduling.FoliaScheduler;
 import art.arcane.volmlib.util.scheduling.SchedulerUtils;
@@ -20,6 +22,7 @@ import com.volmit.shapedportals.portal.PortalNavigationService;
 import com.volmit.shapedportals.portal.PortalRegistry;
 import com.volmit.shapedportals.portal.PortalService;
 import com.volmit.shapedportals.portal.PortalStats;
+import com.volmit.shapedportals.presentation.ChatMenuStyle;
 import com.volmit.shapedportals.presentation.PresentationService;
 import com.volmit.shapedportals.util.SplashScreen;
 import org.bukkit.event.HandlerList;
@@ -44,6 +47,7 @@ public final class ShapedPortals extends JavaPlugin {
     private ShapedDebugService debugService;
     private MetricsService metricsService;
     private ShapedPortalsIntegrationService integrationService;
+    private BukkitLanguageSwitcher languageSwitcher;
     private final Set<String> pendingLanguageActivations = ConcurrentHashMap.newKeySet();
 
     @Override
@@ -53,6 +57,10 @@ public final class ShapedPortals extends JavaPlugin {
             configService = new ConfigService(getDataFolder());
             languageService = new LanguageService(getDataFolder(), getLogger());
             installInitialConfiguration();
+            languageService.initializeSelections(
+                    () -> configService.runtime().language(),
+                    this::selectDefaultLanguage
+            );
             metricsService = new MetricsService(this);
             metricsService.reconfigure(configService.runtime().metricsEnabled());
             presentationService = new PresentationService(this, configService, languageService);
@@ -76,6 +84,17 @@ public final class ShapedPortals extends JavaPlugin {
 
             configEditor = new ConfigEditorGui(this, configService, languageService, presentationService);
             getServer().getPluginManager().registerEvents(configEditor, this);
+            languageSwitcher = BukkitLanguageSwitcher.register(
+                    this,
+                    languageService.selections(),
+                    new BukkitLanguageSwitcher.Options(
+                            "shapedportals",
+                            "shapedportals.config",
+                            ChatMenuStyle.theme(),
+                            languageService.directorResolver(),
+                            languageService.editorOptions()
+                    )
+            );
             debugService = new ShapedDebugService(this);
             new CommandService(this).register();
 
@@ -113,8 +132,8 @@ public final class ShapedPortals extends JavaPlugin {
         if (hotReloadService != null) {
             hotReloadService.close();
         }
-        if (languageService != null) {
-            languageService.close();
+        if (languageSwitcher != null) {
+            languageSwitcher.close();
         }
         if (integrityService != null) {
             integrityService.stop();
@@ -127,6 +146,9 @@ public final class ShapedPortals extends JavaPlugin {
         }
         if (presentationService != null) {
             presentationService.shutdown();
+        }
+        if (languageService != null) {
+            languageService.close();
         }
         if (metricsService != null) {
             metricsService.close();
@@ -224,6 +246,10 @@ public final class ShapedPortals extends JavaPlugin {
         return debugService;
     }
 
+    public BukkitLanguageSwitcher getLanguageSwitcher() {
+        return languageSwitcher;
+    }
+
     public MetricsService getMetricsService() {
         return metricsService;
     }
@@ -246,6 +272,19 @@ public final class ShapedPortals extends JavaPlugin {
                     exception
             );
             languageService.install(languageService.englishFallback(preparedConfig.runtime().language()));
+        }
+    }
+
+    private synchronized void selectDefaultLanguage(String locale, LocalizationSnapshot prepared) throws IOException {
+        configService.update(config -> config.general.language = locale);
+        languageService.install(new LanguageService.PreparedLanguage(
+                locale,
+                languageService.languageFile(locale),
+                prepared,
+                true
+        ));
+        if (hotReloadService != null) {
+            hotReloadService.requestReconfigure();
         }
     }
 

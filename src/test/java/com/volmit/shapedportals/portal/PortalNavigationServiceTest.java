@@ -72,6 +72,41 @@ class PortalNavigationServiceTest {
     }
 
     @Test
+    void endPortalLandingCandidatesStandAboveTheSolidFrame() {
+        BlockPosition anchor = new BlockPosition(4, 64, 8);
+        List<BlockPosition> frame = List.of(
+                new BlockPosition(3, 64, 8),
+                new BlockPosition(5, 64, 8),
+                new BlockPosition(4, 64, 7),
+                new BlockPosition(4, 64, 9)
+        );
+        PortalRecord portal = new PortalRecord(
+                PortalRecord.CURRENT_SCHEMA_VERSION,
+                UUID.fromString("00000000-0000-0000-0000-000000000004"),
+                UUID.nameUUIDFromBytes("world".getBytes(StandardCharsets.UTF_8)),
+                "world",
+                PortalAxis.Y,
+                anchor,
+                List.of(anchor),
+                frame,
+                List.of(Material.END_PORTAL_FRAME, Material.END_PORTAL_FRAME,
+                        Material.END_PORTAL_FRAME, Material.END_PORTAL_FRAME),
+                1L,
+                "tester"
+        );
+
+        assertThat(portal.type()).isEqualTo(PortalType.END);
+        assertThat(PortalNavigationService.landingCandidates(portal))
+                .containsExactlyInAnyOrder(
+                        new BlockPosition(3, 65, 8),
+                        new BlockPosition(5, 65, 8),
+                        new BlockPosition(4, 65, 7),
+                        new BlockPosition(4, 65, 9)
+                )
+                .doesNotContain(new BlockPosition(4, 65, 8));
+    }
+
+    @Test
     void boundsAndDeduplicatesLandingCandidates() {
         PortalRecord portal = portal("00000000-0000-0000-0000-000000000001", "world", 4, 64, 8, PortalAxis.X);
 

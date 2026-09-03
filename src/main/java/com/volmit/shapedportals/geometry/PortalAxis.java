@@ -3,16 +3,19 @@ package com.volmit.shapedportals.geometry;
 import org.bukkit.Axis;
 
 public enum PortalAxis {
-    X(Axis.X),
-    Z(Axis.Z);
-
-    private final Axis bukkitAxis;
-
-    PortalAxis(Axis bukkitAxis) {
-        this.bukkitAxis = bukkitAxis;
-    }
+    X,
+    Z,
+    Y;
 
     public Axis bukkitAxis() {
-        return bukkitAxis;
+        return switch (this) {
+            case X -> Axis.X;
+            case Z -> Axis.Z;
+            case Y -> throw new IllegalStateException("Horizontal End portals do not expose a Bukkit axis");
+        };
+    }
+
+    public boolean horizontal() {
+        return this == Y;
     }
 }

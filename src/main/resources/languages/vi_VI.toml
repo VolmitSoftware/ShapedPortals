@@ -67,8 +67,13 @@ page = "Trang danh sách cổng được đánh số từ một"
 portal = "UUID cổng, tiền tố duy nhất hoặc list"
 
 [portal.notice]
-created = "{prefix}&dĐã tạo một cổng tùy hình với {blocks} khối bên trong.&r"
+nether_created = "{prefix}&dĐã tạo một cổng tùy hình với {blocks} khối bên trong.&r"
+end_created = "{prefix}&5End&r &dĐã tạo một cổng tùy hình với {blocks} khối bên trong.&r"
 failed = "{prefix}&cKhung này không thể trở thành cổng tùy hình: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cKhông có vị trí đứng an toàn bên cạnh &f{portal}&r&c. &eNhấp lại vào cùng cổng trong vòng &f{seconds}&r&e giây để vẫn dịch chuyển vào bên trong.&r"
@@ -76,7 +81,7 @@ unsafe = "{prefix}&cKhông có vị trí đứng an toàn bên cạnh &f{portal}
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eKhung hiện có dùng &f{materials}&r&e; các vật liệu này không thể tạo cổng mới.&r"
 empty = "&eChưa đăng ký cổng tùy hình được quản lý nào.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Vị trí:&r &f{x}, {y}, {z}&r &8•&r &7Trục:&r &f{axis}&r &8•&r &7Ô:&r &f{blocks}&r\n&8  └&r &7Người tạo:&r &f{creator}&r &8•&r &7Đã tạo:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Vị trí:&r &f{x}, {y}, {z}&r &8•&r &7Trục:&r &f{axis}&r &8•&r &7Ô:&r &f{blocks}&r\n&8  └&r &7Người tạo:&r &f{creator}&r &8•&r &7Đã tạo:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aNhấp để dịch chuyển đến cổng này.&r"
 
 [portal.navigation.error]
@@ -153,22 +158,32 @@ failure_feedback = "&dPhản hồi khi tạo cổng thất bại&r"
 enabled = "&dThống kê bStats ẩn danh&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dSố khối bên trong tối thiểu&r"
-maximum_interior_blocks = "&dSố khối bên trong tối đa&r"
-maximum_width = "&dChiều rộng tối đa&r"
-maximum_height = "&dChiều cao tối đa&r"
-frame_materials = "&dVật liệu khung&r"
-interior_materials = "&dVật liệu bên trong&r"
+minimum_interior_blocks = "&dNether Số khối bên trong tối thiểu&r"
+maximum_interior_blocks = "&dNether Số khối bên trong tối đa&r"
+maximum_width = "&dNether Chiều rộng tối đa&r"
+maximum_height = "&dNether Chiều cao tối đa&r"
+frame_materials = "&dNether Vật liệu khung&r"
+interior_materials = "&dNether Vật liệu bên trong&r"
 ignition_causes = "&dNguyên nhân kích hoạt&r"
 allowed_worlds = "&dThế giới được phép&r"
 denied_worlds = "&dThế giới bị từ chối&r"
 deduplication_millis = "&dThời gian khử trùng lặp (mili giây)&r"
+end_portal_creation = "&dEnd Tạo cổng&r"
+end_minimum_interior_blocks = "&dEnd Số khối bên trong tối thiểu&r"
+end_maximum_interior_blocks = "&dEnd Số khối bên trong tối đa&r"
+end_maximum_width = "&dEnd Chiều rộng tối đa&r"
+end_maximum_length = "&dEnd Chiều rộng tối đa&r"
+end_interior_materials = "&dEnd Vật liệu bên trong&r"
 
 [gui.setting.effects]
-creation_sound = "&dÂm thanh tạo cổng&r"
-creation_sound_type = "&dLoại âm thanh tạo cổng&r"
-creation_sound_volume = "&dÂm lượng tạo cổng&r"
-creation_sound_pitch = "&dCao độ âm thanh tạo cổng&r"
+creation_sound = "&dNether Âm thanh tạo cổng&r"
+creation_sound_type = "&dNether Loại âm thanh tạo cổng&r"
+creation_sound_volume = "&dNether Âm lượng tạo cổng&r"
+creation_sound_pitch = "&dNether Cao độ âm thanh tạo cổng&r"
+end_creation_sound = "&dEnd Âm thanh tạo cổng&r"
+end_creation_sound_type = "&dEnd Loại âm thanh tạo cổng&r"
+end_creation_sound_volume = "&dEnd Âm lượng tạo cổng&r"
+end_creation_sound_pitch = "&dEnd Cao độ âm thanh tạo cổng&r"
 
 [gui.setting.hot_reload]
 enabled = "&dTải lại tức thời&r"
@@ -186,6 +201,8 @@ splash_screen = "&dMàn hình chào khi khởi động&r"
 command_sounds = "&dÂm thanh lệnh&r"
 command_overlays = "&dLớp phủ lệnh&r"
 portal_notices = "&dKênh thông báo cổng&r"
+nether_creation_notices = "&dNether Kênh thông báo cổng&r"
+end_creation_notices = "&dEnd Kênh thông báo cổng&r"
 overlay_duration_ticks = "&dThời lượng lớp phủ (tick)&r"
 title_fade_in_ticks = "&dThời gian tiêu đề hiện dần (tick)&r"
 title_stay_ticks = "&dThời gian tiêu đề duy trì (tick)&r"

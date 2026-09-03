@@ -67,8 +67,13 @@ page = "Strona listy portali, liczona od jednego"
 portal = "UUID portalu, unikalny prefiks lub list"
 
 [portal.notice]
-created = "{prefix}&dUtworzono portal o dowolnym kształcie z {blocks} blokami wewnętrznymi.&r"
+nether_created = "{prefix}&dUtworzono portal o dowolnym kształcie z {blocks} blokami wewnętrznymi.&r"
+end_created = "{prefix}&5End&r &dUtworzono portal o dowolnym kształcie z {blocks} blokami wewnętrznymi.&r"
 failed = "{prefix}&cTa rama nie może stać się portalem o dowolnym kształcie: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cObok &f{portal}&r&c nie ma bezpiecznego miejsca do stania. &eKliknij ten sam portal ponownie w ciągu &f{seconds}&r&e sekund, aby mimo to teleportować się do jego wnętrza.&r"
@@ -76,7 +81,7 @@ unsafe = "{prefix}&cObok &f{portal}&r&c nie ma bezpiecznego miejsca do stania. &
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eIstniejąca rama używa &f{materials}&r&e; z tych materiałów nie można tworzyć nowych portali.&r"
 empty = "&eNie zarejestrowano żadnych zarządzanych portali o dowolnym kształcie.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Położenie:&r &f{x}, {y}, {z}&r &8•&r &7Oś:&r &f{axis}&r &8•&r &7Komórki:&r &f{blocks}&r\n&8  └&r &7Twórca:&r &f{creator}&r &8•&r &7Utworzono:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Położenie:&r &f{x}, {y}, {z}&r &8•&r &7Oś:&r &f{axis}&r &8•&r &7Komórki:&r &f{blocks}&r\n&8  └&r &7Twórca:&r &f{creator}&r &8•&r &7Utworzono:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aKliknij, aby teleportować się do tego portalu.&r"
 
 [portal.navigation.error]
@@ -153,22 +158,32 @@ failure_feedback = "&dInformacje zwrotne o błędach portalu&r"
 enabled = "&dAnonimowe statystyki bStats&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dMinimalna liczba bloków wewnętrznych&r"
-maximum_interior_blocks = "&dMaksymalna liczba bloków wewnętrznych&r"
-maximum_width = "&dMaksymalna szerokość&r"
-maximum_height = "&dMaksymalna wysokość&r"
-frame_materials = "&dMateriały ramy&r"
-interior_materials = "&dMateriały wewnętrzne&r"
+minimum_interior_blocks = "&dNether Minimalna liczba bloków wewnętrznych&r"
+maximum_interior_blocks = "&dNether Maksymalna liczba bloków wewnętrznych&r"
+maximum_width = "&dNether Maksymalna szerokość&r"
+maximum_height = "&dNether Maksymalna wysokość&r"
+frame_materials = "&dNether Materiały ramy&r"
+interior_materials = "&dNether Materiały wewnętrzne&r"
 ignition_causes = "&dPrzyczyny zapłonu&r"
 allowed_worlds = "&dDozwolone światy&r"
 denied_worlds = "&dZabronione światy&r"
 deduplication_millis = "&dUsuwanie duplikatów w milisekundach&r"
+end_portal_creation = "&dEnd Tworzenie portali&r"
+end_minimum_interior_blocks = "&dEnd Minimalna liczba bloków wewnętrznych&r"
+end_maximum_interior_blocks = "&dEnd Maksymalna liczba bloków wewnętrznych&r"
+end_maximum_width = "&dEnd Maksymalna szerokość&r"
+end_maximum_length = "&dEnd Maksymalna szerokość&r"
+end_interior_materials = "&dEnd Materiały wewnętrzne&r"
 
 [gui.setting.effects]
-creation_sound = "&dDźwięk tworzenia&r"
-creation_sound_type = "&dTyp dźwięku tworzenia&r"
-creation_sound_volume = "&dGłośność dźwięku tworzenia&r"
-creation_sound_pitch = "&dWysokość dźwięku tworzenia&r"
+creation_sound = "&dNether Dźwięk tworzenia&r"
+creation_sound_type = "&dNether Typ dźwięku tworzenia&r"
+creation_sound_volume = "&dNether Głośność dźwięku tworzenia&r"
+creation_sound_pitch = "&dNether Wysokość dźwięku tworzenia&r"
+end_creation_sound = "&dEnd Dźwięk tworzenia&r"
+end_creation_sound_type = "&dEnd Typ dźwięku tworzenia&r"
+end_creation_sound_volume = "&dEnd Głośność dźwięku tworzenia&r"
+end_creation_sound_pitch = "&dEnd Wysokość dźwięku tworzenia&r"
 
 [gui.setting.hot_reload]
 enabled = "&dAutomatyczne wczytywanie&r"
@@ -186,6 +201,8 @@ splash_screen = "&dEkran startowy&r"
 command_sounds = "&dDźwięki komend&r"
 command_overlays = "&dNakładki komend&r"
 portal_notices = "&dKanały powiadomień portalu&r"
+nether_creation_notices = "&dNether Kanały powiadomień portalu&r"
+end_creation_notices = "&dEnd Kanały powiadomień portalu&r"
 overlay_duration_ticks = "&dCzas nakładki w tickach&r"
 title_fade_in_ticks = "&dPojawianie się tytułu w tickach&r"
 title_stay_ticks = "&dCzas wyświetlania tytułu w tickach&r"

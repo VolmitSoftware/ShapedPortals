@@ -14,6 +14,8 @@ import art.arcane.volmlib.util.localization.MessageCatalog;
 import art.arcane.volmlib.util.localization.MessageKey;
 import art.arcane.volmlib.util.localization.MessageValue;
 import art.arcane.volmlib.util.localization.PluralSelector;
+import art.arcane.volmlib.util.localization.PluginLanguageEditor;
+import art.arcane.volmlib.util.localization.PluginLanguageService;
 import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
 import art.arcane.volmlib.util.localization.TextKey;
 import art.arcane.volmlib.util.localization.TextValue;
@@ -24,6 +26,7 @@ import art.arcane.volmlib.util.plugin.ComponentMessenger;
 import art.arcane.volmlib.util.plugin.ComponentText;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,6 +52,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -69,11 +73,14 @@ public final class LanguageService {
     private final RemoteLanguageCatalog remoteCatalog;
     private final Throwable remoteCatalogFailure;
     private final Set<String> announcedDownloads = new HashSet<>();
+    private final Path preferenceFile;
     private volatile List<String> availableLocales = List.of();
     private volatile BiConsumer<File, String> selfWriteListener;
+    private volatile PluginLanguageService selections;
 
     public LanguageService(File dataFolder, Logger logger) {
         languageDirectory = new File(dataFolder, "languages");
+        preferenceFile = dataFolder.toPath().resolve("language-preferences.properties");
         this.logger = Objects.requireNonNull(logger, "logger");
         validateCatalogTemplates();
         manager = new LocalizationManager(LocalizationCandidate.english(CATALOG, ENGLISH_PLURALS));
@@ -136,6 +143,43 @@ public final class LanguageService {
     public void install(PreparedLanguage prepared) {
         manager.install(prepared.snapshot());
         activeFile.set(prepared.file());
+        PluginLanguageService activeSelections = selections;
+        if (activeSelections != null) {
+            activeSelections.invalidate();
+            activeSelections.cache(prepared.locale(), prepared.snapshot());
+        }
+    }
+
+    public synchronized PluginLanguageService initializeSelections(
+            Supplier<String> defaultLocale,
+            PluginLanguageService.DefaultSelection defaultSelection
+    ) {
+        if (selections != null) {
+            return selections;
+        }
+        PluginLanguageService created = new PluginLanguageService(new PluginLanguageService.Options(
+                preferenceFile,
+                this::availableLocales,
+                defaultLocale,
+                manager::snapshot,
+                this::loadSelectionSnapshot,
+                defaultSelection,
+                logger
+        ));
+        selections = created;
+        return created;
+    }
+
+    public PluginLanguageService selections() {
+        PluginLanguageService activeSelections = selections;
+        if (activeSelections == null) {
+            throw new IllegalStateException("Language selections are not initialized");
+        }
+        return activeSelections;
+    }
+
+    public PluginLanguageEditor.Options editorOptions() {
+        return new PluginLanguageEditor.Options(this::loadSelectionSnapshot, this::saveEditorMessage);
     }
 
     public synchronized List<EditableMessage> editableMessages(String locale) throws IOException {
@@ -177,23 +221,41 @@ public final class LanguageService {
     }
 
     public String render(TextKey key, MessageArgs arguments) {
-        return render(key, arguments, renderPrefix());
+        LocalizationSnapshot snapshot = selectedSnapshot(null);
+        return render(snapshot, key, arguments, renderPrefix(snapshot));
+    }
+
+    public String render(CommandSender sender, TextKey key) {
+        return render(sender, key, MessageArgs.empty());
+    }
+
+    public String render(CommandSender sender, TextKey key, MessageArgs arguments) {
+        LocalizationSnapshot snapshot = selectedSnapshot(sender);
+        return render(snapshot, key, arguments, renderPrefix(snapshot));
     }
 
     public String renderWithoutPrefix(TextKey key, MessageArgs arguments) {
-        return render(key, arguments, "");
+        return render(selectedSnapshot(null), key, arguments, "");
+    }
+
+    public String renderWithoutPrefix(CommandSender sender, TextKey key, MessageArgs arguments) {
+        return render(selectedSnapshot(sender), key, arguments, "");
     }
 
     public String renderPrefixed(TextKey key, MessageArgs arguments) {
         return render(key, arguments);
     }
 
+    public String renderPrefixed(CommandSender sender, TextKey key, MessageArgs arguments) {
+        return render(sender, key, arguments);
+    }
+
     public void send(CommandSender sender, TextKey key) {
-        ComponentMessenger.sendMarkup(sender, render(key));
+        ComponentMessenger.sendMarkup(sender, render(sender, key));
     }
 
     public void send(CommandSender sender, TextKey key, MessageArgs arguments) {
-        ComponentMessenger.sendMarkup(sender, render(key, arguments));
+        ComponentMessenger.sendMarkup(sender, render(sender, key, arguments));
     }
 
     public void sendPrefixed(CommandSender sender, TextKey key) {
@@ -201,7 +263,7 @@ public final class LanguageService {
     }
 
     public void sendPrefixed(CommandSender sender, TextKey key, MessageArgs arguments) {
-        ComponentMessenger.sendMarkup(sender, renderPrefixed(key, arguments));
+        ComponentMessenger.sendMarkup(sender, renderPrefixed(sender, key, arguments));
     }
 
     public String legacy(TextKey key) {
@@ -210,6 +272,14 @@ public final class LanguageService {
 
     public String legacy(TextKey key, MessageArgs arguments) {
         return ComponentText.markup(render(key, arguments)).legacy();
+    }
+
+    public String legacy(CommandSender sender, TextKey key) {
+        return ComponentText.markup(render(sender, key)).legacy();
+    }
+
+    public String legacy(CommandSender sender, TextKey key, MessageArgs arguments) {
+        return ComponentText.markup(render(sender, key, arguments)).legacy();
     }
 
     public DirectorTextResolver directorResolver() {
@@ -305,6 +375,11 @@ public final class LanguageService {
 
     public void close() {
         selfWriteListener = null;
+        PluginLanguageService activeSelections = selections;
+        selections = null;
+        if (activeSelections != null) {
+            activeSelections.close();
+        }
         synchronized (this) {
             announcedDownloads.clear();
         }
@@ -379,7 +454,67 @@ public final class LanguageService {
         if (listener != null) {
             listener.accept(file, content);
         }
+        PluginLanguageService activeSelections = selections;
+        if (activeSelections != null) {
+            activeSelections.cache(requiredLocale, prepared.snapshot());
+            if (sameLocale(requiredLocale, activeSelections.defaultLocale())) {
+                manager.install(prepared.snapshot());
+                activeFile.set(prepared.file());
+            }
+        }
         return prepared;
+    }
+
+    private synchronized LocalizationSnapshot loadSelectionSnapshot(String locale) throws Exception {
+        String requiredLocale = canonicalLocale(locale);
+        prepareLanguageDirectory();
+        createEnglishLanguageIfMissing();
+        File target = languageFile(requiredLocale);
+        if (!target.exists() && hasRemoteCatalogLocale(requiredLocale)) {
+            URI source = remoteCatalog.sourceUri(requiredLocale);
+            logger.info("Downloading ShapedPortals language " + requiredLocale + " from " + source + "...");
+            String content = remoteCatalog.readOrInstall(
+                    requiredLocale,
+                    target.toPath(),
+                    this::validateDownloadedContent
+            );
+            BiConsumer<File, String> listener = selfWriteListener;
+            if (listener != null) {
+                listener.accept(target, content);
+            }
+            logger.info("Downloaded ShapedPortals language " + requiredLocale + " to "
+                    + target.toPath().toAbsolutePath().normalize() + ".");
+        }
+        PreparedLanguage prepared = prepare(requiredLocale);
+        if (!prepared.selectionReady()) {
+            throw new IOException("Language file is not installed: " + requiredLocale);
+        }
+        return selectionSnapshot(requiredLocale, prepared.snapshot());
+    }
+
+    private LocalizationSnapshot selectionSnapshot(String locale, LocalizationSnapshot prepared) {
+        if (sameLocale(locale, CATALOG.englishLocale())) {
+            return prepared;
+        }
+        ArrayList<LocaleOverlay> overlays = new ArrayList<>(prepared.overlays());
+        LocaleOverlay.Builder englishFallback = LocaleOverlay.builder("code-owned-English:" + locale, locale);
+        for (MessageKey key : CATALOG.keys()) {
+            englishFallback.put(key.id(), key.englishValue());
+        }
+        overlays.add(englishFallback.build());
+        return LocalizationSnapshot.create(new LocalizationCandidate(CATALOG, overlays, ENGLISH_PLURALS));
+    }
+
+    private synchronized LocalizationSnapshot saveEditorMessage(PluginLanguageEditor.Edit edit) throws Exception {
+        LocalizationSnapshot current = loadSelectionSnapshot(edit.locale());
+        MessageKey definition = CATALOG.require(edit.key());
+        if (!current.value(definition).equals(edit.expected())) {
+            throw new IOException("Language message changed while it was being edited: " + edit.key());
+        }
+        if (!(edit.value() instanceof TextValue textValue)) {
+            throw new IllegalArgumentException("Unsupported language message shape: " + edit.key());
+        }
+        return mutateMessage(edit.locale(), edit.key(), textValue.template()).snapshot();
     }
 
     private FileSource readFileSource(File file) throws IOException {
@@ -512,8 +647,8 @@ public final class LanguageService {
     void validateDownloadedContent(String locale, String content) throws IOException {
         Set<String> expected = CATALOG.byId().keySet();
         Map<String, String> values = parseStrictValues(content, locale, expected);
-        if (!values.keySet().equals(expected)) {
-            throw new IOException("Downloaded locale does not cover the complete ShapedPortals catalog: " + locale);
+        if (values.isEmpty()) {
+            throw new IOException("Downloaded locale does not contain any recognized ShapedPortals messages: " + locale);
         }
         LocaleOverlay overlay = createOverlay(locale, "download:" + locale, values);
         try {
@@ -620,15 +755,29 @@ public final class LanguageService {
         }
     }
 
-    private String render(TextKey key, MessageArgs arguments, String prefix) {
+    private LocalizationSnapshot selectedSnapshot(CommandSender sender) {
+        PluginLanguageService activeSelections = selections;
+        if (activeSelections == null) {
+            return manager.snapshot();
+        }
+        return sender instanceof Player player
+                ? activeSelections.snapshot(player.getUniqueId())
+                : activeSelections.snapshot();
+    }
+
+    private String render(LocalizationSnapshot snapshot, TextKey key, MessageArgs arguments, String prefix) {
         MessageArgs resolvedArguments = argumentsWithPrefix(key, arguments, prefix);
-        String template = manager.snapshot().resolve(key, resolvedArguments).template();
+        String template = snapshot.resolve(key, resolvedArguments).template();
         return interpolate(template, resolvedArguments);
     }
 
-    private String renderPrefix() {
-        String template = manager.snapshot().resolve(ShapedMessages.PREFIX, MessageArgs.empty()).template();
+    private String renderPrefix(LocalizationSnapshot snapshot) {
+        String template = snapshot.resolve(ShapedMessages.PREFIX, MessageArgs.empty()).template();
         return interpolate(template, MessageArgs.empty());
+    }
+
+    private boolean sameLocale(String first, String second) {
+        return first.replace('-', '_').equalsIgnoreCase(second.replace('-', '_'));
     }
 
     private MessageArgs argumentsWithPrefix(TextKey key, MessageArgs arguments, String prefix) {

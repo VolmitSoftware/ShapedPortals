@@ -67,8 +67,13 @@ page = "Page de la liste des portails, numérotée à partir de un"
 portal = "UUID du portail, préfixe unique ou list"
 
 [portal.notice]
-created = "{prefix}&dUn portail personnalisé de {blocks} blocs intérieurs a été créé.&r"
+nether_created = "{prefix}&dUn portail personnalisé de {blocks} blocs intérieurs a été créé.&r"
+end_created = "{prefix}&5End&r &dUn portail personnalisé de {blocks} blocs intérieurs a été créé.&r"
 failed = "{prefix}&cCe cadre ne peut pas devenir un portail personnalisé : &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cAucun emplacement sûr n'existe à côté de &f{portal}&r&c. &eCliquez à nouveau sur le même portail dans les &f{seconds}&r&e secondes pour vous y téléporter malgré tout.&r"
@@ -76,7 +81,7 @@ unsafe = "{prefix}&cAucun emplacement sûr n'existe à côté de &f{portal}&r&c.
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eLe cadre existant utilise &f{materials}&r&e, qui ne peuvent plus créer de nouveaux portails.&r"
 empty = "&eAucun portail personnalisé géré n'est enregistré.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Emplacement:&r &f{x}, {y}, {z}&r &8•&r &7Axe:&r &f{axis}&r &8•&r &7Cellules:&r &f{blocks}&r\n&8  └&r &7Créateur:&r &f{creator}&r &8•&r &7Créé:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Emplacement:&r &f{x}, {y}, {z}&r &8•&r &7Axe:&r &f{axis}&r &8•&r &7Cellules:&r &f{blocks}&r\n&8  └&r &7Créateur:&r &f{creator}&r &8•&r &7Créé:&r &f{created}&r"
 hover = "&7UUID :&r &f{uuid}&r\n&aCliquez pour vous téléporter vers ce portail.&r"
 
 [portal.navigation.error]
@@ -153,22 +158,32 @@ failure_feedback = "&dRetour sur les échecs de portail&r"
 enabled = "&dStatistiques bStats anonymes&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dNombre minimal de blocs intérieurs&r"
-maximum_interior_blocks = "&dNombre maximal de blocs intérieurs&r"
-maximum_width = "&dLargeur maximale&r"
-maximum_height = "&dHauteur maximale&r"
-frame_materials = "&dMatériaux du cadre&r"
-interior_materials = "&dMatériaux intérieurs&r"
+minimum_interior_blocks = "&dNether Nombre minimal de blocs intérieurs&r"
+maximum_interior_blocks = "&dNether Nombre maximal de blocs intérieurs&r"
+maximum_width = "&dNether Largeur maximale&r"
+maximum_height = "&dNether Hauteur maximale&r"
+frame_materials = "&dNether Matériaux du cadre&r"
+interior_materials = "&dNether Matériaux intérieurs&r"
 ignition_causes = "&dCauses d'allumage&r"
 allowed_worlds = "&dMondes autorisés&r"
 denied_worlds = "&dMondes interdits&r"
 deduplication_millis = "&dDéduplication en millisecondes&r"
+end_portal_creation = "&dEnd Création de portails&r"
+end_minimum_interior_blocks = "&dEnd Nombre minimal de blocs intérieurs&r"
+end_maximum_interior_blocks = "&dEnd Nombre maximal de blocs intérieurs&r"
+end_maximum_width = "&dEnd Largeur maximale&r"
+end_maximum_length = "&dEnd Largeur maximale&r"
+end_interior_materials = "&dEnd Matériaux intérieurs&r"
 
 [gui.setting.effects]
-creation_sound = "&dSon de création&r"
-creation_sound_type = "&dType du son de création&r"
-creation_sound_volume = "&dVolume du son de création&r"
-creation_sound_pitch = "&dHauteur du son de création&r"
+creation_sound = "&dNether Son de création&r"
+creation_sound_type = "&dNether Type du son de création&r"
+creation_sound_volume = "&dNether Volume du son de création&r"
+creation_sound_pitch = "&dNether Hauteur du son de création&r"
+end_creation_sound = "&dEnd Son de création&r"
+end_creation_sound_type = "&dEnd Type du son de création&r"
+end_creation_sound_volume = "&dEnd Volume du son de création&r"
+end_creation_sound_pitch = "&dEnd Hauteur du son de création&r"
 
 [gui.setting.hot_reload]
 enabled = "&dRechargement automatique&r"
@@ -186,6 +201,8 @@ splash_screen = "&dÉcran de démarrage&r"
 command_sounds = "&dSons des commandes&r"
 command_overlays = "&dAffichages des commandes&r"
 portal_notices = "&dCanaux d'avis des portails&r"
+nether_creation_notices = "&dNether Canaux d'avis des portails&r"
+end_creation_notices = "&dEnd Canaux d'avis des portails&r"
 overlay_duration_ticks = "&dDurée de l'affichage en ticks&r"
 title_fade_in_ticks = "&dApparition du titre en ticks&r"
 title_stay_ticks = "&dMaintien du titre en ticks&r"

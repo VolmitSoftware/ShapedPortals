@@ -67,8 +67,13 @@ page = "Página da lista de portais, começando em um"
 portal = "UUID do portal, prefixo exclusivo ou list"
 
 [portal.notice]
-created = "{prefix}&dFoi criado um portal moldado com {blocks} blocos interiores.&r"
+nether_created = "{prefix}&dFoi criado um portal moldado com {blocks} blocos interiores.&r"
+end_created = "{prefix}&5End&r &dFoi criado um portal moldado com {blocks} blocos interiores.&r"
 failed = "{prefix}&cEsta moldura não pode tornar-se um portal moldado: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cNão existe um local seguro junto de &f{portal}&r&c. &eClica novamente no mesmo portal dentro de &f{seconds}&r&e segundos para te teletransportares para o seu interior mesmo assim.&r"
@@ -76,7 +81,7 @@ unsafe = "{prefix}&cNão existe um local seguro junto de &f{portal}&r&c. &eClica
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eA moldura existente usa &f{materials}&r&e; estes materiais não podem criar novos portais.&r"
 empty = "&eNão existem portais moldados geridos registados.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Localização:&r &f{x}, {y}, {z}&r &8•&r &7Eixo:&r &f{axis}&r &8•&r &7Células:&r &f{blocks}&r\n&8  └&r &7Criador:&r &f{creator}&r &8•&r &7Criado:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Localização:&r &f{x}, {y}, {z}&r &8•&r &7Eixo:&r &f{axis}&r &8•&r &7Células:&r &f{blocks}&r\n&8  └&r &7Criador:&r &f{creator}&r &8•&r &7Criado:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aClica para te teletransportares para este portal.&r"
 
 [portal.navigation.error]
@@ -153,22 +158,32 @@ failure_feedback = "&dInformação sobre falhas do portal&r"
 enabled = "&dMétricas anónimas do bStats&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dMínimo de blocos interiores&r"
-maximum_interior_blocks = "&dMáximo de blocos interiores&r"
-maximum_width = "&dLargura máxima&r"
-maximum_height = "&dAltura máxima&r"
-frame_materials = "&dMateriais da moldura&r"
-interior_materials = "&dMateriais interiores&r"
+minimum_interior_blocks = "&dNether Mínimo de blocos interiores&r"
+maximum_interior_blocks = "&dNether Máximo de blocos interiores&r"
+maximum_width = "&dNether Largura máxima&r"
+maximum_height = "&dNether Altura máxima&r"
+frame_materials = "&dNether Materiais da moldura&r"
+interior_materials = "&dNether Materiais interiores&r"
 ignition_causes = "&dCausas de ignição&r"
 allowed_worlds = "&dMundos permitidos&r"
 denied_worlds = "&dMundos negados&r"
 deduplication_millis = "&dDeduplicação em milissegundos&r"
+end_portal_creation = "&dEnd Criação de portais&r"
+end_minimum_interior_blocks = "&dEnd Mínimo de blocos interiores&r"
+end_maximum_interior_blocks = "&dEnd Máximo de blocos interiores&r"
+end_maximum_width = "&dEnd Largura máxima&r"
+end_maximum_length = "&dEnd Largura máxima&r"
+end_interior_materials = "&dEnd Materiais interiores&r"
 
 [gui.setting.effects]
-creation_sound = "&dSom de criação&r"
-creation_sound_type = "&dTipo de som de criação&r"
-creation_sound_volume = "&dVolume do som de criação&r"
-creation_sound_pitch = "&dTom do som de criação&r"
+creation_sound = "&dNether Som de criação&r"
+creation_sound_type = "&dNether Tipo de som de criação&r"
+creation_sound_volume = "&dNether Volume do som de criação&r"
+creation_sound_pitch = "&dNether Tom do som de criação&r"
+end_creation_sound = "&dEnd Som de criação&r"
+end_creation_sound_type = "&dEnd Tipo de som de criação&r"
+end_creation_sound_volume = "&dEnd Volume do som de criação&r"
+end_creation_sound_pitch = "&dEnd Tom do som de criação&r"
 
 [gui.setting.hot_reload]
 enabled = "&dRecarregamento automático&r"
@@ -186,6 +201,8 @@ splash_screen = "&dEcrã de arranque&r"
 command_sounds = "&dSons dos comandos&r"
 command_overlays = "&dSobreposições dos comandos&r"
 portal_notices = "&dCanais de avisos dos portais&r"
+nether_creation_notices = "&dNether Canais de avisos dos portais&r"
+end_creation_notices = "&dEnd Canais de avisos dos portais&r"
 overlay_duration_ticks = "&dDuração da sobreposição em ticks&r"
 title_fade_in_ticks = "&dAparecimento do título em ticks&r"
 title_stay_ticks = "&dPermanência do título em ticks&r"

@@ -35,7 +35,10 @@ class ConfigRepositoryTest {
                 .contains("enabled = false")
                 .contains("[presentation]")
                 .contains("commandOverlays = [\"ACTION_BAR\"]")
-                .contains("creationSoundType = \"minecraft:block.end_portal.spawn\"");
+                .contains("creationSoundType = \"minecraft:block.portal.trigger\"")
+                .contains("endCreationSoundType = \"minecraft:block.end_portal.spawn\"")
+                .contains("endPortalCreation = true")
+                .contains("endMaximumInteriorBlocks = 256");
     }
 
     @Test

@@ -67,8 +67,13 @@ page = "Portalo sąrašo puslapis, skaičiuojamas nuo vieno"
 portal = "Portalo UUID, unikali pradžia arba list"
 
 [portal.notice]
-created = "{prefix}&dSukurtas formos portalas su {blocks} vidiniais blokais.&r"
+nether_created = "{prefix}&dSukurtas formos portalas su {blocks} vidiniais blokais.&r"
+end_created = "{prefix}&5End&r &dSukurtas formos portalas su {blocks} vidiniais blokais.&r"
 failed = "{prefix}&cŠis rėmas negali tapti formos portalu: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cŠalia &f{portal}&r&c nėra saugios vietos atsistoti. &ePer &f{seconds}&r&e sekundes dar kartą spustelėkite tą patį portalą, kad vis tiek persikeltumėte į jo vidų.&r"
@@ -76,7 +81,7 @@ unsafe = "{prefix}&cŠalia &f{portal}&r&c nėra saugios vietos atsistoti. &ePer 
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eEsamas rėmas naudoja &f{materials}&r&e; iš šių medžiagų naujų portalų kurti nebegalima.&r"
 empty = "&eValdomų formos portalų nėra užregistruota.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Vieta:&r &f{x}, {y}, {z}&r &8•&r &7Ašis:&r &f{axis}&r &8•&r &7Langeliai:&r &f{blocks}&r\n&8  └&r &7Kūrėjas:&r &f{creator}&r &8•&r &7Sukurta:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Vieta:&r &f{x}, {y}, {z}&r &8•&r &7Ašis:&r &f{axis}&r &8•&r &7Langeliai:&r &f{blocks}&r\n&8  └&r &7Kūrėjas:&r &f{creator}&r &8•&r &7Sukurta:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aSpustelėkite, kad persikeltumėte į šį portalą.&r"
 
 [portal.navigation.error]
@@ -153,22 +158,32 @@ failure_feedback = "&dPranešimai apie portalo klaidas&r"
 enabled = "&dAnoniminė bStats statistika&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dMažiausias vidinių blokų skaičius&r"
-maximum_interior_blocks = "&dDidžiausias vidinių blokų skaičius&r"
-maximum_width = "&dDidžiausias plotis&r"
-maximum_height = "&dDidžiausias aukštis&r"
-frame_materials = "&dRėmo medžiagos&r"
-interior_materials = "&dVidaus medžiagos&r"
+minimum_interior_blocks = "&dNether Mažiausias vidinių blokų skaičius&r"
+maximum_interior_blocks = "&dNether Didžiausias vidinių blokų skaičius&r"
+maximum_width = "&dNether Didžiausias plotis&r"
+maximum_height = "&dNether Didžiausias aukštis&r"
+frame_materials = "&dNether Rėmo medžiagos&r"
+interior_materials = "&dNether Vidaus medžiagos&r"
 ignition_causes = "&dUždegimo priežastys&r"
 allowed_worlds = "&dLeidžiami pasauliai&r"
 denied_worlds = "&dDraudžiami pasauliai&r"
 deduplication_millis = "&dPasikartojimo slopinimas milisekundėmis&r"
+end_portal_creation = "&dEnd Portalų kūrimas&r"
+end_minimum_interior_blocks = "&dEnd Mažiausias vidinių blokų skaičius&r"
+end_maximum_interior_blocks = "&dEnd Didžiausias vidinių blokų skaičius&r"
+end_maximum_width = "&dEnd Didžiausias plotis&r"
+end_maximum_length = "&dEnd Didžiausias plotis&r"
+end_interior_materials = "&dEnd Vidaus medžiagos&r"
 
 [gui.setting.effects]
-creation_sound = "&dSukūrimo garsas&r"
-creation_sound_type = "&dSukūrimo garso tipas&r"
-creation_sound_volume = "&dSukūrimo garso garsumas&r"
-creation_sound_pitch = "&dSukūrimo garso tonas&r"
+creation_sound = "&dNether Sukūrimo garsas&r"
+creation_sound_type = "&dNether Sukūrimo garso tipas&r"
+creation_sound_volume = "&dNether Sukūrimo garso garsumas&r"
+creation_sound_pitch = "&dNether Sukūrimo garso tonas&r"
+end_creation_sound = "&dEnd Sukūrimo garsas&r"
+end_creation_sound_type = "&dEnd Sukūrimo garso tipas&r"
+end_creation_sound_volume = "&dEnd Sukūrimo garso garsumas&r"
+end_creation_sound_pitch = "&dEnd Sukūrimo garso tonas&r"
 
 [gui.setting.hot_reload]
 enabled = "&dAutomatinis įkėlimas&r"
@@ -186,6 +201,8 @@ splash_screen = "&dPaleidimo ekranas&r"
 command_sounds = "&dKomandų garsai&r"
 command_overlays = "&dKomandų perdangos&r"
 portal_notices = "&dPortalo pranešimų kanalai&r"
+nether_creation_notices = "&dNether Portalo pranešimų kanalai&r"
+end_creation_notices = "&dEnd Portalo pranešimų kanalai&r"
 overlay_duration_ticks = "&dPerdangos trukmė tikais&r"
 title_fade_in_ticks = "&dPavadinimo pasirodymas tikais&r"
 title_stay_ticks = "&dPavadinimo rodymo trukmė tikais&r"

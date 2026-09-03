@@ -28,8 +28,17 @@ class ConfigEditorGuiTest {
     @Test
     void languageSettingUsesTheLocalePicker() {
         assertThat(ConfigEditorGui.languageUsesPicker()).isTrue();
-        assertThat(ConfigEditorGui.languageCommand("fr_FR"))
-                .isEqualTo("/shapedportals language locale=fr_FR");
+        assertThat(ConfigEditorGui.languageStatus(true)).isEqualTo("&a✔&r");
+        assertThat(ConfigEditorGui.languageStatus(false)).isEqualTo("&8•&r");
+        assertThat(ConfigEditorGui.languageScopeLinksVisible(1)).isTrue();
+        assertThat(ConfigEditorGui.languageScopeLinksVisible(2)).isFalse();
+        assertThat(ConfigEditorGui.languageOptionText(true, "en_US", "English (United States)").plain())
+                .isEqualTo("✔ en_US English (United States)")
+                .doesNotContain("—", "--");
+        assertThat(ConfigEditorGui.languageCommand("self", "fr_FR"))
+                .isEqualTo("/shapedportals language self fr_FR");
+        assertThat(ConfigEditorGui.languageCommand("server", "nl_NL"))
+                .isEqualTo("/shapedportals language server nl_NL");
         assertThat(ConfigEditorGui.failureSettingName(true, " nl_NL ", "Active language locale"))
                 .isEqualTo("nl_NL");
         assertThat(ConfigEditorGui.failureSettingName(false, null, "Debug uploads"))

@@ -29,10 +29,17 @@ public record RuntimeConfig(
         Set<String> deniedWorlds,
         long deduplicationMillis,
         PortalShapeScanner.ScanLimits scanLimits,
+        boolean endPortalCreation,
+        Set<Material> endInteriorMaterials,
+        PortalShapeScanner.ScanLimits endScanLimits,
         boolean creationSound,
         Sound creationSoundType,
         float creationSoundVolume,
         float creationSoundPitch,
+        boolean endCreationSound,
+        Sound endCreationSoundType,
+        float endCreationSoundVolume,
+        float endCreationSoundPitch,
         boolean hotReloadEnabled,
         long hotReloadPollMillis,
         long hotReloadCooldownMillis,
@@ -44,6 +51,8 @@ public record RuntimeConfig(
         boolean commandSounds,
         Set<PresentationChannel> commandOverlays,
         Set<PresentationChannel> portalNotices,
+        Set<PresentationChannel> netherCreationNotices,
+        Set<PresentationChannel> endCreationNotices,
         long overlayDurationTicks,
         int titleFadeInTicks,
         int titleStayTicks,
@@ -58,11 +67,14 @@ public record RuntimeConfig(
         source = source.copy();
         frameMaterials = Set.copyOf(frameMaterials);
         interiorMaterials = Set.copyOf(interiorMaterials);
+        endInteriorMaterials = Set.copyOf(endInteriorMaterials);
         ignitionCauses = Set.copyOf(ignitionCauses);
         allowedWorlds = Set.copyOf(allowedWorlds);
         deniedWorlds = Set.copyOf(deniedWorlds);
         commandOverlays = Set.copyOf(commandOverlays);
         portalNotices = Set.copyOf(portalNotices);
+        netherCreationNotices = Set.copyOf(netherCreationNotices);
+        endCreationNotices = Set.copyOf(endCreationNotices);
     }
 
     public static RuntimeConfig from(ShapedPortalsConfig config) {
@@ -70,6 +82,7 @@ public record RuntimeConfig(
         String language = requireLocale(config.general.language);
         Set<Material> frames = parseMaterials(config.portal.frameMaterials, "portal.frameMaterials");
         Set<Material> interiors = parseMaterials(config.portal.interiorMaterials, "portal.interiorMaterials");
+        Set<Material> endInteriors = parseMaterials(config.portal.endInteriorMaterials, "portal.endInteriorMaterials");
         if (frames.isEmpty()) {
             throw new IllegalArgumentException("portal.frameMaterials must contain at least one block material");
         }
@@ -78,6 +91,16 @@ public record RuntimeConfig(
         }
         if (interiors.contains(Material.NETHER_PORTAL)) {
             throw new IllegalArgumentException("portal.interiorMaterials cannot contain NETHER_PORTAL");
+        }
+        if (endInteriors.isEmpty()) {
+            throw new IllegalArgumentException("portal.endInteriorMaterials must contain at least one block material");
+        }
+        if (endInteriors.contains(Material.END_PORTAL)) {
+            throw new IllegalArgumentException("portal.endInteriorMaterials cannot contain END_PORTAL");
+        }
+        if (endInteriors.contains(Material.END_PORTAL_FRAME) || endInteriors.contains(Material.NETHER_PORTAL)) {
+            throw new IllegalArgumentException(
+                    "portal.endInteriorMaterials cannot contain END_PORTAL_FRAME or NETHER_PORTAL");
         }
         Set<Material> overlap = new LinkedHashSet<>(frames);
         overlap.retainAll(interiors);
@@ -93,12 +116,24 @@ public record RuntimeConfig(
                 "portal.maximumWidth");
         int maximumHeight = inRange(config.portal.maximumHeight, 1, HARD_MAXIMUM_DIMENSION,
                 "portal.maximumHeight");
+        int endMinimum = inRange(config.portal.endMinimumInteriorBlocks, 1, HARD_MAXIMUM_INTERIOR,
+                "portal.endMinimumInteriorBlocks");
+        int endMaximum = inRange(config.portal.endMaximumInteriorBlocks, endMinimum, HARD_MAXIMUM_INTERIOR,
+                "portal.endMaximumInteriorBlocks");
+        int endMaximumWidth = inRange(config.portal.endMaximumWidth, 1, HARD_MAXIMUM_DIMENSION,
+                "portal.endMaximumWidth");
+        int endMaximumLength = inRange(config.portal.endMaximumLength, 1, HARD_MAXIMUM_DIMENSION,
+                "portal.endMaximumLength");
         long deduplicationMillis = inRange(config.portal.deduplicationMillis, 0L, 60_000L,
                 "portal.deduplicationMillis");
         float volume = inRange(config.effects.creationSoundVolume, 0F, 4F,
                 "effects.creationSoundVolume");
         float pitch = inRange(config.effects.creationSoundPitch, 0.5F, 2F,
                 "effects.creationSoundPitch");
+        float endVolume = inRange(config.effects.endCreationSoundVolume, 0F, 4F,
+                "effects.endCreationSoundVolume");
+        float endPitch = inRange(config.effects.endCreationSoundPitch, 0.5F, 2F,
+                "effects.endCreationSoundPitch");
         long pollMillis = inRange(config.hotReload.pollIntervalMillis, 250L, 60_000L,
                 "hotReload.pollIntervalMillis");
         long cooldownMillis = inRange(config.hotReload.cooldownMillis, 250L, 60_000L,
@@ -114,6 +149,10 @@ public record RuntimeConfig(
         }
         Set<PresentationChannel> portalNotices = parseChannels(
                 config.presentation.portalNotices, "presentation.portalNotices");
+        Set<PresentationChannel> netherCreationNotices = parseChannels(
+                config.presentation.netherCreationNotices, "presentation.netherCreationNotices");
+        Set<PresentationChannel> endCreationNotices = parseChannels(
+                config.presentation.endCreationNotices, "presentation.endCreationNotices");
         long overlayDurationTicks = inRange(config.presentation.overlayDurationTicks, 10L, 600L,
                 "presentation.overlayDurationTicks");
         int titleFadeInTicks = inRange(config.presentation.titleFadeInTicks, 0, 200,
@@ -137,10 +176,17 @@ public record RuntimeConfig(
                 normalizeWorlds(config.portal.deniedWorlds, "portal.deniedWorlds"),
                 deduplicationMillis,
                 new PortalShapeScanner.ScanLimits(minimum, maximum, maximumWidth, maximumHeight),
+                config.portal.endPortalCreation,
+                endInteriors,
+                new PortalShapeScanner.ScanLimits(endMinimum, endMaximum, endMaximumWidth, endMaximumLength),
                 config.effects.creationSound,
-                parseSound(config.effects.creationSoundType),
+                parseSound(config.effects.creationSoundType, "effects.creationSoundType"),
                 volume,
                 pitch,
+                config.effects.endCreationSound,
+                parseSound(config.effects.endCreationSoundType, "effects.endCreationSoundType"),
+                endVolume,
+                endPitch,
                 config.hotReload.enabled,
                 pollMillis,
                 cooldownMillis,
@@ -152,6 +198,8 @@ public record RuntimeConfig(
                 config.presentation.commandSounds,
                 commandOverlays,
                 portalNotices,
+                netherCreationNotices,
+                endCreationNotices,
                 overlayDurationTicks,
                 titleFadeInTicks,
                 titleStayTicks,
@@ -261,9 +309,9 @@ public record RuntimeConfig(
         return channels;
     }
 
-    private static Sound parseSound(String value) {
+    private static Sound parseSound(String value, String pathName) {
         if (value == null) {
-            throw new IllegalArgumentException("effects.creationSoundType cannot be null");
+            throw new IllegalArgumentException(pathName + " cannot be null");
         }
         String normalized = value.trim();
         String path = normalized.contains(":")
@@ -274,7 +322,7 @@ public record RuntimeConfig(
             return constant;
         }
         if (Bukkit.getServer() == null) {
-            throw new IllegalArgumentException("Unknown creation sound: " + value);
+            throw new IllegalArgumentException("Unknown sound in " + pathName + ": " + value);
         }
         String keyText = normalized.contains(":")
                 ? normalized.toLowerCase(Locale.ROOT)
@@ -282,7 +330,7 @@ public record RuntimeConfig(
         NamespacedKey key = NamespacedKey.fromString(keyText);
         Sound sound = key == null ? null : Registry.SOUNDS.get(key);
         if (sound == null) {
-            throw new IllegalArgumentException("Unknown creation sound: " + value);
+            throw new IllegalArgumentException("Unknown sound in " + pathName + ": " + value);
         }
         return sound;
     }

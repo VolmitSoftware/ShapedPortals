@@ -139,10 +139,14 @@ timeout = "{prefix}&e配置编辑到期且未更改任何内容.&r"
 upload_enabled = "&d上传调试报告至mclo.gs&r"
 
 [gui.setting.effects]
-creation_sound = "&d创建声音&r"
-creation_sound_pitch = "&d创建声音音调&r"
-creation_sound_type = "&d创建声音类型&r"
-creation_sound_volume = "&d创建声音音量&r"
+creation_sound = "&dNether 创建声音&r"
+creation_sound_pitch = "&dNether 创建声音音调&r"
+end_creation_sound = "&dEnd 创建声音&r"
+end_creation_sound_type = "&dEnd 创建声音类型&r"
+end_creation_sound_volume = "&dEnd 创建声音音量&r"
+end_creation_sound_pitch = "&dEnd 创建声音音调&r"
+creation_sound_type = "&dNether 创建声音类型&r"
+creation_sound_volume = "&dNether 创建声音音量&r"
 
 [gui.setting.general]
 enabled = "&d创建传送门&r"
@@ -167,20 +171,28 @@ maximum_checks_per_cycle = "&d每周期最大检查次数&r"
 [gui.setting.portal]
 allowed_worlds = "&d允许的世界&r"
 deduplication_millis = "&d去重毫秒数&r"
+end_portal_creation = "&dEnd 创建传送门&r"
+end_minimum_interior_blocks = "&dEnd 最小内部块&r"
+end_maximum_interior_blocks = "&dEnd 最大内部块&r"
+end_maximum_width = "&dEnd 最大宽度&r"
+end_maximum_length = "&dEnd 最大宽度&r"
+end_interior_materials = "&dEnd 内部材料&r"
 denied_worlds = "&d拒绝的世界&r"
-frame_materials = "&d框架材料&r"
+frame_materials = "&dNether 框架材料&r"
 ignition_causes = "&d点火原因&r"
-interior_materials = "&d内部材料&r"
-maximum_height = "&d最大高度&r"
-maximum_interior_blocks = "&d最大内部块&r"
-maximum_width = "&d最大宽度&r"
-minimum_interior_blocks = "&d最小内部块&r"
+interior_materials = "&dNether 内部材料&r"
+maximum_height = "&dNether 最大高度&r"
+maximum_interior_blocks = "&dNether 最大内部块&r"
+maximum_width = "&dNether 最大宽度&r"
+minimum_interior_blocks = "&dNether 最小内部块&r"
 
 [gui.setting.presentation]
 command_overlays = "&d命令覆盖层&r"
 command_sounds = "&d命令声音&r"
 overlay_duration_ticks = "&d覆盖层持续计时&r"
 portal_notices = "&d传送门通知频道&r"
+nether_creation_notices = "&dNether 传送门通知频道&r"
+end_creation_notices = "&dEnd 传送门通知频道&r"
 splash_screen = "&d启动画面&r"
 title_fade_in_ticks = "&d标题淡入计时&r"
 title_fade_out_ticks = "&d标题淡出计时&r"
@@ -195,6 +207,10 @@ failure = "&c操作失败&r"
 info = "&dShapedPortals&r"
 success = "&a成功&r"
 title = "&d&lShapedPortals&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&c&f{portal}&r&c旁边没有安全的站立空间。&e若仍要传送到门内，请在&f{seconds}&r&e秒内再次点击同一个传送门。&r"
@@ -211,7 +227,7 @@ world_unavailable = "{prefix}&c传送门世界&f{world}&r&c当前不可用.&r"
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &e现有框架使用 &f{materials}&r&e；这些材料无法再用于创建新传送门。&r"
 empty = "&e未注册任何已管理的异形传送门。&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7位置:&r &f{x}, {y}, {z}&r &8•&r &7轴:&r &f{axis}&r &8•&r &7单元:&r &f{blocks}&r\n&8  └&r &7创建者:&r &f{creator}&r &8•&r &7创建时间:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7位置:&r &f{x}, {y}, {z}&r &8•&r &7轴:&r &f{axis}&r &8•&r &7单元:&r &f{blocks}&r\n&8  └&r &7创建者:&r &f{creator}&r &8•&r &7创建时间:&r &f{created}&r"
 hover = "&7UUID:&r&f{uuid}&r\n&a点击传送到此传送门。&r"
 
 [portal.navigation.teleport]
@@ -220,7 +236,8 @@ preparing = "{prefix}&7正在为&f{portal}&r&7准备目的地…&r"
 success = "{prefix}&a已传送到&f{portal}&r&a的旁边，位于&f{world}&r&a。&r"
 
 [portal.notice]
-created = "{prefix}&d创建了一个带有{blocks}内部方块的形状传送门.&r"
+nether_created = "{prefix}&d创建了一个带有{blocks}内部方块的形状传送门.&r"
+end_created = "{prefix}&5End&r &d创建了一个带有{blocks}内部方块的形状传送门.&r"
 failed = "{prefix}&c该框架无法成为形状传送门:&f{reason}&r&c.&r"
 
 [runtime.hot_reload]

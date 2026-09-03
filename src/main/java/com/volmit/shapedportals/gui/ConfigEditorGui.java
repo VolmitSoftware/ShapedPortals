@@ -2,6 +2,7 @@ package com.volmit.shapedportals.gui;
 
 import art.arcane.volmlib.util.director.help.DirectorHelpMessages;
 import art.arcane.volmlib.util.director.help.DirectorMiniMenu;
+import art.arcane.volmlib.util.localization.LanguageAudience;
 import art.arcane.volmlib.util.localization.MessageArgs;
 import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
 import art.arcane.volmlib.util.localization.TextKey;
@@ -99,16 +100,32 @@ public final class ConfigEditorGui implements Listener {
         FoliaScheduler.runEntity(plugin, player, () -> openRootOwned(player));
     }
 
-    public void selectLanguage(Player player, String requestedLocale) {
-        FoliaScheduler.runEntity(plugin, player, () -> selectLanguageOwned(player, requestedLocale));
-    }
-
-    public void openLanguagePicker(Player player, int requestedPage, boolean preserveEditorPrompt) {
+    public void openLanguagePicker(Player player, boolean personal, int requestedPage, boolean preserveEditorPrompt) {
         FoliaScheduler.runEntity(plugin, player, () -> {
-            PromptSession prompt = preserveEditorPrompt
+            PromptSession prompt = !personal && preserveEditorPrompt
                     ? prompts.get(player.getUniqueId())
                     : prompts.remove(player.getUniqueId());
-            showLanguagePickerOwned(player, requestedPage, prompt);
+            showLanguagePickerOwned(player, personal, requestedPage, prompt);
+        });
+    }
+
+    public void finishLanguageSelection(Player player) {
+        prompts.remove(player.getUniqueId());
+    }
+
+    public void openLanguageEditor(Player player, String requestedLocale) {
+        FoliaScheduler.runEntity(plugin, player, () -> {
+            if (requestedLocale == null) {
+                openLanguageLocalesOwned(player, 1);
+                return;
+            }
+            String locale = language.availableLocale(requestedLocale).orElse(null);
+            if (locale == null) {
+                saveFailedOwned(player, Category.LANGUAGES, requestedLocale,
+                        "the language file is not available", ResultDestination.NONE);
+                return;
+            }
+            loadLanguageMessages(player, locale, 1);
         });
     }
 
@@ -135,6 +152,10 @@ public final class ConfigEditorGui implements Listener {
             return;
         }
 
+        LanguageAudience.run(player.getUniqueId(), () -> handleClick(player, holder, event));
+    }
+
+    private void handleClick(Player player, EditorHolder holder, InventoryClickEvent event) {
         int slot = event.getRawSlot();
         if (slot == CLOSE_SLOT) {
             player.closeInventory();
@@ -531,7 +552,7 @@ public final class ConfigEditorGui implements Listener {
         long id = promptIds.incrementAndGet();
         PromptSession prompt = new PromptSession(id, category, setting);
         prompts.put(player.getUniqueId(), prompt);
-        showLanguagePickerOwned(player, 1, prompt);
+        showLanguagePickerOwned(player, false, 1, prompt);
         boolean scheduled = FoliaScheduler.runEntity(plugin, player,
                 () -> expirePrompt(player, prompt), PROMPT_TICKS,
                 () -> prompts.remove(player.getUniqueId(), prompt));
@@ -541,64 +562,97 @@ public final class ConfigEditorGui implements Listener {
         }
     }
 
-    private void showLanguagePickerOwned(Player player, int requestedPage, PromptSession prompt) {
+    private void showLanguagePickerOwned(
+            Player player,
+            boolean personal,
+            int requestedPage,
+            PromptSession prompt
+    ) {
         player.closeInventory();
         DirectorMiniMenu.Theme theme = ChatMenuStyle.theme();
         List<String> locales = language.availableLocales();
         DirectorMiniMenu.ContentPage page = DirectorMiniMenu.paginate(
                 locales.size(), requestedPage, LANGUAGE_PAGE_SIZE);
+        String scope = personal ? "self" : "server";
+        String baseCommand = "/shapedportals language " + scope;
         ArrayList<String> lines = new ArrayList<>();
-        lines.add(DirectorMiniMenu.banner("/shapedportals language", theme));
-        if (prompt != null) {
-            lines.add(ComponentText.markup(language.render(ShapedMessages.GUI_LANGUAGE_TYPE)).miniMessage());
-        }
-        if (locales.isEmpty()) {
-            lines.add(ComponentText.markup(language.render(ShapedMessages.GUI_LANGUAGE_EMPTY)).miniMessage());
-        } else {
-            String current = configService.runtime().language();
-            for (String locale : locales.subList(page.startIndex(), page.endIndex())) {
-                lines.add(languageOption(locale, locale.equalsIgnoreCase(current)));
+        lines.add(DirectorMiniMenu.banner(baseCommand, theme));
+        if (languageScopeLinksVisible(page.page())) {
+            if (canSelectPersonalLanguage(player)) {
+                lines.add(languageScopeOption(
+                        "Your language",
+                        "Change only the messages you see.",
+                        "/shapedportals language self"
+                ));
+            }
+            if (canSelectServerLanguage(player)) {
+                lines.add(languageScopeOption(
+                        "Server default",
+                        "Change the language used without a personal choice.",
+                        "/shapedportals language server"
+                ));
             }
         }
         if (prompt != null) {
+            lines.add(ComponentText.markup(language.render(player, ShapedMessages.GUI_LANGUAGE_TYPE)).miniMessage());
+        }
+        if (locales.isEmpty()) {
+            lines.add(ComponentText.markup(language.render(player, ShapedMessages.GUI_LANGUAGE_EMPTY)).miniMessage());
+        } else {
+            String current = personal
+                    ? language.selections().effectiveLocale(player.getUniqueId())
+                    : configService.runtime().language();
+            for (String locale : locales.subList(page.startIndex(), page.endIndex())) {
+                lines.add(languageOption(player, locale, locale.equalsIgnoreCase(current), scope));
+            }
+        }
+        if (languageScopeLinksVisible(page.page()) && personal
+                && language.selections().playerLocale(player.getUniqueId()).isPresent()) {
+            lines.add(languageScopeOption(
+                    "Use server default",
+                    "Remove your personal language choice.",
+                    "/shapedportals language self reset"
+            ));
+        }
+        if (prompt != null) {
             lines.add(ComponentText.markup(language.renderWithoutPrefix(
+                    player,
                     ShapedMessages.GUI_PROMPT_CANCEL,
                     MessageArgs.empty()
             )).miniMessage());
         }
-        lines.add(DirectorMiniMenu.paginationBar(page, "/shapedportals language", theme,
+        lines.add(DirectorMiniMenu.paginationBar(page, baseCommand, theme,
                 language.directorResolver()));
         DirectorMiniMenu.deliver(player, lines);
     }
 
-    private String languageOption(String locale, boolean selected) {
-        MessageArgs optionArguments = MessageArgs.builder()
-                .trusted("status", selected ? "&a✔&r" : "&8•&r")
-                .untrusted("locale", locale)
-                .untrusted("name", language.localeDisplayName(locale))
-                .build();
-        ComponentText option = ComponentText.markup(language.render(ShapedMessages.GUI_LANGUAGE_OPTION,
-                optionArguments));
-        ComponentText hover = ComponentText.markup(language.render(ShapedMessages.GUI_LANGUAGE_HOVER,
+    private String languageOption(Player player, String locale, boolean selected, String scope) {
+        ComponentText option = languageOptionText(selected, locale, language.localeDisplayName(locale));
+        ComponentText hover = ComponentText.markup(language.render(player,
+                ShapedMessages.GUI_LANGUAGE_HOVER,
                 MessageArgs.builder().untrusted("locale", locale).build()));
         return ChatMenuStyle.entry(option)
-                .clickRunCommand(languageCommand(locale))
+                .clickRunCommand(languageCommand(scope, locale))
                 .hover(hover)
                 .miniMessage();
     }
 
-    private void selectLanguageOwned(Player player, String requestedLocale) {
-        prompts.remove(player.getUniqueId());
-        Setting setting = languageSetting();
-        String locale = language.availableLocale(requestedLocale).orElse(null);
-        if (locale == null) {
-            languageSelections.remove(player.getUniqueId());
-            saveFailedOwned(player, Category.GENERAL, requestedLocale,
-                    "the language file is not available", ResultDestination.NONE);
-            return;
-        }
-        saveMutation(player, Category.GENERAL, setting,
-                config -> setting.writer().write(config, locale), true, ResultDestination.NONE, locale);
+    private String languageScopeOption(String label, String description, String command) {
+        ComponentText option = ComponentText.markup("&f" + label + "&r &8:&r &7" + description + "&r");
+        return ChatMenuStyle.entry(option)
+                .clickRunCommand(command)
+                .hover(ComponentText.markup("&7" + description + "&r"))
+                .miniMessage();
+    }
+
+    private boolean canSelectPersonalLanguage(Player player) {
+        return player.hasPermission("volmit.language.self")
+                && player.hasPermission("shapedportals.language.self");
+    }
+
+    private boolean canSelectServerLanguage(Player player) {
+        return player.hasPermission("volmit.language.admin")
+                || player.hasPermission("shapedportals.config");
     }
 
     private void processPrompt(Player player, PromptSession prompt, String input) {
@@ -1251,8 +1305,24 @@ public final class ConfigEditorGui implements Listener {
                         && setting.kind() == SettingKind.LOCALE);
     }
 
-    static String languageCommand(String locale) {
-        return "/shapedportals language locale=" + locale;
+    static String languageStatus(boolean selected) {
+        return selected ? "&a✔&r" : "&8•&r";
+    }
+
+    static boolean languageScopeLinksVisible(int page) {
+        return page == 1;
+    }
+
+    static ComponentText languageOptionText(boolean selected, String locale, String name) {
+        return ComponentText.markup(languageStatus(selected) + " &f")
+                .append(ComponentText.literal(locale))
+                .append(ComponentText.markup("&r &7"))
+                .append(ComponentText.literal(name))
+                .append(ComponentText.markup("&r"));
+    }
+
+    static String languageCommand(String scope, String locale) {
+        return "/shapedportals language " + scope + " " + locale;
     }
 
     static int inventorySize() {
@@ -1348,6 +1418,30 @@ public final class ConfigEditorGui implements Listener {
                         Material.REPEATER, SettingKind.LONG, 100D,
                         config -> Long.toString(config.portal.deduplicationMillis),
                         (config, value) -> config.portal.deduplicationMillis = Long.parseLong(value.trim())),
+                setting(Category.PORTAL, "portal.endPortalCreation", ShapedMessages.SETTING_PORTAL_END_ENABLED,
+                        Material.END_PORTAL_FRAME, SettingKind.BOOLEAN, 1D,
+                        config -> Boolean.toString(config.portal.endPortalCreation),
+                        (config, value) -> config.portal.endPortalCreation = parseBoolean(value)),
+                setting(Category.PORTAL, "portal.endMinimumInteriorBlocks", ShapedMessages.SETTING_PORTAL_END_MINIMUM,
+                        Material.ENDER_EYE, SettingKind.INTEGER, 1D,
+                        config -> Integer.toString(config.portal.endMinimumInteriorBlocks),
+                        (config, value) -> config.portal.endMinimumInteriorBlocks = Integer.parseInt(value.trim())),
+                setting(Category.PORTAL, "portal.endMaximumInteriorBlocks", ShapedMessages.SETTING_PORTAL_END_MAXIMUM,
+                        Material.END_STONE, SettingKind.INTEGER, 1D,
+                        config -> Integer.toString(config.portal.endMaximumInteriorBlocks),
+                        (config, value) -> config.portal.endMaximumInteriorBlocks = Integer.parseInt(value.trim())),
+                setting(Category.PORTAL, "portal.endMaximumWidth", ShapedMessages.SETTING_PORTAL_END_WIDTH,
+                        Material.END_ROD, SettingKind.INTEGER, 1D,
+                        config -> Integer.toString(config.portal.endMaximumWidth),
+                        (config, value) -> config.portal.endMaximumWidth = Integer.parseInt(value.trim())),
+                setting(Category.PORTAL, "portal.endMaximumLength", ShapedMessages.SETTING_PORTAL_END_LENGTH,
+                        Material.PURPUR_PILLAR, SettingKind.INTEGER, 1D,
+                        config -> Integer.toString(config.portal.endMaximumLength),
+                        (config, value) -> config.portal.endMaximumLength = Integer.parseInt(value.trim())),
+                setting(Category.PORTAL, "portal.endInteriorMaterials", ShapedMessages.SETTING_PORTAL_END_INTERIORS,
+                        Material.END_STONE_BRICKS, SettingKind.LIST, 1D,
+                        config -> join(config.portal.endInteriorMaterials),
+                        (config, value) -> config.portal.endInteriorMaterials = parseList(value)),
 
                 setting(Category.EFFECTS, "effects.creationSound", ShapedMessages.SETTING_EFFECTS_SOUND,
                         Material.NOTE_BLOCK, SettingKind.BOOLEAN, 1D,
@@ -1365,6 +1459,22 @@ public final class ConfigEditorGui implements Listener {
                         Material.AMETHYST_SHARD, SettingKind.FLOAT, 0.1D,
                         config -> Float.toString(config.effects.creationSoundPitch),
                         (config, value) -> config.effects.creationSoundPitch = Float.parseFloat(value.trim())),
+                setting(Category.EFFECTS, "effects.endCreationSound", ShapedMessages.SETTING_EFFECTS_END_SOUND,
+                        Material.END_PORTAL_FRAME, SettingKind.BOOLEAN, 1D,
+                        config -> Boolean.toString(config.effects.endCreationSound),
+                        (config, value) -> config.effects.endCreationSound = parseBoolean(value)),
+                setting(Category.EFFECTS, "effects.endCreationSoundType", ShapedMessages.SETTING_EFFECTS_END_SOUND_TYPE,
+                        Material.ENDER_EYE, SettingKind.TEXT, 1D,
+                        config -> config.effects.endCreationSoundType,
+                        (config, value) -> config.effects.endCreationSoundType = value.trim()),
+                setting(Category.EFFECTS, "effects.endCreationSoundVolume", ShapedMessages.SETTING_EFFECTS_END_VOLUME,
+                        Material.DRAGON_HEAD, SettingKind.FLOAT, 0.1D,
+                        config -> Float.toString(config.effects.endCreationSoundVolume),
+                        (config, value) -> config.effects.endCreationSoundVolume = Float.parseFloat(value.trim())),
+                setting(Category.EFFECTS, "effects.endCreationSoundPitch", ShapedMessages.SETTING_EFFECTS_END_PITCH,
+                        Material.DRAGON_BREATH, SettingKind.FLOAT, 0.1D,
+                        config -> Float.toString(config.effects.endCreationSoundPitch),
+                        (config, value) -> config.effects.endCreationSoundPitch = Float.parseFloat(value.trim())),
 
                 setting(Category.HOT_RELOAD, "hotReload.enabled", ShapedMessages.SETTING_HOT_RELOAD_ENABLED,
                         Material.COMPARATOR, SettingKind.BOOLEAN, 1D,
@@ -1412,6 +1522,14 @@ public final class ConfigEditorGui implements Listener {
                         Material.ENDER_EYE, SettingKind.LIST, 1D,
                         config -> join(config.presentation.portalNotices),
                         (config, value) -> config.presentation.portalNotices = parseList(value)),
+                setting(Category.PRESENTATION, "presentation.netherCreationNotices", ShapedMessages.SETTING_PRESENTATION_NETHER_CREATION,
+                        Material.OBSIDIAN, SettingKind.LIST, 1D,
+                        config -> join(config.presentation.netherCreationNotices),
+                        (config, value) -> config.presentation.netherCreationNotices = parseList(value)),
+                setting(Category.PRESENTATION, "presentation.endCreationNotices", ShapedMessages.SETTING_PRESENTATION_END_CREATION,
+                        Material.END_PORTAL_FRAME, SettingKind.LIST, 1D,
+                        config -> join(config.presentation.endCreationNotices),
+                        (config, value) -> config.presentation.endCreationNotices = parseList(value)),
                 setting(Category.PRESENTATION, "presentation.overlayDurationTicks", ShapedMessages.SETTING_PRESENTATION_DURATION,
                         Material.CLOCK, SettingKind.LONG, 10D,
                         config -> Long.toString(config.presentation.overlayDurationTicks),

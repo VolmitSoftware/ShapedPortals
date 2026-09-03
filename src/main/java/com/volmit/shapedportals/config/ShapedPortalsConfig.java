@@ -33,9 +33,9 @@ public final class ShapedPortalsConfig {
         public boolean enabled = true;
         @ConfigDoc(value = "Active locale stored as the directly editable languages/<locale>.toml file.", impact = "Repository locales are verified and downloaded only when missing; local changes are never automatically replaced, and missing entries use code-owned English.")
         public String language = "en_US";
-        @ConfigDoc(value = "Require shapedportals.create from player igniters.", impact = "Non-player ignition follows the configured ignition causes.")
+        @ConfigDoc(value = "Require shapedportals.create from players creating Nether or End portals.", impact = "Non-player Nether ignition follows the configured ignition causes.")
         public boolean requireCreatePermission = true;
-        @ConfigDoc(value = "Tell player igniters why a shaped portal was not created.", impact = "Duplicate and vanilla-handled attempts remain quiet.")
+        @ConfigDoc(value = "Tell players why a recognized shaped portal was not created.", impact = "Incomplete, duplicate, and vanilla-handled attempts remain quiet.")
         public boolean failureFeedback = true;
 
         private General copy() {
@@ -80,6 +80,18 @@ public final class ShapedPortalsConfig {
         public List<String> deniedWorlds = new ArrayList<>();
         @ConfigDoc(value = "Cooldown for duplicate ignition events at the same block.", impact = "Prevents BlockIgniteEvent and BlockPlaceEvent from double-processing one action.")
         public long deduplicationMillis = 1500L;
+        @ConfigDoc(value = "Create managed non-vanilla End portals when the final eye is inserted.", impact = "Vanilla 3x3 End portals remain owned by the server.")
+        public boolean endPortalCreation = true;
+        @ConfigDoc(value = "Minimum connected interior cells in a shaped End portal.", impact = "Accepted range is 1 through 4096 cells.")
+        public int endMinimumInteriorBlocks = 1;
+        @ConfigDoc(value = "Maximum connected interior cells in a shaped End portal.", impact = "The hard safety ceiling is 4096 cells.")
+        public int endMaximumInteriorBlocks = 256;
+        @ConfigDoc(value = "Maximum horizontal X span of a shaped End portal interior.", impact = "Accepted range is 1 through 512 blocks.")
+        public int endMaximumWidth = 64;
+        @ConfigDoc(value = "Maximum horizontal Z span of a shaped End portal interior.", impact = "Accepted range is 1 through 512 blocks.")
+        public int endMaximumLength = 64;
+        @ConfigDoc(value = "Blocks that may be replaced inside a newly created shaped End portal.", impact = "END_PORTAL is always recognized so vanilla portals can be left untouched.")
+        public List<String> endInteriorMaterials = new ArrayList<>(List.of("AIR", "CAVE_AIR", "VOID_AIR"));
 
         private Portal copy() {
             Portal copy = new Portal();
@@ -93,19 +105,33 @@ public final class ShapedPortalsConfig {
             copy.allowedWorlds = new ArrayList<>(allowedWorlds);
             copy.deniedWorlds = new ArrayList<>(deniedWorlds);
             copy.deduplicationMillis = deduplicationMillis;
+            copy.endPortalCreation = endPortalCreation;
+            copy.endMinimumInteriorBlocks = endMinimumInteriorBlocks;
+            copy.endMaximumInteriorBlocks = endMaximumInteriorBlocks;
+            copy.endMaximumWidth = endMaximumWidth;
+            copy.endMaximumLength = endMaximumLength;
+            copy.endInteriorMaterials = new ArrayList<>(endInteriorMaterials);
             return copy;
         }
     }
 
     public static final class Effects {
-        @ConfigDoc(value = "Play a sound after a shaped portal is successfully committed.", impact = "Cancelled or failed attempts stay silent.")
+        @ConfigDoc(value = "Play a sound after a shaped Nether portal is successfully committed.", impact = "Cancelled or failed attempts stay silent.")
         public boolean creationSound = true;
-        @ConfigDoc(value = "Bukkit sound enum used for successful creation.", impact = "The value must exist on the minimum supported API.")
-        public String creationSoundType = "minecraft:block.end_portal.spawn";
-        @ConfigDoc(value = "Creation sound volume.", impact = "Accepted range is 0.0 through 4.0.")
+        @ConfigDoc(value = "Bukkit sound used for successful Nether portal creation.", impact = "Namespaced keys and legacy enum names are accepted.")
+        public String creationSoundType = "minecraft:block.portal.trigger";
+        @ConfigDoc(value = "Nether portal creation sound volume.", impact = "Accepted range is 0.0 through 4.0.")
         public float creationSoundVolume = 0.6F;
-        @ConfigDoc(value = "Creation sound pitch.", impact = "Accepted range is 0.5 through 2.0.")
+        @ConfigDoc(value = "Nether portal creation sound pitch.", impact = "Accepted range is 0.5 through 2.0.")
         public float creationSoundPitch = 0.67F;
+        @ConfigDoc(value = "Play a sound after a shaped End portal is successfully committed.", impact = "Vanilla-created portals remain silent to ShapedPortals.")
+        public boolean endCreationSound = true;
+        @ConfigDoc(value = "Bukkit sound used for successful End portal creation.", impact = "Namespaced keys and legacy enum names are accepted.")
+        public String endCreationSoundType = "minecraft:block.end_portal.spawn";
+        @ConfigDoc(value = "End portal creation sound volume.", impact = "Accepted range is 0.0 through 4.0.")
+        public float endCreationSoundVolume = 0.8F;
+        @ConfigDoc(value = "End portal creation sound pitch.", impact = "Accepted range is 0.5 through 2.0.")
+        public float endCreationSoundPitch = 1.0F;
 
         private Effects copy() {
             Effects copy = new Effects();
@@ -113,6 +139,10 @@ public final class ShapedPortalsConfig {
             copy.creationSoundType = creationSoundType;
             copy.creationSoundVolume = creationSoundVolume;
             copy.creationSoundPitch = creationSoundPitch;
+            copy.endCreationSound = endCreationSound;
+            copy.endCreationSoundType = endCreationSoundType;
+            copy.endCreationSoundVolume = endCreationSoundVolume;
+            copy.endCreationSoundPitch = endCreationSoundPitch;
             return copy;
         }
     }
@@ -163,6 +193,10 @@ public final class ShapedPortalsConfig {
         public List<String> commandOverlays = new ArrayList<>(List.of("ACTION_BAR"));
         @ConfigDoc(value = "Channels used for portal creation and rejection notices.", impact = "Accepted values are CHAT, ACTION_BAR, TITLE, and BOSS_BAR. An empty list disables portal notices.")
         public List<String> portalNotices = new ArrayList<>(List.of("ACTION_BAR"));
+        @ConfigDoc(value = "Channels used after shaped Nether portal creation.", impact = "Accepted values are CHAT, ACTION_BAR, TITLE, and BOSS_BAR. An empty list disables the message.")
+        public List<String> netherCreationNotices = new ArrayList<>(List.of("ACTION_BAR"));
+        @ConfigDoc(value = "Channels used after shaped End portal creation.", impact = "Accepted values are CHAT, ACTION_BAR, TITLE, and BOSS_BAR. An empty list disables the message.")
+        public List<String> endCreationNotices = new ArrayList<>(List.of("ACTION_BAR"));
         @ConfigDoc(value = "Lifetime of transient action-bar, title-claim, and boss-bar feedback.", impact = "Accepted range is 10 through 600 ticks.")
         public long overlayDurationTicks = 50L;
         @ConfigDoc(value = "Title fade-in duration in ticks.", impact = "Accepted range is 0 through 200 ticks.")
@@ -178,6 +212,8 @@ public final class ShapedPortalsConfig {
             copy.commandSounds = commandSounds;
             copy.commandOverlays = new ArrayList<>(commandOverlays);
             copy.portalNotices = new ArrayList<>(portalNotices);
+            copy.netherCreationNotices = new ArrayList<>(netherCreationNotices);
+            copy.endCreationNotices = new ArrayList<>(endCreationNotices);
             copy.overlayDurationTicks = overlayDurationTicks;
             copy.titleFadeInTicks = titleFadeInTicks;
             copy.titleStayTicks = titleStayTicks;

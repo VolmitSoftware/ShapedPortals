@@ -280,7 +280,7 @@ publishing {
             artifact(tasks.named('sourcesJar'))
             pom {
                 name = 'ShapedPortals'
-                description = 'Arbitrary-shape Nether portals for Spigot, Paper, and Folia.'
+                description = 'Arbitrary-shape Nether and End portals for Spigot, Paper, and Folia.'
                 url = 'https://github.com/VolmitSoftware/ShapedPortals'
             }
         }

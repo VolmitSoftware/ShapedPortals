@@ -6,7 +6,7 @@ folia-supported: true
 authors:
   - Volmit Software
 website: https://volmit.com
-description: Create durable Nether portals with arbitrary vertical frame shapes.
+description: Create durable Nether and End portals with arbitrary two-dimensional frame shapes.
 commands:
   shapedportals:
     aliases: [shapedportal, sp]
@@ -23,6 +23,9 @@ permissions:
   shapedportals.config:
     description: Allows editing ShapedPortals configuration in game
     default: op
+  shapedportals.language.self:
+    description: Allows choosing a personal ShapedPortals language
+    default: true
   shapedportals.debug:
     description: Allows creating and optionally uploading ShapedPortals diagnostic reports
     default: op

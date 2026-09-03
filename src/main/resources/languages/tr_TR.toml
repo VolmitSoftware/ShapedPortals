@@ -67,8 +67,13 @@ page = "Birden başlayan portal listesi sayfası"
 portal = "Portal UUID değeri, benzersiz önek veya list"
 
 [portal.notice]
-created = "{prefix}&d{blocks} iç bloğa sahip şekilli bir portal oluşturuldu.&r"
+nether_created = "{prefix}&d{blocks} iç bloğa sahip şekilli bir portal oluşturuldu.&r"
+end_created = "{prefix}&5End&r &d{blocks} iç bloğa sahip şekilli bir portal oluşturuldu.&r"
 failed = "{prefix}&cBu çerçeve şekilli bir portala dönüşemez: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&c&f{portal}&r&c yanında güvenli bir durma alanı yok. &eYine de içine ışınlanmak için &f{seconds}&r&e saniye içinde aynı portala tekrar tıklayın.&r"
@@ -76,7 +81,7 @@ unsafe = "{prefix}&c&f{portal}&r&c yanında güvenli bir durma alanı yok. &eYin
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eMevcut çerçeve &f{materials}&r&e kullanıyor; bu malzemelerle yeni portal oluşturulamaz.&r"
 empty = "&eKayıtlı yönetilen şekilli portal yok.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Konum:&r &f{x}, {y}, {z}&r &8•&r &7Eksen:&r &f{axis}&r &8•&r &7Hücreler:&r &f{blocks}&r\n&8  └&r &7Oluşturan:&r &f{creator}&r &8•&r &7Oluşturuldu:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Konum:&r &f{x}, {y}, {z}&r &8•&r &7Eksen:&r &f{axis}&r &8•&r &7Hücreler:&r &f{blocks}&r\n&8  └&r &7Oluşturan:&r &f{creator}&r &8•&r &7Oluşturuldu:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aBu portala ışınlanmak için tıklayın.&r"
 
 [portal.navigation.error]
@@ -153,22 +158,32 @@ failure_feedback = "&dPortal hatası geri bildirimi&r"
 enabled = "&dAnonim bStats istatistikleri&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dEn az iç blok&r"
-maximum_interior_blocks = "&dEn fazla iç blok&r"
-maximum_width = "&dEn fazla genişlik&r"
-maximum_height = "&dEn fazla yükseklik&r"
-frame_materials = "&dÇerçeve malzemeleri&r"
-interior_materials = "&dİç alan malzemeleri&r"
+minimum_interior_blocks = "&dNether En az iç blok&r"
+maximum_interior_blocks = "&dNether En fazla iç blok&r"
+maximum_width = "&dNether En fazla genişlik&r"
+maximum_height = "&dNether En fazla yükseklik&r"
+frame_materials = "&dNether Çerçeve malzemeleri&r"
+interior_materials = "&dNether İç alan malzemeleri&r"
 ignition_causes = "&dAteşleme nedenleri&r"
 allowed_worlds = "&dİzin verilen dünyalar&r"
 denied_worlds = "&dReddedilen dünyalar&r"
 deduplication_millis = "&dTekilleştirme milisaniyesi&r"
+end_portal_creation = "&dEnd Portal oluşturma&r"
+end_minimum_interior_blocks = "&dEnd En az iç blok&r"
+end_maximum_interior_blocks = "&dEnd En fazla iç blok&r"
+end_maximum_width = "&dEnd En fazla genişlik&r"
+end_maximum_length = "&dEnd En fazla genişlik&r"
+end_interior_materials = "&dEnd İç alan malzemeleri&r"
 
 [gui.setting.effects]
-creation_sound = "&dOluşturma sesi&r"
-creation_sound_type = "&dOluşturma sesi türü&r"
-creation_sound_volume = "&dOluşturma sesi seviyesi&r"
-creation_sound_pitch = "&dOluşturma sesi perdesi&r"
+creation_sound = "&dNether Oluşturma sesi&r"
+creation_sound_type = "&dNether Oluşturma sesi türü&r"
+creation_sound_volume = "&dNether Oluşturma sesi seviyesi&r"
+creation_sound_pitch = "&dNether Oluşturma sesi perdesi&r"
+end_creation_sound = "&dEnd Oluşturma sesi&r"
+end_creation_sound_type = "&dEnd Oluşturma sesi türü&r"
+end_creation_sound_volume = "&dEnd Oluşturma sesi seviyesi&r"
+end_creation_sound_pitch = "&dEnd Oluşturma sesi perdesi&r"
 
 [gui.setting.hot_reload]
 enabled = "&dCanlı yeniden yükleme&r"
@@ -186,6 +201,8 @@ splash_screen = "&dBaşlangıç karşılama ekranı&r"
 command_sounds = "&dKomut sesleri&r"
 command_overlays = "&dKomut katmanları&r"
 portal_notices = "&dPortal bildirim kanalları&r"
+nether_creation_notices = "&dNether Portal bildirim kanalları&r"
+end_creation_notices = "&dEnd Portal bildirim kanalları&r"
 overlay_duration_ticks = "&dKatman süresi (tik)&r"
 title_fade_in_ticks = "&dBaşlık belirme süresi (tik)&r"
 title_stay_ticks = "&dBaşlık kalma süresi (tik)&r"

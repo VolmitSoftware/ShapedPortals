@@ -4,19 +4,20 @@
 
 # ShapedPortals
 
-Free-form Nether portals with durable registration, configurable presentation, and complete in-game administration.
+Free-form Nether and End portals with durable registration, configurable presentation, and complete in-game administration.
 
 </div>
 
 ## Features
 
 - **Arbitrary portal shapes** — Ignite bounded vertical Nether portals with irregular, concave, or asymmetric interiors.
-- **Vanilla-compatible creation** — Vanilla receives the first creation opportunity, and proposed shaped portals fire Bukkit's `PortalCreateEvent` so protection plugins can cancel them.
+- **Shaped End portals** — Fill horizontal, fully eyed End Portal Frame boundaries of non-vanilla sizes and shapes while retaining vanilla End travel.
+- **Vanilla-compatible creation** — Nether proposals use cancellable `PortalCreateEvent`; End activation respects the eye interaction and preflights every interior through `BlockCanBuildEvent`.
 - **Managed integrity** — Portals persist across restarts, repair replaceable portal cells, and retain their recorded frame materials when the creation whitelist changes.
 - **Hot-reloadable configuration** — Every persisted option is available in the 54-slot in-game editor and can also be edited in `config.toml` without a restart.
-- **Localization** — Code-owned English remains available offline; 17 additional locale files download only when selected and remain directly editable afterward. Messages accept classic `&` colors, RGB, and MiniMessage.
+- **Localization** — Players can keep a personal language or follow the server default. Code-owned English remains available offline; 17 additional locale files download only when selected and remain directly editable afterward. Messages accept classic `&` colors, RGB, and MiniMessage.
 - **Administration** — Paginated portal listings, safe and permission-gated forced teleportation, and comprehensive local diagnostics with optional mclo.gs upload.
-- **Cooperative presentation** — Configurable chat, action-bar, title, boss-bar, and sound feedback respects VolmLib's shared HUD claims.
+- **Cooperative presentation** — Separate Nether/End creation messages, channels, titles, boss bars, and sounds hot-reload while respecting VolmLib's shared HUD claims.
 - **Metrics** — Enabled-by-default bStats metrics retain both plugin-local and global opt-outs; optional React Plugin API Pack metrics stay on the server.
 
 ## Requirements
@@ -35,7 +36,11 @@ Free-form Nether portals with durable registration, configurable presentation, a
 | `/sp` | Open the localized paginated help menu. |
 | `/sp status` | Show creation, registry, scheduler, and integration state. |
 | `/sp config` | Open the complete in-game configuration and language editor. |
-| `/sp language [locale]` | Select a locale or open the clickable language picker. |
+| `/sp language` | Open the personal language picker in-game or the server picker from console. |
+| `/sp language self <locale\|reset>` | Select a personal language or return to the server default. |
+| `/sp language server <locale>` | Change the server default. |
+| `/sp language server edit [locale]` | Open the per-language message editor. |
+| `/volmit plugins languages [locale]` | Change the server default across registered Volmit plugins. |
 | `/sp portals [page]` | List managed portals with frame status and teleport shortcuts. |
 | `/sp teleport [UUID/prefix]` | Teleport safely beside a managed portal; authorized operators may confirm an unsafe landing. |
 | `/sp debug` | Save a diagnostic report and optionally upload the saved report to mclo.gs. |
@@ -59,10 +64,11 @@ ShapedPortals creates its configuration and English fallback on first start. Oth
 ```text
 plugins/ShapedPortals/
 ├── config.toml                              all runtime settings; always
+├── language-preferences.properties          persistent personal choices, after the first selection
 ├── languages/en_US.toml                    editable English fallback; always
 ├── languages/<locale>.toml                 selected repository or custom locales
 ├── portals.json                            persisted managed portals, after the first registry write
 └── debug/shapedportals-debug-<time>.txt    locally saved `/sp debug` reports
 ```
 
-`config.toml` and installed language files hot-reload. A missing repository locale is fetched from the latest `main` language directory, validated, installed once, and activated by the original selection; the console reports its source URL and final path. Existing files and local edits are never automatically replaced.
+`config.toml` and the active server language file hot-reload. A missing repository locale is fetched from the latest `main` language directory, validated, installed once, and activated by the original selection; the console reports its source URL and final path. Existing files and local edits are never automatically replaced.

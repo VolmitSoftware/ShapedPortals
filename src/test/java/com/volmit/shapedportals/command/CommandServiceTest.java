@@ -15,10 +15,8 @@ final class CommandServiceTest {
                 .containsExactly("tp", "portal=list");
         assertThat(CommandService.normalizeOptionalArguments(List.of("portals", "2")))
                 .containsExactly("portals", "page=2");
-        assertThat(CommandService.normalizeOptionalArguments(List.of("language", "fr_FR")))
-                .containsExactly("language", "locale=fr_FR");
-        assertThat(CommandService.normalizeOptionalArguments(List.of("language", "menu")))
-                .containsExactly("language", "locale=menu");
+        assertThat(CommandService.normalizeOptionalArguments(List.of("language", "self")))
+                .containsExactly("language", "self");
     }
 
     @Test
@@ -34,10 +32,15 @@ final class CommandServiceTest {
     }
 
     @Test
-    void routesBareAndPagedLanguageRequestsToThePicker() {
-        assertThat(CommandService.languageMenuPage(List.of("language"))).hasValue(1);
-        assertThat(CommandService.languageMenuPage(List.of("language", "page=2"))).hasValue(2);
-        assertThat(CommandService.languageMenuPage(List.of("language", "fr_FR"))).isEmpty();
-        assertThat(CommandService.languageMenuPage(List.of("language", "page=invalid"))).isEmpty();
+    void routesOnlyLanguageMenuPagesThroughTheShapedPortalsSelector() {
+        assertThat(CommandService.languageMenuRequest(new String[0], true, true))
+                .isEqualTo(new CommandService.LanguageMenuRequest(true, 1));
+        assertThat(CommandService.languageMenuRequest(new String[]{"server"}, true, true))
+                .isEqualTo(new CommandService.LanguageMenuRequest(false, 1));
+        assertThat(CommandService.languageMenuRequest(new String[]{"self", "page=3"}, true, true))
+                .isEqualTo(new CommandService.LanguageMenuRequest(true, 3));
+        assertThat(CommandService.languageMenuRequest(new String[]{"self", "fr_FR"}, true, true)).isNull();
+        assertThat(CommandService.languageMenuRequest(new String[]{"server", "edit"}, true, true)).isNull();
+        assertThat(CommandService.languageMenuRequest(new String[]{"self"}, false, true)).isNull();
     }
 }

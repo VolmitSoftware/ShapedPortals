@@ -67,8 +67,13 @@ page = "עמוד רשימת פורטלים שמספרו מתחיל באחד"
 portal = "UUID של פורטל, תחילית ייחודית או list"
 
 [portal.notice]
-created = "{prefix}&dנוצר פורטל מעוצב עם {blocks} בלוקים פנימיים.&r"
+nether_created = "{prefix}&dנוצר פורטל מעוצב עם {blocks} בלוקים פנימיים.&r"
+end_created = "{prefix}&5End&r &dנוצר פורטל מעוצב עם {blocks} בלוקים פנימיים.&r"
 failed = "{prefix}&cלא ניתן להפוך את המסגרת הזו לפורטל מעוצב: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cאין מקום בטוח לעמוד ליד &f{portal}&r&c. &eלחצו שוב על אותו פורטל בתוך &f{seconds}&r&e שניות כדי להשתגר לתוכו בכל זאת.&r"
@@ -76,7 +81,7 @@ unsafe = "{prefix}&cאין מקום בטוח לעמוד ליד &f{portal}&r&c. &
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eהמסגרת הקיימת משתמשת ב-&f{materials}&r&e, שלא ניתן ליצור מהם שערים חדשים.&r"
 empty = "&eלא רשומים פורטלים מעוצבים מנוהלים.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7מיקום:&r &f{x}, {y}, {z}&r &8•&r &7ציר:&r &f{axis}&r &8•&r &7תאים:&r &f{blocks}&r\n&8  └&r &7יוצר:&r &f{creator}&r &8•&r &7נוצר:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7מיקום:&r &f{x}, {y}, {z}&r &8•&r &7ציר:&r &f{axis}&r &8•&r &7תאים:&r &f{blocks}&r\n&8  └&r &7יוצר:&r &f{creator}&r &8•&r &7נוצר:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aלחצו כדי להשתגר אל פורטל זה.&r"
 
 [portal.navigation.error]
@@ -153,22 +158,32 @@ failure_feedback = "&dמשוב על כשל בפורטל&r"
 enabled = "&dמדדי bStats אנונימיים&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dמספר בלוקים פנימיים מזערי&r"
-maximum_interior_blocks = "&dמספר בלוקים פנימיים מרבי&r"
-maximum_width = "&dרוחב מרבי&r"
-maximum_height = "&dגובה מרבי&r"
-frame_materials = "&dחומרי מסגרת&r"
-interior_materials = "&dחומרים פנימיים&r"
+minimum_interior_blocks = "&dNether מספר בלוקים פנימיים מזערי&r"
+maximum_interior_blocks = "&dNether מספר בלוקים פנימיים מרבי&r"
+maximum_width = "&dNether רוחב מרבי&r"
+maximum_height = "&dNether גובה מרבי&r"
+frame_materials = "&dNether חומרי מסגרת&r"
+interior_materials = "&dNether חומרים פנימיים&r"
 ignition_causes = "&dגורמי הצתה&r"
 allowed_worlds = "&dעולמות מותרים&r"
 denied_worlds = "&dעולמות אסורים&r"
 deduplication_millis = "&dאלפיות שנייה למניעת כפילויות&r"
+end_portal_creation = "&dEnd יצירת פורטלים&r"
+end_minimum_interior_blocks = "&dEnd מספר בלוקים פנימיים מזערי&r"
+end_maximum_interior_blocks = "&dEnd מספר בלוקים פנימיים מרבי&r"
+end_maximum_width = "&dEnd רוחב מרבי&r"
+end_maximum_length = "&dEnd רוחב מרבי&r"
+end_interior_materials = "&dEnd חומרים פנימיים&r"
 
 [gui.setting.effects]
-creation_sound = "&dצליל יצירה&r"
-creation_sound_type = "&dסוג צליל היצירה&r"
-creation_sound_volume = "&dעוצמת צליל היצירה&r"
-creation_sound_pitch = "&dגובה צליל היצירה&r"
+creation_sound = "&dNether צליל יצירה&r"
+creation_sound_type = "&dNether סוג צליל היצירה&r"
+creation_sound_volume = "&dNether עוצמת צליל היצירה&r"
+creation_sound_pitch = "&dNether גובה צליל היצירה&r"
+end_creation_sound = "&dEnd צליל יצירה&r"
+end_creation_sound_type = "&dEnd סוג צליל היצירה&r"
+end_creation_sound_volume = "&dEnd עוצמת צליל היצירה&r"
+end_creation_sound_pitch = "&dEnd גובה צליל היצירה&r"
 
 [gui.setting.hot_reload]
 enabled = "&dטעינה חמה&r"
@@ -186,6 +201,8 @@ splash_screen = "&dמסך פתיחה בהפעלה&r"
 command_sounds = "&dצלילי פקודות&r"
 command_overlays = "&dשכבות פקודה&r"
 portal_notices = "&dערוצי הודעות פורטל&r"
+nether_creation_notices = "&dNether ערוצי הודעות פורטל&r"
+end_creation_notices = "&dEnd ערוצי הודעות פורטל&r"
 overlay_duration_ticks = "&dמשך שכבה בטיקים&r"
 title_fade_in_ticks = "&dהופעת כותרת בטיקים&r"
 title_stay_ticks = "&dמשך הצגת כותרת בטיקים&r"

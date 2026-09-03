@@ -17,7 +17,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.Orientable;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -89,7 +88,7 @@ public final class PortalNavigationService {
             entries.add(entry(sender, record));
         }
         DirectorMiniMenu.ContentMenu menu = portalMenu(entries,
-                ComponentText.markup(language.render(ShapedMessages.PORTAL_LIST_EMPTY)).miniMessage(),
+                ComponentText.markup(language.render(sender, ShapedMessages.PORTAL_LIST_EMPTY)).miniMessage(),
                 requestedPage);
         DirectorMiniMenu.deliverContent(sender, menu, theme, language.directorResolver());
     }
@@ -188,6 +187,15 @@ public final class PortalNavigationService {
     }
 
     static List<BlockPosition> landingCandidates(PortalRecord record) {
+        if (record.type() == PortalType.END) {
+            return record.frame().stream()
+                    .map(position -> new BlockPosition(position.x(), position.y() + 1, position.z()))
+                    .sorted(Comparator
+                            .comparingInt((BlockPosition position) -> distanceSquared(position, record.anchor()))
+                            .thenComparingInt(BlockPosition::x)
+                            .thenComparingInt(BlockPosition::z))
+                    .toList();
+        }
         ArrayList<BlockPosition> candidates = new ArrayList<>(record.interior().size() * 4);
         for (BlockPosition position : record.interior()) {
             if (record.axis() == PortalAxis.X) {
@@ -227,20 +235,24 @@ public final class PortalNavigationService {
                 .trusted("y", record.anchor().y())
                 .trusted("z", record.anchor().z())
                 .untrusted("axis", record.axis().name())
+                .untrusted("type", record.type().name())
                 .trusted("blocks", record.interior().size())
                 .untrusted("creator", record.creator())
                 .untrusted("created", formatCreatedAt(record.createdAtEpochMillis()))
                 .build();
-        String markup = language.render(ShapedMessages.PORTAL_LIST_ENTRY, arguments);
+        String markup = language.render(sender, ShapedMessages.PORTAL_LIST_ENTRY, arguments);
+        Set<Material> allowedFrameMaterials = record.type() == PortalType.END
+                ? Set.of(Material.END_PORTAL_FRAME)
+                : configService.runtime().frameMaterials();
         List<Material> retiredMaterials = retiredFrameMaterials(
-                record.frameMaterialSnapshot(), configService.runtime().frameMaterials());
+                record.frameMaterialSnapshot(), allowedFrameMaterials);
         if (!retiredMaterials.isEmpty()) {
-            markup += "\n" + language.render(ShapedMessages.PORTAL_LIST_FRAME_POLICY_NOTE,
+            markup += "\n" + language.render(sender, ShapedMessages.PORTAL_LIST_FRAME_POLICY_NOTE,
                     MessageArgs.builder().untrusted("materials", formatMaterials(retiredMaterials)).build());
         }
         ComponentText row = ChatMenuStyle.entry(ComponentText.markup(markup));
         if (sender instanceof Player player && player.hasPermission("shapedportals.teleport")) {
-            ComponentText hover = ComponentText.markup(language.render(ShapedMessages.PORTAL_LIST_HOVER,
+            ComponentText hover = ComponentText.markup(language.render(sender, ShapedMessages.PORTAL_LIST_HOVER,
                     MessageArgs.builder().untrusted("uuid", record.id().toString()).build()));
             return row.clickRunCommand(teleportCommand(record.id())).hover(hover).miniMessage();
         }
@@ -568,9 +580,7 @@ public final class PortalNavigationService {
 
     private boolean isActivePortal(World world, PortalRecord record) {
         Block anchor = record.anchor().block(world);
-        return anchor.getType() == Material.NETHER_PORTAL
-                && anchor.getBlockData() instanceof Orientable orientable
-                && orientable.getAxis() == record.axis().bukkitAxis();
+        return record.type().matches(anchor.getBlockData(), record.axis());
     }
 
     private Location safeDestination(World world, List<BlockPosition> candidates) {

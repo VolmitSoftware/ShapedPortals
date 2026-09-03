@@ -140,10 +140,20 @@ final class ShapedDebugReport {
         value(report, "portal.allowedWorlds count", config.portal.allowedWorlds.size());
         value(report, "portal.deniedWorlds count", config.portal.deniedWorlds.size());
         value(report, "portal.deduplicationMillis", config.portal.deduplicationMillis);
+        value(report, "portal.endPortalCreation", config.portal.endPortalCreation);
+        value(report, "portal.endMinimumInteriorBlocks", config.portal.endMinimumInteriorBlocks);
+        value(report, "portal.endMaximumInteriorBlocks", config.portal.endMaximumInteriorBlocks);
+        value(report, "portal.endMaximumWidth", config.portal.endMaximumWidth);
+        value(report, "portal.endMaximumLength", config.portal.endMaximumLength);
+        value(report, "portal.endInteriorMaterials", join(config.portal.endInteriorMaterials));
         value(report, "effects.creationSound", config.effects.creationSound);
         value(report, "effects.creationSoundType", config.effects.creationSoundType);
         value(report, "effects.creationSoundVolume", config.effects.creationSoundVolume);
         value(report, "effects.creationSoundPitch", config.effects.creationSoundPitch);
+        value(report, "effects.endCreationSound", config.effects.endCreationSound);
+        value(report, "effects.endCreationSoundType", config.effects.endCreationSoundType);
+        value(report, "effects.endCreationSoundVolume", config.effects.endCreationSoundVolume);
+        value(report, "effects.endCreationSoundPitch", config.effects.endCreationSoundPitch);
         value(report, "hotReload.enabled", config.hotReload.enabled);
         value(report, "hotReload.pollIntervalMillis", config.hotReload.pollIntervalMillis);
         value(report, "hotReload.cooldownMillis", config.hotReload.cooldownMillis);
@@ -155,6 +165,8 @@ final class ShapedDebugReport {
         value(report, "presentation.commandSounds", config.presentation.commandSounds);
         value(report, "presentation.commandOverlays", join(config.presentation.commandOverlays));
         value(report, "presentation.portalNotices", join(config.presentation.portalNotices));
+        value(report, "presentation.netherCreationNotices", join(config.presentation.netherCreationNotices));
+        value(report, "presentation.endCreationNotices", join(config.presentation.endCreationNotices));
         value(report, "presentation.overlayDurationTicks", config.presentation.overlayDurationTicks);
         value(report, "presentation.titleFadeInTicks", config.presentation.titleFadeInTicks);
         value(report, "presentation.titleStayTicks", config.presentation.titleStayTicks);
@@ -193,6 +205,7 @@ final class ShapedDebugReport {
         long newest = Long.MIN_VALUE;
         int axisX = 0;
         int axisZ = 0;
+        int axisY = 0;
         int loadedWorldRecords = 0;
         int unavailableWorldRecords = 0;
         Set<UUID> worlds = new HashSet<>();
@@ -208,15 +221,16 @@ final class ShapedDebugReport {
             chunks += portal.chunks().size();
             oldest = Math.min(oldest, portal.createdAtEpochMillis());
             newest = Math.max(newest, portal.createdAtEpochMillis());
-            if (portal.axis().name().equals("X")) {
-                axisX++;
-            } else {
-                axisZ++;
+            switch (portal.axis()) {
+                case X -> axisX++;
+                case Z -> axisZ++;
+                case Y -> axisY++;
             }
         }
         value(report, "Records", portals.size());
         value(report, "Axis X", axisX);
         value(report, "Axis Z", axisZ);
+        value(report, "Axis Y (End)", axisY);
         value(report, "Worlds represented", worlds.size());
         value(report, "Records in loaded worlds", loadedWorldRecords);
         value(report, "Records in unavailable worlds", unavailableWorldRecords);
@@ -233,6 +247,7 @@ final class ShapedDebugReport {
             report.append("- ").append(portal.id())
                     .append(" | schema=").append(portal.schemaVersion())
                     .append(" | axis=").append(portal.axis().name())
+                    .append(" | type=").append(portal.type().name())
                     .append(" | interior=").append(portal.interior().size())
                     .append(" | frame=").append(portal.frame().size())
                     .append(" | chunks=").append(portal.chunks().size())

@@ -33,11 +33,14 @@ public final class ShapedMessages {
     public static final TextKey STATUS_ATTEMPTS = prefixed("command.status.attempts", "&7Attempts:&r &f{attempts}&r &8|&r &7Created:&r &a{created}&r &8|&r &7Rejected:&r &c{rejected}&r");
     public static final TextKey STATUS_COMPATIBILITY = prefixed("command.status.compatibility", "&7Artifact:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Scheduler:&r &f{scheduler}&r");
 
-    public static final TextKey PORTAL_CREATED = prefixed("portal.notice.created", "&dCreated a shaped portal with {blocks} interior blocks.&r");
+    public static final TextKey PORTAL_NETHER_CREATED = prefixed("portal.notice.nether_created", "&dCreated a shaped Nether portal with {blocks} interior blocks.&r");
+    public static final TextKey PORTAL_END_CREATED = prefixed("portal.notice.end_created", "&dCreated a shaped End portal with {blocks} interior blocks.&r");
+    public static final TextKey PORTAL_NETHER_TITLE = TextKey.of("portal.title.nether_created", "&5&lNether Portal Created&r");
+    public static final TextKey PORTAL_END_TITLE = TextKey.of("portal.title.end_created", "&5&lEnd Portal Created&r");
     public static final TextKey PORTAL_FAILED = prefixed("portal.notice.failed", "&cThat frame cannot become a shaped portal: &f{reason}&r&c.&r");
 
     public static final TextKey PORTAL_LIST_EMPTY = TextKey.of("portal.navigation.list.empty", "&eNo managed shaped portals are registered.&r");
-    public static final TextKey PORTAL_LIST_ENTRY = TextKey.of("portal.navigation.list.entry", "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Location:&r &f{x}, {y}, {z}&r &8•&r &7Axis:&r &f{axis}&r &8•&r &7Cells:&r &f{blocks}&r\n&8  └&r &7Creator:&r &f{creator}&r &8•&r &7Created:&r &f{created}&r");
+    public static final TextKey PORTAL_LIST_ENTRY = TextKey.ofOptional("portal.navigation.list.entry", "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Location:&r &f{x}, {y}, {z}&r &8•&r &7Axis:&r &f{axis}&r &8•&r &7Cells:&r &f{blocks}&r\n&8  └&r &7Creator:&r &f{creator}&r &8•&r &7Created:&r &f{created}&r", "type");
     public static final TextKey PORTAL_LIST_HOVER = TextKey.of("portal.navigation.list.hover", "&7UUID:&r &f{uuid}&r\n&aClick to teleport to this portal.&r");
     public static final TextKey PORTAL_LIST_FRAME_POLICY_NOTE = TextKey.of("portal.navigation.list.frame_policy_note", "&8  ⚠&r &eExisting frame uses &f{materials}&r&e, which cannot create new portals.&r");
     public static final TextKey PORTAL_NOT_FOUND = prefixed("portal.navigation.error.not_found", "&cNo managed portal matches &f{portal}&r&c.&r");
@@ -94,20 +97,30 @@ public final class ShapedMessages {
     public static final TextKey SETTING_GENERAL_REQUIRE_PERMISSION = setting("general.require_create_permission", "Require creation permission");
     public static final TextKey SETTING_GENERAL_FAILURE_FEEDBACK = setting("general.failure_feedback", "Portal failure feedback");
     public static final TextKey SETTING_METRICS_ENABLED = setting("metrics.enabled", "Anonymous bStats metrics");
-    public static final TextKey SETTING_PORTAL_MINIMUM = setting("portal.minimum_interior_blocks", "Minimum interior blocks");
-    public static final TextKey SETTING_PORTAL_MAXIMUM = setting("portal.maximum_interior_blocks", "Maximum interior blocks");
-    public static final TextKey SETTING_PORTAL_WIDTH = setting("portal.maximum_width", "Maximum width");
-    public static final TextKey SETTING_PORTAL_HEIGHT = setting("portal.maximum_height", "Maximum height");
-    public static final TextKey SETTING_PORTAL_FRAMES = setting("portal.frame_materials", "Frame materials");
-    public static final TextKey SETTING_PORTAL_INTERIORS = setting("portal.interior_materials", "Interior materials");
+    public static final TextKey SETTING_PORTAL_MINIMUM = setting("portal.minimum_interior_blocks", "Nether minimum interior blocks");
+    public static final TextKey SETTING_PORTAL_MAXIMUM = setting("portal.maximum_interior_blocks", "Nether maximum interior blocks");
+    public static final TextKey SETTING_PORTAL_WIDTH = setting("portal.maximum_width", "Nether maximum width");
+    public static final TextKey SETTING_PORTAL_HEIGHT = setting("portal.maximum_height", "Nether maximum height");
+    public static final TextKey SETTING_PORTAL_FRAMES = setting("portal.frame_materials", "Nether frame materials");
+    public static final TextKey SETTING_PORTAL_INTERIORS = setting("portal.interior_materials", "Nether interior materials");
     public static final TextKey SETTING_PORTAL_CAUSES = setting("portal.ignition_causes", "Ignition causes");
     public static final TextKey SETTING_PORTAL_ALLOWED_WORLDS = setting("portal.allowed_worlds", "Allowed worlds");
     public static final TextKey SETTING_PORTAL_DENIED_WORLDS = setting("portal.denied_worlds", "Denied worlds");
     public static final TextKey SETTING_PORTAL_DEDUPLICATION = setting("portal.deduplication_millis", "Deduplication milliseconds");
-    public static final TextKey SETTING_EFFECTS_SOUND = setting("effects.creation_sound", "Creation sound");
-    public static final TextKey SETTING_EFFECTS_SOUND_TYPE = setting("effects.creation_sound_type", "Creation sound type");
-    public static final TextKey SETTING_EFFECTS_VOLUME = setting("effects.creation_sound_volume", "Creation sound volume");
-    public static final TextKey SETTING_EFFECTS_PITCH = setting("effects.creation_sound_pitch", "Creation sound pitch");
+    public static final TextKey SETTING_PORTAL_END_ENABLED = setting("portal.end_portal_creation", "Shaped End portal creation");
+    public static final TextKey SETTING_PORTAL_END_MINIMUM = setting("portal.end_minimum_interior_blocks", "End minimum interior blocks");
+    public static final TextKey SETTING_PORTAL_END_MAXIMUM = setting("portal.end_maximum_interior_blocks", "End maximum interior blocks");
+    public static final TextKey SETTING_PORTAL_END_WIDTH = setting("portal.end_maximum_width", "End maximum width");
+    public static final TextKey SETTING_PORTAL_END_LENGTH = setting("portal.end_maximum_length", "End maximum length");
+    public static final TextKey SETTING_PORTAL_END_INTERIORS = setting("portal.end_interior_materials", "End interior materials");
+    public static final TextKey SETTING_EFFECTS_SOUND = setting("effects.creation_sound", "Nether creation sound");
+    public static final TextKey SETTING_EFFECTS_SOUND_TYPE = setting("effects.creation_sound_type", "Nether creation sound type");
+    public static final TextKey SETTING_EFFECTS_VOLUME = setting("effects.creation_sound_volume", "Nether creation sound volume");
+    public static final TextKey SETTING_EFFECTS_PITCH = setting("effects.creation_sound_pitch", "Nether creation sound pitch");
+    public static final TextKey SETTING_EFFECTS_END_SOUND = setting("effects.end_creation_sound", "End creation sound");
+    public static final TextKey SETTING_EFFECTS_END_SOUND_TYPE = setting("effects.end_creation_sound_type", "End creation sound type");
+    public static final TextKey SETTING_EFFECTS_END_VOLUME = setting("effects.end_creation_sound_volume", "End creation sound volume");
+    public static final TextKey SETTING_EFFECTS_END_PITCH = setting("effects.end_creation_sound_pitch", "End creation sound pitch");
     public static final TextKey SETTING_HOT_RELOAD_ENABLED = setting("hot_reload.enabled", "Hot reload");
     public static final TextKey SETTING_HOT_RELOAD_POLL = setting("hot_reload.poll_interval_millis", "Poll interval milliseconds");
     public static final TextKey SETTING_HOT_RELOAD_COOLDOWN = setting("hot_reload.cooldown_millis", "Save cooldown milliseconds");
@@ -118,7 +131,9 @@ public final class ShapedMessages {
     public static final TextKey SETTING_PRESENTATION_SPLASH = setting("presentation.splash_screen", "Startup splash screen");
     public static final TextKey SETTING_PRESENTATION_SOUNDS = setting("presentation.command_sounds", "Command sounds");
     public static final TextKey SETTING_PRESENTATION_COMMAND = setting("presentation.command_overlays", "Command overlays");
-    public static final TextKey SETTING_PRESENTATION_PORTAL = setting("presentation.portal_notices", "Portal notice channels");
+    public static final TextKey SETTING_PRESENTATION_PORTAL = setting("presentation.portal_notices", "Portal rejection notice channels");
+    public static final TextKey SETTING_PRESENTATION_NETHER_CREATION = setting("presentation.nether_creation_notices", "Nether creation notice channels");
+    public static final TextKey SETTING_PRESENTATION_END_CREATION = setting("presentation.end_creation_notices", "End creation notice channels");
     public static final TextKey SETTING_PRESENTATION_DURATION = setting("presentation.overlay_duration_ticks", "Overlay duration ticks");
     public static final TextKey SETTING_PRESENTATION_FADE_IN = setting("presentation.title_fade_in_ticks", "Title fade-in ticks");
     public static final TextKey SETTING_PRESENTATION_STAY = setting("presentation.title_stay_ticks", "Title stay ticks");
@@ -160,7 +175,8 @@ public final class ShapedMessages {
                 RELOAD_SUCCESS, RELOAD_FAILED, COMMAND_CONFIG_OPENED, COMMAND_FAILED,
                 CONFIG_SAVED, CONFIG_SAVE_FAILED, DEBUG_STARTED, DEBUG_BUSY, DEBUG_SAVED, DEBUG_UPLOADED,
                 DEBUG_LINK_HOVER, DEBUG_UPLOAD_FAILED, DEBUG_FAILED, STATUS_HEADER, STATUS_CONFIG, STATUS_PORTALS,
-                STATUS_ATTEMPTS, STATUS_COMPATIBILITY, PORTAL_CREATED, PORTAL_FAILED,
+                STATUS_ATTEMPTS, STATUS_COMPATIBILITY, PORTAL_NETHER_CREATED, PORTAL_END_CREATED,
+                PORTAL_NETHER_TITLE, PORTAL_END_TITLE, PORTAL_FAILED,
                 PORTAL_LIST_EMPTY, PORTAL_LIST_ENTRY, PORTAL_LIST_HOVER, PORTAL_LIST_FRAME_POLICY_NOTE, PORTAL_NOT_FOUND,
                 PORTAL_AMBIGUOUS, PORTAL_REMOVED, PORTAL_WORLD_UNAVAILABLE, PORTAL_DESTINATION_UNAVAILABLE,
                 PORTAL_INACTIVE, PORTAL_NO_SAFE_LANDING, PORTAL_UNSAFE_CONFIRMATION, PORTAL_TELEPORT_PREPARING,
@@ -178,12 +194,17 @@ public final class ShapedMessages {
                 SETTING_GENERAL_FAILURE_FEEDBACK, SETTING_METRICS_ENABLED, SETTING_PORTAL_MINIMUM, SETTING_PORTAL_MAXIMUM,
                 SETTING_PORTAL_WIDTH, SETTING_PORTAL_HEIGHT, SETTING_PORTAL_FRAMES,
                 SETTING_PORTAL_INTERIORS, SETTING_PORTAL_CAUSES, SETTING_PORTAL_ALLOWED_WORLDS,
-                SETTING_PORTAL_DENIED_WORLDS, SETTING_PORTAL_DEDUPLICATION, SETTING_EFFECTS_SOUND,
+                SETTING_PORTAL_DENIED_WORLDS, SETTING_PORTAL_DEDUPLICATION, SETTING_PORTAL_END_ENABLED,
+                SETTING_PORTAL_END_MINIMUM, SETTING_PORTAL_END_MAXIMUM, SETTING_PORTAL_END_WIDTH,
+                SETTING_PORTAL_END_LENGTH, SETTING_PORTAL_END_INTERIORS, SETTING_EFFECTS_SOUND,
                 SETTING_EFFECTS_SOUND_TYPE, SETTING_EFFECTS_VOLUME, SETTING_EFFECTS_PITCH,
+                SETTING_EFFECTS_END_SOUND, SETTING_EFFECTS_END_SOUND_TYPE, SETTING_EFFECTS_END_VOLUME,
+                SETTING_EFFECTS_END_PITCH,
                 SETTING_HOT_RELOAD_ENABLED, SETTING_HOT_RELOAD_POLL, SETTING_HOT_RELOAD_COOLDOWN,
                 SETTING_HOT_RELOAD_NOTIFY, SETTING_INTEGRITY_ENABLED, SETTING_INTEGRITY_INTERVAL,
                 SETTING_INTEGRITY_MAXIMUM, SETTING_PRESENTATION_SPLASH, SETTING_PRESENTATION_SOUNDS,
-                SETTING_PRESENTATION_COMMAND, SETTING_PRESENTATION_PORTAL, SETTING_PRESENTATION_DURATION,
+                SETTING_PRESENTATION_COMMAND, SETTING_PRESENTATION_PORTAL, SETTING_PRESENTATION_NETHER_CREATION,
+                SETTING_PRESENTATION_END_CREATION, SETTING_PRESENTATION_DURATION,
                 SETTING_PRESENTATION_FADE_IN, SETTING_PRESENTATION_STAY, SETTING_PRESENTATION_FADE_OUT,
                 SETTING_DEBUG_UPLOAD, COMMAND_ROOT, COMMAND_CONFIG, COMMAND_LANGUAGE, COMMAND_DEBUG,
                 COMMAND_PORTALS, COMMAND_TELEPORT, COMMAND_STATUS,

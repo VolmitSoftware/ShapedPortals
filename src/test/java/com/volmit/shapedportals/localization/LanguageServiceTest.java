@@ -1,6 +1,8 @@
 package com.volmit.shapedportals.localization;
 
+import art.arcane.volmlib.util.localization.LanguageAudience;
 import art.arcane.volmlib.util.localization.MessageArgs;
+import art.arcane.volmlib.util.localization.PluginLanguageService;
 import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
 import art.arcane.volmlib.util.localization.VolmitLocales;
 import art.arcane.volmlib.util.plugin.ComponentText;
@@ -15,6 +17,8 @@ import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -76,6 +80,13 @@ class LanguageServiceTest {
     }
 
     @Test
+    void downloadedLanguageCanUseEnglishForKeysAddedAfterItsTranslation() throws IOException {
+        LanguageService service = service();
+
+        service.validateDownloadedContent("es_ES", "[runtime]\nprefix = \"&6Portales &8> \"\n");
+    }
+
+    @Test
     void preservesAnExistingLanguageFileAcrossPrepareAndRestart() throws IOException {
         LanguageService service = service();
         Path file = service.languageFile("en_US").toPath();
@@ -89,6 +100,35 @@ class LanguageServiceTest {
 
         assertThat(service.render(ShapedMessages.PREFIX)).contains("Local");
         assertThat(restarted.render(ShapedMessages.PREFIX)).contains("Local");
+        assertThat(Files.readString(file)).isEqualTo(content);
+    }
+
+    @Test
+    void acceptsAnExistingPortalListEntryWithoutTheOptionalPortalType() throws IOException {
+        LanguageService service = service();
+        Path file = service.languageFile("en_US").toPath();
+        Files.createDirectories(file.getParent());
+        String content = """
+                [portal.navigation.list]
+                entry = "&d{id}&r &8›&r &f{world}&r\\n&8  ├&r &7Location:&r &f{x}, {y}, {z}&r &8•&r &7Axis:&r &f{axis}&r &8•&r &7Cells:&r &f{blocks}&r\\n&8  └&r &7Creator:&r &f{creator}&r &8•&r &7Created:&r &f{created}&r"
+                """;
+        Files.writeString(file, content, StandardCharsets.UTF_8);
+
+        service.install(service.prepare("en_US"));
+        String rendered = service.render(ShapedMessages.PORTAL_LIST_ENTRY, MessageArgs.builder()
+                .untrusted("id", "portal")
+                .untrusted("world", "world")
+                .untrusted("type", "NETHER")
+                .untrusted("x", "1")
+                .untrusted("y", "64")
+                .untrusted("z", "2")
+                .untrusted("axis", "X")
+                .untrusted("blocks", "6")
+                .untrusted("creator", "operator")
+                .untrusted("created", "2026-09-03 10:44:19")
+                .build());
+
+        assertThat(rendered).contains("portal", "world", "operator").doesNotContain("NETHER");
         assertThat(Files.readString(file)).isEqualTo(content);
     }
 
@@ -281,6 +321,52 @@ class LanguageServiceTest {
                 .isInstanceOf(IOException.class)
                 .hasMessageContaining("invalid message markup");
         assertThat(Files.readString(file)).isEqualTo(safe);
+    }
+
+    @Test
+    void supportsPersistentPlayerLanguagesAndASeparateServerDefault() throws Exception {
+        LanguageService service = service();
+        LanguageService.PreparedLanguage english = service.prepare("en_US");
+        Path pirate = service.languageFile("pirate").toPath();
+        Files.createDirectories(pirate.getParent());
+        String pirateContent = "[runtime]\nprefix = \"&6Pirate &8> \"\n";
+        Files.writeString(pirate, pirateContent, StandardCharsets.UTF_8);
+        service.prepare("pirate");
+        service.install(english);
+        AtomicReference<String> defaultLocale = new AtomicReference<>("en_US");
+        PluginLanguageService selections = service.initializeSelections(defaultLocale::get, (locale, snapshot) -> {
+            defaultLocale.set(locale);
+            service.install(new LanguageService.PreparedLanguage(
+                    locale,
+                    service.languageFile(locale),
+                    snapshot,
+                    true
+            ));
+        });
+        UUID playerId = UUID.randomUUID();
+
+        try {
+            selections.selectPlayer(playerId, "pirate").get(5L, TimeUnit.SECONDS);
+
+            assertThat(service.render(ShapedMessages.PREFIX)).doesNotContain("Pirate");
+            assertThat(LanguageAudience.call(playerId, () -> service.render(ShapedMessages.PREFIX)))
+                    .contains("Pirate");
+            assertThat(LanguageAudience.call(playerId, () -> service.render(ShapedMessages.NO_PERMISSION)))
+                    .contains("Pirate", "You do not have permission");
+            assertThat(Files.readString(temporaryDirectory.resolve("language-preferences.properties")))
+                    .contains(playerId + "=pirate");
+            assertThat(Files.readString(pirate)).isEqualTo(pirateContent);
+
+            selections.selectDefault("pirate").get(5L, TimeUnit.SECONDS);
+
+            assertThat(defaultLocale.get()).isEqualTo("pirate");
+            assertThat(service.render(ShapedMessages.PREFIX)).contains("Pirate");
+
+            selections.clearPlayer(playerId).get(5L, TimeUnit.SECONDS);
+            assertThat(selections.playerLocale(playerId)).isEmpty();
+        } finally {
+            service.close();
+        }
     }
 
     private LanguageService service() {

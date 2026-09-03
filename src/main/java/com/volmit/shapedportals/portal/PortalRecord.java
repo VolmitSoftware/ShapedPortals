@@ -68,6 +68,10 @@ public record PortalRecord(
         return !frameMaterialSnapshot.isEmpty();
     }
 
+    public PortalType type() {
+        return PortalType.from(axis);
+    }
+
     public PortalRecord withFrameMaterialSnapshot(List<Material> materials) {
         return new PortalRecord(
                 schemaVersion,

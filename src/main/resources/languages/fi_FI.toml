@@ -67,8 +67,13 @@ page = "Portaaliluettelon sivu numerosta yksi alkaen"
 portal = "Portaalin UUID, yksilöllinen alku tai list"
 
 [portal.notice]
-created = "{prefix}&dMuotoiltu portaali luotiin käyttäen {blocks} sisälohkoa.&r"
+nether_created = "{prefix}&dMuotoiltu portaali luotiin käyttäen {blocks} sisälohkoa.&r"
+end_created = "{prefix}&5End&r &dMuotoiltu portaali luotiin käyttäen {blocks} sisälohkoa.&r"
 failed = "{prefix}&cTuosta kehyksestä ei voi tehdä muotoiltua portaalia: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cPortaalin &f{portal}&r&c vieressä ei ole turvallista seisomapaikkaa. &eNapsauta samaa portaalia uudelleen &f{seconds}&r&e sekunnin kuluessa teleportataksesi siihen silti.&r"
@@ -76,7 +81,7 @@ unsafe = "{prefix}&cPortaalin &f{portal}&r&c vieressä ei ole turvallista seisom
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eNykyinen kehys käyttää materiaaleja &f{materials}&r&e, joilla ei voi luoda uusia portaaleja.&r"
 empty = "&eHallinnoituja muotoiltuja portaaleja ei ole rekisteröity.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Sijainti:&r &f{x}, {y}, {z}&r &8•&r &7Akseli:&r &f{axis}&r &8•&r &7Solut:&r &f{blocks}&r\n&8  └&r &7Luoja:&r &f{creator}&r &8•&r &7Luotu:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Sijainti:&r &f{x}, {y}, {z}&r &8•&r &7Akseli:&r &f{axis}&r &8•&r &7Solut:&r &f{blocks}&r\n&8  └&r &7Luoja:&r &f{creator}&r &8•&r &7Luotu:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aNapsauta teleportataksesi tälle portaalille.&r"
 
 [portal.navigation.error]
@@ -153,22 +158,32 @@ failure_feedback = "&dPortaalivirheiden palaute&r"
 enabled = "&dAnonyymit bStats-mittarit&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dSisälohkojen vähimmäismäärä&r"
-maximum_interior_blocks = "&dSisälohkojen enimmäismäärä&r"
-maximum_width = "&dEnimmäisleveys&r"
-maximum_height = "&dEnimmäiskorkeus&r"
-frame_materials = "&dKehysmateriaalit&r"
-interior_materials = "&dSisämateriaalit&r"
+minimum_interior_blocks = "&dNether Sisälohkojen vähimmäismäärä&r"
+maximum_interior_blocks = "&dNether Sisälohkojen enimmäismäärä&r"
+maximum_width = "&dNether Enimmäisleveys&r"
+maximum_height = "&dNether Enimmäiskorkeus&r"
+frame_materials = "&dNether Kehysmateriaalit&r"
+interior_materials = "&dNether Sisämateriaalit&r"
 ignition_causes = "&dSyttymissyyt&r"
 allowed_worlds = "&dSallitut maailmat&r"
 denied_worlds = "&dEstetyt maailmat&r"
 deduplication_millis = "&dKaksoiskappaleiden esto millisekunteina&r"
+end_portal_creation = "&dEnd Portaalien luonti&r"
+end_minimum_interior_blocks = "&dEnd Sisälohkojen vähimmäismäärä&r"
+end_maximum_interior_blocks = "&dEnd Sisälohkojen enimmäismäärä&r"
+end_maximum_width = "&dEnd Enimmäisleveys&r"
+end_maximum_length = "&dEnd Enimmäisleveys&r"
+end_interior_materials = "&dEnd Sisämateriaalit&r"
 
 [gui.setting.effects]
-creation_sound = "&dLuontiääni&r"
-creation_sound_type = "&dLuontiäänen tyyppi&r"
-creation_sound_volume = "&dLuontiäänen voimakkuus&r"
-creation_sound_pitch = "&dLuontiäänen korkeus&r"
+creation_sound = "&dNether Luontiääni&r"
+creation_sound_type = "&dNether Luontiäänen tyyppi&r"
+creation_sound_volume = "&dNether Luontiäänen voimakkuus&r"
+creation_sound_pitch = "&dNether Luontiäänen korkeus&r"
+end_creation_sound = "&dEnd Luontiääni&r"
+end_creation_sound_type = "&dEnd Luontiäänen tyyppi&r"
+end_creation_sound_volume = "&dEnd Luontiäänen voimakkuus&r"
+end_creation_sound_pitch = "&dEnd Luontiäänen korkeus&r"
 
 [gui.setting.hot_reload]
 enabled = "&dAutomaattinen lataus&r"
@@ -186,6 +201,8 @@ splash_screen = "&dKäynnistyksen aloitusnäkymä&r"
 command_sounds = "&dKomentojen äänet&r"
 command_overlays = "&dKomentojen peittokuvat&r"
 portal_notices = "&dPortaali-ilmoitusten kanavat&r"
+nether_creation_notices = "&dNether Portaali-ilmoitusten kanavat&r"
+end_creation_notices = "&dEnd Portaali-ilmoitusten kanavat&r"
 overlay_duration_ticks = "&dPeittokuvan kesto tickeinä&r"
 title_fade_in_ticks = "&dOtsikon häivytys sisään tickeinä&r"
 title_stay_ticks = "&dOtsikon näyttöaika tickeinä&r"

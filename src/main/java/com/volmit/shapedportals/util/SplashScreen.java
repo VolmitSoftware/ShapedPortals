@@ -38,7 +38,7 @@ public final class SplashScreen {
         String version = plugin.getDescription().getVersion();
         String[] column = {
                 "",
-                accent + "   ShapedPortals, " + meta + "Free-form Nether portals [" + SplashScreenSupport.releaseTrain(version) + " RELEASE]",
+                accent + "   ShapedPortals, " + meta + "Free-form Nether and End portals [" + SplashScreenSupport.releaseTrain(version) + " RELEASE]",
                 meta + "   Version: " + accent + version + meta + " | By: " + accent + "Volmit Software",
                 meta + "   Server: " + accent + SplashScreenSupport.serverVersionWithoutMcSuffix() + meta + " | MC Support: " + accent + "1.20.1+",
                 meta + "   Java: " + accent + SplashScreenSupport.javaMajorVersion() + meta + " | Scheduler: " + accent + plugin.schedulerName(),

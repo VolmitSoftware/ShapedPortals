@@ -67,8 +67,13 @@ page = "Página de la lista de portales, empezando por uno"
 portal = "UUID del portal, prefijo único o list"
 
 [portal.notice]
-created = "{prefix}&dSe creó un portal con forma y {blocks} bloques interiores.&r"
+nether_created = "{prefix}&dSe creó un portal con forma y {blocks} bloques interiores.&r"
+end_created = "{prefix}&5End&r &dSe creó un portal con forma y {blocks} bloques interiores.&r"
 failed = "{prefix}&cEse marco no puede convertirse en un portal con forma: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cNo hay un espacio seguro para permanecer junto a &f{portal}&r&c. &eHaz clic de nuevo en el mismo portal en un plazo de &f{seconds}&r&e segundos para teletransportarte dentro de todos modos.&r"
@@ -76,7 +81,7 @@ unsafe = "{prefix}&cNo hay un espacio seguro para permanecer junto a &f{portal}&
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eEl marco existente usa &f{materials}&r&e; estos materiales no pueden crear portales nuevos.&r"
 empty = "&eNo hay portales con forma administrados registrados.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Ubicación:&r &f{x}, {y}, {z}&r &8•&r &7Eje:&r &f{axis}&r &8•&r &7Celdas:&r &f{blocks}&r\n&8  └&r &7Creador:&r &f{creator}&r &8•&r &7Creado:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Ubicación:&r &f{x}, {y}, {z}&r &8•&r &7Eje:&r &f{axis}&r &8•&r &7Celdas:&r &f{blocks}&r\n&8  └&r &7Creador:&r &f{creator}&r &8•&r &7Creado:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aHaz clic para teletransportarte a este portal.&r"
 
 [portal.navigation.error]
@@ -153,22 +158,32 @@ failure_feedback = "&dInformación sobre fallos del portal&r"
 enabled = "&dMétricas anónimas de bStats&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dBloques interiores mínimos&r"
-maximum_interior_blocks = "&dBloques interiores máximos&r"
-maximum_width = "&dAnchura máxima&r"
-maximum_height = "&dAltura máxima&r"
-frame_materials = "&dMateriales del marco&r"
-interior_materials = "&dMateriales del interior&r"
+minimum_interior_blocks = "&dNether Bloques interiores mínimos&r"
+maximum_interior_blocks = "&dNether Bloques interiores máximos&r"
+maximum_width = "&dNether Anchura máxima&r"
+maximum_height = "&dNether Altura máxima&r"
+frame_materials = "&dNether Materiales del marco&r"
+interior_materials = "&dNether Materiales del interior&r"
 ignition_causes = "&dCausas de ignición&r"
 allowed_worlds = "&dMundos permitidos&r"
 denied_worlds = "&dMundos denegados&r"
 deduplication_millis = "&dMilisegundos de deduplicación&r"
+end_portal_creation = "&dEnd Creación de portales&r"
+end_minimum_interior_blocks = "&dEnd Bloques interiores mínimos&r"
+end_maximum_interior_blocks = "&dEnd Bloques interiores máximos&r"
+end_maximum_width = "&dEnd Anchura máxima&r"
+end_maximum_length = "&dEnd Anchura máxima&r"
+end_interior_materials = "&dEnd Materiales del interior&r"
 
 [gui.setting.effects]
-creation_sound = "&dSonido de creación&r"
-creation_sound_type = "&dTipo de sonido de creación&r"
-creation_sound_volume = "&dVolumen del sonido de creación&r"
-creation_sound_pitch = "&dTono del sonido de creación&r"
+creation_sound = "&dNether Sonido de creación&r"
+creation_sound_type = "&dNether Tipo de sonido de creación&r"
+creation_sound_volume = "&dNether Volumen del sonido de creación&r"
+creation_sound_pitch = "&dNether Tono del sonido de creación&r"
+end_creation_sound = "&dEnd Sonido de creación&r"
+end_creation_sound_type = "&dEnd Tipo de sonido de creación&r"
+end_creation_sound_volume = "&dEnd Volumen del sonido de creación&r"
+end_creation_sound_pitch = "&dEnd Tono del sonido de creación&r"
 
 [gui.setting.hot_reload]
 enabled = "&dRecarga automática&r"
@@ -186,6 +201,8 @@ splash_screen = "&dPantalla de inicio&r"
 command_sounds = "&dSonidos de comandos&r"
 command_overlays = "&dSuperposiciones de comandos&r"
 portal_notices = "&dCanales de avisos del portal&r"
+nether_creation_notices = "&dNether Canales de avisos del portal&r"
+end_creation_notices = "&dEnd Canales de avisos del portal&r"
 overlay_duration_ticks = "&dDuración de superposición en ticks&r"
 title_fade_in_ticks = "&dAparición gradual del título en ticks&r"
 title_stay_ticks = "&dPermanencia del título en ticks&r"

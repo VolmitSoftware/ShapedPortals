@@ -67,8 +67,13 @@ page = "Pagina dell'elenco dei portali, a partire da uno"
 portal = "UUID del portale, prefisso univoco o list"
 
 [portal.notice]
-created = "{prefix}&dÈ stato creato un portale sagomato con {blocks} blocchi interni.&r"
+nether_created = "{prefix}&dÈ stato creato un portale sagomato con {blocks} blocchi interni.&r"
+end_created = "{prefix}&5End&r &dÈ stato creato un portale sagomato con {blocks} blocchi interni.&r"
 failed = "{prefix}&cQuesta cornice non può diventare un portale sagomato: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cNon esiste uno spazio sicuro accanto a &f{portal}&r&c. &eFai nuovamente clic sullo stesso portale entro &f{seconds}&r&e secondi per teletrasportarti comunque al suo interno.&r"
@@ -76,7 +81,7 @@ unsafe = "{prefix}&cNon esiste uno spazio sicuro accanto a &f{portal}&r&c. &eFai
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eLa cornice esistente usa &f{materials}&r&e, che non possono creare nuovi portali.&r"
 empty = "&eNon sono registrati portali sagomati gestiti.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Posizione:&r &f{x}, {y}, {z}&r &8•&r &7Asse:&r &f{axis}&r &8•&r &7Celle:&r &f{blocks}&r\n&8  └&r &7Creatore:&r &f{creator}&r &8•&r &7Creato:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Posizione:&r &f{x}, {y}, {z}&r &8•&r &7Asse:&r &f{axis}&r &8•&r &7Celle:&r &f{blocks}&r\n&8  └&r &7Creatore:&r &f{creator}&r &8•&r &7Creato:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aFai clic per teletrasportarti a questo portale.&r"
 
 [portal.navigation.error]
@@ -153,22 +158,32 @@ failure_feedback = "&dFeedback sugli errori del portale&r"
 enabled = "&dMetriche bStats anonime&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dBlocchi interni minimi&r"
-maximum_interior_blocks = "&dBlocchi interni massimi&r"
-maximum_width = "&dLarghezza massima&r"
-maximum_height = "&dAltezza massima&r"
-frame_materials = "&dMateriali della cornice&r"
-interior_materials = "&dMateriali interni&r"
+minimum_interior_blocks = "&dNether Blocchi interni minimi&r"
+maximum_interior_blocks = "&dNether Blocchi interni massimi&r"
+maximum_width = "&dNether Larghezza massima&r"
+maximum_height = "&dNether Altezza massima&r"
+frame_materials = "&dNether Materiali della cornice&r"
+interior_materials = "&dNether Materiali interni&r"
 ignition_causes = "&dCause di accensione&r"
 allowed_worlds = "&dMondi consentiti&r"
 denied_worlds = "&dMondi negati&r"
 deduplication_millis = "&dDeduplicazione in millisecondi&r"
+end_portal_creation = "&dEnd Creazione dei portali&r"
+end_minimum_interior_blocks = "&dEnd Blocchi interni minimi&r"
+end_maximum_interior_blocks = "&dEnd Blocchi interni massimi&r"
+end_maximum_width = "&dEnd Larghezza massima&r"
+end_maximum_length = "&dEnd Larghezza massima&r"
+end_interior_materials = "&dEnd Materiali interni&r"
 
 [gui.setting.effects]
-creation_sound = "&dSuono di creazione&r"
-creation_sound_type = "&dTipo di suono di creazione&r"
-creation_sound_volume = "&dVolume del suono di creazione&r"
-creation_sound_pitch = "&dTonalità del suono di creazione&r"
+creation_sound = "&dNether Suono di creazione&r"
+creation_sound_type = "&dNether Tipo di suono di creazione&r"
+creation_sound_volume = "&dNether Volume del suono di creazione&r"
+creation_sound_pitch = "&dNether Tonalità del suono di creazione&r"
+end_creation_sound = "&dEnd Suono di creazione&r"
+end_creation_sound_type = "&dEnd Tipo di suono di creazione&r"
+end_creation_sound_volume = "&dEnd Volume del suono di creazione&r"
+end_creation_sound_pitch = "&dEnd Tonalità del suono di creazione&r"
 
 [gui.setting.hot_reload]
 enabled = "&dRicaricamento automatico&r"
@@ -186,6 +201,8 @@ splash_screen = "&dSchermata iniziale&r"
 command_sounds = "&dSuoni dei comandi&r"
 command_overlays = "&dSovrimpressioni dei comandi&r"
 portal_notices = "&dCanali degli avvisi del portale&r"
+nether_creation_notices = "&dNether Canali degli avvisi del portale&r"
+end_creation_notices = "&dEnd Canali degli avvisi del portale&r"
 overlay_duration_ticks = "&dDurata della sovrimpressione in tick&r"
 title_fade_in_ticks = "&dDissolvenza in entrata del titolo in tick&r"
 title_stay_ticks = "&dPermanenza del titolo in tick&r"

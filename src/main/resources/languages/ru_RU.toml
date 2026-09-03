@@ -67,8 +67,13 @@ page = "Номер страницы списка порталов, начина�
 portal = "UUID портала, уникальный префикс или list"
 
 [portal.notice]
-created = "{prefix}&dСоздан фигурный портал с {blocks} внутренними блоками.&r"
+nether_created = "{prefix}&dСоздан фигурный портал с {blocks} внутренними блоками.&r"
+end_created = "{prefix}&5End&r &dСоздан фигурный портал с {blocks} внутренними блоками.&r"
 failed = "{prefix}&cЭта рамка не может стать фигурным порталом: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether Portal Created&r"
+end_created = "&5&lEnd Portal Created&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cРядом с &f{portal}&r&c нет безопасного места. &eНажмите на тот же портал ещё раз в течение &f{seconds}&r&e секунд, чтобы всё равно телепортироваться внутрь него.&r"
@@ -76,7 +81,7 @@ unsafe = "{prefix}&cРядом с &f{portal}&r&c нет безопасного �
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eСуществующая рамка использует &f{materials}&r&e; из этих материалов нельзя создавать новые порталы.&r"
 empty = "&eУправляемые фигурные порталы не зарегистрированы.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Местоположение:&r &f{x}, {y}, {z}&r &8•&r &7Ось:&r &f{axis}&r &8•&r &7Ячейки:&r &f{blocks}&r\n&8  └&r &7Создатель:&r &f{creator}&r &8•&r &7Создан:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Местоположение:&r &f{x}, {y}, {z}&r &8•&r &7Ось:&r &f{axis}&r &8•&r &7Ячейки:&r &f{blocks}&r\n&8  └&r &7Создатель:&r &f{creator}&r &8•&r &7Создан:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aНажмите, чтобы телепортироваться к этому порталу.&r"
 
 [portal.navigation.error]
@@ -153,22 +158,32 @@ failure_feedback = "&dСообщения об ошибках порталов&r"
 enabled = "&dАнонимная статистика bStats&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dМинимум внутренних блоков&r"
-maximum_interior_blocks = "&dМаксимум внутренних блоков&r"
-maximum_width = "&dМаксимальная ширина&r"
-maximum_height = "&dМаксимальная высота&r"
-frame_materials = "&dМатериалы рамки&r"
-interior_materials = "&dМатериалы внутренней части&r"
+minimum_interior_blocks = "&dNether Минимум внутренних блоков&r"
+maximum_interior_blocks = "&dNether Максимум внутренних блоков&r"
+maximum_width = "&dNether Максимальная ширина&r"
+maximum_height = "&dNether Максимальная высота&r"
+frame_materials = "&dNether Материалы рамки&r"
+interior_materials = "&dNether Материалы внутренней части&r"
 ignition_causes = "&dПричины зажигания&r"
 allowed_worlds = "&dРазрешённые миры&r"
 denied_worlds = "&dЗапрещённые миры&r"
 deduplication_millis = "&dИнтервал дедупликации в миллисекундах&r"
+end_portal_creation = "&dEnd Создание порталов&r"
+end_minimum_interior_blocks = "&dEnd Минимум внутренних блоков&r"
+end_maximum_interior_blocks = "&dEnd Максимум внутренних блоков&r"
+end_maximum_width = "&dEnd Максимальная ширина&r"
+end_maximum_length = "&dEnd Максимальная ширина&r"
+end_interior_materials = "&dEnd Материалы внутренней части&r"
 
 [gui.setting.effects]
-creation_sound = "&dЗвук создания&r"
-creation_sound_type = "&dТип звука создания&r"
-creation_sound_volume = "&dГромкость звука создания&r"
-creation_sound_pitch = "&dВысота звука создания&r"
+creation_sound = "&dNether Звук создания&r"
+creation_sound_type = "&dNether Тип звука создания&r"
+creation_sound_volume = "&dNether Громкость звука создания&r"
+creation_sound_pitch = "&dNether Высота звука создания&r"
+end_creation_sound = "&dEnd Звук создания&r"
+end_creation_sound_type = "&dEnd Тип звука создания&r"
+end_creation_sound_volume = "&dEnd Громкость звука создания&r"
+end_creation_sound_pitch = "&dEnd Высота звука создания&r"
 
 [gui.setting.hot_reload]
 enabled = "&dГорячая перезагрузка&r"
@@ -186,6 +201,8 @@ splash_screen = "&dЗаставка при запуске&r"
 command_sounds = "&dЗвуки команд&r"
 command_overlays = "&dНаложения команд&r"
 portal_notices = "&dКаналы уведомлений портала&r"
+nether_creation_notices = "&dNether Каналы уведомлений портала&r"
+end_creation_notices = "&dEnd Каналы уведомлений портала&r"
 overlay_duration_ticks = "&dДлительность наложения в тиках&r"
 title_fade_in_ticks = "&dПоявление заголовка в тиках&r"
 title_stay_ticks = "&dПоказ заголовка в тиках&r"

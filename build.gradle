@@ -23,7 +23,7 @@ String relocatedLibraryPackage = 'com.volmit.shapedportals.libs'
 String volmLibCoordinate = providers.gradleProperty('volmLibCoordinate')
     .orElse('com.github.VolmitSoftware:VolmLib:master-SNAPSHOT')
     .get()
-String languageSourceReference = 'main'
+String languageSourceReference = 'ebde960aa4fd53e56f66f6c34b6659d1e2843410'
 List<File> languageSourceFiles = fileTree('src/main/resources/languages') {
     include('*.toml')
 }.files.toList().sort { File left, File right -> left.name <=> right.name }
@@ -156,6 +156,10 @@ tasks.named('processResources').configure {
     }
 }
 
+tasks.named('sourcesJar').configure {
+    exclude('languages/**')
+}
+
 tasks.named('jar').configure {
     archiveClassifier.set('thin')
 }
@@ -249,7 +253,7 @@ tasks.register('verifyJava17Artifact') {
             throw new GradleException('Runtime language source manifest does not match the build source set')
         }
         if (languageManifest.stringPropertyNames().any { String key -> key.startsWith('sha256.') }) {
-            throw new GradleException('Runtime language source manifest must follow the latest main branch')
+            throw new GradleException('Runtime language source manifest must match the pinned repository revision')
         }
     }
 }
@@ -290,6 +294,23 @@ publishing {
 tasks.named('publishToMavenLocal').configure {
     dependsOn(tasks.named('check'))
     dependsOn(reactApiPackTask)
+}
+
+tasks.register('buildPsychoLT', Copy) {
+    group = 'development'
+    description = 'Builds, verifies, and deploys ShapedPortals to the managed Minecraft test-server dropins.'
+    outputs.upToDateWhen { false }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    dependsOn(tasks.named('check'), tasks.named('shadowJar'), reactApiPackTask)
+    from(tasks.named('shadowJar').flatMap { it.archiveFile })
+    into(layout.projectDirectory.dir('../../[Minecraft Server]/consumers/plugin-consumers/dropins/plugins'))
+    rename { String ignored -> 'ShapedPortals.jar' }
+    doLast {
+        project.copy {
+            from(tasks.named('shadowJar').get().archiveFile.get().asFile)
+            into(layout.projectDirectory.dir('../PluginOuts'))
+        }
+    }
 }
 
 def buildSwiftSwampTask = tasks.register('buildSwiftSwamp', Copy) {

@@ -1,8 +1,8 @@
 package com.volmit.shapedportals.gui;
 
-import art.arcane.volmlib.util.director.help.DirectorHelpMessages;
 import art.arcane.volmlib.util.director.help.DirectorMiniMenu;
 import art.arcane.volmlib.util.localization.MessageArgs;
+import art.arcane.volmlib.util.localization.LanguageAudience;
 import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
 import art.arcane.volmlib.util.localization.TextKey;
 import art.arcane.volmlib.util.plugin.ComponentText;
@@ -16,7 +16,6 @@ import com.volmit.shapedportals.presentation.ChatMenuStyle;
 import com.volmit.shapedportals.presentation.FeedbackTone;
 import com.volmit.shapedportals.presentation.PresentationService;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -56,13 +55,7 @@ public final class ConfigEditorGui implements Listener {
     private static final int BACK_SLOT = 45;
     private static final int RELOAD_SLOT = 49;
     private static final int CLOSE_SLOT = 53;
-    private static final int PREVIOUS_PAGE_SLOT = 47;
-    private static final int NEXT_PAGE_SLOT = 51;
     private static final int[] CATEGORY_SLOTS = {19, 21, 23, 25, 28, 30, 32, 34};
-    private static final int LANGUAGE_PAGE_SIZE = 12;
-    private static final int LANGUAGE_EDITOR_PAGE_SIZE = 45;
-    private static final int LANGUAGE_PREVIEW_WIDTH = 44;
-    private static final int LANGUAGE_PREVIEW_LINES = 6;
     private static final long PROMPT_TICKS = 20L * 60L;
     private static final int MAXIMUM_INPUT_LENGTH = 512;
 
@@ -72,7 +65,6 @@ public final class ConfigEditorGui implements Listener {
     private final PresentationService presentation;
     private final List<Setting> settings;
     private final Map<UUID, PromptSession> prompts = new ConcurrentHashMap<>();
-    private final Map<UUID, LanguageMessagePrompt> languageMessagePrompts = new ConcurrentHashMap<>();
     private final Map<UUID, Long> languageSelections = new ConcurrentHashMap<>();
     private final AtomicLong promptIds = new AtomicLong();
     private final ExecutorService writer;
@@ -99,28 +91,18 @@ public final class ConfigEditorGui implements Listener {
         FoliaScheduler.runEntity(plugin, player, () -> openRootOwned(player));
     }
 
-    public void selectLanguage(Player player, String requestedLocale) {
-        FoliaScheduler.runEntity(plugin, player, () -> selectLanguageOwned(player, requestedLocale));
-    }
-
-    public void openLanguagePicker(Player player, int requestedPage, boolean preserveEditorPrompt) {
-        FoliaScheduler.runEntity(plugin, player, () -> {
-            PromptSession prompt = preserveEditorPrompt
-                    ? prompts.get(player.getUniqueId())
-                    : prompts.remove(player.getUniqueId());
-            showLanguagePickerOwned(player, requestedPage, prompt);
-        });
-    }
-
     public void shutdown() {
         prompts.clear();
-        languageMessagePrompts.clear();
         languageSelections.clear();
         writer.shutdownNow();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onClick(InventoryClickEvent event) {
+        LanguageAudience.run(event.getWhoClicked().getUniqueId(), () -> onClickOwned(event));
+    }
+
+    private void onClickOwned(InventoryClickEvent event) {
         if (!(event.getView().getTopInventory().getHolder() instanceof EditorHolder holder)) {
             return;
         }
@@ -140,10 +122,6 @@ public final class ConfigEditorGui implements Listener {
             player.closeInventory();
             return;
         }
-        if (holder.category() == Category.LANGUAGES) {
-            handleLanguageEditorClick(player, holder, event);
-            return;
-        }
         if (slot == RELOAD_SLOT) {
             reload(player, holder.category());
             return;
@@ -152,7 +130,7 @@ public final class ConfigEditorGui implements Listener {
             Category category = categoryAt(slot);
             if (category != null) {
                 if (category == Category.LANGUAGES) {
-                    openLanguageLocalesOwned(player, 1);
+                    plugin.getLanguageSwitcher().openEditor(player);
                 } else {
                     openCategoryOwned(player, category);
                 }
@@ -182,14 +160,6 @@ public final class ConfigEditorGui implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        LanguageMessagePrompt languagePrompt = languageMessagePrompts.remove(player.getUniqueId());
-        if (languagePrompt != null) {
-            event.setCancelled(true);
-            String input = event.getMessage();
-            FoliaScheduler.runEntity(plugin, player, () -> processLanguageMessagePrompt(player, languagePrompt, input),
-                    0L, () -> languageMessagePrompts.remove(player.getUniqueId(), languagePrompt));
-            return;
-        }
         PromptSession prompt = prompts.remove(player.getUniqueId());
         if (prompt == null) {
             return;
@@ -204,13 +174,11 @@ public final class ConfigEditorGui implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         UUID playerId = event.getPlayer().getUniqueId();
         prompts.remove(playerId);
-        languageMessagePrompts.remove(playerId);
         languageSelections.remove(playerId);
     }
 
     private void openRootOwned(Player player) {
         prompts.remove(player.getUniqueId());
-        languageMessagePrompts.remove(player.getUniqueId());
         EditorHolder holder = EditorHolder.root();
         Inventory inventory = Bukkit.createInventory(holder, SIZE, language.legacy(ShapedMessages.GUI_ROOT_TITLE));
         holder.setInventory(inventory);
@@ -257,241 +225,17 @@ public final class ConfigEditorGui implements Listener {
         inventory.setItem(CLOSE_SLOT, item(Material.BARRIER, language.legacy(ShapedMessages.GUI_CLOSE), List.of()));
     }
 
-    private void openLanguageLocalesOwned(Player player, int requestedPage) {
-        prompts.remove(player.getUniqueId());
-        languageMessagePrompts.remove(player.getUniqueId());
-        List<String> locales = language.availableLocales();
-        DirectorMiniMenu.ContentPage page = DirectorMiniMenu.paginate(
-                locales.size(), requestedPage, LANGUAGE_EDITOR_PAGE_SIZE);
-        EditorHolder holder = EditorHolder.languageLocales(page.page(), locales);
-        MessageArgs titleArguments = MessageArgs.builder()
-                .trusted("category", language.render(ShapedMessages.GUI_CATEGORY_LANGUAGES))
-                .build();
-        Inventory inventory = Bukkit.createInventory(
-                holder,
-                SIZE,
-                language.legacy(ShapedMessages.GUI_CATEGORY_TITLE, titleArguments)
-        );
-        holder.setInventory(inventory);
-        fill(inventory);
-        String current = configService.runtime().language();
-        for (int index = page.startIndex(); index < page.endIndex(); index++) {
-            String locale = locales.get(index);
-            boolean active = locale.equalsIgnoreCase(current);
-            MessageArgs arguments = MessageArgs.builder()
-                    .trusted("status", active ? "&a✔&r" : "&8•&r")
-                    .untrusted("locale", locale)
-                    .untrusted("name", language.localeDisplayName(locale))
-                    .build();
-            inventory.setItem(index - page.startIndex(), item(
-                    active ? Material.WRITABLE_BOOK : Material.BOOK,
-                    language.legacy(ShapedMessages.GUI_LANGUAGE_OPTION, arguments),
-                    List.of(language.legacy(ShapedMessages.GUI_CATEGORY_OPEN))
-            ));
-        }
-        navigation(inventory, true);
-        pagination(inventory, page);
-        player.openInventory(inventory);
-    }
-
-    private void loadLanguageMessages(Player player, String locale, int requestedPage) {
-        player.closeInventory();
-        try {
-            writer.execute(() -> {
-                try {
-                    LanguageService.PreparedLanguage prepared = language.prepare(locale);
-                    if (!prepared.selectionReady()) {
-                        requestLanguageEditorDownload(player, locale, requestedPage);
-                        return;
-                    }
-                    List<LanguageService.EditableMessage> messages = language.editableMessages(locale);
-                    scheduleResult(player, () -> openLanguageMessagesOwned(player, locale, requestedPage, messages));
-                } catch (IOException | RuntimeException exception) {
-                    plugin.getLogger().log(Level.SEVERE,
-                            "Failed to load ShapedPortals language editor for " + locale, exception);
-                    scheduleResult(player, () -> languageEditorDownloadFailed(
-                            player, locale, reason(exception)));
-                }
-            });
-        } catch (RejectedExecutionException exception) {
-            saveFailedOwned(player, Category.LANGUAGES, locale,
-                    "the editor is shutting down", ResultDestination.NONE);
-        }
-    }
-
-    private void requestLanguageEditorDownload(Player player, String locale, int page) {
-        RemoteLanguageCatalog.RequestState state = language.requestRemote(
-                locale,
-                result -> languageEditorDownloadCompleted(player, locale, page, result)
-        );
-        if (state == RemoteLanguageCatalog.RequestState.SCHEDULED
-                || state == RemoteLanguageCatalog.RequestState.IN_FLIGHT) {
-            return;
-        }
-        if (state == RemoteLanguageCatalog.RequestState.CURRENT) {
-            scheduleResult(player, () -> loadLanguageMessages(player, locale, page));
-            return;
-        }
-        scheduleResult(player, () -> languageEditorDownloadFailed(
-                player, locale, languageRequestFailure(state)));
-    }
-
-    private void languageEditorDownloadCompleted(
-            Player player,
-            String locale,
-            int page,
-            RemoteLanguageCatalog.DownloadResult result
-    ) {
-        if (result.successful()) {
-            scheduleResult(player, () -> loadLanguageMessages(player, locale, page));
-            return;
-        }
-        Throwable failure = result.failure();
-        String detail = failure == null || failure.getMessage() == null || failure.getMessage().isBlank()
-                ? "the language download or verification failed"
-                : failure.getMessage();
-        plugin.getLogger().log(Level.WARNING,
-                "Unable to open the ShapedPortals language editor for " + locale, failure);
-        scheduleResult(player, () -> languageEditorDownloadFailed(player, locale, detail));
-    }
-
-    private void languageEditorDownloadFailed(Player player, String locale, String reason) {
-        saveFailedOwned(player, Category.LANGUAGES, locale, reason, ResultDestination.NONE);
-        openLanguageLocalesOwned(player, 1);
-    }
-
-    private void openLanguageMessagesOwned(
-            Player player,
-            String locale,
-            int requestedPage,
-            List<LanguageService.EditableMessage> messages
-    ) {
-        DirectorMiniMenu.ContentPage page = DirectorMiniMenu.paginate(
-                messages.size(), requestedPage, LANGUAGE_EDITOR_PAGE_SIZE);
-        EditorHolder holder = EditorHolder.languageMessages(locale, page.page(), messages);
-        MessageArgs titleArguments = MessageArgs.builder().untrusted("category", locale).build();
-        Inventory inventory = Bukkit.createInventory(
-                holder,
-                SIZE,
-                language.legacy(ShapedMessages.GUI_CATEGORY_TITLE, titleArguments)
-        );
-        holder.setInventory(inventory);
-        fill(inventory);
-        for (int index = page.startIndex(); index < page.endIndex(); index++) {
-            LanguageService.EditableMessage message = messages.get(index);
-            inventory.setItem(index - page.startIndex(), languageMessageItem(message));
-        }
-        navigation(inventory, true);
-        pagination(inventory, page);
-        player.openInventory(inventory);
-    }
-
-    private void pagination(Inventory inventory, DirectorMiniMenu.ContentPage page) {
-        if (page.hasPrevious()) {
-            inventory.setItem(PREVIOUS_PAGE_SLOT, item(
-                    Material.ARROW,
-                    language.legacy(DirectorHelpMessages.PREVIOUS_PAGE),
-                    List.of(language.legacy(DirectorHelpMessages.PAGE) + " " + (page.page() - 1))
-            ));
-        }
-        if (page.hasNext()) {
-            inventory.setItem(NEXT_PAGE_SLOT, item(
-                    Material.ARROW,
-                    language.legacy(DirectorHelpMessages.NEXT_PAGE),
-                    List.of(language.legacy(DirectorHelpMessages.PAGE) + " " + (page.page() + 1))
-            ));
-        }
-    }
-
-    private void handleLanguageEditorClick(Player player, EditorHolder holder, InventoryClickEvent event) {
-        int slot = event.getRawSlot();
-        if (slot == BACK_SLOT) {
-            if (holder.locale() == null) {
-                openRootOwned(player);
-            } else {
-                openLanguageLocalesOwned(player, 1);
-            }
-            return;
-        }
-        if (slot == RELOAD_SLOT) {
-            reloadLanguageEditor(player, holder);
-            return;
-        }
-        if (slot == PREVIOUS_PAGE_SLOT) {
-            openLanguagePage(player, holder, holder.page() - 1);
-            return;
-        }
-        if (slot == NEXT_PAGE_SLOT) {
-            openLanguagePage(player, holder, holder.page() + 1);
-            return;
-        }
-        if (slot >= LANGUAGE_EDITOR_PAGE_SIZE) {
-            return;
-        }
-        int index = ((holder.page() - 1) * LANGUAGE_EDITOR_PAGE_SIZE) + slot;
-        if (holder.locale() == null) {
-            if (index < holder.locales().size()) {
-                loadLanguageMessages(player, holder.locales().get(index), 1);
-            }
-            return;
-        }
-        if (index >= holder.messages().size()) {
-            return;
-        }
-        if (!event.isLeftClick()) {
-            return;
-        }
-        LanguageService.EditableMessage message = holder.messages().get(index);
-        beginLanguageMessagePrompt(player, holder.locale(), message, holder.page());
-    }
-
-    private void openLanguagePage(Player player, EditorHolder holder, int page) {
-        if (holder.locale() == null) {
-            openLanguageLocalesOwned(player, page);
-        } else {
-            openLanguageMessagesOwned(player, holder.locale(), page, holder.messages());
-        }
-    }
-
-    private void reloadLanguageEditor(Player player, EditorHolder holder) {
-        try {
-            writer.execute(() -> {
-                long startedNanos = System.nanoTime();
-                boolean success = plugin.reloadAll(true);
-                long duration = (System.nanoTime() - startedNanos) / 1_000_000L;
-                scheduleResult(player, () -> {
-                    if (success) {
-                        presentation.command(player, ShapedMessages.RELOAD_SUCCESS, MessageArgs.builder()
-                                .trusted("duration", duration)
-                                .untrusted("locale", configService.runtime().language())
-                                .build(), FeedbackTone.SUCCESS);
-                    } else {
-                        presentation.command(player, ShapedMessages.RELOAD_FAILED, MessageArgs.builder()
-                                .trusted("duration", duration)
-                                .build(), FeedbackTone.FAILURE);
-                    }
-                    if (holder.locale() == null) {
-                        openLanguageLocalesOwned(player, holder.page());
-                    } else {
-                        loadLanguageMessages(player, holder.locale(), holder.page());
-                    }
-                });
-            });
-        } catch (RejectedExecutionException exception) {
-            presentation.command(player, ShapedMessages.COMMAND_FAILED, FeedbackTone.FAILURE);
-        }
-    }
-
     private void handleSettingClick(Player player, Category category, Setting setting, InventoryClickEvent event) {
         if (setting.kind() == SettingKind.LOCALE) {
-            beginLanguagePicker(player, category, setting);
+            player.closeInventory();
+            plugin.getLanguageSwitcher().command(player, new String[]{"server"});
             return;
         }
         if (setting.kind() == SettingKind.BOOLEAN) {
             saveMutation(player, category, setting, candidate -> {
                 boolean current = Boolean.parseBoolean(setting.reader().apply(candidate));
                 setting.writer().write(candidate, Boolean.toString(!current));
-            }, false, ResultDestination.CATEGORY, null);
+            }, false, null);
             return;
         }
         if (setting.kind().numeric() && !isPromptClick(event.getClick())) {
@@ -501,7 +245,7 @@ public final class ConfigEditorGui implements Listener {
             saveMutation(player, category, setting, candidate -> {
                 String current = setting.reader().apply(candidate);
                 setting.writer().write(candidate, adjust(setting, current, adjustment));
-            }, false, ResultDestination.CATEGORY, null);
+            }, false, null);
             return;
         }
         beginPrompt(player, category, setting);
@@ -527,80 +271,6 @@ public final class ConfigEditorGui implements Listener {
         }
     }
 
-    private void beginLanguagePicker(Player player, Category category, Setting setting) {
-        long id = promptIds.incrementAndGet();
-        PromptSession prompt = new PromptSession(id, category, setting);
-        prompts.put(player.getUniqueId(), prompt);
-        showLanguagePickerOwned(player, 1, prompt);
-        boolean scheduled = FoliaScheduler.runEntity(plugin, player,
-                () -> expirePrompt(player, prompt), PROMPT_TICKS,
-                () -> prompts.remove(player.getUniqueId(), prompt));
-        if (!scheduled) {
-            prompts.remove(player.getUniqueId(), prompt);
-            presentation.command(player, ShapedMessages.GUI_PROMPT_CANCELLED, FeedbackTone.FAILURE);
-        }
-    }
-
-    private void showLanguagePickerOwned(Player player, int requestedPage, PromptSession prompt) {
-        player.closeInventory();
-        DirectorMiniMenu.Theme theme = ChatMenuStyle.theme();
-        List<String> locales = language.availableLocales();
-        DirectorMiniMenu.ContentPage page = DirectorMiniMenu.paginate(
-                locales.size(), requestedPage, LANGUAGE_PAGE_SIZE);
-        ArrayList<String> lines = new ArrayList<>();
-        lines.add(DirectorMiniMenu.banner("/shapedportals language", theme));
-        if (prompt != null) {
-            lines.add(ComponentText.markup(language.render(ShapedMessages.GUI_LANGUAGE_TYPE)).miniMessage());
-        }
-        if (locales.isEmpty()) {
-            lines.add(ComponentText.markup(language.render(ShapedMessages.GUI_LANGUAGE_EMPTY)).miniMessage());
-        } else {
-            String current = configService.runtime().language();
-            for (String locale : locales.subList(page.startIndex(), page.endIndex())) {
-                lines.add(languageOption(locale, locale.equalsIgnoreCase(current)));
-            }
-        }
-        if (prompt != null) {
-            lines.add(ComponentText.markup(language.renderWithoutPrefix(
-                    ShapedMessages.GUI_PROMPT_CANCEL,
-                    MessageArgs.empty()
-            )).miniMessage());
-        }
-        lines.add(DirectorMiniMenu.paginationBar(page, "/shapedportals language", theme,
-                language.directorResolver()));
-        DirectorMiniMenu.deliver(player, lines);
-    }
-
-    private String languageOption(String locale, boolean selected) {
-        MessageArgs optionArguments = MessageArgs.builder()
-                .trusted("status", selected ? "&a✔&r" : "&8•&r")
-                .untrusted("locale", locale)
-                .untrusted("name", language.localeDisplayName(locale))
-                .build();
-        ComponentText option = ComponentText.markup(language.render(ShapedMessages.GUI_LANGUAGE_OPTION,
-                optionArguments));
-        ComponentText hover = ComponentText.markup(language.render(ShapedMessages.GUI_LANGUAGE_HOVER,
-                MessageArgs.builder().untrusted("locale", locale).build()));
-        return ChatMenuStyle.entry(option)
-                .clickRunCommand(languageCommand(locale))
-                .hover(hover)
-                .miniMessage();
-    }
-
-    private void selectLanguageOwned(Player player, String requestedLocale) {
-        prompts.remove(player.getUniqueId());
-        Setting setting = languageSetting();
-        String locale = language.availableLocale(requestedLocale).orElse(null);
-        if (locale == null) {
-            languageSelections.remove(player.getUniqueId());
-            saveFailedOwned(player, Category.GENERAL, requestedLocale,
-                    "the language file is not available", ResultDestination.NONE);
-            return;
-        }
-        saveMutation(player, Category.GENERAL, setting,
-                config -> setting.writer().write(config, locale), true, ResultDestination.NONE, locale);
-    }
-
     private void processPrompt(Player player, PromptSession prompt, String input) {
         if (input.equalsIgnoreCase("cancel")) {
             presentation.command(player, ShapedMessages.GUI_PROMPT_CANCELLED, FeedbackTone.INFO);
@@ -609,132 +279,10 @@ public final class ConfigEditorGui implements Listener {
         }
         if (input.length() > MAXIMUM_INPUT_LENGTH) {
             saveFailedOwned(player, prompt.category(), prompt.setting(),
-                    "the value is longer than 512 characters", ResultDestination.CATEGORY);
+                    "the value is longer than 512 characters");
             return;
         }
         save(player, prompt.category(), prompt.setting(), input);
-    }
-
-    private void beginLanguageMessagePrompt(
-            Player player,
-            String locale,
-            LanguageService.EditableMessage message,
-            int page
-    ) {
-        prompts.remove(player.getUniqueId());
-        long id = promptIds.incrementAndGet();
-        LanguageMessagePrompt prompt = new LanguageMessagePrompt(
-                id, locale, message.id(), message.previewValue(), message.placeholders(), page);
-        languageMessagePrompts.put(player.getUniqueId(), prompt);
-        player.closeInventory();
-        showLanguageMessagePrompt(player, prompt);
-        boolean scheduled = FoliaScheduler.runEntity(plugin, player,
-                () -> expireLanguageMessagePrompt(player, prompt), PROMPT_TICKS,
-                () -> languageMessagePrompts.remove(player.getUniqueId(), prompt));
-        if (!scheduled) {
-            languageMessagePrompts.remove(player.getUniqueId(), prompt);
-            presentation.command(player, ShapedMessages.GUI_PROMPT_CANCELLED, FeedbackTone.FAILURE);
-        }
-    }
-
-    private void showLanguageMessagePrompt(Player player, LanguageMessagePrompt prompt) {
-        ArrayList<String> entries = new ArrayList<>();
-        entries.add(ChatMenuStyle.entry(ComponentText.markup(language.renderWithoutPrefix(
-                ShapedMessages.GUI_PROMPT,
-                MessageArgs.builder().untrusted("setting", prompt.key()).build()
-        ))).miniMessage());
-        entries.add(ChatMenuStyle.entry(ComponentText.markup(language.renderWithoutPrefix(
-                ShapedMessages.GUI_LANGUAGE_CURRENT,
-                MessageArgs.builder().trusted("value", prompt.previewValue()).build()
-        ))).miniMessage());
-        entries.add(ChatMenuStyle.entry(ComponentText.markup(language.renderWithoutPrefix(
-                ShapedMessages.GUI_LANGUAGE_VARIABLES,
-                MessageArgs.builder().untrusted("variables", languageVariables(prompt.placeholders())).build()
-        ))).miniMessage());
-        entries.add(ChatMenuStyle.entry(ComponentText.markup(language.renderWithoutPrefix(
-                ShapedMessages.GUI_PROMPT_CANCEL,
-                MessageArgs.empty()
-        ))).miniMessage());
-        DirectorMiniMenu.ContentMenu menu = new DirectorMiniMenu.ContentMenu(
-                "/shapedportals config language " + prompt.locale(),
-                "/shapedportals config",
-                entries,
-                "",
-                1,
-                entries.size()
-        );
-        DirectorMiniMenu.deliverContent(player, menu, ChatMenuStyle.theme(), language.directorResolver());
-    }
-
-    private void processLanguageMessagePrompt(Player player, LanguageMessagePrompt prompt, String input) {
-        if (input.equalsIgnoreCase("cancel")) {
-            presentation.command(player, ShapedMessages.GUI_PROMPT_CANCELLED, FeedbackTone.INFO);
-            loadLanguageMessages(player, prompt.locale(), prompt.page());
-            return;
-        }
-        if (input.length() > MAXIMUM_INPUT_LENGTH) {
-            saveFailedOwned(player, Category.LANGUAGES, prompt.key(),
-                    "the value is longer than 512 characters", ResultDestination.NONE);
-            loadLanguageMessages(player, prompt.locale(), prompt.page());
-            return;
-        }
-        saveLanguageMessage(player, prompt, decodeLanguageInput(input));
-    }
-
-    private void expireLanguageMessagePrompt(Player player, LanguageMessagePrompt prompt) {
-        if (!languageMessagePrompts.remove(player.getUniqueId(), prompt)) {
-            return;
-        }
-        presentation.command(player, ShapedMessages.GUI_PROMPT_TIMEOUT, FeedbackTone.INFO);
-        loadLanguageMessages(player, prompt.locale(), prompt.page());
-    }
-
-    private void saveLanguageMessage(Player player, LanguageMessagePrompt prompt, String value) {
-        try {
-            writer.execute(() -> {
-                try {
-                    LanguageService.PreparedLanguage prepared = language.updateMessage(
-                            prompt.locale(), prompt.key(), value);
-                    LanguageService.EditableMessage updatedMessage = language.editableMessages(prompt.locale()).stream()
-                            .filter(message -> message.id().equals(prompt.key()))
-                            .findFirst()
-                            .orElseThrow(() -> new IOException(
-                                    "Updated language key was not found: " + prompt.key()));
-                    installEditedLanguage(prepared);
-                    scheduleResult(player, () -> {
-                        showLanguageSaveResult(player, prompt, updatedMessage.previewValue());
-                        loadLanguageMessages(player, prompt.locale(), prompt.page());
-                    });
-                } catch (IOException | RuntimeException exception) {
-                    plugin.getLogger().log(Level.SEVERE,
-                            "Failed to save ShapedPortals language key " + prompt.key()
-                                    + " for " + prompt.locale(), exception);
-                    scheduleLanguageFailure(player, prompt.locale(), prompt.page(), prompt.key(), exception);
-                }
-            });
-        } catch (RejectedExecutionException exception) {
-            saveFailedOwned(player, Category.LANGUAGES, prompt.key(),
-                    "the editor is shutting down", ResultDestination.NONE);
-        }
-    }
-
-    private void installEditedLanguage(LanguageService.PreparedLanguage prepared) {
-        if (prepared.locale().equalsIgnoreCase(configService.runtime().language())) {
-            plugin.installPreparedLanguage(prepared);
-        }
-    }
-
-    private void scheduleLanguageFailure(
-            Player player,
-            String locale,
-            int page,
-            String key,
-            Exception exception
-    ) {
-        scheduleResult(player, () -> {
-            saveFailedOwned(player, Category.LANGUAGES, key, reason(exception), ResultDestination.NONE);
-            loadLanguageMessages(player, locale, page);
-        });
     }
 
     private void expirePrompt(Player player, PromptSession prompt) {
@@ -748,7 +296,7 @@ public final class ConfigEditorGui implements Listener {
     private void save(Player player, Category category, Setting setting, String input) {
         boolean languageChange = setting.path().equals("general.language");
         saveMutation(player, category, setting, config -> setting.writer().write(config, input), languageChange,
-                ResultDestination.CATEGORY, languageChange ? input : null);
+                languageChange ? input : null);
     }
 
     private void saveMutation(
@@ -757,7 +305,6 @@ public final class ConfigEditorGui implements Listener {
             Setting setting,
             Consumer<ShapedPortalsConfig> mutation,
             boolean languageChange,
-            ResultDestination destination,
             String attemptedLanguage
     ) {
         long languageSelection = languageChange ? promptIds.incrementAndGet() : 0L;
@@ -765,7 +312,7 @@ public final class ConfigEditorGui implements Listener {
             languageSelections.put(player.getUniqueId(), languageSelection);
         }
         SaveOperation operation = new SaveOperation(
-                player, category, setting, mutation, languageChange, destination, languageSelection,
+                player, category, setting, mutation, languageChange, languageSelection,
                 attemptedLanguage);
         submitSave(operation);
     }
@@ -813,7 +360,7 @@ public final class ConfigEditorGui implements Listener {
                     .untrusted("setting", plainName(operation.setting()))
                     .build();
             showConfigResult(operation.player(), ShapedMessages.CONFIG_SAVED, arguments);
-            openDestination(operation);
+            openCategoryOwned(operation.player(), operation.category());
         });
         return true;
     }
@@ -943,8 +490,7 @@ public final class ConfigEditorGui implements Listener {
                 operation.player(),
                 operation.category(),
                 settingName,
-                failure,
-                operation.destination()
+                failure
         ));
     }
 
@@ -952,60 +498,29 @@ public final class ConfigEditorGui implements Listener {
             Player player,
             Category category,
             Setting setting,
-            String reason,
-            ResultDestination destination
+            String reason
     ) {
-        saveFailedOwned(player, category, plainName(setting), reason, destination);
+        saveFailedOwned(player, category, plainName(setting), reason);
     }
 
     private void saveFailedOwned(
             Player player,
             Category category,
             String settingName,
-            String reason,
-            ResultDestination destination
+            String reason
     ) {
         MessageArgs arguments = MessageArgs.builder()
                 .untrusted("setting", settingName)
                 .untrusted("reason", reason)
                 .build();
         showConfigResult(player, ShapedMessages.CONFIG_SAVE_FAILED, arguments);
-        if (destination == ResultDestination.CATEGORY) {
-            openCategoryOwned(player, category);
-        }
+        openCategoryOwned(player, category);
     }
 
     private void showConfigResult(Player player, TextKey message, MessageArgs arguments) {
         String entry = ChatMenuStyle.entry(ComponentText.markup(
                 language.renderWithoutPrefix(message, arguments))).miniMessage();
         DirectorMiniMenu.ContentMenu menu = configResultMenu(entry);
-        DirectorMiniMenu.deliverContent(player, menu, ChatMenuStyle.theme(), language.directorResolver());
-    }
-
-    private void showLanguageSaveResult(
-            Player player,
-            LanguageMessagePrompt prompt,
-            String updatedPreview
-    ) {
-        String saved = ChatMenuStyle.entry(ComponentText.markup(language.renderWithoutPrefix(
-                ShapedMessages.CONFIG_SAVED,
-                MessageArgs.builder().untrusted("setting", prompt.key()).build()
-        ))).miniMessage();
-        String changed = ChatMenuStyle.entry(ComponentText.markup(language.renderWithoutPrefix(
-                ShapedMessages.GUI_LANGUAGE_CHANGED,
-                MessageArgs.builder()
-                        .trusted("old", prompt.previewValue())
-                        .trusted("new", updatedPreview)
-                        .build()
-        ))).miniMessage();
-        DirectorMiniMenu.ContentMenu menu = new DirectorMiniMenu.ContentMenu(
-                "/shapedportals config",
-                "/shapedportals config",
-                List.of(saved, changed),
-                "",
-                1,
-                2
-        );
         DirectorMiniMenu.deliverContent(player, menu, ChatMenuStyle.theme(), language.directorResolver());
     }
 
@@ -1027,16 +542,6 @@ public final class ConfigEditorGui implements Listener {
         return settingName;
     }
 
-    static String languageVariables(Set<String> placeholders) {
-        if (placeholders.isEmpty()) {
-            return "—";
-        }
-        return placeholders.stream()
-                .sorted()
-                .map(name -> "{" + name + "}")
-                .collect(Collectors.joining(" "));
-    }
-
     private boolean isCurrentSelection(SaveOperation operation) {
         if (!operation.languageChange()) {
             return true;
@@ -1048,12 +553,6 @@ public final class ConfigEditorGui implements Listener {
     private void clearSelection(SaveOperation operation) {
         if (operation.languageChange()) {
             languageSelections.remove(operation.player().getUniqueId(), operation.languageSelection());
-        }
-    }
-
-    private void openDestination(SaveOperation operation) {
-        if (operation.destination() == ResultDestination.CATEGORY) {
-            openCategoryOwned(operation.player(), operation.category());
         }
     }
 
@@ -1077,30 +576,6 @@ public final class ConfigEditorGui implements Listener {
                 language.legacy(ShapedMessages.GUI_STATE, valueArguments),
                 language.legacy(instruction)
         ));
-    }
-
-    private ItemStack languageMessageItem(LanguageService.EditableMessage message) {
-        ArrayList<String> lore = new ArrayList<>();
-        String currentLabel = language.legacy(
-                ShapedMessages.GUI_LANGUAGE_CURRENT,
-                MessageArgs.builder().trusted("value", "").build()
-        ).stripTrailing();
-        lore.add(currentLabel);
-        lore.addAll(wrapLegacyPreview(
-                ComponentText.markup(message.previewValue()).legacy(),
-                LANGUAGE_PREVIEW_WIDTH,
-                LANGUAGE_PREVIEW_LINES
-        ));
-        if (!message.placeholders().isEmpty()) {
-            String placeholders = message.placeholders().stream()
-                    .sorted()
-                    .map(name -> "{" + name + "}")
-                    .collect(Collectors.joining(" "));
-            lore.add("");
-            lore.addAll(wrapLegacyPreview("§8" + placeholders, LANGUAGE_PREVIEW_WIDTH, 2));
-        }
-        lore.add(language.legacy(ShapedMessages.GUI_TEXT));
-        return item(Material.PAPER, "§f" + message.id(), lore);
     }
 
     private ItemStack item(Material material, String name, List<String> lore) {
@@ -1162,77 +637,6 @@ public final class ConfigEditorGui implements Listener {
         return value.length() <= 120 ? value : value.substring(0, 117) + "…";
     }
 
-    static String decodeLanguageInput(String input) {
-        StringBuilder decoded = new StringBuilder(input.length());
-        for (int index = 0; index < input.length(); index++) {
-            char current = input.charAt(index);
-            if (current != '\\' || index + 1 >= input.length()) {
-                decoded.append(current);
-                continue;
-            }
-            char next = input.charAt(index + 1);
-            if (next == 'n') {
-                decoded.append('\n');
-                index++;
-                continue;
-            }
-            if (next == '\\') {
-                decoded.append('\\');
-                index++;
-                continue;
-            }
-            decoded.append(current);
-        }
-        return decoded.toString();
-    }
-
-    static List<String> wrapLegacyPreview(String value, int width, int maximumLines) {
-        int safeWidth = Math.max(1, width);
-        int safeMaximumLines = Math.max(1, maximumLines);
-        String normalized = value == null || value.isEmpty() ? "(empty)" : value;
-        ArrayList<String> lines = new ArrayList<>();
-        StringBuilder current = new StringBuilder();
-        int visibleCharacters = 0;
-        for (int index = 0; index < normalized.length(); index++) {
-            char character = normalized.charAt(index);
-            if (character == '§' && index + 1 < normalized.length()) {
-                current.append(character).append(normalized.charAt(++index));
-                continue;
-            }
-            if (character == '\r') {
-                continue;
-            }
-            if (character == '\n') {
-                lines.add(current.toString());
-                current = new StringBuilder(ChatColor.getLastColors(current.toString()));
-                visibleCharacters = 0;
-                continue;
-            }
-            if (visibleCharacters >= safeWidth
-                    || (Character.isWhitespace(character) && visibleCharacters == safeWidth - 1)) {
-                String completed = current.toString().stripTrailing();
-                lines.add(completed);
-                current = new StringBuilder(ChatColor.getLastColors(completed));
-                visibleCharacters = 0;
-                if (Character.isWhitespace(character)) {
-                    continue;
-                }
-            }
-            current.append(character);
-            visibleCharacters++;
-        }
-        if (visibleCharacters > 0 || lines.isEmpty()) {
-            lines.add(current.toString().stripTrailing());
-        }
-        if (lines.size() <= safeMaximumLines) {
-            return List.copyOf(lines);
-        }
-        ArrayList<String> truncated = new ArrayList<>(lines.subList(0, safeMaximumLines));
-        int lastIndex = truncated.size() - 1;
-        truncated.set(lastIndex, truncated.get(lastIndex).stripTrailing() + "§8…");
-        return List.copyOf(truncated);
-    }
-
     private String reason(Exception exception) {
         String message = exception.getMessage();
         if (message == null || message.isBlank()) {
@@ -1251,16 +655,9 @@ public final class ConfigEditorGui implements Listener {
                         && setting.kind() == SettingKind.LOCALE);
     }
 
-    static String languageCommand(String locale) {
-        return "/shapedportals language locale=" + locale;
-    }
 
     static int inventorySize() {
         return SIZE;
-    }
-
-    static int languageEditorPageSize() {
-        return LANGUAGE_EDITOR_PAGE_SIZE;
     }
 
     static Map<Integer, String> rootCategorySlots() {
@@ -1436,13 +833,6 @@ public final class ConfigEditorGui implements Listener {
         );
     }
 
-    private Setting languageSetting() {
-        return settings.stream()
-                .filter(candidate -> candidate.kind() == SettingKind.LOCALE)
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Language editor setting is missing"));
-    }
-
     private static Setting setting(
             Category category,
             String path,
@@ -1526,11 +916,6 @@ public final class ConfigEditorGui implements Listener {
         }
     }
 
-    private enum ResultDestination {
-        NONE,
-        CATEGORY
-    }
-
     @FunctionalInterface
     private interface SettingWriter {
         void write(ShapedPortalsConfig config, String value);
@@ -1551,59 +936,31 @@ public final class ConfigEditorGui implements Listener {
     private record PromptSession(long id, Category category, Setting setting) {
     }
 
-    private record LanguageMessagePrompt(
-            long id,
-            String locale,
-            String key,
-            String previewValue,
-            Set<String> placeholders,
-            int page
-    ) {
-        private LanguageMessagePrompt {
-            placeholders = Set.copyOf(placeholders);
-        }
-    }
-
     private record SaveOperation(
             Player player,
             Category category,
             Setting setting,
             Consumer<ShapedPortalsConfig> mutation,
             boolean languageChange,
-            ResultDestination destination,
             long languageSelection,
             String attemptedLanguage
     ) {
     }
 
     private static final class EditorHolder implements InventoryHolder {
-        private final EditorState state;
+        private final Category category;
         private Inventory inventory;
 
-        private EditorHolder(EditorState state) {
-            this.state = state;
+        private EditorHolder(Category category) {
+            this.category = category;
         }
 
         private static EditorHolder root() {
-            return new EditorHolder(new EditorState(null, null, 1, List.of(), List.of()));
+            return new EditorHolder(null);
         }
 
         private static EditorHolder category(Category category) {
-            return new EditorHolder(new EditorState(category, null, 1, List.of(), List.of()));
-        }
-
-        private static EditorHolder languageLocales(int page, List<String> locales) {
-            return new EditorHolder(new EditorState(
-                    Category.LANGUAGES, null, page, List.copyOf(locales), List.of()));
-        }
-
-        private static EditorHolder languageMessages(
-                String locale,
-                int page,
-                List<LanguageService.EditableMessage> messages
-        ) {
-            return new EditorHolder(new EditorState(
-                    Category.LANGUAGES, locale, page, List.of(), List.copyOf(messages)));
+            return new EditorHolder(category);
         }
 
         @Override
@@ -1612,36 +969,11 @@ public final class ConfigEditorGui implements Listener {
         }
 
         private Category category() {
-            return state.category();
-        }
-
-        private String locale() {
-            return state.locale();
-        }
-
-        private int page() {
-            return state.page();
-        }
-
-        private List<String> locales() {
-            return state.locales();
-        }
-
-        private List<LanguageService.EditableMessage> messages() {
-            return state.messages();
+            return category;
         }
 
         private void setInventory(Inventory inventory) {
             this.inventory = inventory;
         }
-    }
-
-    private record EditorState(
-            Category category,
-            String locale,
-            int page,
-            List<String> locales,
-            List<LanguageService.EditableMessage> messages
-    ) {
     }
 }

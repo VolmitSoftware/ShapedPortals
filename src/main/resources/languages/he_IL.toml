@@ -9,7 +9,7 @@
 # רשימות: {matches}=פורטלים תואמים; {seconds}=חלון אישור בשניות.
 # הגדרות: {category}=קטגוריה; {setting}=שם הגדרה; {status}=סימן בחירה; {value}=ערך נוכחי, ברירת מחדל או גולמי; {language}=שפה פעילה; {locale}=אזור שפה; {name}=שם השפה המלא.
 # עורך שפה: {variables}=מצייני מקום תקינים; {old}=הערך הקודם; {new}=הערך החדש.
-# אחר: {duration}=אלפיות שנייה; {path}=נתיב דוח מקומי; {url}=כתובת דוח ציבורית; {reason}=סיבת כשל.
+# אחר: {duration}=אלפיות שנייה; {reason}=סיבת כשל.
 # קידומת: {prefix}=הערך הגלובלי runtime.prefix. הסירו את {prefix} מהודעה מסוימת כדי להסתיר אותה רק שם.
 # כדי להציג & או [ כלשונם, יש להוסיף לפניהם לוכסן הפוך.
 
@@ -36,15 +36,6 @@ save_failed = "{prefix}&cלא ניתן להחיל את &f{setting}&r&c: {reason}
 [command.feedback]
 failed = "{prefix}&cלא ניתן להשלים את הפקודה. פרטים נוספים מופיעים במסוף.&r"
 
-[command.feedback.debug]
-started = "{prefix}&7נאספים נתוני אבחון של השרת ושל ShapedPortals…&r"
-busy = "{prefix}&eדוח אבחון של ShapedPortals כבר נמצא בתהליך יצירה.&r"
-saved = "{prefix}&aדוח האבחון נשמר במיקום &f{path}&r&a.&r"
-uploaded = "{prefix}&aדוח האבחון הועלה:&r &b&n{url}&r"
-link_hover = "&7פתיחת דוח mclo.gs הציבורי.&r"
-upload_failed = "{prefix}&eהדוח המקומי נשמר, אך ההעלאה אל mclo.gs נכשלה. פרטים נוספים מופיעים במסוף.&r"
-failed = "{prefix}&cלא ניתן ליצור את דוח האבחון. פרטים נוספים מופיעים במסוף.&r"
-
 [command.status]
 header = "{prefix}&d&lמצב הפעולה של ShapedPortals&r"
 config = "{prefix}&7יצירה:&r {enabled} &8|&r &7שפה:&r &f{language}&r &8|&r &7טעינה חמה:&r {hot_reload}"
@@ -55,14 +46,14 @@ compatibility = "{prefix}&7קובץ בנוי:&r &fJava 17 / Bukkit 1.20.1+&r &8|
 [command.description]
 root = "עזרה וניהול של ShapedPortals"
 config = "פתיחת עורך התצורה המלא בתוך המשחק"
-language = "בחירת שפת ShapedPortals זמינה"
-debug = "יצירת דוח אבחון מקיף של ShapedPortals"
+language = "בחירת השפה שלך או שפת ברירת המחדל של השרת"
+debugdump = "יצירת דוח אבחון והעלאתו לפי בחירה"
 portals = "הצגת כל הפורטלים המנוהלים וקיצורי ההשתגרות אליהם"
 teleport = "השתגרות בטוחה ליד פורטל מנוהל, או הצגת פורטלים אם לא צוין יעד"
 status = "הצגת נתונים סטטיסטיים של פורטלים מנוהלים וניסיונות"
 
 [command.parameter]
-locale = "אזור שפה זמין"
+debugdump_upload = "העלאת הדוח אל mclo.gs"
 page = "עמוד רשימת פורטלים שמספרו מתחיל באחד"
 portal = "UUID של פורטל, תחילית ייחודית או list"
 
@@ -124,7 +115,7 @@ state = "&7נוכחי:&r {value}"
 toggle = "&8לחצו כדי להחליף מצב.&r"
 number = "&8שמאל +1, ימין -1, Shift ×10, השלכה כדי להקליד.&r"
 text = "&8לחצו כדי להקליד ערך חדש בצ׳אט.&r"
-language = "&8לחצו כדי לבחור שפה זמינה או להקליד אזור שפה.&r"
+language = "&8בחירת השפה שלך או שפת ברירת המחדל של השרת&r"
 category = "&8לחצו כדי לערוך כל הגדרה בקטגוריה זו.&r"
 
 [gui.prompt]
@@ -135,10 +126,7 @@ cancelled = "{prefix}&eעריכת התצורה בוטלה.&r"
 timeout = "{prefix}&eזמן עריכת התצורה פג מבלי ששונה דבר.&r"
 
 [gui.language]
-type = "&7הקלידו בצ׳אט שם של אזור שפה כדי ליצור או לבחור אותו.&r"
 option = "{status} &f{locale}&r &8—&r &7{name}&r"
-hover = "&7לחצו כדי לבחור את &f{locale}&r&7.&r"
-empty = "&eלא נמצאו שפות זמינות; הקלידו שם אזור שפה כדי ליצור אחת.&r"
 current = "&7ערך נוכחי:&r {value}"
 variables = "&7משתנים / מצייני מקום נוכחיים:&r &f{variables}&r"
 changed = "&f{old}&r &7שונה ל-&r &f{new}&r"

@@ -9,7 +9,7 @@
 # Luettelot: {matches}=vastaavat portaalit; {seconds}=vahvistusaika sekunteina.
 # Asetukset: {category}=luokka; {setting}=asetuksen nimi; {status}=valintamerkki; {value}=nykyinen, oletus- tai raaka-arvo; {language}=aktiivinen kieli; {locale}=kielitunnus; {name}=kielen koko nimi.
 # Kielieditori: {variables}=sallitut paikkamerkit; {old}=edellinen arvo; {new}=uusi arvo.
-# Muut: {duration}=millisekunnit; {path}=paikallisen raportin polku; {url}=julkinen URL; {reason}=virheen syy.
+# Muut: {duration}=millisekunnit; {reason}=virheen syy.
 # Etuliite: {prefix}=yleinen runtime.prefix-arvo. Poista {prefix} yksittäisestä viestistä piilottaaksesi sen siinä.
 # Näytä & tai [ kirjaimellisesti lisäämällä eteen kenoviiva.
 
@@ -36,15 +36,6 @@ save_failed = "{prefix}&cAsetusta &f{setting}&r&c ei voitu ottaa käyttöön: {r
 [command.feedback]
 failed = "{prefix}&cKomentoa ei voitu suorittaa. Katso lisätiedot konsolista.&r"
 
-[command.feedback.debug]
-started = "{prefix}&7Kerätään palvelimen ja ShapedPortalsin diagnostiikkatietoja…&r"
-busy = "{prefix}&eShapedPortalsin diagnostiikkaraporttia luodaan jo.&r"
-saved = "{prefix}&aDiagnostiikkaraportti tallennettiin tiedostoon &f{path}&r&a.&r"
-uploaded = "{prefix}&aDiagnostiikkaraportti lähetettiin:&r &b&n{url}&r"
-link_hover = "&7Avaa julkinen mclo.gs-raportti.&r"
-upload_failed = "{prefix}&ePaikallinen raportti tallennettiin, mutta lähetys mclo.gs-palveluun epäonnistui. Katso lisätiedot konsolista.&r"
-failed = "{prefix}&cDiagnostiikkaraporttia ei voitu luoda. Katso lisätiedot konsolista.&r"
-
 [command.status]
 header = "{prefix}&d&lShapedPortalsin tila&r"
 config = "{prefix}&7Luonti:&r {enabled} &8|&r &7Kieli:&r &f{language}&r &8|&r &7Automaattinen lataus:&r {hot_reload}"
@@ -55,14 +46,14 @@ compatibility = "{prefix}&7Artefakti:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Aja
 [command.description]
 root = "ShapedPortalsin ohje ja hallinta"
 config = "Avaa kattava pelinsisäinen asetuseditori"
-language = "Valitse käytettävissä oleva ShapedPortals-kieli"
-debug = "Luo kattava ShapedPortals-diagnostiikkaraportti"
+language = "Valitse oma kielesi tai palvelimen oletuskieli"
+debugdump = "Luo diagnostiikkaraportti ja lähetä se halutessasi"
 portals = "Luettele kaikki hallinnoidut portaalit ja niiden teleporttipikavalinnat"
 teleport = "Teleporttaa turvallisesti hallinnoidun portaalin viereen tai luettele portaalit, jos tunnus puuttuu"
 status = "Näytä hallinnoitujen portaalien ja yritysten tilastot"
 
 [command.parameter]
-locale = "Käytettävissä olevan kielen tunnus"
+debugdump_upload = "Lähetä raportti mclo.gs-palveluun"
 page = "Portaaliluettelon sivu numerosta yksi alkaen"
 portal = "Portaalin UUID, yksilöllinen alku tai list"
 
@@ -124,7 +115,7 @@ state = "&7Nykyinen:&r {value}"
 toggle = "&8Napsauta vaihtaaksesi.&r"
 number = "&8Vasen +1, oikea -1, vaihto ×10, pudota kirjoittaaksesi.&r"
 text = "&8Napsauta kirjoittaaksesi uuden arvon chattiin.&r"
-language = "&8Napsauta valitaksesi käytettävissä olevan kielen tai kirjoita kielitunnus.&r"
+language = "&8Valitse oma kielesi tai palvelimen oletuskieli&r"
 category = "&8Napsauta muokataksesi tämän luokan kaikkia asetuksia.&r"
 
 [gui.prompt]
@@ -135,10 +126,7 @@ cancelled = "{prefix}&eAsetusten muokkaus peruutettiin.&r"
 timeout = "{prefix}&eAsetusten muokkaus vanheni muuttamatta mitään.&r"
 
 [gui.language]
-type = "&7Kirjoita kielitunnus chattiin luodaksesi tai valitaksesi sen.&r"
 option = "{status} &f{locale}&r &8—&r &7{name}&r"
-hover = "&7Napsauta valitaksesi kielen &f{locale}&r&7.&r"
-empty = "&eKäytettävissä olevia kieliä ei löytynyt; kirjoita kielitunnus luodaksesi sellaisen.&r"
 current = "&7Nykyinen arvo:&r {value}"
 variables = "&7Nykyiset muuttujat / paikkamerkit:&r &f{variables}&r"
 changed = "&f{old}&r &7muutettiin arvoon&r &f{new}&r"

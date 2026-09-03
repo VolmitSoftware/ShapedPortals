@@ -9,14 +9,14 @@
 # 列表：{matches}=匹配的传送门数；{seconds}=确认时限（秒）。
 # 配置：{category}=编辑器分类；{setting}=设置名称；{status}=选择标记；{value}=当前值、默认值或原始值；{language}=当前语言；{locale}=区域设置; {name}=语言全名。
 # 语言编辑器：{variables}=可用占位符；{old}=旧值；{new}=新值。
-# 其他：{duration}=毫秒；{path}=本地报告路径；{url}=公开报告网址；{reason}=失败原因.
+
 # 前缀：{prefix}=全局 runtime.prefix 值。从某条消息中删除 {prefix}，即可只在该消息中隐藏前缀。
 # 在 & 或 [ 前添加反斜杠可按原样显示该字符。
 
 [command.description]
 config = "打开完整的游戏内配置编辑器"
-debug = "创建完整的ShapedPortals诊断报告"
-language = "选择可用的 ShapedPortals 语言"
+debugdump = "创建诊断报告并选择是否上传"
+language = "选择你的语言或服务器默认语言"
 portals = "列出每个管理的传送门及其传送快捷方式"
 root = "ShapedPortals帮助与管理"
 status = "显示已管理传送门和尝试统计"
@@ -27,15 +27,6 @@ opened = "{prefix}&a已打开完整的游戏内配置编辑器。&r"
 save_failed = "{prefix}&c无法应用&f{setting}&r&c：{reason}&r"
 saved = "{prefix}&a已保存并应用&f{setting}&r&a。&r"
 
-[command.feedback.debug]
-busy = "{prefix}&eShapedPortals诊断报告已在创建中。&r"
-failed = "{prefix}&c诊断报告无法创建。详情请查看控制台。&r"
-link_hover = "&7已打开公共mclo.gs报告。&r"
-saved = "{prefix}&a已将诊断报告保存到&f{path}&r&a。&r"
-started = "{prefix}&7正在捕获服务器和ShapedPortals诊断信息…&r"
-upload_failed = "{prefix}&e本地报告已保存，但mclo.gs上传失败。详情请查看控制台。&r"
-uploaded = "{prefix}&a已上传诊断报告：&r&b&n{url}&r"
-
 [command.feedback]
 failed = "{prefix}&c命令无法完成。请查看控制台以获取详细信息。&r"
 
@@ -44,7 +35,7 @@ failed = "{prefix}&c重载失败，耗时{duration}毫秒。&r&7最后已知的�
 success = "{prefix}&a已在&f{duration}&r&a毫秒内重新加载。&r&7语言环境：&r&f{locale}&r"
 
 [command.parameter]
-locale = "可用的语言区域设置"
+debugdump_upload = "将报告上传到 mclo.gs"
 page = "从一开始编号的传送门列表页"
 portal = "传送门UUID、唯一前缀或列表"
 
@@ -106,17 +97,14 @@ presentation = "&d展示&r"
 languages = "&d语言&r"
 
 [gui.language]
-empty = "&e未找到可用语言；输入区域名以创建一个。&r"
-hover = "&7点击以选择&f{locale}&r&7。&r"
 option = "{status} &f{locale}&r &8—&r &7{name}&r"
-type = "&7在聊天中输入一个区域名以创建或选择它。&r"
 current = "&7当前值：&r {value}"
 variables = "&7当前变量 / 占位符：&r &f{variables}&r"
 changed = "&f{old}&r &7已更改为&r &f{new}&r"
 
 [gui.lore]
 category = "&8点击编辑此类别中的每个设置.&r"
-language = "&8点击选择可用语言或输入区域设置。&r"
+language = "&8选择你的语言或服务器默认语言&r"
 number = "&8左 +1，右 -1，Shift ×10，拖动到类型。&r"
 state = "&7当前：&r{value}"
 text = "&8点击在聊天中输入新值.&r"

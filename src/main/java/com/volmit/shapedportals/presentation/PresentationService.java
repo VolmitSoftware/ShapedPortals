@@ -11,6 +11,7 @@ import art.arcane.volmlib.util.hud.HudSlot;
 import art.arcane.volmlib.util.hud.HudTitleClaim;
 import art.arcane.volmlib.util.hud.HudTitleService;
 import art.arcane.volmlib.util.localization.MessageArgs;
+import art.arcane.volmlib.util.localization.LanguageAudience;
 import art.arcane.volmlib.util.localization.TextKey;
 import art.arcane.volmlib.util.plugin.ComponentMessenger;
 import art.arcane.volmlib.util.plugin.ComponentText;
@@ -120,8 +121,8 @@ public final class PresentationService implements Listener {
             FeedbackTone tone,
             boolean sound
     ) {
-        String markup = language.renderWithoutPrefix(key, arguments);
-        String chatMarkup = language.renderPrefixed(key, arguments);
+        String markup = LanguageAudience.call(player.getUniqueId(), () -> language.renderWithoutPrefix(key, arguments));
+        String chatMarkup = LanguageAudience.call(player.getUniqueId(), () -> language.renderPrefixed(key, arguments));
         Set<PresentationChannel> selected = Set.copyOf(channels);
         Runnable delivery = () -> displayOwned(player, purpose, selected, markup, chatMarkup, tone, sound);
         Runnable retired = () -> retire(player.getUniqueId(), purpose);

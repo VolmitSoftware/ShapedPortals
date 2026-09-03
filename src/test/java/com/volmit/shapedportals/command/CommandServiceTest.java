@@ -15,10 +15,6 @@ final class CommandServiceTest {
                 .containsExactly("tp", "portal=list");
         assertThat(CommandService.normalizeOptionalArguments(List.of("portals", "2")))
                 .containsExactly("portals", "page=2");
-        assertThat(CommandService.normalizeOptionalArguments(List.of("language", "fr_FR")))
-                .containsExactly("language", "locale=fr_FR");
-        assertThat(CommandService.normalizeOptionalArguments(List.of("language", "menu")))
-                .containsExactly("language", "locale=menu");
     }
 
     @Test
@@ -33,11 +29,4 @@ final class CommandServiceTest {
                 .containsExactly("status", "extra");
     }
 
-    @Test
-    void routesBareAndPagedLanguageRequestsToThePicker() {
-        assertThat(CommandService.languageMenuPage(List.of("language"))).hasValue(1);
-        assertThat(CommandService.languageMenuPage(List.of("language", "page=2"))).hasValue(2);
-        assertThat(CommandService.languageMenuPage(List.of("language", "fr_FR"))).isEmpty();
-        assertThat(CommandService.languageMenuPage(List.of("language", "page=invalid"))).isEmpty();
-    }
 }

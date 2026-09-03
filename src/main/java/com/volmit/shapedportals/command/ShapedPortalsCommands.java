@@ -40,33 +40,17 @@ public final class ShapedPortalsCommands {
         plugin.getPresentationService().command(player, ShapedMessages.COMMAND_CONFIG_OPENED, FeedbackTone.SUCCESS);
     }
 
-    @Director(name = "language", sync = true, description = "Select an available ShapedPortals language", descriptionKey = "command.description.language")
-    public void language(
-            @Param(name = "locale", description = "Available language locale", descriptionKey = "command.parameter.locale", customHandler = ShapedPortalsCommandHandlers.Language.class) String locale,
+    @Director(name = "language", sync = true, description = "Choose your language or the server default", descriptionKey = "command.description.language")
+    public void language(@Param(name = "sender", contextual = true) CommandSender sender) {
+        plugin.getLanguageSwitcher().open(sender);
+    }
+
+    @Director(name = "debugdump", sync = true, description = "Create and optionally upload a diagnostic report", descriptionKey = "command.description.debugdump")
+    public void debugdump(
+            @Param(name = "upload", defaultValue = "true", description = "Upload the report to mclo.gs", descriptionKey = "command.parameter.debugdump_upload") boolean upload,
             @Param(name = "sender", contextual = true) CommandSender sender
     ) {
-        Player player = languagePlayer(sender);
-        if (player == null) {
-            return;
-        }
-        plugin.getConfigEditor().selectLanguage(player, locale);
-    }
-
-    public void languageMenu(CommandSender sender, int page, boolean preserveEditorPrompt) {
-        Player player = languagePlayer(sender);
-        if (player == null) {
-            return;
-        }
-        plugin.getConfigEditor().openLanguagePicker(player, page, preserveEditorPrompt);
-    }
-
-    @Director(name = "debug", sync = true, description = "Create a comprehensive ShapedPortals diagnostic report", descriptionKey = "command.description.debug")
-    public void debug(@Param(name = "sender", contextual = true) CommandSender sender) {
-        if (!sender.hasPermission("shapedportals.debug")) {
-            plugin.getPresentationService().command(sender, ShapedMessages.NO_PERMISSION, FeedbackTone.FAILURE);
-            return;
-        }
-        plugin.getDebugService().generate(sender);
+        plugin.debugDump().request(sender, upload);
     }
 
     @Director(name = "portals", sync = true, description = "List every managed portal and its teleport shortcut", descriptionKey = "command.description.portals")
@@ -142,18 +126,6 @@ public final class ShapedPortalsCommands {
                 entries.size()
         );
         DirectorMiniMenu.deliverContent(sender, menu, ChatMenuStyle.theme(), language.directorResolver());
-    }
-
-    private Player languagePlayer(CommandSender sender) {
-        if (!sender.hasPermission("shapedportals.config")) {
-            plugin.getPresentationService().command(sender, ShapedMessages.NO_PERMISSION, FeedbackTone.FAILURE);
-            return null;
-        }
-        if (!(sender instanceof Player player)) {
-            plugin.getPresentationService().command(sender, ShapedMessages.PLAYER_ONLY, FeedbackTone.FAILURE);
-            return null;
-        }
-        return player;
     }
 
     private String state(boolean enabled) {

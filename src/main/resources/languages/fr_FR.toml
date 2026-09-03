@@ -9,7 +9,7 @@
 # Listes : {matches}=portails correspondants ; {seconds}=délai de confirmation en secondes.
 # Configuration : {category}=catégorie ; {setting}=nom du réglage ; {status}=marque de sélection ; {value}=valeur actuelle, par défaut ou brute ; {language}=langue active ; {locale}=code régional; {name}=nom complet de la langue.
 # Éditeur de langue : {variables}=variables valides ; {old}=ancienne valeur ; {new}=nouvelle valeur.
-# Autres : {duration}=millisecondes ; {path}=chemin du rapport local ; {url}=URL publique ; {reason}=motif de l’échec .
+# Autres : {duration}=millisecondes ; {reason}=motif de l’échec .
 # Préfixe : {prefix}=la valeur globale runtime.prefix. Retirez {prefix} d’un message pour le masquer uniquement à cet endroit.
 # Ajoutez une barre oblique inverse devant & ou [ pour l’afficher littéralement.
 
@@ -36,15 +36,6 @@ save_failed = "{prefix}&cImpossible d'appliquer &f{setting}&r&c : {reason}&r"
 [command.feedback]
 failed = "{prefix}&cLa commande n'a pas pu être exécutée. Consultez la console pour plus de détails.&r"
 
-[command.feedback.debug]
-started = "{prefix}&7Collecte des diagnostics du serveur et de ShapedPortals…&r"
-busy = "{prefix}&eUn rapport de diagnostic ShapedPortals est déjà en cours de création.&r"
-saved = "{prefix}&aLe rapport de diagnostic a été enregistré dans &f{path}&r&a.&r"
-uploaded = "{prefix}&aRapport de diagnostic envoyé :&r &b&n{url}&r"
-link_hover = "&7Ouvre le rapport public mclo.gs.&r"
-upload_failed = "{prefix}&eLe rapport local a été enregistré, mais son envoi vers mclo.gs a échoué. Consultez la console pour plus de détails.&r"
-failed = "{prefix}&cLe rapport de diagnostic n'a pas pu être créé. Consultez la console pour plus de détails.&r"
-
 [command.status]
 header = "{prefix}&d&lÉtat de ShapedPortals&r"
 config = "{prefix}&7Création :&r {enabled} &8|&r &7Langue :&r &f{language}&r &8|&r &7Rechargement automatique :&r {hot_reload}"
@@ -55,14 +46,14 @@ compatibility = "{prefix}&7Artefact :&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Pla
 [command.description]
 root = "Aide et administration de ShapedPortals"
 config = "Ouvrir l'éditeur complet de configuration en jeu"
-language = "Sélectionner une langue ShapedPortals disponible"
-debug = "Créer un rapport de diagnostic ShapedPortals complet"
+language = "Choisissez votre langue ou la langue par défaut du serveur"
+debugdump = "Créer un rapport de diagnostic et le publier si souhaité"
 portals = "Répertorier tous les portails gérés et leur raccourci de téléportation"
 teleport = "Se téléporter en toute sécurité à côté d'un portail géré ou répertorier les portails si aucun n'est indiqué"
 status = "Afficher les statistiques des portails gérés et des tentatives"
 
 [command.parameter]
-locale = "Code régional d’une langue disponible"
+debugdump_upload = "Publier le rapport sur mclo.gs"
 page = "Page de la liste des portails, numérotée à partir de un"
 portal = "UUID du portail, préfixe unique ou list"
 
@@ -124,7 +115,7 @@ state = "&7Valeur actuelle :&r {value}"
 toggle = "&8Cliquez pour basculer.&r"
 number = "&8Gauche +1, droite -1, Maj ×10, jeter pour saisir.&r"
 text = "&8Cliquez pour saisir une nouvelle valeur dans le chat.&r"
-language = "&8Cliquez pour choisir une langue disponible ou saisissez un code régional.&r"
+language = "&8Choisissez votre langue ou la langue par défaut du serveur&r"
 category = "&8Cliquez pour modifier tous les paramètres de cette catégorie.&r"
 
 [gui.prompt]
@@ -135,10 +126,7 @@ cancelled = "{prefix}&eModification de la configuration annulée.&r"
 timeout = "{prefix}&eLa modification de la configuration a expiré sans aucun changement.&r"
 
 [gui.language]
-type = "&7Saisissez un code régional dans le chat pour le créer ou le sélectionner.&r"
 option = "{status} &f{locale}&r &8—&r &7{name}&r"
-hover = "&7Cliquez pour sélectionner &f{locale}&r&7.&r"
-empty = "&eAucune langue disponible n’a été trouvée ; saisissez un code régional pour en créer une.&r"
 current = "&7Valeur actuelle :&r {value}"
 variables = "&7Variables / espaces réservés actuels :&r &f{variables}&r"
 changed = "&f{old}&r &7a été remplacé par&r &f{new}&r"

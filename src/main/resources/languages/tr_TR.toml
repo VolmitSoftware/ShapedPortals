@@ -9,7 +9,7 @@
 # Listeler: {matches}=eşleşen portallar; {seconds}=saniye cinsinden onay süresi.
 # Yapılandırma: {category}=kategori; {setting}=ayar adı; {status}=seçim işareti; {value}=geçerli, varsayılan veya ham değer; {language}=etkin dil; {locale}=yerel ayar; {name}=dilin tam adı.
 # Dil düzenleyici: {variables}=geçerli yer tutucular; {old}=önceki değer; {new}=yeni değer.
-# Diğer: {duration}=milisaniye; {path}=yerel rapor yolu; {url}=genel URL; {reason}=hata nedeni.
+# Diğer: {duration}=milisaniye; {reason}=hata nedeni.
 # Önek: {prefix}=genel runtime.prefix değeri. Yalnızca belirli bir iletide gizlemek için o iletiden {prefix} öğesini kaldırın.
 # & veya [ karakterini olduğu gibi göstermek için önüne ters eğik çizgi koyun.
 
@@ -36,15 +36,6 @@ save_failed = "{prefix}&c&f{setting}&r&c uygulanamadı: {reason}&r"
 [command.feedback]
 failed = "{prefix}&cKomut tamamlanamadı. Ayrıntılar için konsola bakın.&r"
 
-[command.feedback.debug]
-started = "{prefix}&7Sunucu ve ShapedPortals tanı bilgileri toplanıyor…&r"
-busy = "{prefix}&eBir ShapedPortals tanı raporu zaten oluşturuluyor.&r"
-saved = "{prefix}&aTanı raporu &f{path}&r&a konumuna kaydedildi.&r"
-uploaded = "{prefix}&aTanı raporu yüklendi:&r &b&n{url}&r"
-link_hover = "&7Herkese açık mclo.gs raporunu açın.&r"
-upload_failed = "{prefix}&eYerel rapor kaydedildi ancak mclo.gs yüklemesi başarısız oldu. Ayrıntılar için konsola bakın.&r"
-failed = "{prefix}&cTanı raporu oluşturulamadı. Ayrıntılar için konsola bakın.&r"
-
 [command.status]
 header = "{prefix}&d&lShapedPortals çalışma durumu&r"
 config = "{prefix}&7Oluşturma:&r {enabled} &8|&r &7Dil:&r &f{language}&r &8|&r &7Canlı yeniden yükleme:&r {hot_reload}"
@@ -55,14 +46,14 @@ compatibility = "{prefix}&7Derleme:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Zaman
 [command.description]
 root = "ShapedPortals yardım ve yönetimi"
 config = "Eksiksiz oyun içi yapılandırma düzenleyicisini aç"
-language = "Kullanılabilir bir ShapedPortals dili seç"
-debug = "Kapsamlı bir ShapedPortals tanı raporu oluştur"
+language = "Kendi dilinizi veya sunucunun varsayılan dilini seçin"
+debugdump = "Tanılama raporu oluştur ve isteğe bağlı olarak yükle"
 portals = "Yönetilen tüm portalları ve ışınlanma kısayollarını listele"
 teleport = "Yönetilen bir portalın yanına güvenle ışınlan veya belirtilmezse portalları listele"
 status = "Yönetilen portal ve deneme istatistiklerini göster"
 
 [command.parameter]
-locale = "Kullanılabilir dil yerel ayarı"
+debugdump_upload = "Raporu mclo.gs üzerine yükle"
 page = "Birden başlayan portal listesi sayfası"
 portal = "Portal UUID değeri, benzersiz önek veya list"
 
@@ -124,7 +115,7 @@ state = "&7Geçerli:&r {value}"
 toggle = "&8Değiştirmek için tıklayın.&r"
 number = "&8Sol +1, sağ -1, shift ×10, yazmak için bırakma tuşu.&r"
 text = "&8Sohbette yeni bir değer yazmak için tıklayın.&r"
-language = "&8Kullanılabilir bir dil seçmek veya yerel ayar yazmak için tıklayın.&r"
+language = "&8Kendi dilinizi veya sunucunun varsayılan dilini seçin&r"
 category = "&8Bu kategorideki her ayarı düzenlemek için tıklayın.&r"
 
 [gui.prompt]
@@ -135,10 +126,7 @@ cancelled = "{prefix}&eYapılandırma düzenlemesi iptal edildi.&r"
 timeout = "{prefix}&eYapılandırma düzenlemesinin süresi hiçbir şey değişmeden doldu.&r"
 
 [gui.language]
-type = "&7Bir dil ayarı oluşturmak veya seçmek için sohbete adını yazın.&r"
 option = "{status} &f{locale}&r &8—&r &7{name}&r"
-hover = "&7&f{locale}&r&7 seçmek için tıklayın.&r"
-empty = "&eKullanılabilir dil bulunamadı; oluşturmak için bir yerel ayar adı yazın.&r"
 current = "&7Geçerli değer:&r {value}"
 variables = "&7Geçerli değişkenler / yer tutucular:&r &f{variables}&r"
 changed = "&f{old}&r &7değerinden&r &f{new}&r &7değerine değiştirildi&r"

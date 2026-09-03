@@ -1,6 +1,11 @@
 package com.volmit.shapedportals.localization;
 
 import art.arcane.volmlib.util.director.DirectorTextResolver;
+import art.arcane.volmlib.util.localization.PluginLanguageService;
+import art.arcane.volmlib.util.localization.PluginLanguageEditor;
+import art.arcane.volmlib.util.localization.LanguageAudience;
+import art.arcane.volmlib.util.localization.LanguageFileEditor;
+import com.volmit.shapedportals.ShapedPortals;
 import art.arcane.volmlib.util.io.AtomicFileIO;
 import art.arcane.volmlib.util.localization.LocaleOverlay;
 import art.arcane.volmlib.util.localization.LocalizationCandidate;
@@ -24,6 +29,7 @@ import art.arcane.volmlib.util.plugin.ComponentMessenger;
 import art.arcane.volmlib.util.plugin.ComponentText;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +42,6 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -63,6 +68,7 @@ public final class LanguageService {
     private static final Pattern LOCALE_PATTERN = Pattern.compile("[A-Za-z0-9_-]{2,32}");
 
     private final File languageDirectory;
+    private volatile PluginLanguageService languages;
     private final Logger logger;
     private final LocalizationManager manager;
     private final AtomicReference<File> activeFile;
@@ -95,6 +101,39 @@ public final class LanguageService {
         }
         remoteCatalog = loadedCatalog;
         remoteCatalogFailure = catalogFailure;
+    }
+
+    public PluginLanguageService enableLanguages(ShapedPortals plugin) {
+        languages = new PluginLanguageService(new PluginLanguageService.Options(
+                languageDirectory.toPath().getParent().resolve("language-preferences.properties"),
+                this::availableLocales,
+                () -> plugin.getConfigService().runtime().language(),
+                manager::snapshot,
+                this::loadSelectedSnapshot,
+                (locale, snapshot) -> plugin.applyConfigurationEdit(config -> config.general.language = locale,
+                        new PreparedLanguage(locale, languageFile(locale), snapshot, true)),
+                logger));
+        return languages;
+    }
+
+    private LocalizationSnapshot loadSelectedSnapshot(String locale) throws Exception {
+        PreparedLanguage prepared = prepare(locale);
+        if (!prepared.selectionReady()) {
+            if (remoteCatalog == null) {
+                throw new IOException("Remote language catalog is unavailable");
+            }
+            remoteCatalog.readOrInstall(locale, languageFile(locale).toPath(), this::validateDownloadedContent);
+            prepared = prepare(locale);
+        }
+        return prepared.snapshot();
+    }
+
+    private LocalizationSnapshot snapshot() {
+        PluginLanguageService service = languages;
+        if (service == null) {
+            return manager.snapshot();
+        }
+        return service.snapshot();
     }
 
     public synchronized PreparedLanguage prepare(String locale) throws IOException {
@@ -136,6 +175,9 @@ public final class LanguageService {
     public void install(PreparedLanguage prepared) {
         manager.install(prepared.snapshot());
         activeFile.set(prepared.file());
+        if (languages != null) {
+            languages.cache(prepared.locale(), prepared.snapshot());
+        }
     }
 
     public synchronized List<EditableMessage> editableMessages(String locale) throws IOException {
@@ -165,7 +207,13 @@ public final class LanguageService {
     }
 
     public synchronized PreparedLanguage updateMessage(String locale, String key, String value) throws IOException {
-        return mutateMessage(locale, key, value);
+        PreparedLanguage current = prepare(locale);
+        return mutateMessage(new PluginLanguageEditor.Edit(locale, key,
+                current.snapshot().value(CATALOG.require(key)), new TextValue(value)));
+    }
+
+    public PluginLanguageEditor.Options editorOptions(ShapedPortals plugin) {
+        return new PluginLanguageEditor.Options(this::loadSelectedSnapshot, edit -> writeEditorMessage(plugin, edit));
     }
 
     public void setSelfWriteListener(BiConsumer<File, String> listener) {
@@ -189,11 +237,12 @@ public final class LanguageService {
     }
 
     public void send(CommandSender sender, TextKey key) {
-        ComponentMessenger.sendMarkup(sender, render(key));
+        send(sender, key, MessageArgs.empty());
     }
 
     public void send(CommandSender sender, TextKey key, MessageArgs arguments) {
-        ComponentMessenger.sendMarkup(sender, render(key, arguments));
+        LanguageAudience.run(sender instanceof Player player ? player.getUniqueId() : null,
+                () -> ComponentMessenger.sendMarkup(sender, render(key, arguments)));
     }
 
     public void sendPrefixed(CommandSender sender, TextKey key) {
@@ -201,7 +250,7 @@ public final class LanguageService {
     }
 
     public void sendPrefixed(CommandSender sender, TextKey key, MessageArgs arguments) {
-        ComponentMessenger.sendMarkup(sender, renderPrefixed(key, arguments));
+        send(sender, key, arguments);
     }
 
     public String legacy(TextKey key) {
@@ -304,6 +353,11 @@ public final class LanguageService {
     }
 
     public void close() {
+        PluginLanguageService service = languages;
+        languages = null;
+        if (service != null) {
+            service.close();
+        }
         selfWriteListener = null;
         synchronized (this) {
             announcedDownloads.clear();
@@ -349,10 +403,23 @@ public final class LanguageService {
                 + result.file().toAbsolutePath().normalize() + ".");
     }
 
-    private PreparedLanguage mutateMessage(String locale, String key, String value) throws IOException {
-        String requiredLocale = canonicalLocale(locale);
-        MessageKey definition = CATALOG.require(key);
-        if (!(definition instanceof TextKey)) {
+    private LocalizationSnapshot writeEditorMessage(ShapedPortals plugin, PluginLanguageEditor.Edit edit)
+            throws IOException {
+        synchronized (plugin) {
+            synchronized (this) {
+                PreparedLanguage prepared = mutateMessage(edit);
+                if (prepared.locale().equalsIgnoreCase(plugin.getConfigService().runtime().language())) {
+                    plugin.installPreparedLanguage(prepared);
+                }
+                return prepared.snapshot();
+            }
+        }
+    }
+
+    private PreparedLanguage mutateMessage(PluginLanguageEditor.Edit edit) throws IOException {
+        String requiredLocale = canonicalLocale(edit.locale());
+        MessageKey definition = CATALOG.require(edit.key());
+        if (!(definition instanceof TextKey) || !(edit.value() instanceof TextValue)) {
             throw new IOException("Language editor does not support key shape: " + definition.id());
         }
         PreparedLanguage current = prepare(requiredLocale);
@@ -360,56 +427,28 @@ public final class LanguageService {
             throw new IOException("Language file is not installed: " + requiredLocale);
         }
         File file = languageFile(requiredLocale);
-        FileSource source = readFileSource(file);
-        TomlLanguageEditor.EditResult edit = TomlLanguageEditor.upsertText(
-                source.content(), definition.id(), value);
-        String content = edit.content();
-        if (content.getBytes(StandardCharsets.UTF_8).length > MAXIMUM_LANGUAGE_BYTES) {
-            throw new IOException("Language file exceeds the 2 MiB safety limit");
-        }
-        Map<String, String> values = TomlLanguageParser.parseText(content, CATALOG.byId().keySet());
-        ArrayList<LocaleOverlay> overlays = new ArrayList<>(1);
-        overlays.add(createOverlay(requiredLocale, file.getPath(), values));
-        PreparedLanguage prepared = createPrepared(
-                requiredLocale, file, overlays, true);
-        verifyUnchanged(file, source);
-        AtomicFileIO.writeString(file.toPath(), content);
+        EditedLanguage edited = LanguageFileEditor.update(file.toPath(), source -> {
+            Map<String, String> originalValues = TomlLanguageParser.parseText(source, CATALOG.byId().keySet());
+            LocaleOverlay original = createOverlay(requiredLocale, file.getPath(), originalValues);
+            PreparedLanguage latest = createPrepared(requiredLocale, file, List.of(original), true);
+            if (!latest.snapshot().value(definition).equals(edit.expected())) {
+                throw new IOException("Language message changed while the editor was open; reopen it and try again");
+            }
+            String content = TomlLanguageEditor.upsert(source, definition.id(), edit.value()).content();
+            Map<String, String> values = TomlLanguageParser.parseText(content, CATALOG.byId().keySet());
+            LocaleOverlay overlay = createOverlay(requiredLocale, file.getPath(), values);
+            PreparedLanguage prepared = createPrepared(requiredLocale, file, List.of(overlay), true);
+            return new LanguageFileEditor.Prepared<>(content, new EditedLanguage(prepared, content));
+        });
         refreshAvailableLocales();
+        if (languages != null) {
+            languages.cache(edited.prepared().locale(), edited.prepared().snapshot());
+        }
         BiConsumer<File, String> listener = selfWriteListener;
         if (listener != null) {
-            listener.accept(file, content);
+            listener.accept(file, edited.content());
         }
-        return prepared;
-    }
-
-    private FileSource readFileSource(File file) throws IOException {
-        Path path = file.toPath().toAbsolutePath().normalize();
-        if (!Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
-            return new FileSource(false, new byte[0], "");
-        }
-        if (!Files.isRegularFile(path, LinkOption.NOFOLLOW_LINKS) || Files.isSymbolicLink(path)) {
-            throw new IOException("Language path is not a regular file: " + file.getName());
-        }
-        byte[] bytes = Files.readAllBytes(path);
-        if (bytes.length > MAXIMUM_LANGUAGE_BYTES) {
-            throw new IOException("Language file exceeds the 2 MiB safety limit");
-        }
-        try {
-            return new FileSource(true, bytes, decodeUtf8(bytes));
-        } catch (CharacterCodingException exception) {
-            throw new IOException("Invalid UTF-8 in " + file.getName(), exception);
-        }
-    }
-
-    private void verifyUnchanged(File file, FileSource expected) throws IOException {
-        Path path = file.toPath().toAbsolutePath().normalize();
-        boolean exists = Files.exists(path, LinkOption.NOFOLLOW_LINKS);
-        byte[] current = exists
-                ? Files.readAllBytes(path)
-                : new byte[0];
-        if (exists != expected.existed() || !Arrays.equals(expected.bytes(), current)) {
-            throw new IOException("Language file changed while the editor was saving; try again");
-        }
+        return edited.prepared();
     }
 
     private PreparedLanguage createPrepared(
@@ -606,7 +645,7 @@ public final class LanguageService {
                 "Lists and timing: {matches}=matching portals; {seconds}=confirmation window.",
                 "Configuration: {category}=editor category; {setting}=setting name; {status}=selection marker; {value}=current, default, or raw value; {language}=active language; {locale}=locale identifier; {name}=full language name.",
                 "Language editor: {variables}=tokens valid for the selected message; {old}=previous rendered value; {new}=installed rendered value.",
-                "Other: {duration}=elapsed milliseconds; {path}=local report path; {url}=public report URL; {reason}=failure reason.",
+                "Other: {duration}=elapsed milliseconds; {reason}=failure reason.",
                 "Prefix & or [ with a backslash to display it literally."
         );
     }
@@ -622,12 +661,12 @@ public final class LanguageService {
 
     private String render(TextKey key, MessageArgs arguments, String prefix) {
         MessageArgs resolvedArguments = argumentsWithPrefix(key, arguments, prefix);
-        String template = manager.snapshot().resolve(key, resolvedArguments).template();
+        String template = snapshot().resolve(key, resolvedArguments).template();
         return interpolate(template, resolvedArguments);
     }
 
     private String renderPrefix() {
-        String template = manager.snapshot().resolve(ShapedMessages.PREFIX, MessageArgs.empty()).template();
+        String template = snapshot().resolve(ShapedMessages.PREFIX, MessageArgs.empty()).template();
         return interpolate(template, MessageArgs.empty());
     }
 
@@ -764,10 +803,7 @@ public final class LanguageService {
         }
     }
 
-    private record FileSource(boolean existed, byte[] bytes, String content) {
-        private FileSource {
-            bytes = Arrays.copyOf(bytes, bytes.length);
-        }
+    private record EditedLanguage(PreparedLanguage prepared, String content) {
     }
 
     public record PreparedLanguage(

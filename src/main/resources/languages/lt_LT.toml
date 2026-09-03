@@ -9,7 +9,7 @@
 # Sąrašai: {matches}=atitinkantys portalai; {seconds}=patvirtinimo laikas sekundėmis.
 # Konfigūracija: {category}=kategorija; {setting}=nuostatos vardas; {status}=pasirinkimo žyma; {value}=dabartinė, numatytoji arba neapdorota reikšmė; {language}=aktyvi kalba; {locale}=lokalė; {name}=visas kalbos pavadinimas.
 # Kalbos redaktorius: {variables}=galimi vietos žymekliai; {old}=ankstesnė reikšmė; {new}=nauja reikšmė.
-# Kita: {duration}=milisekundės; {path}=vietinio pranešimo kelias; {url}=viešas URL; {reason}=klaidos priežastis.
+# Kita: {duration}=milisekundės; {reason}=klaidos priežastis.
 # Priešdėlis: {prefix}=visuotinė runtime.prefix reikšmė. Pašalinkite {prefix} iš atskiro pranešimo, kad jame jo nerodytų.
 # Norėdami & arba [ rodyti tiesiogiai, prieš juos rašykite pasvirąjį brūkšnį atgal.
 
@@ -36,15 +36,6 @@ save_failed = "{prefix}&cNepavyko pritaikyti &f{setting}&r&c: {reason}&r"
 [command.feedback]
 failed = "{prefix}&cKomandos įvykdyti nepavyko. Išsamesnę informaciją rasite konsolėje.&r"
 
-[command.feedback.debug]
-started = "{prefix}&7Renkama serverio ir ShapedPortals diagnostikos informacija…&r"
-busy = "{prefix}&eShapedPortals diagnostikos ataskaita jau kuriama.&r"
-saved = "{prefix}&aDiagnostikos ataskaita išsaugota faile &f{path}&r&a.&r"
-uploaded = "{prefix}&aDiagnostikos ataskaita įkelta:&r &b&n{url}&r"
-link_hover = "&7Atidaryti viešą mclo.gs ataskaitą.&r"
-upload_failed = "{prefix}&eVietinė ataskaita išsaugota, bet įkelti į mclo.gs nepavyko. Išsamesnę informaciją rasite konsolėje.&r"
-failed = "{prefix}&cDiagnostikos ataskaitos sukurti nepavyko. Išsamesnę informaciją rasite konsolėje.&r"
-
 [command.status]
 header = "{prefix}&d&lShapedPortals būsena&r"
 config = "{prefix}&7Kūrimas:&r {enabled} &8|&r &7Kalba:&r &f{language}&r &8|&r &7Automatinis įkėlimas:&r {hot_reload}"
@@ -55,14 +46,14 @@ compatibility = "{prefix}&7Artefaktas:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Pl
 [command.description]
 root = "ShapedPortals pagalba ir administravimas"
 config = "Atidaryti visą žaidimo konfigūracijos redaktorių"
-language = "Pasirinkti prieinamą ShapedPortals kalbą"
-debug = "Sukurti išsamią ShapedPortals diagnostikos ataskaitą"
+language = "Pasirinkite savo arba numatytąją serverio kalbą"
+debugdump = "Sukurti diagnostikos ataskaitą ir pasirinktinai ją įkelti"
 portals = "Išvardyti visus valdomus portalus ir jų persikėlimo nuorodas"
 teleport = "Saugiai persikelti šalia valdomo portalo arba, jei nenurodytas, išvardyti portalus"
 status = "Rodyti valdomų portalų ir bandymų statistiką"
 
 [command.parameter]
-locale = "Prieinamos kalbos lokalė"
+debugdump_upload = "Įkelti ataskaitą į mclo.gs"
 page = "Portalo sąrašo puslapis, skaičiuojamas nuo vieno"
 portal = "Portalo UUID, unikali pradžia arba list"
 
@@ -124,7 +115,7 @@ state = "&7Dabartinė reikšmė:&r {value}"
 toggle = "&8Spustelėkite, kad perjungtumėte.&r"
 number = "&8Kairysis +1, dešinysis -1, Shift ×10, išmeskite norėdami įvesti.&r"
 text = "&8Spustelėkite ir pokalbyje įveskite naują reikšmę.&r"
-language = "&8Spustelėkite norėdami pasirinkti prieinamą kalbą arba įveskite lokalę.&r"
+language = "&8Pasirinkite savo arba numatytąją serverio kalbą&r"
 category = "&8Spustelėkite norėdami redaguoti kiekvieną šios kategorijos nustatymą.&r"
 
 [gui.prompt]
@@ -135,10 +126,7 @@ cancelled = "{prefix}&eKonfigūracijos redagavimas atšauktas.&r"
 timeout = "{prefix}&eKonfigūracijos redagavimo laikas baigėsi nieko nepakeitus.&r"
 
 [gui.language]
-type = "&7Pokalbyje įveskite lokalės pavadinimą, kad ją sukurtumėte arba pasirinktumėte.&r"
 option = "{status} &f{locale}&r &8—&r &7{name}&r"
-hover = "&7Spustelėkite norėdami pasirinkti &f{locale}&r&7.&r"
-empty = "&ePrieinamų kalbų nerasta; įveskite lokalės pavadinimą, kad sukurtumėte naują.&r"
 current = "&7Dabartinė reikšmė:&r {value}"
 variables = "&7Dabartiniai kintamieji / vietos žymekliai:&r &f{variables}&r"
 changed = "&f{old}&r &7pakeista į&r &f{new}&r"

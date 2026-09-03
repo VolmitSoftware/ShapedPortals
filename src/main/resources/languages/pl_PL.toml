@@ -9,7 +9,7 @@
 # Listy: {matches}=pasujące portale; {seconds}=czas na potwierdzenie w sekundach.
 # Konfiguracja: {category}=kategoria; {setting}=nazwa ustawienia; {status}=znacznik wyboru; {value}=wartość bieżąca, domyślna lub surowa; {language}=aktywny język; {locale}=ustawienia regionalne; {name}=pełna nazwa języka.
 # Edytor języka: {variables}=dozwolone symbole zastępcze; {old}=poprzednia wartość; {new}=nowa wartość.
-# Inne: {duration}=milisekundy; {path}=lokalna ścieżka raportu; {url}=publiczny URL; {reason}=powód błędu.
+# Inne: {duration}=milisekundy; {reason}=powód błędu.
 # Prefiks: {prefix}=globalna wartość runtime.prefix. Usuń {prefix} z pojedynczej wiadomości, aby ukryć go tylko tam.
 # Dodaj ukośnik odwrotny przed & lub [, aby wyświetlić znak dosłownie.
 
@@ -36,15 +36,6 @@ save_failed = "{prefix}&cNie udało się zastosować ustawienia &f{setting}&r&c:
 [command.feedback]
 failed = "{prefix}&cNie udało się wykonać komendy. Szczegóły znajdziesz w konsoli.&r"
 
-[command.feedback.debug]
-started = "{prefix}&7Zbieranie danych diagnostycznych serwera i ShapedPortals…&r"
-busy = "{prefix}&eRaport diagnostyczny ShapedPortals jest już tworzony.&r"
-saved = "{prefix}&aRaport diagnostyczny zapisano w &f{path}&r&a.&r"
-uploaded = "{prefix}&aPrzesłano raport diagnostyczny:&r &b&n{url}&r"
-link_hover = "&7Otwórz publiczny raport mclo.gs.&r"
-upload_failed = "{prefix}&eRaport lokalny został zapisany, ale przesyłanie do mclo.gs nie powiodło się. Szczegóły znajdziesz w konsoli.&r"
-failed = "{prefix}&cNie udało się utworzyć raportu diagnostycznego. Szczegóły znajdziesz w konsoli.&r"
-
 [command.status]
 header = "{prefix}&d&lStan ShapedPortals&r"
 config = "{prefix}&7Tworzenie:&r {enabled} &8|&r &7Język:&r &f{language}&r &8|&r &7Automatyczne wczytywanie:&r {hot_reload}"
@@ -55,14 +46,14 @@ compatibility = "{prefix}&7Artefakt:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Harm
 [command.description]
 root = "Pomoc i administracja ShapedPortals"
 config = "Otwórz pełny edytor konfiguracji w grze"
-language = "Wybierz dostępny język ShapedPortals"
-debug = "Utwórz pełny raport diagnostyczny ShapedPortals"
+language = "Wybierz swój język lub domyślny język serwera"
+debugdump = "Utwórz raport diagnostyczny i opcjonalnie go prześlij"
 portals = "Wyświetl wszystkie zarządzane portale i ich skróty teleportacji"
 teleport = "Bezpiecznie teleportuj się obok zarządzanego portalu lub wyświetl portale, jeśli go nie podano"
 status = "Pokaż statystyki zarządzanych portali i prób"
 
 [command.parameter]
-locale = "Dostępne ustawienia regionalne języka"
+debugdump_upload = "Prześlij raport do mclo.gs"
 page = "Strona listy portali, liczona od jednego"
 portal = "UUID portalu, unikalny prefiks lub list"
 
@@ -124,7 +115,7 @@ state = "&7Obecna wartość:&r {value}"
 toggle = "&8Kliknij, aby przełączyć.&r"
 number = "&8Lewy +1, prawy -1, Shift ×10, upuść, aby wpisać.&r"
 text = "&8Kliknij, aby wpisać nową wartość na czacie.&r"
-language = "&8Kliknij, aby wybrać dostępny język, lub wpisz ustawienia regionalne.&r"
+language = "&8Wybierz swój język lub domyślny język serwera&r"
 category = "&8Kliknij, aby edytować wszystkie ustawienia w tej kategorii.&r"
 
 [gui.prompt]
@@ -135,10 +126,7 @@ cancelled = "{prefix}&eAnulowano edycję konfiguracji.&r"
 timeout = "{prefix}&eEdycja konfiguracji wygasła bez wprowadzenia zmian.&r"
 
 [gui.language]
-type = "&7Wpisz ustawienia regionalne na czacie, aby je utworzyć lub wybrać.&r"
 option = "{status} &f{locale}&r &8—&r &7{name}&r"
-hover = "&7Kliknij, aby wybrać &f{locale}&r&7.&r"
-empty = "&eNie znaleziono dostępnych języków; wpisz ustawienia regionalne, aby utworzyć nowy.&r"
 current = "&7Bieżąca wartość:&r {value}"
 variables = "&7Bieżące zmienne / symbole zastępcze:&r &f{variables}&r"
 changed = "&f{old}&r &7zmieniono na&r &f{new}&r"

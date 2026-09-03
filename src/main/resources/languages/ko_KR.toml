@@ -9,14 +9,14 @@
 # 목록: {matches}=일치하는 포털 수; {seconds}=확인 제한 시간(초).
 # 설정: {category}=편집기 범주; {setting}=설정 이름; {status}=선택 표시; {value}=현재값, 기본값 또는 원시값; {language}=활성 언어; {locale}=로케일; {name}=언어 전체 이름.
 # 언어 편집기: {variables}=사용 가능한 자리표시자; {old}=이전 값; {new}=새 값.
-# 기타: {duration}=경과 밀리초; {path}=로컬 보고서 경로; {url}=공개 URL; {reason}=실패 이유.
+# 기타: {duration}=경과 밀리초; {reason}=실패 이유.
 # 접두사: {prefix}=전역 runtime.prefix 값입니다. 개별 메시지에서 {prefix}를 제거하면 그 메시지에서만 숨겨집니다.
 # & 또는 [ 앞에 백슬래시를 붙이면 문자를 그대로 표시합니다.
 
 [command.description]
 config = "전체 게임 내 구성 편집기 열기"
-debug = "포괄적인ShapedPortals진단 보고서 생성"
-language = "사용 가능한 ShapedPortals 언어 선택"
+debugdump = "진단 보고서를 생성하고 선택적으로 업로드"
+language = "개인 언어 또는 서버 기본 언어 선택"
 portals = "관리되는 모든 포털과 해당 순간이동 단축키 나열"
 root = "ShapedPortals도움말 및 관리"
 status = "관리 포털 및 시도 통계 표시"
@@ -27,15 +27,6 @@ opened = "{prefix}&a게임 내 전체 구성 편집기를 열었습니다.&r"
 save_failed = "{prefix}&c&f{setting}&r&c적용할 수 없습니다:{reason}&r"
 saved = "{prefix}&a&f{setting}&r&a저장 및 적용됨.&r"
 
-[command.feedback.debug]
-busy = "{prefix}&eShapedPortals진단 보고서가 이미 생성되고 있습니다.&r"
-failed = "{prefix}&c진단 보고서를 생성할 수 없습니다. 자세한 내용은 콘솔을 참조하십시오.&r"
-link_hover = "&7공개mclo.gs보고서를 엽니다.&r"
-saved = "{prefix}&a진단 보고서를&f{path}&r&a에 저장했습니다.&r"
-started = "{prefix}&7서버 및ShapedPortals진단 정보를 캡처하는 중…&r"
-upload_failed = "{prefix}&e로컬 보고서는 저장되었지만,mclo.gs업로드에 실패했습니다. 자세한 내용은 콘솔을 참조하십시오.&r"
-uploaded = "{prefix}&a진단 보고서를 업로드했습니다:&r&b&n{url}&r"
-
 [command.feedback]
 failed = "{prefix}&c명령을 완료할 수 없습니다. 자세한 내용은 콘솔을 참조하십시오.&r"
 
@@ -44,7 +35,7 @@ failed = "{prefix}&c{duration}ms 후 재로드 실패.&r&7마지막 정상 설�
 success = "{prefix}&a&f{duration}&r&ams 동안 다시 로드됨.&r&7로케일:&r&f{locale}&r"
 
 [command.parameter]
-locale = "사용 가능한 언어 로케일"
+debugdump_upload = "보고서를 mclo.gs에 업로드"
 page = "1부터 시작하는 포털 목록 페이지"
 portal = "포털UUID, 고유 접두사 또는 목록"
 
@@ -106,17 +97,14 @@ presentation = "&d프레젠테이션&r"
 languages = "&d언어&r"
 
 [gui.language]
-empty = "&e사용 가능한 언어가 없습니다. 생성하려면 로케일 이름을 입력하세요.&r"
-hover = "&7선택하려면 클릭하십시오&f{locale}&r&7.&r"
 option = "{status} &f{locale}&r &8—&r &7{name}&r"
-type = "&7채팅에 로케일 이름을 입력하여 생성하거나 선택하십시오.&r"
 current = "&7현재 값:&r {value}"
 variables = "&7현재 변수 / 자리표시자:&r &f{variables}&r"
 changed = "&f{old}&r&7에서&r &f{new}&r&7(으)로 변경했습니다&r"
 
 [gui.lore]
 category = "&8이 카테고리의 모든 설정을 편집하려면 클릭하세요.&r"
-language = "&8사용 가능한 언어를 선택하거나 로케일을 입력하려면 클릭하세요.&r"
+language = "&8개인 언어 또는 서버 기본 언어 선택&r"
 number = "&8왼쪽 +1, 오른쪽 -1, 시프트 ×10, 형식에 드롭.&r"
 state = "&7현재:&r{value}"
 text = "&8채팅에서 새 값을 입력하려면 클릭하세요.&r"

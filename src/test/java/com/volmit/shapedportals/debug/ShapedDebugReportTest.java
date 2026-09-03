@@ -7,9 +7,11 @@ import com.volmit.shapedportals.portal.PortalRecord;
 import com.volmit.shapedportals.portal.PortalStats;
 import org.bukkit.Material;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,8 +20,14 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 final class ShapedDebugReportTest {
+    @TempDir
+    Path directory;
+
     @Test
-    void createsAUsefulSanitizedReportWithoutPrivateRuntimeSources() {
+    void createsAUsefulSanitizedReportWithoutPrivateRuntimeSources() throws IOException {
+        Files.writeString(directory.resolve("portals.json"), "private-portal-file-contents");
+        Files.createDirectories(directory.resolve("languages"));
+        Files.writeString(directory.resolve("languages/en_US.toml"), "private-language-file-contents");
         ShapedPortalsConfig config = new ShapedPortalsConfig();
         config.portal.allowedWorlds = List.of("private-world-name");
         config.portal.deniedWorlds = List.of("another-private-world");
@@ -38,37 +46,13 @@ final class ShapedDebugReportTest {
                 "private-player-name"
         );
         ShapedDebugSnapshot snapshot = new ShapedDebugSnapshot(
-                Instant.parse("2026-08-28T12:00:00Z"),
-                "2.0.0",
-                "Paper\nInjected",
-                "Paper 1.21.11",
-                "1.21.11-R0.1-SNAPSHOT",
-                "1.21.11",
-                true,
-                2,
-                100,
-                10,
-                10,
-                false,
-                true,
-                true,
-                "SURVIVAL",
-                10,
-                0,
-                7,
-                3,
-                Map.of("NORMAL", 1, "NETHER", 1, "THE_END", 1),
                 Set.of(portal.worldId()),
-                "Folia region",
-                "20.00, 19.98, 19.95",
-                "12.34",
                 "en_US",
                 List.of("en_US"),
                 "ready",
                 "30e3b4eea5852ffa879d8371d556cd4b9b9fdbe7",
                 false,
-                "player",
-                config,
+                ShapedDebugSnapshot.ConfigState.capture(config),
                 true,
                 true,
                 4,
@@ -78,27 +62,21 @@ final class ShapedDebugReportTest {
                         PortalStats.RejectionReason.OPEN_FRAME, 4L,
                         PortalStats.RejectionReason.EVENT_CANCELLED, 2L
                 )),
-                List.of(new ShapedDebugSnapshot.PluginState(
-                        "ShapedPortals", "2.0.0", true, "com.volmit.shapedportals.ShapedPortals",
-                        List.of("Volmit Software"), "POSTWORLD", "1.20",
-                        List.of(), List.of("PlaceholderAPI")
-                )),
-                Path.of("."),
-                null
+                directory
         );
+
+        config.debug.uploadEnabled = false;
+        config.portal.allowedWorlds = List.of();
 
         String report = ShapedDebugReport.create(snapshot);
 
         assertThat(report)
-                .contains("Format: 4")
-                .contains("Version: 2.0.0")
-                .contains("Implementation: Paper Injected")
                 .contains("Managed portals: 4")
                 .contains("Creation attempts: 10")
                 .contains("Rejected open frame: 4")
                 .contains("Rejected event cancelled: 2")
-                .contains("Pending scheduler tasks: 7")
                 .contains("Language catalog: ready")
+                .contains("Active locale in remote catalog: false")
                 .contains("Language source reference: 30e3b4eea5852ffa879d8371d556cd4b9b9fdbe7")
                 .contains("Portal registry details")
                 .contains("Records in loaded worlds: 1")
@@ -110,7 +88,11 @@ final class ShapedDebugReportTest {
                 .contains("portal.deniedWorlds count: 1")
                 .contains("bStats integration: initialized")
                 .contains("React metric provider: registered")
-                .contains("ShapedPortals 2.0.0 | enabled=true")
+                .contains("portals.json: size=")
+                .contains("languages/en_US.toml: size=")
+                .contains("sha256=")
+                .doesNotContain("private-portal-file-contents")
+                .doesNotContain("private-language-file-contents")
                 .doesNotContain("== Threads ==")
                 .doesNotContain("Deadlocked:")
                 .doesNotContain("Deadlock thread")

@@ -1,5 +1,7 @@
 package com.volmit.shapedportals.command;
 
+import art.arcane.volmlib.util.localization.LanguageAudience;
+
 import art.arcane.volmlib.util.director.DirectorEngineOptions;
 import art.arcane.volmlib.util.director.compat.DirectorEngineFactory;
 import art.arcane.volmlib.util.director.context.DirectorContextRegistry;
@@ -27,7 +29,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.logging.Level;
 
 public final class CommandService implements CommandExecutor, TabCompleter {
@@ -60,6 +61,15 @@ public final class CommandService implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length > 0 && "language".equalsIgnoreCase(args[0])) {
+            plugin.getLanguageSwitcher().command(sender, Arrays.copyOfRange(args, 1, args.length));
+            return true;
+        }
+        return LanguageAudience.call(sender instanceof Player player ? player.getUniqueId() : null,
+                () -> executeOwned(sender, command, label, args));
+    }
+
+    private boolean executeOwned(CommandSender sender, Command command, String label, String[] args) {
         if (!command.getName().equalsIgnoreCase(ROOT_COMMAND)) {
             return false;
         }
@@ -69,11 +79,6 @@ public final class CommandService implements CommandExecutor, TabCompleter {
         }
         try {
             if (sendHelp(sender, args)) {
-                return true;
-            }
-            OptionalInt languagePage = languageMenuPage(Arrays.asList(args));
-            if (languagePage.isPresent()) {
-                commands.languageMenu(sender, languagePage.getAsInt(), args.length > 1);
                 return true;
             }
             List<String> arguments = normalizeOptionalArguments(Arrays.asList(args));
@@ -95,8 +100,22 @@ public final class CommandService implements CommandExecutor, TabCompleter {
         if (!command.getName().equalsIgnoreCase(ROOT_COMMAND)) {
             return List.of();
         }
+        if (args.length > 1 && "language".equalsIgnoreCase(args[0])) {
+            return plugin.getLanguageSwitcher().complete(sender, Arrays.copyOfRange(args, 1, args.length));
+        }
         if (!mayTabComplete(sender, args)) {
-            return List.of();
+            List<String> suggestions = new ArrayList<>(2);
+            if (args.length == 1) {
+                String prefix = args[0].toLowerCase(Locale.ROOT);
+                if ("language".startsWith(prefix) && sender.hasPermission("volmit.language.self")
+                        && sender.hasPermission("shapedportals.language.self")) {
+                    suggestions.add("language");
+                }
+                if ("debugdump".startsWith(prefix) && sender.hasPermission("shapedportals.debugdump")) {
+                    suggestions.add("debugdump");
+                }
+            }
+            return List.copyOf(suggestions);
         }
         try {
             return director.tabComplete(new DirectorInvocation(
@@ -157,7 +176,7 @@ public final class CommandService implements CommandExecutor, TabCompleter {
         String subcommand = args[0];
         return !subcommand.equalsIgnoreCase("config")
                 && !subcommand.equalsIgnoreCase("language")
-                && !subcommand.equalsIgnoreCase("debug")
+                && !subcommand.equalsIgnoreCase("debugdump")
                 && !subcommand.equalsIgnoreCase("portals")
                 && !subcommand.equalsIgnoreCase("teleport")
                 && !subcommand.equalsIgnoreCase("tp");
@@ -168,6 +187,9 @@ public final class CommandService implements CommandExecutor, TabCompleter {
             return sender.hasPermission("shapedportals.command");
         }
         String subcommand = args[0];
+        if (subcommand.equalsIgnoreCase("debugdump")) {
+            return sender.hasPermission("shapedportals.debugdump");
+        }
         if (subcommand.equalsIgnoreCase("portals")) {
             return sender.hasPermission("shapedportals.portals");
         }
@@ -184,7 +206,6 @@ public final class CommandService implements CommandExecutor, TabCompleter {
         }
         String command = arguments.get(0).toLowerCase(Locale.ROOT);
         String parameter = switch (command) {
-            case "language" -> "locale";
             case "portals" -> "page";
             case "teleport", "tp" -> "portal";
             default -> null;
@@ -195,24 +216,6 @@ public final class CommandService implements CommandExecutor, TabCompleter {
         ArrayList<String> normalized = new ArrayList<>(arguments);
         normalized.set(1, parameter + "=" + arguments.get(1));
         return List.copyOf(normalized);
-    }
-
-    static OptionalInt languageMenuPage(List<String> arguments) {
-        if (arguments.size() == 1 && arguments.get(0).equalsIgnoreCase("language")) {
-            return OptionalInt.of(1);
-        }
-        if (arguments.size() != 2 || !arguments.get(0).equalsIgnoreCase("language")) {
-            return OptionalInt.empty();
-        }
-        String page = arguments.get(1).toLowerCase(Locale.ROOT);
-        if (!page.startsWith("page=")) {
-            return OptionalInt.empty();
-        }
-        try {
-            return OptionalInt.of(Math.max(1, Integer.parseInt(page.substring("page=".length()))));
-        } catch (NumberFormatException ignored) {
-            return OptionalInt.empty();
-        }
     }
 
     private record BukkitDirectorSender(CommandSender sender, LanguageService language) implements DirectorSender {

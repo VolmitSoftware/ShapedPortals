@@ -19,13 +19,6 @@ public final class ShapedMessages {
     public static final TextKey COMMAND_FAILED = prefixed("command.feedback.failed", "&cThe command could not be completed. See the console for details.&r");
     public static final TextKey CONFIG_SAVED = prefixed("command.feedback.config.saved", "&aSaved and applied &f{setting}&r&a.&r");
     public static final TextKey CONFIG_SAVE_FAILED = prefixed("command.feedback.config.save_failed", "&cCould not apply &f{setting}&r&c: {reason}&r");
-    public static final TextKey DEBUG_STARTED = prefixed("command.feedback.debug.started", "&7Capturing server and ShapedPortals diagnostics…&r");
-    public static final TextKey DEBUG_BUSY = prefixed("command.feedback.debug.busy", "&eA ShapedPortals diagnostic report is already being created.&r");
-    public static final TextKey DEBUG_SAVED = prefixed("command.feedback.debug.saved", "&aSaved the diagnostic report to &f{path}&r&a.&r");
-    public static final TextKey DEBUG_UPLOADED = prefixed("command.feedback.debug.uploaded", "&aUploaded the diagnostic report:&r &b&n{url}&r");
-    public static final TextKey DEBUG_LINK_HOVER = TextKey.of("command.feedback.debug.link_hover", "&7Open the public mclo.gs report.&r");
-    public static final TextKey DEBUG_UPLOAD_FAILED = prefixed("command.feedback.debug.upload_failed", "&eThe local report was saved, but the mclo.gs upload failed. See the console for details.&r");
-    public static final TextKey DEBUG_FAILED = prefixed("command.feedback.debug.failed", "&cThe diagnostic report could not be created. See the console for details.&r");
 
     public static final TextKey STATUS_HEADER = prefixed("command.status.header", "&d&lShapedPortals runtime&r");
     public static final TextKey STATUS_CONFIG = prefixed("command.status.config", "&7Creation:&r {enabled} &8|&r &7Language:&r &f{language}&r &8|&r &7Hot reload:&r {hot_reload}");
@@ -74,17 +67,14 @@ public final class ShapedMessages {
     public static final TextKey GUI_TOGGLE = TextKey.of("gui.lore.toggle", "&8Click to toggle.&r");
     public static final TextKey GUI_NUMBER = TextKey.of("gui.lore.number", "&8Left +1, right -1, shift ×10, drop to type.&r");
     public static final TextKey GUI_TEXT = TextKey.of("gui.lore.text", "&8Click to type a new value in chat.&r");
-    public static final TextKey GUI_LANGUAGE_SELECT = TextKey.of("gui.lore.language", "&8Click to choose an available language or type a locale.&r");
+    public static final TextKey GUI_LANGUAGE_SELECT = TextKey.of("gui.lore.language", "&8Choose your language or the server default.&r");
     public static final TextKey GUI_CATEGORY_OPEN = TextKey.of("gui.lore.category", "&8Click to edit every setting in this category.&r");
     public static final TextKey GUI_PROMPT = prefixed("gui.prompt.request", "&eType a new value for &f{setting}&r&e in chat.&r");
     public static final TextKey GUI_PROMPT_LIST = prefixed("gui.prompt.list", "&7Separate list entries with commas. Type &fnone&r&7 for an empty list.&r");
     public static final TextKey GUI_PROMPT_CANCEL = prefixed("gui.prompt.cancel", "&7Type &fcancel&r&7 to stop. This prompt expires in 60 seconds.&r");
     public static final TextKey GUI_PROMPT_CANCELLED = prefixed("gui.prompt.cancelled", "&eConfiguration edit cancelled.&r");
     public static final TextKey GUI_PROMPT_TIMEOUT = prefixed("gui.prompt.timeout", "&eConfiguration edit expired without changing anything.&r");
-    public static final TextKey GUI_LANGUAGE_TYPE = TextKey.of("gui.language.type", "&7Type a locale name in chat to create or select it.&r");
     public static final TextKey GUI_LANGUAGE_OPTION = TextKey.of("gui.language.option", "{status} &f{locale}&r &8—&r &7{name}&r");
-    public static final TextKey GUI_LANGUAGE_HOVER = TextKey.of("gui.language.hover", "&7Click to select &f{locale}&r&7.&r");
-    public static final TextKey GUI_LANGUAGE_EMPTY = TextKey.of("gui.language.empty", "&eNo available languages were found; type a locale name to create one.&r");
     public static final TextKey GUI_LANGUAGE_CURRENT = TextKey.of("gui.language.current", "&7Current Value:&r {value}");
     public static final TextKey GUI_LANGUAGE_VARIABLES = TextKey.of("gui.language.variables", "&7Current variables / placeholders:&r &f{variables}&r");
     public static final TextKey GUI_LANGUAGE_CHANGED = TextKey.of("gui.language.changed", "&f{old}&r &7changed to&r &f{new}&r");
@@ -127,12 +117,12 @@ public final class ShapedMessages {
 
     public static final TextKey COMMAND_ROOT = TextKey.of("command.description.root", "ShapedPortals help and administration");
     public static final TextKey COMMAND_CONFIG = TextKey.of("command.description.config", "Open the complete in-game configuration editor");
-    public static final TextKey COMMAND_LANGUAGE = TextKey.of("command.description.language", "Select an available ShapedPortals language");
-    public static final TextKey COMMAND_DEBUG = TextKey.of("command.description.debug", "Create a comprehensive ShapedPortals diagnostic report");
+    public static final TextKey COMMAND_LANGUAGE = TextKey.of("command.description.language", "Choose your language or the server default");
+    public static final TextKey COMMAND_DEBUG_DUMP = TextKey.of("command.description.debugdump", "Create and optionally upload a diagnostic report");
     public static final TextKey COMMAND_PORTALS = TextKey.of("command.description.portals", "List every managed portal and its teleport shortcut");
     public static final TextKey COMMAND_TELEPORT = TextKey.of("command.description.teleport", "Teleport safely beside a managed portal or list portals when omitted");
     public static final TextKey COMMAND_STATUS = TextKey.of("command.description.status", "Show managed portal and attempt statistics");
-    public static final TextKey PARAMETER_LOCALE = TextKey.of("command.parameter.locale", "Available language locale");
+    public static final TextKey PARAMETER_DEBUG_DUMP_UPLOAD = TextKey.of("command.parameter.debugdump_upload", "Upload the report to mclo.gs");
     public static final TextKey PARAMETER_PAGE = TextKey.of("command.parameter.page", "One-based portal list page");
     public static final TextKey PARAMETER_PORTAL = TextKey.of("command.parameter.portal", "Portal UUID, unique prefix, or list");
 
@@ -158,8 +148,7 @@ public final class ShapedMessages {
         return List.of(
                 PREFIX, NO_PERMISSION, PLAYER_ONLY, HOT_RELOAD_SUCCESS, HOT_RELOAD_FAILED,
                 RELOAD_SUCCESS, RELOAD_FAILED, COMMAND_CONFIG_OPENED, COMMAND_FAILED,
-                CONFIG_SAVED, CONFIG_SAVE_FAILED, DEBUG_STARTED, DEBUG_BUSY, DEBUG_SAVED, DEBUG_UPLOADED,
-                DEBUG_LINK_HOVER, DEBUG_UPLOAD_FAILED, DEBUG_FAILED, STATUS_HEADER, STATUS_CONFIG, STATUS_PORTALS,
+                CONFIG_SAVED, CONFIG_SAVE_FAILED, STATUS_HEADER, STATUS_CONFIG, STATUS_PORTALS,
                 STATUS_ATTEMPTS, STATUS_COMPATIBILITY, PORTAL_CREATED, PORTAL_FAILED,
                 PORTAL_LIST_EMPTY, PORTAL_LIST_ENTRY, PORTAL_LIST_HOVER, PORTAL_LIST_FRAME_POLICY_NOTE, PORTAL_NOT_FOUND,
                 PORTAL_AMBIGUOUS, PORTAL_REMOVED, PORTAL_WORLD_UNAVAILABLE, PORTAL_DESTINATION_UNAVAILABLE,
@@ -172,7 +161,7 @@ public final class ShapedMessages {
                 GUI_BACK, GUI_RELOAD, GUI_CLOSE, GUI_STATE, GUI_TOGGLE,
                 GUI_NUMBER, GUI_TEXT, GUI_LANGUAGE_SELECT, GUI_CATEGORY_OPEN, GUI_PROMPT, GUI_PROMPT_LIST,
                 GUI_PROMPT_CANCEL, GUI_PROMPT_CANCELLED, GUI_PROMPT_TIMEOUT,
-                GUI_LANGUAGE_TYPE, GUI_LANGUAGE_OPTION, GUI_LANGUAGE_HOVER, GUI_LANGUAGE_EMPTY,
+                GUI_LANGUAGE_OPTION,
                 GUI_LANGUAGE_CURRENT, GUI_LANGUAGE_VARIABLES, GUI_LANGUAGE_CHANGED,
                 SETTING_GENERAL_ENABLED, SETTING_GENERAL_LANGUAGE, SETTING_GENERAL_REQUIRE_PERMISSION,
                 SETTING_GENERAL_FAILURE_FEEDBACK, SETTING_METRICS_ENABLED, SETTING_PORTAL_MINIMUM, SETTING_PORTAL_MAXIMUM,
@@ -185,9 +174,9 @@ public final class ShapedMessages {
                 SETTING_INTEGRITY_MAXIMUM, SETTING_PRESENTATION_SPLASH, SETTING_PRESENTATION_SOUNDS,
                 SETTING_PRESENTATION_COMMAND, SETTING_PRESENTATION_PORTAL, SETTING_PRESENTATION_DURATION,
                 SETTING_PRESENTATION_FADE_IN, SETTING_PRESENTATION_STAY, SETTING_PRESENTATION_FADE_OUT,
-                SETTING_DEBUG_UPLOAD, COMMAND_ROOT, COMMAND_CONFIG, COMMAND_LANGUAGE, COMMAND_DEBUG,
+                SETTING_DEBUG_UPLOAD, COMMAND_ROOT, COMMAND_CONFIG, COMMAND_LANGUAGE, COMMAND_DEBUG_DUMP,
                 COMMAND_PORTALS, COMMAND_TELEPORT, COMMAND_STATUS,
-                PARAMETER_LOCALE, PARAMETER_PAGE, PARAMETER_PORTAL
+                PARAMETER_DEBUG_DUMP_UPLOAD, PARAMETER_PAGE, PARAMETER_PORTAL
         );
     }
 }

@@ -9,14 +9,14 @@
 # 一覧: {matches}=一致するポータル数; {seconds}=確認期限（秒）。
 # 設定: {category}=カテゴリ; {setting}=設定名; {status}=選択記号; {value}=現在値、既定値、または入力値; {language}=使用中の言語; {locale}=ロケール; {name}=言語の正式名。
 # 言語エディター: {variables}=使用可能なプレースホルダー; {old}=変更前の値; {new}=変更後の値。
-# その他: {duration}=経過ミリ秒; {path}=ローカル報告書のパス; {url}=公開 URL; {reason}=失敗理由.
+# その他: {duration}=経過ミリ秒; {reason}=失敗理由.
 # 接頭辞: {prefix}=グローバルな runtime.prefix の値です。個別のメッセージから {prefix} を削除すると、その場所だけ非表示になります。
 # & または [ の前にバックスラッシュを付けると、その文字をそのまま表示できます。
 
 [command.description]
 config = "完全なゲーム内設定エディターを開く"
-debug = "包括的なShapedPortals診断レポートを作成"
-language = "利用可能な ShapedPortals 言語を選択"
+debugdump = "診断レポートを作成し、必要に応じてアップロードする"
+language = "自分の言語またはサーバーの既定言語を選択"
 portals = "すべての管理ポータルとそのテレポートショートカットを一覧表示"
 root = "ShapedPortalsヘルプと管理"
 status = "管理されたポータルと試行統計を表示"
@@ -27,15 +27,6 @@ opened = "{prefix}&aゲーム内の完全な設定エディターを開きまし
 save_failed = "{prefix}&c&f{setting}&r&cを適用できませんでした:{reason}&r"
 saved = "{prefix}&a&f{setting}&r&aを保存して適用しました。&r"
 
-[command.feedback.debug]
-busy = "{prefix}&eShapedPortals診断レポートはすでに作成中です。&r"
-failed = "{prefix}&c診断レポートを作成できませんでした。詳細はコンソールを確認してください。&r"
-link_hover = "&7公開mclo.gsレポートを開きます。&r"
-saved = "{prefix}&a診断レポートを&f{path}&r&aに保存しました。&r"
-started = "{prefix}&7サーバーとShapedPortalsの診断をキャプチャしています…&r"
-upload_failed = "{prefix}&eローカルレポートは保存されましたが、mclo.gsのアップロードに失敗しました。詳細はコンソールを確認してください。&r"
-uploaded = "{prefix}&a診断レポートをアップロードしました:&r&b&n{url}&r"
-
 [command.feedback]
 failed = "{prefix}&cコマンドを完了できませんでした。詳細はコンソールを参照してください。&r"
 
@@ -44,7 +35,7 @@ failed = "{prefix}&c{duration}ミリ秒後の再読み込みに失敗しまし�
 success = "{prefix}&a&f{duration}&r&aミリ秒で再読み込みされました。&r&7ロケール:&r&f{locale}&r"
 
 [command.parameter]
-locale = "利用可能な言語ロケール"
+debugdump_upload = "レポートを mclo.gs にアップロードする"
 page = "1始まりのポータル一覧ページ"
 portal = "ポータルUUID、ユニーク接頭辞、または一覧"
 
@@ -106,17 +97,14 @@ presentation = "&dプレゼンテーション&r"
 languages = "&d言語&r"
 
 [gui.language]
-empty = "&e利用可能な言語が見つかりませんでした。ロケール名を入力して作成してください。&r"
-hover = "&7クリックして&f{locale}&r&7を選択します。&r"
 option = "{status} &f{locale}&r &8—&r &7{name}&r"
-type = "&7チャットにロケール名を入力して作成または選択します。&r"
 current = "&7現在の値:&r {value}"
 variables = "&7現在の変数 / プレースホルダー:&r &f{variables}&r"
 changed = "&f{old}&r &7を&r &f{new}&r &7に変更しました&r"
 
 [gui.lore]
 category = "&8このカテゴリのすべての設定を編集するにはクリックしてください。&r"
-language = "&8利用可能な言語を選択するか、ロケールを入力するにはクリックしてください。&r"
+language = "&8自分の言語またはサーバーの既定言語を選択&r"
 number = "&8左 +1、右 -1、Shift ×10、タイプにドロップ.&r"
 state = "&7現在:&r{value}"
 text = "&8チャットで新しい値を入力するにはクリックしてください。&r"

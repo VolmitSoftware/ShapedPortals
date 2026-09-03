@@ -9,7 +9,7 @@
 # Lijsten: {matches}=overeenkomende portalen; {seconds}=bevestigingstijd in seconden.
 # Configuratie: {category}=categorie; {setting}=instellingsnaam; {status}=selectiemarkering; {value}=huidige, standaard- of ruwe waarde; {language}=actieve taal; {locale}=landinstelling; {name}=volledige taalnaam.
 # Taaleditor: {variables}=geldige tijdelijke aanduidingen; {old}=vorige waarde; {new}=nieuwe waarde.
-# Overig: {duration}=milliseconden; {path}=lokaal rapportpad; {url}=openbare URL; {reason}=foutreden.
+# Overig: {duration}=milliseconden; {reason}=foutreden.
 # Voorvoegsel: {prefix}=de globale waarde runtime.prefix. Verwijder {prefix} uit één bericht om het alleen daar te verbergen.
 # Zet een backslash voor & of [ om het teken letterlijk weer te geven.
 
@@ -36,15 +36,6 @@ save_failed = "{prefix}&c&f{setting}&r&c kon niet worden toegepast: {reason}&r"
 [command.feedback]
 failed = "{prefix}&cDe opdracht kon niet worden uitgevoerd. Bekijk de console voor meer informatie.&r"
 
-[command.feedback.debug]
-started = "{prefix}&7Diagnostische gegevens van de server en ShapedPortals worden verzameld…&r"
-busy = "{prefix}&eEr wordt al een diagnostisch rapport voor ShapedPortals gemaakt.&r"
-saved = "{prefix}&aHet diagnostische rapport is opgeslagen in &f{path}&r&a.&r"
-uploaded = "{prefix}&aDiagnostisch rapport geüpload:&r &b&n{url}&r"
-link_hover = "&7Open het openbare rapport op mclo.gs.&r"
-upload_failed = "{prefix}&eHet lokale rapport is opgeslagen, maar uploaden naar mclo.gs is mislukt. Bekijk de console voor meer informatie.&r"
-failed = "{prefix}&cHet diagnostische rapport kon niet worden gemaakt. Bekijk de console voor meer informatie.&r"
-
 [command.status]
 header = "{prefix}&d&lShapedPortals-status&r"
 config = "{prefix}&7Aanmaken:&r {enabled} &8|&r &7Taal:&r &f{language}&r &8|&r &7Automatisch herladen:&r {hot_reload}"
@@ -55,14 +46,14 @@ compatibility = "{prefix}&7Artefact:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Plan
 [command.description]
 root = "Hulp en beheer voor ShapedPortals"
 config = "De volledige configuratie-editor in het spel openen"
-language = "Een beschikbare ShapedPortals-taal selecteren"
-debug = "Een uitgebreid diagnostisch rapport voor ShapedPortals maken"
+language = "Kies je taal of de standaardtaal van de server"
+debugdump = "Maak een diagnostisch rapport en upload het desgewenst"
 portals = "Alle beheerde portalen en hun teleportatiesnelkoppeling weergeven"
 teleport = "Veilig naast een beheerd portaal teleporteren of zonder invoer de portalen weergeven"
 status = "Statistieken van beheerde portalen en pogingen weergeven"
 
 [command.parameter]
-locale = "Beschikbare landinstelling"
+debugdump_upload = "Upload het rapport naar mclo.gs"
 page = "Pagina van de portalenlijst, beginnend bij één"
 portal = "Portaal-UUID, uniek voorvoegsel of list"
 
@@ -124,7 +115,7 @@ state = "&7Huidig:&r {value}"
 toggle = "&8Klik om te wisselen.&r"
 number = "&8Links +1, rechts -1, shift ×10, laat vallen om te typen.&r"
 text = "&8Klik om een nieuwe waarde in de chat te typen.&r"
-language = "&8Klik om een beschikbare taal te kiezen of typ een landinstelling.&r"
+language = "&8Kies je taal of de standaardtaal van de server&r"
 category = "&8Klik om elke instelling in deze categorie te bewerken.&r"
 
 [gui.prompt]
@@ -135,10 +126,7 @@ cancelled = "{prefix}&eConfiguratiebewerking geannuleerd.&r"
 timeout = "{prefix}&eDe configuratiebewerking is verlopen zonder iets te wijzigen.&r"
 
 [gui.language]
-type = "&7Typ een landinstelling in de chat om deze aan te maken of te selecteren.&r"
 option = "{status} &f{locale}&r &8—&r &7{name}&r"
-hover = "&7Klik om &f{locale}&r&7 te selecteren.&r"
-empty = "&eEr zijn geen beschikbare talen gevonden; typ een landinstelling om er een te maken.&r"
 current = "&7Huidige waarde:&r {value}"
 variables = "&7Huidige variabelen / tijdelijke aanduidingen:&r &f{variables}&r"
 changed = "&f{old}&r &7is gewijzigd naar&r &f{new}&r"

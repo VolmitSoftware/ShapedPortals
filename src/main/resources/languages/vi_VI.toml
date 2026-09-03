@@ -9,7 +9,7 @@
 # Danh sách: {matches}=cổng khớp; {seconds}=thời hạn xác nhận tính bằng giây.
 # Cấu hình: {category}=danh mục; {setting}=tên cài đặt; {status}=dấu chọn; {value}=giá trị hiện tại, mặc định hoặc thô; {language}=ngôn ngữ đang dùng; {locale}=mã vùng; {name}=tên đầy đủ của ngôn ngữ.
 # Trình sửa ngôn ngữ: {variables}=chỗ giữ chỗ hợp lệ; {old}=giá trị trước; {new}=giá trị mới.
-# Khác: {duration}=mili giây; {path}=đường dẫn báo cáo cục bộ; {url}=URL công khai; {reason}=lý do lỗi.
+# Khác: {duration}=mili giây; {reason}=lý do lỗi.
 # Tiền tố: {prefix}=giá trị runtime.prefix toàn cục. Xóa {prefix} khỏi từng thông báo nếu không muốn hiện ở thông báo đó.
 # Thêm dấu gạch chéo ngược trước & hoặc [ để hiển thị ký tự theo nghĩa đen.
 
@@ -36,15 +36,6 @@ save_failed = "{prefix}&cKhông thể áp dụng &f{setting}&r&c: {reason}&r"
 [command.feedback]
 failed = "{prefix}&cKhông thể hoàn tất lệnh. Hãy xem bảng điều khiển để biết chi tiết.&r"
 
-[command.feedback.debug]
-started = "{prefix}&7Đang thu thập thông tin chẩn đoán máy chủ và ShapedPortals…&r"
-busy = "{prefix}&eMột báo cáo chẩn đoán ShapedPortals đang được tạo.&r"
-saved = "{prefix}&aĐã lưu báo cáo chẩn đoán tại &f{path}&r&a.&r"
-uploaded = "{prefix}&aĐã tải báo cáo chẩn đoán lên:&r &b&n{url}&r"
-link_hover = "&7Mở báo cáo mclo.gs công khai.&r"
-upload_failed = "{prefix}&eBáo cáo cục bộ đã được lưu nhưng không thể tải lên mclo.gs. Hãy xem bảng điều khiển để biết chi tiết.&r"
-failed = "{prefix}&cKhông thể tạo báo cáo chẩn đoán. Hãy xem bảng điều khiển để biết chi tiết.&r"
-
 [command.status]
 header = "{prefix}&d&lTrạng thái ShapedPortals&r"
 config = "{prefix}&7Tạo cổng:&r {enabled} &8|&r &7Ngôn ngữ:&r &f{language}&r &8|&r &7Tải lại tức thời:&r {hot_reload}"
@@ -55,14 +46,14 @@ compatibility = "{prefix}&7Gói dựng:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7B
 [command.description]
 root = "Trợ giúp và quản trị ShapedPortals"
 config = "Mở trình chỉnh sửa cấu hình đầy đủ trong trò chơi"
-language = "Chọn một ngôn ngữ ShapedPortals khả dụng"
-debug = "Tạo báo cáo chẩn đoán ShapedPortals toàn diện"
+language = "Chọn ngôn ngữ của bạn hoặc ngôn ngữ mặc định của máy chủ"
+debugdump = "Tạo báo cáo chẩn đoán và tải lên nếu muốn"
 portals = "Liệt kê mọi cổng được quản lý và lối tắt dịch chuyển của chúng"
 teleport = "Dịch chuyển an toàn đến cạnh một cổng được quản lý hoặc liệt kê cổng nếu bỏ trống"
 status = "Hiển thị thống kê cổng được quản lý và số lần thử"
 
 [command.parameter]
-locale = "Mã vùng ngôn ngữ khả dụng"
+debugdump_upload = "Tải báo cáo lên mclo.gs"
 page = "Trang danh sách cổng được đánh số từ một"
 portal = "UUID cổng, tiền tố duy nhất hoặc list"
 
@@ -124,7 +115,7 @@ state = "&7Hiện tại:&r {value}"
 toggle = "&8Nhấp để bật hoặc tắt.&r"
 number = "&8Trái +1, phải -1, shift ×10, thả để nhập.&r"
 text = "&8Nhấp để nhập giá trị mới trong trò chuyện.&r"
-language = "&8Nhấp để chọn ngôn ngữ khả dụng hoặc nhập mã vùng.&r"
+language = "&8Chọn ngôn ngữ của bạn hoặc ngôn ngữ mặc định của máy chủ&r"
 category = "&8Nhấp để sửa mọi thiết lập trong mục này.&r"
 
 [gui.prompt]
@@ -135,10 +126,7 @@ cancelled = "{prefix}&eĐã hủy chỉnh sửa cấu hình.&r"
 timeout = "{prefix}&eChỉnh sửa cấu hình đã hết hạn mà không thay đổi gì.&r"
 
 [gui.language]
-type = "&7Nhập tên mã vùng trong trò chuyện để tạo hoặc chọn mã đó.&r"
 option = "{status} &f{locale}&r &8—&r &7{name}&r"
-hover = "&7Nhấp để chọn &f{locale}&r&7.&r"
-empty = "&eKhông tìm thấy ngôn ngữ khả dụng; hãy nhập tên mã vùng để tạo một ngôn ngữ.&r"
 current = "&7Giá trị hiện tại:&r {value}"
 variables = "&7Biến / chỗ giữ chỗ hiện tại:&r &f{variables}&r"
 changed = "&f{old}&r &7đã đổi thành&r &f{new}&r"

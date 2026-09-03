@@ -9,7 +9,7 @@
 # Listen: {matches}=passende Portale; {seconds}=Bestätigungszeit in Sekunden.
 # Konfiguration: {category}=Editorkategorie; {setting}=Einstellungsname; {status}=Auswahlmarkierung; {value}=aktueller, Standard- oder Rohwert; {language}=aktive Sprache; {locale}=Sprachkennung; {name}=vollständiger Sprachname.
 # Sprach-Editor: {variables}=gültige Platzhalter; {old}=vorheriger Wert; {new}=neuer Wert.
-# Sonstiges: {duration}=Millisekunden; {path}=lokaler Berichtspfad; {url}=öffentliche Berichts-URL; {reason}=Fehlergrund.
+# Sonstiges: {duration}=Millisekunden; {reason}=Fehlergrund.
 # Präfix: {prefix}=der globale Wert runtime.prefix. Entferne {prefix} aus einer einzelnen Nachricht, um es dort auszublenden.
 # Ein vorangestellter Rückwärtsschrägstrich zeigt & oder [ wörtlich an.
 
@@ -36,15 +36,6 @@ save_failed = "{prefix}&c&f{setting}&r&c konnte nicht übernommen werden: {reaso
 [command.feedback]
 failed = "{prefix}&cDer Befehl konnte nicht ausgeführt werden. Details stehen in der Konsole.&r"
 
-[command.feedback.debug]
-started = "{prefix}&7Server- und ShapedPortals-Diagnosedaten werden erfasst…&r"
-busy = "{prefix}&eEin ShapedPortals-Diagnosebericht wird bereits erstellt.&r"
-saved = "{prefix}&aDer Diagnosebericht wurde unter &f{path}&r&a gespeichert.&r"
-uploaded = "{prefix}&aDiagnosebericht hochgeladen:&r &b&n{url}&r"
-link_hover = "&7Öffnet den öffentlichen Bericht auf mclo.gs.&r"
-upload_failed = "{prefix}&eDer lokale Bericht wurde gespeichert, aber das Hochladen zu mclo.gs ist fehlgeschlagen. Details stehen in der Konsole.&r"
-failed = "{prefix}&cDer Diagnosebericht konnte nicht erstellt werden. Details stehen in der Konsole.&r"
-
 [command.status]
 header = "{prefix}&d&lShapedPortals-Laufzeit&r"
 config = "{prefix}&7Erstellung:&r {enabled} &8|&r &7Sprache:&r &f{language}&r &8|&r &7Automatisches Neuladen:&r {hot_reload}"
@@ -55,14 +46,14 @@ compatibility = "{prefix}&7Artefakt:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Plan
 [command.description]
 root = "Hilfe und Verwaltung für ShapedPortals"
 config = "Den vollständigen Konfigurationseditor öffnen"
-language = "Eine verfügbare ShapedPortals-Sprache auswählen"
-debug = "Einen umfassenden ShapedPortals-Diagnosebericht erstellen"
+language = "Wähle deine Sprache oder die Standardsprache des Servers"
+debugdump = "Einen Diagnosebericht erstellen und optional hochladen"
 portals = "Alle verwalteten Portale mit Teleport-Verknüpfung auflisten"
 teleport = "Sicher neben ein verwaltetes Portal teleportieren oder ohne Angabe die Portale auflisten"
 status = "Statistiken zu verwalteten Portalen und Versuchen anzeigen"
 
 [command.parameter]
-locale = "Verfügbare Sprachkennung"
+debugdump_upload = "Den Bericht zu mclo.gs hochladen"
 page = "Seitennummer der Portalliste, beginnend bei eins"
 portal = "Portal-UUID, eindeutiges Präfix oder list"
 
@@ -124,7 +115,7 @@ state = "&7Aktuell:&r {value}"
 toggle = "&8Zum Umschalten klicken.&r"
 number = "&8Links +1, rechts -1, Umschalt ×10, Ablegen zum Eingeben.&r"
 text = "&8Klicken, um einen neuen Wert im Chat einzugeben.&r"
-language = "&8Klicken, um eine verfügbare Sprache auszuwählen oder eine Sprachkennung einzugeben.&r"
+language = "&8Wähle deine Sprache oder die Standardsprache des Servers&r"
 category = "&8Klicken, um alle Einstellungen dieser Kategorie zu bearbeiten.&r"
 
 [gui.prompt]
@@ -135,10 +126,7 @@ cancelled = "{prefix}&eKonfigurationsbearbeitung abgebrochen.&r"
 timeout = "{prefix}&eDie Konfigurationsbearbeitung ist ohne Änderung abgelaufen.&r"
 
 [gui.language]
-type = "&7Gib im Chat eine Sprachkennung ein, um sie zu erstellen oder auszuwählen.&r"
 option = "{status} &f{locale}&r &8—&r &7{name}&r"
-hover = "&7Klicken, um &f{locale}&r&7 auszuwählen.&r"
-empty = "&eKeine verfügbaren Sprachen gefunden; gib eine Sprachkennung ein, um eine zu erstellen.&r"
 current = "&7Aktueller Wert:&r {value}"
 variables = "&7Aktuelle Variablen / Platzhalter:&r &f{variables}&r"
 changed = "&f{old}&r &7wurde geändert zu&r &f{new}&r"

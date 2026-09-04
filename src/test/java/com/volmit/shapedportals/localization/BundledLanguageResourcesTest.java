@@ -2,6 +2,7 @@ package com.volmit.shapedportals.localization;
 
 import art.arcane.volmlib.util.localization.MessageCatalog;
 import art.arcane.volmlib.util.localization.MessageKey;
+import art.arcane.volmlib.util.localization.BukkitLanguageMessages;
 import art.arcane.volmlib.util.localization.TextKey;
 import art.arcane.volmlib.util.localization.TextValue;
 import art.arcane.volmlib.util.localization.TomlLanguageParser;
@@ -73,7 +74,7 @@ class BundledLanguageResourcesTest {
                     .containsExactlyInAnyOrderElementsOf(expectedPlaceholders);
             assertThat(content)
                     .describedAs("sectioned TOML in %s", resource)
-                    .contains("[runtime]", "[command.feedback.reload]", "[portal.navigation.list]")
+                    .contains("[runtime]", "[language.menu]", "[portal.navigation.list]")
                     .doesNotContain("[messages]");
             assertThat(messages.get("portal.navigation.list.hover"))
                     .describedAs("two-line portal hover in %s", resource)
@@ -85,6 +86,11 @@ class BundledLanguageResourcesTest {
             assertThat(messages.keySet())
                     .describedAs("catalog coverage in %s", resource)
                     .containsExactlyInAnyOrderElementsOf(catalog.ids());
+            for (MessageKey key : BukkitLanguageMessages.keys()) {
+                assertThat(messages.get(key.id()))
+                        .describedAs("translated shared language menu key %s in %s", key.id(), resource)
+                        .isNotEqualTo(((TextKey) key).english());
+            }
 
             int changed = 0;
             int ampersandFormatted = 0;

@@ -1,16 +1,67 @@
 # שפת ShapedPortals: he_IL
+#
 # הקובץ יורד רק אם הוא חסר; יש לערוך ישירות את languages/he_IL.toml.
 # שינויים מקומיים לעולם אינם מוחלפים אוטומטית; ערכים חסרים משתמשים באנגלית.
+#
 # צבעים: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B וגם [RRGGBB]. ניתן להשתמש גם ב-MiniMessage לעיצוב מותאם.
 # מצייני המקום שייכים להודעות מסוימות. יש להשאיר רק את המציינים שכבר מופיעים בהודעה ולא לשנות את שמם.
-# פקודות: {argument}=ארגומנט לא צפוי; {command}=נתיב פקודה; {key}=מפתח פרמטר; {parameter}=שם פרמטר; {type}=סוג; {usage}=אופן שימוש.
-# זמן ריצה: {attempts}=ניסיונות יצירה; {created}=כמות שנוצרה או זמן יצירה; {rejected}=ניסיונות שנדחו; {enabled}=מצב יצירה; {hot_reload}=מצב טעינה חמה; {scheduler}=מתזמן.
-# פורטלים: {portal}=מזהה; {portals}=כמות מנוהלת; {id}=מזהה קצר; {uuid}=UUID מלא; {world}=עולם; {axis}=ציר; {x}/{y}/{z}=קואורדינטות עוגן; {blocks}=תאי פורטל; {cells}=כל התאים; {creator}=יוצר; {materials}=חומרי המסגרת שנרשמו.
-# רשימות: {matches}=פורטלים תואמים; {seconds}=חלון אישור בשניות.
-# הגדרות: {category}=קטגוריה; {setting}=שם הגדרה; {status}=סימן בחירה; {value}=ערך נוכחי, ברירת מחדל או גולמי; {language}=שפה פעילה; {locale}=אזור שפה; {name}=שם השפה המלא.
-# עורך שפה: {variables}=מצייני מקום תקינים; {old}=הערך הקודם; {new}=הערך החדש.
-# אחר: {duration}=אלפיות שנייה; {path}=נתיב דוח מקומי; {url}=כתובת דוח ציבורית; {reason}=סיבת כשל.
-# קידומת: {prefix}=הערך הגלובלי runtime.prefix. הסירו את {prefix} מהודעה מסוימת כדי להסתיר אותה רק שם.
+#
+# פקודות
+#   {argument}      ארגומנט לא צפוי
+#   {command}       נתיב פקודה
+#   {key}           מפתח פרמטר
+#   {parameter}     שם פרמטר
+#   {type}          סוג
+#   {usage}         אופן שימוש
+#
+# זמן ריצה
+#   {attempts}      ניסיונות יצירה
+#   {created}       כמות שנוצרה או זמן יצירה
+#   {rejected}      ניסיונות שנדחו
+#   {enabled}       מצב יצירה
+#   {hot_reload}    מצב טעינה חמה
+#   {scheduler}     מתזמן
+#
+# פורטלים
+#   {portal}        מזהה
+#   {portals}       כמות מנוהלת
+#   {id}            מזהה קצר
+#   {uuid}          UUID מלא
+#   {world}         עולם
+#   {axis}          ציר
+#   {x}/{y}/{z}     קואורדינטות עוגן
+#   {blocks}        תאי פורטל
+#   {cells}         כל התאים
+#   {creator}       יוצר
+#   {materials}     חומרי המסגרת שנרשמו
+#
+# רשימות
+#   {matches}       פורטלים תואמים
+#   {seconds}       חלון אישור בשניות
+#
+# הגדרות
+#   {category}      קטגוריה
+#   {setting}       שם הגדרה
+#   {status}        סימן בחירה
+#   {value}         ערך נוכחי, ברירת מחדל או גולמי
+#   {language}      שפה פעילה
+#   {locale}        אזור שפה
+#   {personal}      אזור השפה האישי
+#   {name}          שם השפה המלא
+#
+# עורך שפה
+#   {variables}     מצייני מקום תקינים
+#   {old}           הערך הקודם
+#   {new}           הערך החדש
+#
+# אחר
+#   {path}          נתיב דוח מקומי
+#   {url}           כתובת דוח ציבורית
+#   {reason}        סיבת כשל
+#
+# קידומת
+#   {prefix}        הערך הגלובלי runtime.prefix. הסירו את {prefix} מהודעה מסוימת כדי להסתיר אותה רק שם
+#
 # כדי להציג & או [ כלשונם, יש להוסיף לפניהם לוכסן הפוך.
 
 [runtime]
@@ -24,13 +75,9 @@ denied = "{prefix}&cאין לך הרשאה לבצע פעולה זו.&r"
 success = "{prefix}&aהשינויים בקובצי התצורה והשפה הוחלו.&r"
 failed = "{prefix}&cהשינויים בקבצים נדחו; ההגדרות התקינות האחרונות נשארו פעילות.&r"
 
-[command.feedback.reload]
-success = "{prefix}&aהטעינה מחדש הושלמה בתוך &f{duration}&r&a אלפיות שנייה.&r &7שפה:&r &f{locale}&r"
-failed = "{prefix}&cהטעינה מחדש נכשלה לאחר {duration} אלפיות שנייה.&r &7ההגדרות התקינות האחרונות עדיין פעילות; פרטי השגיאה המלאים מופיעים במסוף.&r"
-
 [command.feedback.config]
 opened = "{prefix}&aעורך התצורה המלא בתוך המשחק נפתח.&r"
-saved = "{prefix}&aההגדרה &f{setting}&r&a נשמרה והוחלה.&r"
+saved = "{prefix}&a{setting}&r &7שונה מ-&f{old}&r &7ל-&f{new}&r&7.&r"
 save_failed = "{prefix}&cלא ניתן להחיל את &f{setting}&r&c: {reason}&r"
 
 [command.feedback]
@@ -56,7 +103,8 @@ compatibility = "{prefix}&7קובץ בנוי:&r &fJava 17 / Bukkit 1.20.1+&r &8|
 root = "עזרה וניהול של ShapedPortals"
 config = "פתיחת עורך התצורה המלא בתוך המשחק"
 language = "בחירת שפת ShapedPortals זמינה"
-debug = "יצירת דוח אבחון מקיף של ShapedPortals"
+debug = "כלי האבחון של ShapedPortals"
+debug_dump = "יצירת דוח אבחון מקיף של ShapedPortals"
 portals = "הצגת כל הפורטלים המנוהלים וקיצורי ההשתגרות אליהם"
 teleport = "השתגרות בטוחה ליד פורטל מנוהל, או הצגת פורטלים אם לא צוין יעד"
 status = "הצגת נתונים סטטיסטיים של פורטלים מנוהלים וניסיונות"
@@ -65,6 +113,7 @@ status = "הצגת נתונים סטטיסטיים של פורטלים מנוה�
 locale = "אזור שפה זמין"
 page = "עמוד רשימת פורטלים שמספרו מתחיל באחד"
 portal = "UUID של פורטל, תחילית ייחודית או list"
+upload = "העלאת הדוח כאשר העלאות ציבוריות מופעלות"
 
 [portal.notice]
 nether_created = "{prefix}&dנוצר פורטל מעוצב עם {blocks} בלוקים פנימיים.&r"
@@ -121,7 +170,6 @@ languages = "&dשפות&r"
 
 [gui.navigation]
 back = "&eחזרה&r"
-reload = "&bטעינת הקבצים מחדש&r"
 close = "&cסגירה&r"
 
 [gui.lore]
@@ -250,3 +298,19 @@ unknown_parameter = "מפתח פרמטר לא ידוע: {key}"
 
 [director.runtime]
 usage = "שימוש: {usage}"
+
+[language.menu]
+your_language = "השפה שלך"
+reset_your_language = "איפוס השפה שלך"
+server_default = "ברירת המחדל של השרת"
+edit_messages = "עריכת הודעות השפה"
+use_server_default = "שימוש בברירת המחדל של השרת"
+current = "נוכחית: {locale}"
+current_with_personal = "נוכחית: {locale} (שלך: {personal})"
+your_description = "שנה רק את ההודעות שאתה רואה."
+reset_description = "השתמש בשפת ברירת המחדל של השרת."
+server_description = "שנה את שפת ברירת המחדל של השרת."
+edit_description = "פתח את עורך ההודעות לכל שפה."
+select_description = "לחץ כדי לבחור בשפה זו."
+remove_personal_description = "הסר את בחירת השפה האישית שלך."
+no_controls = "אין לך גישה להגדרות שפה."

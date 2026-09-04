@@ -80,7 +80,7 @@ public final class LanguageService {
 
     public LanguageService(File dataFolder, Logger logger) {
         languageDirectory = new File(dataFolder, "languages");
-        preferenceFile = dataFolder.toPath().resolve("language-preferences.properties");
+        preferenceFile = languageDirectory.toPath().resolve("language-preferences.properties");
         this.logger = Objects.requireNonNull(logger, "logger");
         validateCatalogTemplates();
         manager = new LocalizationManager(LocalizationCandidate.english(CATALOG, ENGLISH_PLURALS));
@@ -728,21 +728,59 @@ public final class LanguageService {
     private static List<String> englishHeader(String locale) {
         return List.of(
                 "ShapedPortals language: " + locale,
-                "This is an editable language file. Manual and in-game edits are kept and hot reload automatically when enabled.",
-                "The plugin creates or downloads this file only when it is missing and never automatically replaces local changes.",
-                "Missing entries fall back to the built-in English catalog.",
-                "Colors: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B, and [RRGGBB].",
-                "Shipped defaults use classic ampersand codes; MiniMessage remains supported for custom formatting.",
-                "Placeholders are message-specific. Keep only the tokens already present in each message and never rename them.",
-                "Prefix: {prefix}=the global runtime.prefix value. Remove {prefix} from an individual message to hide it there.",
-                "Commands: {argument}=unexpected argument; {command}=command path; {key}=parameter key; {parameter}=parameter name; {type}=parameter type; {usage}=command usage.",
-                "Runtime: {attempts}=creation attempts; {created}=created count or creation time; {rejected}=rejected attempts; {enabled}=creation state; {hot_reload}=hot-reload state; {scheduler}=scheduler implementation.",
-                "Portals: {portal}=portal identifier; {portals}=managed count; {id}=short ID; {uuid}=full UUID; {world}=world; {axis}=portal axis; {x}/{y}/{z}=anchor coordinates; {blocks}=portal cells; {cells}=all managed cells; {creator}=creator identity; {materials}=recorded frame materials.",
-                "Lists and timing: {matches}=matching portals; {seconds}=confirmation window.",
-                "Configuration: {category}=editor category; {setting}=setting name; {status}=selection marker; {value}=current, default, or raw value; {language}=active language; {locale}=locale identifier; {name}=full language name.",
-                "Language editor: {variables}=tokens valid for the selected message; {old}=previous rendered value; {new}=installed rendered value.",
-                "Other: {duration}=elapsed milliseconds; {path}=local report path; {url}=public report URL; {reason}=failure reason.",
-                "Prefix & or [ with a backslash to display it literally."
+                "",
+                "This file is editable in a text editor or through /sp config.",
+                "ShapedPortals creates or downloads it only when missing. Local changes are not replaced.",
+                "Missing messages use the built-in English catalog.",
+                "",
+                "Formatting",
+                "  Colors and styles  &0 through &f, &k through &r",
+                "  RGB                &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B, [RRGGBB]",
+                "  Custom markup      MiniMessage is supported",
+                "  Literal text       Put a backslash before & or [",
+                "",
+                "Placeholders",
+                "Keep the placeholders already used by a message. Do not rename them.",
+                "  {prefix}       Global runtime.prefix value; optional per message",
+                "  {argument}     Unexpected command argument",
+                "  {command}      Command path",
+                "  {key}          Parameter key",
+                "  {parameter}    Parameter name",
+                "  {type}         Parameter type or portal type",
+                "  {usage}        Command usage",
+                "  {attempts}     Portal creation attempts",
+                "  {created}      Created count or creation time",
+                "  {rejected}     Rejected creation attempts",
+                "  {enabled}      Portal creation state",
+                "  {hot_reload}   Hot-reload state",
+                "  {scheduler}    Scheduler implementation",
+                "  {portal}       Portal identifier",
+                "  {portals}      Managed portal count",
+                "  {id}           Short portal ID",
+                "  {uuid}         Full portal UUID",
+                "  {world}        World name",
+                "  {axis}         Portal axis",
+                "  {x} {y} {z}    Anchor coordinates",
+                "  {blocks}       Portal interior cells",
+                "  {cells}        All managed cells",
+                "  {creator}      Creator identity",
+                "  {materials}    Recorded frame materials",
+                "  {matches}      Matching portal count",
+                "  {seconds}      Confirmation window",
+                "  {category}     Editor category",
+                "  {setting}      Setting name",
+                "  {status}       Selection marker",
+                "  {value}        Current, default, or raw value",
+                "  {language}     Active language",
+                "  {locale}       Locale identifier",
+                "  {personal}     Personal locale when it differs from the server default",
+                "  {name}         Full language name",
+                "  {variables}    Placeholders valid for the selected message",
+                "  {old}          Previous rendered value",
+                "  {new}          Installed rendered value",
+                "  {path}         Local report path",
+                "  {url}          Public report URL",
+                "  {reason}       Failure reason"
         );
     }
 

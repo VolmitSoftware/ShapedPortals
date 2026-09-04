@@ -1,6 +1,7 @@
 package com.volmit.shapedportals.localization;
 
 import art.arcane.volmlib.util.director.DirectorMessages;
+import art.arcane.volmlib.util.localization.BukkitLanguageMessages;
 import art.arcane.volmlib.util.localization.MessageCatalog;
 import art.arcane.volmlib.util.localization.TextKey;
 
@@ -13,11 +14,9 @@ public final class ShapedMessages {
     public static final TextKey HOT_RELOAD_SUCCESS = prefixed("runtime.hot_reload.success", "&aApplied configuration and language file changes.&r");
     public static final TextKey HOT_RELOAD_FAILED = prefixed("runtime.hot_reload.failed", "&cRejected file changes; the last known good settings remain active.&r");
 
-    public static final TextKey RELOAD_SUCCESS = prefixed("command.feedback.reload.success", "&aReloaded in &f{duration}&r&a ms.&r &7Locale:&r &f{locale}&r");
-    public static final TextKey RELOAD_FAILED = prefixed("command.feedback.reload.failed", "&cReload failed after {duration} ms.&r &7The last known good settings are still active; see the full console error.&r");
     public static final TextKey COMMAND_CONFIG_OPENED = prefixed("command.feedback.config.opened", "&aOpened the complete in-game configuration editor.&r");
     public static final TextKey COMMAND_FAILED = prefixed("command.feedback.failed", "&cThe command could not be completed. See the console for details.&r");
-    public static final TextKey CONFIG_SAVED = prefixed("command.feedback.config.saved", "&aSaved and applied &f{setting}&r&a.&r");
+    public static final TextKey CONFIG_SAVED = prefixed("command.feedback.config.saved", "&a{setting}&r &7changed from &f{old}&r &7to &f{new}&r&7.&r");
     public static final TextKey CONFIG_SAVE_FAILED = prefixed("command.feedback.config.save_failed", "&cCould not apply &f{setting}&r&c: {reason}&r");
     public static final TextKey DEBUG_STARTED = prefixed("command.feedback.debug.started", "&7Capturing server and ShapedPortals diagnostics…&r");
     public static final TextKey DEBUG_BUSY = prefixed("command.feedback.debug.busy", "&eA ShapedPortals diagnostic report is already being created.&r");
@@ -71,7 +70,6 @@ public final class ShapedMessages {
     public static final TextKey GUI_CATEGORY_DEBUG = TextKey.of("gui.category.debug", "&dDiagnostics&r");
     public static final TextKey GUI_CATEGORY_LANGUAGES = TextKey.of("gui.category.languages", "&dLanguages&r");
     public static final TextKey GUI_BACK = TextKey.of("gui.navigation.back", "&eBack&r");
-    public static final TextKey GUI_RELOAD = TextKey.of("gui.navigation.reload", "&bReload files&r");
     public static final TextKey GUI_CLOSE = TextKey.of("gui.navigation.close", "&cClose&r");
     public static final TextKey GUI_STATE = TextKey.of("gui.lore.state", "&7Current:&r {value}");
     public static final TextKey GUI_TOGGLE = TextKey.of("gui.lore.toggle", "&8Click to toggle.&r");
@@ -143,13 +141,15 @@ public final class ShapedMessages {
     public static final TextKey COMMAND_ROOT = TextKey.of("command.description.root", "ShapedPortals help and administration");
     public static final TextKey COMMAND_CONFIG = TextKey.of("command.description.config", "Open the complete in-game configuration editor");
     public static final TextKey COMMAND_LANGUAGE = TextKey.of("command.description.language", "Select an available ShapedPortals language");
-    public static final TextKey COMMAND_DEBUG = TextKey.of("command.description.debug", "Create a comprehensive ShapedPortals diagnostic report");
+    public static final TextKey COMMAND_DEBUG = TextKey.of("command.description.debug", "ShapedPortals diagnostic tools");
+    public static final TextKey COMMAND_DEBUG_DUMP = TextKey.of("command.description.debug_dump", "Create a comprehensive ShapedPortals diagnostic report");
     public static final TextKey COMMAND_PORTALS = TextKey.of("command.description.portals", "List every managed portal and its teleport shortcut");
     public static final TextKey COMMAND_TELEPORT = TextKey.of("command.description.teleport", "Teleport safely beside a managed portal or list portals when omitted");
     public static final TextKey COMMAND_STATUS = TextKey.of("command.description.status", "Show managed portal and attempt statistics");
     public static final TextKey PARAMETER_LOCALE = TextKey.of("command.parameter.locale", "Available language locale");
     public static final TextKey PARAMETER_PAGE = TextKey.of("command.parameter.page", "One-based portal list page");
     public static final TextKey PARAMETER_PORTAL = TextKey.of("command.parameter.portal", "Portal UUID, unique prefix, or list");
+    public static final TextKey PARAMETER_UPLOAD = TextKey.of("command.parameter.upload", "Upload the report when public uploads are enabled");
 
     private ShapedMessages() {
     }
@@ -158,6 +158,7 @@ public final class ShapedMessages {
         MessageCatalog.Builder builder = MessageCatalog.builder("en_US");
         builder.addAll(productKeys());
         builder.addAll(DirectorMessages.keys());
+        builder.addAll(BukkitLanguageMessages.keys());
         return builder.build();
     }
 
@@ -172,7 +173,7 @@ public final class ShapedMessages {
     private static List<TextKey> productKeys() {
         return List.of(
                 PREFIX, NO_PERMISSION, PLAYER_ONLY, HOT_RELOAD_SUCCESS, HOT_RELOAD_FAILED,
-                RELOAD_SUCCESS, RELOAD_FAILED, COMMAND_CONFIG_OPENED, COMMAND_FAILED,
+                COMMAND_CONFIG_OPENED, COMMAND_FAILED,
                 CONFIG_SAVED, CONFIG_SAVE_FAILED, DEBUG_STARTED, DEBUG_BUSY, DEBUG_SAVED, DEBUG_UPLOADED,
                 DEBUG_LINK_HOVER, DEBUG_UPLOAD_FAILED, DEBUG_FAILED, STATUS_HEADER, STATUS_CONFIG, STATUS_PORTALS,
                 STATUS_ATTEMPTS, STATUS_COMPATIBILITY, PORTAL_NETHER_CREATED, PORTAL_END_CREATED,
@@ -185,7 +186,7 @@ public final class ShapedMessages {
                 GUI_ROOT_TITLE, GUI_CATEGORY_TITLE, GUI_CATEGORY_GENERAL, GUI_CATEGORY_PORTAL,
                 GUI_CATEGORY_EFFECTS, GUI_CATEGORY_HOT_RELOAD, GUI_CATEGORY_INTEGRITY,
                 GUI_CATEGORY_PRESENTATION, GUI_CATEGORY_DEBUG, GUI_CATEGORY_LANGUAGES,
-                GUI_BACK, GUI_RELOAD, GUI_CLOSE, GUI_STATE, GUI_TOGGLE,
+                GUI_BACK, GUI_CLOSE, GUI_STATE, GUI_TOGGLE,
                 GUI_NUMBER, GUI_TEXT, GUI_LANGUAGE_SELECT, GUI_CATEGORY_OPEN, GUI_PROMPT, GUI_PROMPT_LIST,
                 GUI_PROMPT_CANCEL, GUI_PROMPT_CANCELLED, GUI_PROMPT_TIMEOUT,
                 GUI_LANGUAGE_TYPE, GUI_LANGUAGE_OPTION, GUI_LANGUAGE_HOVER, GUI_LANGUAGE_EMPTY,
@@ -206,9 +207,9 @@ public final class ShapedMessages {
                 SETTING_PRESENTATION_COMMAND, SETTING_PRESENTATION_PORTAL, SETTING_PRESENTATION_NETHER_CREATION,
                 SETTING_PRESENTATION_END_CREATION, SETTING_PRESENTATION_DURATION,
                 SETTING_PRESENTATION_FADE_IN, SETTING_PRESENTATION_STAY, SETTING_PRESENTATION_FADE_OUT,
-                SETTING_DEBUG_UPLOAD, COMMAND_ROOT, COMMAND_CONFIG, COMMAND_LANGUAGE, COMMAND_DEBUG,
+                SETTING_DEBUG_UPLOAD, COMMAND_ROOT, COMMAND_CONFIG, COMMAND_LANGUAGE, COMMAND_DEBUG, COMMAND_DEBUG_DUMP,
                 COMMAND_PORTALS, COMMAND_TELEPORT, COMMAND_STATUS,
-                PARAMETER_LOCALE, PARAMETER_PAGE, PARAMETER_PORTAL
+                PARAMETER_LOCALE, PARAMETER_PAGE, PARAMETER_PORTAL, PARAMETER_UPLOAD
         );
     }
 }

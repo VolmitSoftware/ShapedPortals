@@ -1,16 +1,67 @@
 # Langue de ShapedPortals : fr_FR
+#
 # Ce fichier est téléchargé uniquement s’il manque ; modifiez directement languages/fr_FR.toml.
 # Les modifications locales ne sont jamais remplacées automatiquement ; les entrées absentes utilisent l’anglais.
+#
 # Couleurs : &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B et [RRGGBB]. MiniMessage reste disponible pour les formats personnalisés.
 # Les variables sont propres à chaque message. Conservez uniquement celles déjà présentes, sans jamais les renommer.
-# Commandes : {argument}=argument inattendu ; {command}=chemin de commande ; {key}=clé du paramètre ; {parameter}=nom du paramètre ; {type}=type ; {usage}=syntaxe de commande.
-# Exécution : {attempts}=tentatives de création ; {created}=nombre créé ou date de création ; {rejected}=tentatives refusées ; {enabled}=état de création ; {hot_reload}=état du rechargement ; {scheduler}=planificateur.
-# Portails : {portal}=identifiant ; {portals}=nombre géré ; {id}=ID court ; {uuid}=UUID complet ; {world}=monde ; {axis}=axe ; {x}/{y}/{z}=coordonnées de l’ancre ; {blocks}=cellules du portail ; {cells}=toutes les cellules ; {creator}=créateur ; {materials}=matériaux de cadre enregistrés.
-# Listes : {matches}=portails correspondants ; {seconds}=délai de confirmation en secondes.
-# Configuration : {category}=catégorie ; {setting}=nom du réglage ; {status}=marque de sélection ; {value}=valeur actuelle, par défaut ou brute ; {language}=langue active ; {locale}=code régional; {name}=nom complet de la langue.
-# Éditeur de langue : {variables}=variables valides ; {old}=ancienne valeur ; {new}=nouvelle valeur.
-# Autres : {duration}=millisecondes ; {path}=chemin du rapport local ; {url}=URL publique ; {reason}=motif de l’échec .
-# Préfixe : {prefix}=la valeur globale runtime.prefix. Retirez {prefix} d’un message pour le masquer uniquement à cet endroit.
+#
+# Commandes
+#   {argument}      argument inattendu
+#   {command}       chemin de commande
+#   {key}           clé du paramètre
+#   {parameter}     nom du paramètre
+#   {type}          type
+#   {usage}         syntaxe de commande
+#
+# Exécution
+#   {attempts}      tentatives de création
+#   {created}       nombre créé ou date de création
+#   {rejected}      tentatives refusées
+#   {enabled}       état de création
+#   {hot_reload}    état du rechargement
+#   {scheduler}     planificateur
+#
+# Portails
+#   {portal}        identifiant
+#   {portals}       nombre géré
+#   {id}            ID court
+#   {uuid}          UUID complet
+#   {world}         monde
+#   {axis}          axe
+#   {x}/{y}/{z}     coordonnées de l’ancre
+#   {blocks}        cellules du portail
+#   {cells}         toutes les cellules
+#   {creator}       créateur
+#   {materials}     matériaux de cadre enregistrés
+#
+# Listes
+#   {matches}       portails correspondants
+#   {seconds}       délai de confirmation en secondes
+#
+# Configuration
+#   {category}      catégorie
+#   {setting}       nom du réglage
+#   {status}        marque de sélection
+#   {value}         valeur actuelle, par défaut ou brute
+#   {language}      langue active
+#   {locale}        code régional
+#   {personal}      code régional personnel
+#   {name}          nom complet de la langue
+#
+# Éditeur de langue
+#   {variables}     variables valides
+#   {old}           ancienne valeur
+#   {new}           nouvelle valeur
+#
+# Autres
+#   {path}          chemin du rapport local
+#   {url}           URL publique
+#   {reason}        motif de l’échec
+#
+# Préfixe
+#   {prefix}        la valeur globale runtime.prefix. Retirez {prefix} d’un message pour le masquer uniquement à cet endroit
+#
 # Ajoutez une barre oblique inverse devant & ou [ pour l’afficher littéralement.
 
 [runtime]
@@ -24,13 +75,9 @@ denied = "{prefix}&cVous n'avez pas la permission d'effectuer cette action.&r"
 success = "{prefix}&aLes modifications de la configuration et des fichiers de langue ont été appliquées.&r"
 failed = "{prefix}&cLes modifications de fichiers ont été refusées ; les derniers paramètres valides restent actifs.&r"
 
-[command.feedback.reload]
-success = "{prefix}&aRechargement terminé en &f{duration}&r&a ms.&r &7Langue :&r &f{locale}&r"
-failed = "{prefix}&cÉchec du rechargement après {duration} ms.&r &7Les derniers paramètres valides restent actifs ; consultez l'erreur complète dans la console.&r"
-
 [command.feedback.config]
 opened = "{prefix}&aL'éditeur complet de configuration en jeu a été ouvert.&r"
-saved = "{prefix}&aLe paramètre &f{setting}&r&a a été enregistré et appliqué.&r"
+saved = "{prefix}&a{setting}&r &7est passé de &f{old}&r &7à &f{new}&r&7.&r"
 save_failed = "{prefix}&cImpossible d'appliquer &f{setting}&r&c : {reason}&r"
 
 [command.feedback]
@@ -56,7 +103,8 @@ compatibility = "{prefix}&7Artefact :&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Pla
 root = "Aide et administration de ShapedPortals"
 config = "Ouvrir l'éditeur complet de configuration en jeu"
 language = "Sélectionner une langue ShapedPortals disponible"
-debug = "Créer un rapport de diagnostic ShapedPortals complet"
+debug = "Outils de diagnostic de ShapedPortals"
+debug_dump = "Créer un rapport de diagnostic ShapedPortals complet"
 portals = "Répertorier tous les portails gérés et leur raccourci de téléportation"
 teleport = "Se téléporter en toute sécurité à côté d'un portail géré ou répertorier les portails si aucun n'est indiqué"
 status = "Afficher les statistiques des portails gérés et des tentatives"
@@ -65,6 +113,7 @@ status = "Afficher les statistiques des portails gérés et des tentatives"
 locale = "Code régional d’une langue disponible"
 page = "Page de la liste des portails, numérotée à partir de un"
 portal = "UUID du portail, préfixe unique ou list"
+upload = "Téléverser le rapport lorsque les envois publics sont activés"
 
 [portal.notice]
 nether_created = "{prefix}&dUn portail personnalisé de {blocks} blocs intérieurs a été créé.&r"
@@ -121,7 +170,6 @@ languages = "&dLangues&r"
 
 [gui.navigation]
 back = "&eRetour&r"
-reload = "&bRecharger les fichiers&r"
 close = "&cFermer&r"
 
 [gui.lore]
@@ -250,3 +298,19 @@ unknown_parameter = "Clé de paramètre inconnue : {key}"
 
 [director.runtime]
 usage = "Utilisation: {usage}"
+
+[language.menu]
+your_language = "Votre langue"
+reset_your_language = "Réinitialiser votre langue"
+server_default = "Langue par défaut du serveur"
+edit_messages = "Modifier les messages de langue"
+use_server_default = "Utiliser la langue par défaut du serveur"
+current = "Langue actuelle : {locale}"
+current_with_personal = "Langue actuelle : {locale} (La vôtre : {personal})"
+your_description = "Modifiez uniquement les messages que vous voyez."
+reset_description = "Utilisez la langue par défaut du serveur."
+server_description = "Modifiez la langue par défaut du serveur."
+edit_description = "Ouvrez l’éditeur de messages pour chaque langue."
+select_description = "Cliquez pour sélectionner cette langue."
+remove_personal_description = "Supprimez votre choix de langue personnel."
+no_controls = "Aucune option de langue ne vous est accessible."

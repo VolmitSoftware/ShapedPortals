@@ -1,16 +1,67 @@
 # Język ShapedPortals: pl_PL
+#
 # Ten plik jest pobierany tylko wtedy, gdy go brakuje; edytuj bezpośrednio languages/pl_PL.toml.
 # Lokalne zmiany nigdy nie są automatycznie zastępowane; brakujące wpisy używają angielskiego.
+#
 # Kolory: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B i [RRGGBB]. MiniMessage pozostaje dostępny dla własnego formatowania.
 # Symbole zastępcze są przypisane do konkretnych wiadomości. Zachowaj tylko już obecne symbole i nigdy nie zmieniaj ich nazw.
-# Polecenia: {argument}=nieoczekiwany argument; {command}=ścieżka polecenia; {key}=klucz parametru; {parameter}=nazwa parametru; {type}=typ; {usage}=użycie polecenia.
-# Działanie: {attempts}=próby utworzenia; {created}=liczba utworzonych lub czas utworzenia; {rejected}=odrzucone próby; {enabled}=stan tworzenia; {hot_reload}=stan przeładowania; {scheduler}=planista.
-# Portale: {portal}=identyfikator; {portals}=liczba zarządzanych; {id}=krótkie ID; {uuid}=pełny UUID; {world}=świat; {axis}=oś; {x}/{y}/{z}=współrzędne kotwicy; {blocks}=komórki portalu; {cells}=wszystkie komórki; {creator}=twórca; {materials}=zapisane materiały ramy.
-# Listy: {matches}=pasujące portale; {seconds}=czas na potwierdzenie w sekundach.
-# Konfiguracja: {category}=kategoria; {setting}=nazwa ustawienia; {status}=znacznik wyboru; {value}=wartość bieżąca, domyślna lub surowa; {language}=aktywny język; {locale}=ustawienia regionalne; {name}=pełna nazwa języka.
-# Edytor języka: {variables}=dozwolone symbole zastępcze; {old}=poprzednia wartość; {new}=nowa wartość.
-# Inne: {duration}=milisekundy; {path}=lokalna ścieżka raportu; {url}=publiczny URL; {reason}=powód błędu.
-# Prefiks: {prefix}=globalna wartość runtime.prefix. Usuń {prefix} z pojedynczej wiadomości, aby ukryć go tylko tam.
+#
+# Polecenia
+#   {argument}      nieoczekiwany argument
+#   {command}       ścieżka polecenia
+#   {key}           klucz parametru
+#   {parameter}     nazwa parametru
+#   {type}          typ
+#   {usage}         użycie polecenia
+#
+# Działanie
+#   {attempts}      próby utworzenia
+#   {created}       liczba utworzonych lub czas utworzenia
+#   {rejected}      odrzucone próby
+#   {enabled}       stan tworzenia
+#   {hot_reload}    stan przeładowania
+#   {scheduler}     planista
+#
+# Portale
+#   {portal}        identyfikator
+#   {portals}       liczba zarządzanych
+#   {id}            krótkie ID
+#   {uuid}          pełny UUID
+#   {world}         świat
+#   {axis}          oś
+#   {x}/{y}/{z}     współrzędne kotwicy
+#   {blocks}        komórki portalu
+#   {cells}         wszystkie komórki
+#   {creator}       twórca
+#   {materials}     zapisane materiały ramy
+#
+# Listy
+#   {matches}       pasujące portale
+#   {seconds}       czas na potwierdzenie w sekundach
+#
+# Konfiguracja
+#   {category}      kategoria
+#   {setting}       nazwa ustawienia
+#   {status}        znacznik wyboru
+#   {value}         wartość bieżąca, domyślna lub surowa
+#   {language}      aktywny język
+#   {locale}        ustawienia regionalne
+#   {personal}      osobiste ustawienie regionalne
+#   {name}          pełna nazwa języka
+#
+# Edytor języka
+#   {variables}     dozwolone symbole zastępcze
+#   {old}           poprzednia wartość
+#   {new}           nowa wartość
+#
+# Inne
+#   {path}          lokalna ścieżka raportu
+#   {url}           publiczny URL
+#   {reason}        powód błędu
+#
+# Prefiks
+#   {prefix}        globalna wartość runtime.prefix. Usuń {prefix} z pojedynczej wiadomości, aby ukryć go tylko tam
+#
 # Dodaj ukośnik odwrotny przed & lub [, aby wyświetlić znak dosłownie.
 
 [runtime]
@@ -24,13 +75,9 @@ denied = "{prefix}&cNie masz uprawnień, aby to zrobić.&r"
 success = "{prefix}&aZastosowano zmiany konfiguracji i plików językowych.&r"
 failed = "{prefix}&cZmiany plików zostały odrzucone; ostatnie prawidłowe ustawienia pozostają aktywne.&r"
 
-[command.feedback.reload]
-success = "{prefix}&aPonownie wczytano w &f{duration}&r&a ms.&r &7Język:&r &f{locale}&r"
-failed = "{prefix}&cPonowne wczytanie nie powiodło się po {duration} ms.&r &7Ostatnie prawidłowe ustawienia pozostają aktywne; pełny błąd znajdziesz w konsoli.&r"
-
 [command.feedback.config]
 opened = "{prefix}&aOtwarto pełny edytor konfiguracji w grze.&r"
-saved = "{prefix}&aZapisano i zastosowano ustawienie &f{setting}&r&a.&r"
+saved = "{prefix}&a{setting}&r &7zmieniono z &f{old}&r &7na &f{new}&r&7.&r"
 save_failed = "{prefix}&cNie udało się zastosować ustawienia &f{setting}&r&c: {reason}&r"
 
 [command.feedback]
@@ -56,7 +103,8 @@ compatibility = "{prefix}&7Artefakt:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Harm
 root = "Pomoc i administracja ShapedPortals"
 config = "Otwórz pełny edytor konfiguracji w grze"
 language = "Wybierz dostępny język ShapedPortals"
-debug = "Utwórz pełny raport diagnostyczny ShapedPortals"
+debug = "Narzędzia diagnostyczne ShapedPortals"
+debug_dump = "Utwórz pełny raport diagnostyczny ShapedPortals"
 portals = "Wyświetl wszystkie zarządzane portale i ich skróty teleportacji"
 teleport = "Bezpiecznie teleportuj się obok zarządzanego portalu lub wyświetl portale, jeśli go nie podano"
 status = "Pokaż statystyki zarządzanych portali i prób"
@@ -65,6 +113,7 @@ status = "Pokaż statystyki zarządzanych portali i prób"
 locale = "Dostępne ustawienia regionalne języka"
 page = "Strona listy portali, liczona od jednego"
 portal = "UUID portalu, unikalny prefiks lub list"
+upload = "Prześlij raport, gdy publiczne przesyłanie jest włączone"
 
 [portal.notice]
 nether_created = "{prefix}&dUtworzono portal o dowolnym kształcie z {blocks} blokami wewnętrznymi.&r"
@@ -121,7 +170,6 @@ languages = "&dJęzyki&r"
 
 [gui.navigation]
 back = "&eWstecz&r"
-reload = "&bWczytaj pliki ponownie&r"
 close = "&cZamknij&r"
 
 [gui.lore]
@@ -250,3 +298,19 @@ unknown_parameter = "Nieznany klucz parametru: {key}"
 
 [director.runtime]
 usage = "Użycie: {usage}"
+
+[language.menu]
+your_language = "Twój język"
+reset_your_language = "Zresetuj swój język"
+server_default = "Domyślny język serwera"
+edit_messages = "Edytuj komunikaty językowe"
+use_server_default = "Użyj domyślnego języka serwera"
+current = "Bieżący: {locale}"
+current_with_personal = "Bieżący: {locale} (Twój: {personal})"
+your_description = "Zmień tylko komunikaty, które widzisz."
+reset_description = "Użyj domyślnego języka serwera."
+server_description = "Zmień domyślny język serwera."
+edit_description = "Otwórz edytor komunikatów dla każdego języka."
+select_description = "Kliknij, aby wybrać ten język."
+remove_personal_description = "Usuń swój osobisty wybór języka."
+no_controls = "Nie masz dostępu do ustawień języka."

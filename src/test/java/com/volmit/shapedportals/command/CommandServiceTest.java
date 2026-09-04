@@ -31,16 +31,4 @@ final class CommandServiceTest {
                 .containsExactly("status", "extra");
     }
 
-    @Test
-    void routesOnlyLanguageMenuPagesThroughTheShapedPortalsSelector() {
-        assertThat(CommandService.languageMenuRequest(new String[0], true, true))
-                .isEqualTo(new CommandService.LanguageMenuRequest(true, 1));
-        assertThat(CommandService.languageMenuRequest(new String[]{"server"}, true, true))
-                .isEqualTo(new CommandService.LanguageMenuRequest(false, 1));
-        assertThat(CommandService.languageMenuRequest(new String[]{"self", "page=3"}, true, true))
-                .isEqualTo(new CommandService.LanguageMenuRequest(true, 3));
-        assertThat(CommandService.languageMenuRequest(new String[]{"self", "fr_FR"}, true, true)).isNull();
-        assertThat(CommandService.languageMenuRequest(new String[]{"server", "edit"}, true, true)).isNull();
-        assertThat(CommandService.languageMenuRequest(new String[]{"self"}, false, true)).isNull();
-    }
 }

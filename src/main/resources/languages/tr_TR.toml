@@ -1,16 +1,67 @@
 # ShapedPortals dili: tr_TR
+#
 # Bu dosya yalnızca eksikse indirilir; languages/tr_TR.toml dosyasını doğrudan düzenleyin.
 # Yerel değişiklikler otomatik olarak değiştirilmez; eksik değerler İngilizceyi kullanır.
+#
 # Renkler: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B ve [RRGGBB]. Özel biçimlendirme için MiniMessage da kullanılabilir.
 # Yer tutucular iletiye özeldir. Yalnızca iletide zaten bulunan yer tutucuları koruyun ve adlarını değiştirmeyin.
-# Komutlar: {argument}=beklenmeyen argüman; {command}=komut yolu; {key}=parametre anahtarı; {parameter}=parametre adı; {type}=tür; {usage}=komut kullanımı.
-# Çalışma: {attempts}=oluşturma denemeleri; {created}=oluşturulan sayı veya zaman; {rejected}=reddedilen denemeler; {enabled}=oluşturma durumu; {hot_reload}=yeniden yükleme durumu; {scheduler}=zamanlayıcı.
-# Portallar: {portal}=tanımlayıcı; {portals}=yönetilen sayı; {id}=kısa ID; {uuid}=tam UUID; {world}=dünya; {axis}=eksen; {x}/{y}/{z}=çapa koordinatları; {blocks}=portal hücreleri; {cells}=tüm hücreler; {creator}=oluşturan; {materials}=kaydedilmiş çerçeve malzemeleri.
-# Listeler: {matches}=eşleşen portallar; {seconds}=saniye cinsinden onay süresi.
-# Yapılandırma: {category}=kategori; {setting}=ayar adı; {status}=seçim işareti; {value}=geçerli, varsayılan veya ham değer; {language}=etkin dil; {locale}=yerel ayar; {name}=dilin tam adı.
-# Dil düzenleyici: {variables}=geçerli yer tutucular; {old}=önceki değer; {new}=yeni değer.
-# Diğer: {duration}=milisaniye; {path}=yerel rapor yolu; {url}=genel URL; {reason}=hata nedeni.
-# Önek: {prefix}=genel runtime.prefix değeri. Yalnızca belirli bir iletide gizlemek için o iletiden {prefix} öğesini kaldırın.
+#
+# Komutlar
+#   {argument}      beklenmeyen argüman
+#   {command}       komut yolu
+#   {key}           parametre anahtarı
+#   {parameter}     parametre adı
+#   {type}          tür
+#   {usage}         komut kullanımı
+#
+# Çalışma
+#   {attempts}      oluşturma denemeleri
+#   {created}       oluşturulan sayı veya zaman
+#   {rejected}      reddedilen denemeler
+#   {enabled}       oluşturma durumu
+#   {hot_reload}    yeniden yükleme durumu
+#   {scheduler}     zamanlayıcı
+#
+# Portallar
+#   {portal}        tanımlayıcı
+#   {portals}       yönetilen sayı
+#   {id}            kısa ID
+#   {uuid}          tam UUID
+#   {world}         dünya
+#   {axis}          eksen
+#   {x}/{y}/{z}     çapa koordinatları
+#   {blocks}        portal hücreleri
+#   {cells}         tüm hücreler
+#   {creator}       oluşturan
+#   {materials}     kaydedilmiş çerçeve malzemeleri
+#
+# Listeler
+#   {matches}       eşleşen portallar
+#   {seconds}       saniye cinsinden onay süresi
+#
+# Yapılandırma
+#   {category}      kategori
+#   {setting}       ayar adı
+#   {status}        seçim işareti
+#   {value}         geçerli, varsayılan veya ham değer
+#   {language}      etkin dil
+#   {locale}        yerel ayar
+#   {personal}      kişisel yerel ayar
+#   {name}          dilin tam adı
+#
+# Dil düzenleyici
+#   {variables}     geçerli yer tutucular
+#   {old}           önceki değer
+#   {new}           yeni değer
+#
+# Diğer
+#   {path}          yerel rapor yolu
+#   {url}           genel URL
+#   {reason}        hata nedeni
+#
+# Önek
+#   {prefix}        genel runtime.prefix değeri. Yalnızca belirli bir iletide gizlemek için o iletiden {prefix} öğesini kaldırın
+#
 # & veya [ karakterini olduğu gibi göstermek için önüne ters eğik çizgi koyun.
 
 [runtime]
@@ -24,13 +75,9 @@ denied = "{prefix}&cBunu yapmak için izniniz yok.&r"
 success = "{prefix}&aYapılandırma ve dil dosyası değişiklikleri uygulandı.&r"
 failed = "{prefix}&cDosya değişiklikleri reddedildi; son geçerli ayarlar etkin kalmaya devam ediyor.&r"
 
-[command.feedback.reload]
-success = "{prefix}&a&f{duration}&r&a ms içinde yeniden yüklendi.&r &7Dil:&r &f{locale}&r"
-failed = "{prefix}&cYeniden yükleme {duration} ms sonra başarısız oldu.&r &7Son geçerli ayarlar hâlâ etkin; ayrıntılı hata için konsola bakın.&r"
-
 [command.feedback.config]
 opened = "{prefix}&aEksiksiz oyun içi yapılandırma düzenleyicisi açıldı.&r"
-saved = "{prefix}&a&f{setting}&r&a kaydedildi ve uygulandı.&r"
+saved = "{prefix}&a{setting}&r &7değeri &f{old}&r &7yerine &f{new}&r &7olarak değiştirildi.&r"
 save_failed = "{prefix}&c&f{setting}&r&c uygulanamadı: {reason}&r"
 
 [command.feedback]
@@ -56,7 +103,8 @@ compatibility = "{prefix}&7Derleme:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Zaman
 root = "ShapedPortals yardım ve yönetimi"
 config = "Eksiksiz oyun içi yapılandırma düzenleyicisini aç"
 language = "Kullanılabilir bir ShapedPortals dili seç"
-debug = "Kapsamlı bir ShapedPortals tanı raporu oluştur"
+debug = "ShapedPortals tanı araçları"
+debug_dump = "Kapsamlı bir ShapedPortals tanı raporu oluştur"
 portals = "Yönetilen tüm portalları ve ışınlanma kısayollarını listele"
 teleport = "Yönetilen bir portalın yanına güvenle ışınlan veya belirtilmezse portalları listele"
 status = "Yönetilen portal ve deneme istatistiklerini göster"
@@ -65,6 +113,7 @@ status = "Yönetilen portal ve deneme istatistiklerini göster"
 locale = "Kullanılabilir dil yerel ayarı"
 page = "Birden başlayan portal listesi sayfası"
 portal = "Portal UUID değeri, benzersiz önek veya list"
+upload = "Herkese açık yüklemeler etkinse raporu yükle"
 
 [portal.notice]
 nether_created = "{prefix}&d{blocks} iç bloğa sahip şekilli bir portal oluşturuldu.&r"
@@ -121,7 +170,6 @@ languages = "&dDiller&r"
 
 [gui.navigation]
 back = "&eGeri&r"
-reload = "&bDosyaları yeniden yükle&r"
 close = "&cKapat&r"
 
 [gui.lore]
@@ -250,3 +298,19 @@ unknown_parameter = "Bilinmeyen parametre anahtarı: {key}"
 
 [director.runtime]
 usage = "Kullanım: {usage}"
+
+[language.menu]
+your_language = "Diliniz"
+reset_your_language = "Dil seçiminizi sıfırla"
+server_default = "Sunucu varsayılanı"
+edit_messages = "Dil mesajlarını düzenle"
+use_server_default = "Sunucu varsayılanını kullan"
+current = "Geçerli: {locale}"
+current_with_personal = "Geçerli: {locale} (Sizin: {personal})"
+your_description = "Yalnızca gördüğünüz mesajları değiştirin."
+reset_description = "Sunucunun varsayılan dilini kullanın."
+server_description = "Sunucunun varsayılan dilini değiştirin."
+edit_description = "Her dil için mesaj düzenleyicisini açın."
+select_description = "Bu dili seçmek için tıklayın."
+remove_personal_description = "Kişisel dil seçiminizi kaldırın."
+no_controls = "Kullanabileceğiniz dil ayarı yok."

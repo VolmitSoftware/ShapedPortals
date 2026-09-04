@@ -95,24 +95,6 @@ public final class CommandService implements CommandExecutor, TabCompleter {
     }
 
     private boolean executeLanguageCommand(CommandSender sender, String[] arguments) {
-        if (isLanguageEditorRequest(arguments) && sender instanceof Player player
-                && canSelectServerLanguage(sender)) {
-            plugin.getConfigEditor().openLanguageEditor(player, arguments.length == 3 ? arguments[2] : null);
-            return true;
-        }
-        LanguageMenuRequest request = languageMenuRequest(sender, arguments);
-        if (request != null && sender instanceof Player player) {
-            plugin.getConfigEditor().openLanguagePicker(
-                    player,
-                    request.personal(),
-                    request.page(),
-                    !request.personal()
-            );
-            return true;
-        }
-        if (sender instanceof Player player && isDirectLanguageSelection(arguments)) {
-            plugin.getConfigEditor().finishLanguageSelection(player);
-        }
         return plugin.getLanguageSwitcher().command(sender, arguments);
     }
 
@@ -212,69 +194,6 @@ public final class CommandService implements CommandExecutor, TabCompleter {
         return sender.hasPermission("shapedportals.command") || !requiresCommandPermission(args);
     }
 
-    private LanguageMenuRequest languageMenuRequest(CommandSender sender, String[] arguments) {
-        return languageMenuRequest(arguments, canSelectPersonalLanguage(sender), canSelectServerLanguage(sender));
-    }
-
-    static LanguageMenuRequest languageMenuRequest(
-            String[] arguments,
-            boolean personalAllowed,
-            boolean serverAllowed
-    ) {
-        if (arguments.length == 0) {
-            if (personalAllowed) {
-                return new LanguageMenuRequest(true, 1);
-            }
-            return serverAllowed ? new LanguageMenuRequest(false, 1) : null;
-        }
-        boolean personal;
-        if (arguments[0].equalsIgnoreCase("self")) {
-            personal = true;
-        } else if (arguments[0].equalsIgnoreCase("server")) {
-            personal = false;
-        } else {
-            return null;
-        }
-        if (personal ? !personalAllowed : !serverAllowed) {
-            return null;
-        }
-        if (arguments.length == 1) {
-            return new LanguageMenuRequest(personal, 1);
-        }
-        if (arguments.length != 2 || !arguments[1].toLowerCase(Locale.ROOT).startsWith("page=")) {
-            return null;
-        }
-        try {
-            int page = Integer.parseInt(arguments[1].substring("page=".length()));
-            return new LanguageMenuRequest(personal, Math.max(1, page));
-        } catch (NumberFormatException ignored) {
-            return null;
-        }
-    }
-
-    private boolean canSelectPersonalLanguage(CommandSender sender) {
-        return sender instanceof Player
-                && sender.hasPermission("volmit.language.self")
-                && sender.hasPermission("shapedportals.language.self");
-    }
-
-    private boolean canSelectServerLanguage(CommandSender sender) {
-        return sender.hasPermission("volmit.language.admin")
-                || sender.hasPermission("shapedportals.config");
-    }
-
-    private boolean isLanguageEditorRequest(String[] arguments) {
-        return (arguments.length == 2 || arguments.length == 3)
-                && arguments[0].equalsIgnoreCase("server")
-                && arguments[1].equalsIgnoreCase("edit");
-    }
-
-    private boolean isDirectLanguageSelection(String[] arguments) {
-        return arguments.length == 2
-                && (arguments[0].equalsIgnoreCase("self") || arguments[0].equalsIgnoreCase("server"))
-                && !arguments[1].toLowerCase(Locale.ROOT).startsWith("page=");
-    }
-
     static List<String> normalizeOptionalArguments(List<String> arguments) {
         if (arguments.size() != 2 || arguments.get(1).contains("=")) {
             return List.copyOf(arguments);
@@ -311,8 +230,5 @@ public final class CommandService implements CommandExecutor, TabCompleter {
                         .append(ComponentText.literal(message)));
             }
         }
-    }
-
-    record LanguageMenuRequest(boolean personal, int page) {
     }
 }

@@ -1,21 +1,73 @@
 # ShapedPortals 语言：zh_CN
+#
 # 此文件仅在缺失时下载；请直接编辑 languages/zh_CN.toml。
 # 本地更改绝不会被自动替换；缺少的项目使用英文。
+#
 # 颜色：&0-&f、&k-&r、&#RRGGBB、&xRRGGBB、&x&R&R&G&G&B&B 和 [RRGGBB]。自定义格式仍可使用 MiniMessage。
 # 占位符仅适用于特定消息。只保留消息中原有的占位符，且绝不能更改名称。
-# 命令：{argument}=意外参数；{command}=命令路径；{key}=参数键；{parameter}=参数名称；{type}=类型；{usage}=命令用法。
-# 运行状态：{attempts}=创建尝试数；{created}=创建数或创建时间；{rejected}=拒绝数；{enabled}=创建状态；{hot_reload}=热重载状态；{scheduler}=调度器。
-# 传送门：{portal}=标识；{portals}=管理数量；{id}=短 ID；{uuid}=完整 UUID；{world}=世界；{axis}=轴；{x}/{y}/{z}=锚点坐标；{blocks}=传送门格数；{cells}=全部管理格数；{creator}=创建者；{materials}=记录的框架材料。
-# 列表：{matches}=匹配的传送门数；{seconds}=确认时限（秒）。
-# 配置：{category}=编辑器分类；{setting}=设置名称；{status}=选择标记；{value}=当前值、默认值或原始值；{language}=当前语言；{locale}=区域设置; {name}=语言全名。
-# 语言编辑器：{variables}=可用占位符；{old}=旧值；{new}=新值。
-# 其他：{duration}=毫秒；{path}=本地报告路径；{url}=公开报告网址；{reason}=失败原因.
-# 前缀：{prefix}=全局 runtime.prefix 值。从某条消息中删除 {prefix}，即可只在该消息中隐藏前缀。
+#
+# 命令
+#   {argument}      意外参数
+#   {command}       命令路径
+#   {key}           参数键
+#   {parameter}     参数名称
+#   {type}          类型
+#   {usage}         命令用法
+#
+# 运行状态
+#   {attempts}      创建尝试数
+#   {created}       创建数或创建时间
+#   {rejected}      拒绝数
+#   {enabled}       创建状态
+#   {hot_reload}    热重载状态
+#   {scheduler}     调度器
+#
+# 传送门
+#   {portal}        标识
+#   {portals}       管理数量
+#   {id}            短 ID
+#   {uuid}          完整 UUID
+#   {world}         世界
+#   {axis}          轴
+#   {x}/{y}/{z}     锚点坐标
+#   {blocks}        传送门格数
+#   {cells}         全部管理格数
+#   {creator}       创建者
+#   {materials}     记录的框架材料
+#
+# 列表
+#   {matches}       匹配的传送门数
+#   {seconds}       确认时限（秒）
+#
+# 配置
+#   {category}      编辑器分类
+#   {setting}       设置名称
+#   {status}        选择标记
+#   {value}         当前值、默认值或原始值
+#   {language}      当前语言
+#   {locale}        区域设置
+#   {personal}      个人区域设置
+#   {name}          语言全名
+#
+# 语言编辑器
+#   {variables}     可用占位符
+#   {old}           旧值
+#   {new}           新值
+#
+# 其他
+#   {path}          本地报告路径
+#   {url}           公开报告网址
+#   {reason}        失败原因
+#
+# 前缀
+#   {prefix}        全局 runtime.prefix 值。从某条消息中删除 {prefix}，即可只在该消息中隐藏前缀
+#
 # 在 & 或 [ 前添加反斜杠可按原样显示该字符。
 
 [command.description]
 config = "打开完整的游戏内配置编辑器"
-debug = "创建完整的ShapedPortals诊断报告"
+debug = "ShapedPortals诊断工具"
+debug_dump = "创建完整的ShapedPortals诊断报告"
 language = "选择可用的 ShapedPortals 语言"
 portals = "列出每个管理的传送门及其传送快捷方式"
 root = "ShapedPortals帮助与管理"
@@ -25,7 +77,7 @@ teleport = "安全传送到管理的传送门旁边，或者在省略时列出�
 [command.feedback.config]
 opened = "{prefix}&a已打开完整的游戏内配置编辑器。&r"
 save_failed = "{prefix}&c无法应用&f{setting}&r&c：{reason}&r"
-saved = "{prefix}&a已保存并应用&f{setting}&r&a。&r"
+saved = "{prefix}&a{setting}&r &7已从 &f{old}&r &7更改为 &f{new}&r&7。&r"
 
 [command.feedback.debug]
 busy = "{prefix}&eShapedPortals诊断报告已在创建中。&r"
@@ -39,14 +91,11 @@ uploaded = "{prefix}&a已上传诊断报告：&r&b&n{url}&r"
 [command.feedback]
 failed = "{prefix}&c命令无法完成。请查看控制台以获取详细信息。&r"
 
-[command.feedback.reload]
-failed = "{prefix}&c重载失败，耗时{duration}毫秒。&r&7最后已知的良好设置仍然有效；请参阅完整的控制台错误。&r"
-success = "{prefix}&a已在&f{duration}&r&a毫秒内重新加载。&r&7语言环境：&r&f{locale}&r"
-
 [command.parameter]
 locale = "可用的语言区域设置"
 page = "从一开始编号的传送门列表页"
 portal = "传送门UUID、唯一前缀或列表"
+upload = "启用公开上传时上传报告"
 
 [command.status]
 attempts = "{prefix}&7尝试次数:&r&f{attempts}&r&8|&r&7创建时间:&r&a{created}&r&8|&r&7已拒绝:&r&c{rejected}&r"
@@ -126,7 +175,6 @@ toggle = "&8点击切换。&r"
 [gui.navigation]
 back = "&e返回&r"
 close = "&c关闭&r"
-reload = "&b重新加载文件&r"
 
 [gui.prompt]
 cancel = "{prefix}&7输入&fcancel&r&7以停止。此提示将在60秒后过期.&r"
@@ -250,3 +298,19 @@ denied = "{prefix}&c你没有权限执行该操作。&r"
 [runtime]
 player_only = "{prefix}&c此命令只能由玩家使用。&r"
 prefix = "&d&lShapedPortals&r&8›&r "
+
+[language.menu]
+your_language = "你的语言"
+reset_your_language = "重置你的语言"
+server_default = "服务器默认语言"
+edit_messages = "编辑语言消息"
+use_server_default = "使用服务器默认语言"
+current = "当前：{locale}"
+current_with_personal = "当前：{locale}（你的：{personal}）"
+your_description = "仅更改你看到的消息。"
+reset_description = "使用服务器默认语言。"
+server_description = "更改服务器默认语言。"
+edit_description = "打开各语言的消息编辑器。"
+select_description = "点击以选择此语言。"
+remove_personal_description = "移除你的个人语言选择。"
+no_controls = "你无权使用语言设置。"

@@ -52,16 +52,16 @@ class LanguageServiceTest {
         assertThat(service.hasRemoteCatalogLocale("fr_FR")).isTrue();
         assertThat(service.hasRemoteCatalogLocale("en_US")).isFalse();
         assertThat(toml)
-                .contains("an editable language file")
-                .contains("never automatically replaces local changes")
-                .contains("Colors: &0-&f")
+                .contains("This file is editable in a text editor or through /sp config")
+                .contains("Local changes are not replaced")
+                .contains("Colors and styles  &0 through &f")
                 .contains("[runtime]")
-                .contains("[command.feedback.reload]")
+                .contains("[language.menu]")
                 .contains("[portal.navigation.error]")
                 .contains("[hud]")
                 .contains("[gui.title]")
                 .contains("[director.runtime]")
-                .contains("{prefix}=the global runtime.prefix value")
+                .contains("{prefix}       Global runtime.prefix value")
                 .contains("&cYou do not have permission")
                 .contains("&d&lShapedPortals")
                 .doesNotContain("<red>")
@@ -277,7 +277,7 @@ class LanguageServiceTest {
         LanguageService service = service();
         Path file = service.languageFile("en_US").toPath();
         Files.createDirectories(file.getParent());
-        String content = "[command.feedback.reload]\nsuccess = \"<green><bold>Broken {duration} {locale}</green>\"\n";
+        String content = "[command.status]\nheader = \"<green><bold>Broken</green>\"\n";
         Files.writeString(file, content, StandardCharsets.UTF_8);
 
         assertThatThrownBy(() -> service.prepare("en_US"))
@@ -353,8 +353,9 @@ class LanguageServiceTest {
                     .contains("Pirate");
             assertThat(LanguageAudience.call(playerId, () -> service.render(ShapedMessages.NO_PERMISSION)))
                     .contains("Pirate", "You do not have permission");
-            assertThat(Files.readString(temporaryDirectory.resolve("language-preferences.properties")))
+            assertThat(Files.readString(temporaryDirectory.resolve("languages/language-preferences.properties")))
                     .contains(playerId + "=pirate");
+            assertThat(temporaryDirectory.resolve("language-preferences.properties")).doesNotExist();
             assertThat(Files.readString(pirate)).isEqualTo(pirateContent);
 
             selections.selectDefault("pirate").get(5L, TimeUnit.SECONDS);

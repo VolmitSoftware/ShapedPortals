@@ -1,16 +1,67 @@
 # ShapedPortals-kieli: fi_FI
+#
 # Tämä tiedosto ladataan vain, jos se puuttuu; muokkaa tiedostoa languages/fi_FI.toml suoraan.
 # Paikallisia muutoksia ei korvata automaattisesti; puuttuvat kohdat käyttävät englantia.
+#
 # Värit: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B ja [RRGGBB]. MiniMessage toimii myös omissa muotoiluissa.
 # Paikkamerkit ovat viestikohtaisia. Säilytä vain viestissä jo olevat paikkamerkit täsmälleen ennallaan.
-# Komennot: {argument}=odottamaton argumentti; {command}=komentopolku; {key}=parametriavain; {parameter}=parametrin nimi; {type}=tyyppi; {usage}=komennon käyttö.
-# Suoritus: {attempts}=luontiyritykset; {created}=luotujen määrä tai luontiaika; {rejected}=hylätyt yritykset; {enabled}=luonnin tila; {hot_reload}=pikalatauksen tila; {scheduler}=ajastin.
-# Portaalit: {portal}=tunniste; {portals}=hallittujen määrä; {id}=lyhyt ID; {uuid}=täysi UUID; {world}=maailma; {axis}=akseli; {x}/{y}/{z}=ankkurin koordinaatit; {blocks}=portaalisolut; {cells}=kaikki solut; {creator}=luoja; {materials}=tallennetut kehysmateriaalit.
-# Luettelot: {matches}=vastaavat portaalit; {seconds}=vahvistusaika sekunteina.
-# Asetukset: {category}=luokka; {setting}=asetuksen nimi; {status}=valintamerkki; {value}=nykyinen, oletus- tai raaka-arvo; {language}=aktiivinen kieli; {locale}=kielitunnus; {name}=kielen koko nimi.
-# Kielieditori: {variables}=sallitut paikkamerkit; {old}=edellinen arvo; {new}=uusi arvo.
-# Muut: {duration}=millisekunnit; {path}=paikallisen raportin polku; {url}=julkinen URL; {reason}=virheen syy.
-# Etuliite: {prefix}=yleinen runtime.prefix-arvo. Poista {prefix} yksittäisestä viestistä piilottaaksesi sen siinä.
+#
+# Komennot
+#   {argument}      odottamaton argumentti
+#   {command}       komentopolku
+#   {key}           parametriavain
+#   {parameter}     parametrin nimi
+#   {type}          tyyppi
+#   {usage}         komennon käyttö
+#
+# Suoritus
+#   {attempts}      luontiyritykset
+#   {created}       luotujen määrä tai luontiaika
+#   {rejected}      hylätyt yritykset
+#   {enabled}       luonnin tila
+#   {hot_reload}    pikalatauksen tila
+#   {scheduler}     ajastin
+#
+# Portaalit
+#   {portal}        tunniste
+#   {portals}       hallittujen määrä
+#   {id}            lyhyt ID
+#   {uuid}          täysi UUID
+#   {world}         maailma
+#   {axis}          akseli
+#   {x}/{y}/{z}     ankkurin koordinaatit
+#   {blocks}        portaalisolut
+#   {cells}         kaikki solut
+#   {creator}       luoja
+#   {materials}     tallennetut kehysmateriaalit
+#
+# Luettelot
+#   {matches}       vastaavat portaalit
+#   {seconds}       vahvistusaika sekunteina
+#
+# Asetukset
+#   {category}      luokka
+#   {setting}       asetuksen nimi
+#   {status}        valintamerkki
+#   {value}         nykyinen, oletus- tai raaka-arvo
+#   {language}      aktiivinen kieli
+#   {locale}        kielitunnus
+#   {personal}      henkilökohtainen kielitunnus
+#   {name}          kielen koko nimi
+#
+# Kielieditori
+#   {variables}     sallitut paikkamerkit
+#   {old}           edellinen arvo
+#   {new}           uusi arvo
+#
+# Muut
+#   {path}          paikallisen raportin polku
+#   {url}           julkinen URL
+#   {reason}        virheen syy
+#
+# Etuliite
+#   {prefix}        yleinen runtime.prefix-arvo. Poista {prefix} yksittäisestä viestistä piilottaaksesi sen siinä
+#
 # Näytä & tai [ kirjaimellisesti lisäämällä eteen kenoviiva.
 
 [runtime]
@@ -24,13 +75,9 @@ denied = "{prefix}&cSinulla ei ole oikeutta tehdä sitä.&r"
 success = "{prefix}&aAsetusten ja kielitiedostojen muutokset otettiin käyttöön.&r"
 failed = "{prefix}&cTiedostomuutokset hylättiin; viimeksi toimineet asetukset pysyvät käytössä.&r"
 
-[command.feedback.reload]
-success = "{prefix}&aLadattiin uudelleen &f{duration}&r&a ms:ssa.&r &7Kieli:&r &f{locale}&r"
-failed = "{prefix}&cUudelleenlataus epäonnistui {duration} ms:n jälkeen.&r &7Viimeksi toimineet asetukset pysyvät käytössä; katso koko virhe konsolista.&r"
-
 [command.feedback.config]
 opened = "{prefix}&aKattava pelinsisäinen asetuseditori avattiin.&r"
-saved = "{prefix}&aAsetus &f{setting}&r&a tallennettiin ja otettiin käyttöön.&r"
+saved = "{prefix}&a{setting}&r &7muutettiin arvosta &f{old}&r &7arvoon &f{new}&r&7.&r"
 save_failed = "{prefix}&cAsetusta &f{setting}&r&c ei voitu ottaa käyttöön: {reason}&r"
 
 [command.feedback]
@@ -56,7 +103,8 @@ compatibility = "{prefix}&7Artefakti:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Aja
 root = "ShapedPortalsin ohje ja hallinta"
 config = "Avaa kattava pelinsisäinen asetuseditori"
 language = "Valitse käytettävissä oleva ShapedPortals-kieli"
-debug = "Luo kattava ShapedPortals-diagnostiikkaraportti"
+debug = "ShapedPortalsin diagnostiikkatyökalut"
+debug_dump = "Luo kattava ShapedPortals-diagnostiikkaraportti"
 portals = "Luettele kaikki hallinnoidut portaalit ja niiden teleporttipikavalinnat"
 teleport = "Teleporttaa turvallisesti hallinnoidun portaalin viereen tai luettele portaalit, jos tunnus puuttuu"
 status = "Näytä hallinnoitujen portaalien ja yritysten tilastot"
@@ -65,6 +113,7 @@ status = "Näytä hallinnoitujen portaalien ja yritysten tilastot"
 locale = "Käytettävissä olevan kielen tunnus"
 page = "Portaaliluettelon sivu numerosta yksi alkaen"
 portal = "Portaalin UUID, yksilöllinen alku tai list"
+upload = "Lähetä raportti, kun julkiset lähetykset ovat käytössä"
 
 [portal.notice]
 nether_created = "{prefix}&dMuotoiltu portaali luotiin käyttäen {blocks} sisälohkoa.&r"
@@ -121,7 +170,6 @@ languages = "&dKielet&r"
 
 [gui.navigation]
 back = "&eTakaisin&r"
-reload = "&bLataa tiedostot uudelleen&r"
 close = "&cSulje&r"
 
 [gui.lore]
@@ -250,3 +298,19 @@ unknown_parameter = "Tuntematon parametriavain: {key}"
 
 [director.runtime]
 usage = "Käyttö: {usage}"
+
+[language.menu]
+your_language = "Oma kielesi"
+reset_your_language = "Palauta oma kielesi"
+server_default = "Palvelimen oletuskieli"
+edit_messages = "Muokkaa kieliviestejä"
+use_server_default = "Käytä palvelimen oletuskieltä"
+current = "Nykyinen: {locale}"
+current_with_personal = "Nykyinen: {locale} (Omasi: {personal})"
+your_description = "Vaihda vain näkemäsi viestit."
+reset_description = "Käytä palvelimen oletuskieltä."
+server_description = "Vaihda palvelimen oletuskieli."
+edit_description = "Avaa kielikohtainen viestieditori."
+select_description = "Napsauta valitaksesi tämän kielen."
+remove_personal_description = "Poista henkilökohtainen kielivalintasi."
+no_controls = "Sinulla ei ole käytettävissä kieliasetuksia."

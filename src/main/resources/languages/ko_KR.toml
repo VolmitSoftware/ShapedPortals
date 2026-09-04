@@ -1,21 +1,73 @@
 # ShapedPortals 언어: ko_KR
+#
 # 이 파일은 없을 때만 다운로드됩니다. languages/ko_KR.toml을 직접 편집하세요.
 # 로컬 변경 사항은 자동으로 덮어쓰지 않으며 누락된 항목은 영어를 사용합니다.
+#
 # 색상: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B, [RRGGBB]. 사용자 지정 서식에는 MiniMessage도 사용할 수 있습니다.
 # 자리표시자는 메시지별로 다릅니다. 각 메시지에 이미 있는 자리표시자만 그대로 두고 이름을 바꾸지 마세요.
-# 명령어: {argument}=예상하지 못한 인수; {command}=명령 경로; {key}=매개변수 키; {parameter}=매개변수 이름; {type}=형식; {usage}=사용법.
-# 실행 상태: {attempts}=생성 시도 수; {created}=생성 수 또는 생성 시각; {rejected}=거부 수; {enabled}=생성 상태; {hot_reload}=핫 리로드 상태; {scheduler}=스케줄러.
-# 포털: {portal}=식별자; {portals}=관리 수; {id}=짧은 ID; {uuid}=전체 UUID; {world}=월드; {axis}=축; {x}/{y}/{z}=기준 좌표; {blocks}=포털 셀 수; {cells}=전체 관리 셀; {creator}=생성자; {materials}=기록된 프레임 재료.
-# 목록: {matches}=일치하는 포털 수; {seconds}=확인 제한 시간(초).
-# 설정: {category}=편집기 범주; {setting}=설정 이름; {status}=선택 표시; {value}=현재값, 기본값 또는 원시값; {language}=활성 언어; {locale}=로케일; {name}=언어 전체 이름.
-# 언어 편집기: {variables}=사용 가능한 자리표시자; {old}=이전 값; {new}=새 값.
-# 기타: {duration}=경과 밀리초; {path}=로컬 보고서 경로; {url}=공개 URL; {reason}=실패 이유.
-# 접두사: {prefix}=전역 runtime.prefix 값입니다. 개별 메시지에서 {prefix}를 제거하면 그 메시지에서만 숨겨집니다.
+#
+# 명령어
+#   {argument}      예상하지 못한 인수
+#   {command}       명령 경로
+#   {key}           매개변수 키
+#   {parameter}     매개변수 이름
+#   {type}          형식
+#   {usage}         사용법
+#
+# 실행 상태
+#   {attempts}      생성 시도 수
+#   {created}       생성 수 또는 생성 시각
+#   {rejected}      거부 수
+#   {enabled}       생성 상태
+#   {hot_reload}    핫 리로드 상태
+#   {scheduler}     스케줄러
+#
+# 포털
+#   {portal}        식별자
+#   {portals}       관리 수
+#   {id}            짧은 ID
+#   {uuid}          전체 UUID
+#   {world}         월드
+#   {axis}          축
+#   {x}/{y}/{z}     기준 좌표
+#   {blocks}        포털 셀 수
+#   {cells}         전체 관리 셀
+#   {creator}       생성자
+#   {materials}     기록된 프레임 재료
+#
+# 목록
+#   {matches}       일치하는 포털 수
+#   {seconds}       확인 제한 시간(초)
+#
+# 설정
+#   {category}      편집기 범주
+#   {setting}       설정 이름
+#   {status}        선택 표시
+#   {value}         현재값, 기본값 또는 원시값
+#   {language}      활성 언어
+#   {locale}        로케일
+#   {personal}      개인 로케일
+#   {name}          언어 전체 이름
+#
+# 언어 편집기
+#   {variables}     사용 가능한 자리표시자
+#   {old}           이전 값
+#   {new}           새 값
+#
+# 기타
+#   {path}          로컬 보고서 경로
+#   {url}           공개 URL
+#   {reason}        실패 이유
+#
+# 접두사
+#   {prefix}        전역 runtime.prefix 값입니다. 개별 메시지에서 {prefix}를 제거하면 그 메시지에서만 숨겨집니다
+#
 # & 또는 [ 앞에 백슬래시를 붙이면 문자를 그대로 표시합니다.
 
 [command.description]
 config = "전체 게임 내 구성 편집기 열기"
-debug = "포괄적인ShapedPortals진단 보고서 생성"
+debug = "ShapedPortals 진단 도구"
+debug_dump = "포괄적인ShapedPortals진단 보고서 생성"
 language = "사용 가능한 ShapedPortals 언어 선택"
 portals = "관리되는 모든 포털과 해당 순간이동 단축키 나열"
 root = "ShapedPortals도움말 및 관리"
@@ -25,7 +77,7 @@ teleport = "관리되는 포털 옆으로 안전하게 순간이동 또는 생�
 [command.feedback.config]
 opened = "{prefix}&a게임 내 전체 구성 편집기를 열었습니다.&r"
 save_failed = "{prefix}&c&f{setting}&r&c적용할 수 없습니다:{reason}&r"
-saved = "{prefix}&a&f{setting}&r&a저장 및 적용됨.&r"
+saved = "{prefix}&a{setting}&r&7을(를) &f{old}&r&7에서 &f{new}&r&7(으)로 변경했습니다.&r"
 
 [command.feedback.debug]
 busy = "{prefix}&eShapedPortals진단 보고서가 이미 생성되고 있습니다.&r"
@@ -39,14 +91,11 @@ uploaded = "{prefix}&a진단 보고서를 업로드했습니다:&r&b&n{url}&r"
 [command.feedback]
 failed = "{prefix}&c명령을 완료할 수 없습니다. 자세한 내용은 콘솔을 참조하십시오.&r"
 
-[command.feedback.reload]
-failed = "{prefix}&c{duration}ms 후 재로드 실패.&r&7마지막 정상 설정이 여전히 활성화됨; 전체 콘솔 오류를 확인하세요.&r"
-success = "{prefix}&a&f{duration}&r&ams 동안 다시 로드됨.&r&7로케일:&r&f{locale}&r"
-
 [command.parameter]
 locale = "사용 가능한 언어 로케일"
 page = "1부터 시작하는 포털 목록 페이지"
 portal = "포털UUID, 고유 접두사 또는 목록"
+upload = "공개 업로드가 활성화된 경우 보고서 업로드"
 
 [command.status]
 attempts = "{prefix}&7시도:&r&f{attempts}&r&8|&r&7생성됨:&r&a{created}&r&8|&r&7거부됨:&r&c{rejected}&r"
@@ -126,7 +175,6 @@ toggle = "&8클릭하여 전환.&r"
 [gui.navigation]
 back = "&e뒤로&r"
 close = "&c닫기&r"
-reload = "&b파일 다시 불러오기&r"
 
 [gui.prompt]
 cancel = "{prefix}&7중지하려면&fcancel&r&7을 입력하세요. 이 프롬프트는 60초 후 만료됩니다.&r"
@@ -250,3 +298,19 @@ denied = "{prefix}&c당신은 그것을 수행할 권한이 없습니다.&r"
 [runtime]
 player_only = "{prefix}&c이 명령은 플레이어만 사용할 수 있습니다.&r"
 prefix = "&d&lShapedPortals&r&8›&r "
+
+[language.menu]
+your_language = "내 언어"
+reset_your_language = "내 언어 재설정"
+server_default = "서버 기본값"
+edit_messages = "언어 메시지 편집"
+use_server_default = "서버 기본값 사용"
+current = "현재: {locale}"
+current_with_personal = "현재: {locale} (내 언어: {personal})"
+your_description = "나에게 표시되는 메시지만 변경합니다."
+reset_description = "서버 기본 언어를 사용합니다."
+server_description = "서버 기본 언어를 변경합니다."
+edit_description = "언어별 메시지 편집기를 엽니다."
+select_description = "클릭하여 이 언어를 선택합니다."
+remove_personal_description = "개인 언어 선택을 제거합니다."
+no_controls = "사용할 수 있는 언어 설정이 없습니다."

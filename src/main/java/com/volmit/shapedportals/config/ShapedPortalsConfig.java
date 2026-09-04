@@ -223,7 +223,7 @@ public final class ShapedPortalsConfig {
     }
 
     public static final class Debug {
-        @ConfigDoc(value = "Upload /shapedportals debug reports to the public mclo.gs service after saving them locally.", impact = "Enabled by default. Disabling this keeps reports local; ShapedPortals does not retain the service deletion credential for public uploads.")
+        @ConfigDoc(value = "Upload /shapedportals debug dump reports to the public mclo.gs service after saving them locally.", impact = "Enabled by default. Disabling this keeps reports local; ShapedPortals does not retain the service deletion credential for public uploads.")
         public boolean uploadEnabled = true;
 
         private Debug copy() {

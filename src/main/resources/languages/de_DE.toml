@@ -1,16 +1,67 @@
 # ShapedPortals-Sprache: de_DE
+#
 # Diese Datei wird nur heruntergeladen, wenn sie fehlt; bearbeite languages/de_DE.toml direkt.
 # Lokale Änderungen werden nie automatisch ersetzt; fehlende Einträge verwenden Englisch.
+#
 # Farben: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B und [RRGGBB]. MiniMessage bleibt für eigene Formatierungen verfügbar.
 # Platzhalter gehören jeweils zu einer bestimmten Nachricht. Nur vorhandene Platzhalter behalten und niemals umbenennen.
-# Befehle: {argument}=unerwartetes Argument; {command}=Befehlspfad; {key}=Parameterschlüssel; {parameter}=Parametername; {type}=Parametertyp; {usage}=Befehlsverwendung.
-# Laufzeit: {attempts}=Erstellungsversuche; {created}=Erfolgsanzahl oder Erstellungszeit; {rejected}=abgelehnte Versuche; {enabled}=Erstellungsstatus; {hot_reload}=Hot-Reload-Status; {scheduler}=Scheduler-Implementierung.
-# Portale: {portal}=Portalbezeichner; {portals}=verwaltete Anzahl; {id}=Kurz-ID; {uuid}=vollständige UUID; {world}=Welt; {axis}=Portalachse; {x}/{y}/{z}=Ankerkoordinaten; {blocks}=Portalzellen; {cells}=alle verwalteten Zellen; {creator}=Ersteller; {materials}=aufgezeichnete Rahmenmaterialien.
-# Listen: {matches}=passende Portale; {seconds}=Bestätigungszeit in Sekunden.
-# Konfiguration: {category}=Editorkategorie; {setting}=Einstellungsname; {status}=Auswahlmarkierung; {value}=aktueller, Standard- oder Rohwert; {language}=aktive Sprache; {locale}=Sprachkennung; {name}=vollständiger Sprachname.
-# Sprach-Editor: {variables}=gültige Platzhalter; {old}=vorheriger Wert; {new}=neuer Wert.
-# Sonstiges: {duration}=Millisekunden; {path}=lokaler Berichtspfad; {url}=öffentliche Berichts-URL; {reason}=Fehlergrund.
-# Präfix: {prefix}=der globale Wert runtime.prefix. Entferne {prefix} aus einer einzelnen Nachricht, um es dort auszublenden.
+#
+# Befehle
+#   {argument}      unerwartetes Argument
+#   {command}       Befehlspfad
+#   {key}           Parameterschlüssel
+#   {parameter}     Parametername
+#   {type}          Parametertyp
+#   {usage}         Befehlsverwendung
+#
+# Laufzeit
+#   {attempts}      Erstellungsversuche
+#   {created}       Erfolgsanzahl oder Erstellungszeit
+#   {rejected}      abgelehnte Versuche
+#   {enabled}       Erstellungsstatus
+#   {hot_reload}    Hot-Reload-Status
+#   {scheduler}     Scheduler-Implementierung
+#
+# Portale
+#   {portal}        Portalbezeichner
+#   {portals}       verwaltete Anzahl
+#   {id}            Kurz-ID
+#   {uuid}          vollständige UUID
+#   {world}         Welt
+#   {axis}          Portalachse
+#   {x}/{y}/{z}     Ankerkoordinaten
+#   {blocks}        Portalzellen
+#   {cells}         alle verwalteten Zellen
+#   {creator}       Ersteller
+#   {materials}     aufgezeichnete Rahmenmaterialien
+#
+# Listen
+#   {matches}       passende Portale
+#   {seconds}       Bestätigungszeit in Sekunden
+#
+# Konfiguration
+#   {category}      Editorkategorie
+#   {setting}       Einstellungsname
+#   {status}        Auswahlmarkierung
+#   {value}         aktueller, Standard- oder Rohwert
+#   {language}      aktive Sprache
+#   {locale}        Sprachkennung
+#   {personal}      persönliche Sprachkennung
+#   {name}          vollständiger Sprachname
+#
+# Sprach-Editor
+#   {variables}     gültige Platzhalter
+#   {old}           vorheriger Wert
+#   {new}           neuer Wert
+#
+# Sonstiges
+#   {path}          lokaler Berichtspfad
+#   {url}           öffentliche Berichts-URL
+#   {reason}        Fehlergrund
+#
+# Präfix
+#   {prefix}        der globale Wert runtime.prefix. Entferne {prefix} aus einer einzelnen Nachricht, um es dort auszublenden
+#
 # Ein vorangestellter Rückwärtsschrägstrich zeigt & oder [ wörtlich an.
 
 [runtime]
@@ -24,13 +75,9 @@ denied = "{prefix}&cDu hast keine Berechtigung dafür.&r"
 success = "{prefix}&aÄnderungen an Konfiguration und Sprachdatei wurden übernommen.&r"
 failed = "{prefix}&cDateiänderungen wurden abgelehnt; die letzten gültigen Einstellungen bleiben aktiv.&r"
 
-[command.feedback.reload]
-success = "{prefix}&aIn &f{duration}&r&a ms neu geladen.&r &7Sprache:&r &f{locale}&r"
-failed = "{prefix}&cNeuladen nach {duration} ms fehlgeschlagen.&r &7Die letzten gültigen Einstellungen bleiben aktiv; der vollständige Fehler steht in der Konsole.&r"
-
 [command.feedback.config]
 opened = "{prefix}&aDer vollständige Konfigurationseditor wurde geöffnet.&r"
-saved = "{prefix}&a&f{setting}&r&a wurde gespeichert und übernommen.&r"
+saved = "{prefix}&a{setting}&r &7wurde von &f{old}&r &7zu &f{new}&r &7geändert.&r"
 save_failed = "{prefix}&c&f{setting}&r&c konnte nicht übernommen werden: {reason}&r"
 
 [command.feedback]
@@ -56,7 +103,8 @@ compatibility = "{prefix}&7Artefakt:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Plan
 root = "Hilfe und Verwaltung für ShapedPortals"
 config = "Den vollständigen Konfigurationseditor öffnen"
 language = "Eine verfügbare ShapedPortals-Sprache auswählen"
-debug = "Einen umfassenden ShapedPortals-Diagnosebericht erstellen"
+debug = "ShapedPortals-Diagnosewerkzeuge"
+debug_dump = "Einen umfassenden ShapedPortals-Diagnosebericht erstellen"
 portals = "Alle verwalteten Portale mit Teleport-Verknüpfung auflisten"
 teleport = "Sicher neben ein verwaltetes Portal teleportieren oder ohne Angabe die Portale auflisten"
 status = "Statistiken zu verwalteten Portalen und Versuchen anzeigen"
@@ -65,6 +113,7 @@ status = "Statistiken zu verwalteten Portalen und Versuchen anzeigen"
 locale = "Verfügbare Sprachkennung"
 page = "Seitennummer der Portalliste, beginnend bei eins"
 portal = "Portal-UUID, eindeutiges Präfix oder list"
+upload = "Den Bericht hochladen, wenn öffentliche Uploads aktiviert sind"
 
 [portal.notice]
 nether_created = "{prefix}&dEin geformtes Portal mit {blocks} Innenblöcken wurde erstellt.&r"
@@ -121,7 +170,6 @@ languages = "&dSprachen&r"
 
 [gui.navigation]
 back = "&eZurück&r"
-reload = "&bDateien neu laden&r"
 close = "&cSchließen&r"
 
 [gui.lore]
@@ -250,3 +298,19 @@ unknown_parameter = "Unbekannter Parameterschlüssel: {key}"
 
 [director.runtime]
 usage = "Verwendung: {usage}"
+
+[language.menu]
+your_language = "Ihre Sprache"
+reset_your_language = "Eigene Sprachauswahl zurücksetzen"
+server_default = "Serverstandard"
+edit_messages = "Sprachnachrichten bearbeiten"
+use_server_default = "Serverstandard verwenden"
+current = "Aktuell: {locale}"
+current_with_personal = "Aktuell: {locale} (Ihre: {personal})"
+your_description = "Ändern Sie nur die Nachrichten, die Sie sehen."
+reset_description = "Verwenden Sie die Standardsprache des Servers."
+server_description = "Ändern Sie die Standardsprache des Servers."
+edit_description = "Öffnen Sie den Nachrichteneditor für jede Sprache."
+select_description = "Klicken Sie, um diese Sprache auszuwählen."
+remove_personal_description = "Entfernen Sie Ihre persönliche Sprachauswahl."
+no_controls = "Für Sie sind keine Spracheinstellungen verfügbar."

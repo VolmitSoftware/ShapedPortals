@@ -2,14 +2,13 @@ package com.volmit.shapedportals.portal;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.EndPortalFrame;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Event.Result;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
@@ -22,10 +21,8 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.block.data.type.EndPortalFrame;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 
 import java.util.HashSet;
@@ -56,23 +53,15 @@ public final class PortalEventListener implements Listener {
     public void onPlace(BlockPlaceEvent event) {
         Block block = event.getBlockPlaced();
         dirty(block);
+        if (event.canBuild()
+                && block.getBlockData() instanceof EndPortalFrame frame
+                && frame.hasEye()) {
+            portalService.attemptEnd(block, event.getPlayer());
+            return;
+        }
         if (block.getType() == Material.FIRE || block.getType() == Material.SOUL_FIRE) {
             portalService.attempt(block, event.getPlayer(), "PLACED_FIRE");
         }
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onEndEye(PlayerInteractEvent event) {
-        Block clicked = event.getClickedBlock();
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK
-                || clicked == null
-                || clicked.getType() != Material.END_PORTAL_FRAME
-                || event.getMaterial() != Material.ENDER_EYE
-                || event.useInteractedBlock() == Result.DENY
-                || event.useItemInHand() == Result.DENY) {
-            return;
-        }
-        portalService.attemptEnd(clicked, event.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -139,12 +128,6 @@ public final class PortalEventListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityChangeBlock(EntityChangeBlockEvent event) {
         dirty(event.getBlock());
-        if (event.getEntity() instanceof Player player
-                && event.getBlock().getType() == Material.END_PORTAL_FRAME
-                && event.getBlockData() instanceof EndPortalFrame frame
-                && frame.hasEye()) {
-            portalService.attemptEnd(event.getBlock(), player);
-        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

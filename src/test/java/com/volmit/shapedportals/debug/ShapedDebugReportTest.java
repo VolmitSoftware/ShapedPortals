@@ -9,7 +9,6 @@ import org.bukkit.Material;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,36 +37,12 @@ final class ShapedDebugReportTest {
                 "private-player-name"
         );
         ShapedDebugSnapshot snapshot = new ShapedDebugSnapshot(
-                Instant.parse("2026-08-28T12:00:00Z"),
-                "2.0.0",
-                "Paper\nInjected",
-                "Paper 1.21.11",
-                "1.21.11-R0.1-SNAPSHOT",
-                "1.21.11",
-                true,
-                2,
-                100,
-                10,
-                10,
-                false,
-                true,
-                true,
-                "SURVIVAL",
-                10,
-                0,
-                7,
-                3,
-                Map.of("NORMAL", 1, "NETHER", 1, "THE_END", 1),
-                Set.of(portal.worldId()),
                 "Folia region",
-                "20.00, 19.98, 19.95",
-                "12.34",
                 "en_US",
                 List.of("en_US"),
                 "ready",
                 "30e3b4eea5852ffa879d8371d556cd4b9b9fdbe7",
                 false,
-                "player",
                 config,
                 true,
                 true,
@@ -78,26 +53,17 @@ final class ShapedDebugReportTest {
                         PortalStats.RejectionReason.OPEN_FRAME, 4L,
                         PortalStats.RejectionReason.EVENT_CANCELLED, 2L
                 )),
-                List.of(new ShapedDebugSnapshot.PluginState(
-                        "ShapedPortals", "2.0.0", true, "com.volmit.shapedportals.ShapedPortals",
-                        List.of("Volmit Software"), "POSTWORLD", "1.20",
-                        List.of(), List.of("PlaceholderAPI")
-                )),
-                Path.of("."),
-                null
+                Set.of(portal.worldId()),
+                Path.of(".")
         );
 
         String report = ShapedDebugReport.create(snapshot);
 
         assertThat(report)
-                .contains("Format: 4")
-                .contains("Version: 2.0.0")
-                .contains("Implementation: Paper Injected")
                 .contains("Managed portals: 4")
                 .contains("Creation attempts: 10")
                 .contains("Rejected open frame: 4")
                 .contains("Rejected event cancelled: 2")
-                .contains("Pending scheduler tasks: 7")
                 .contains("Language catalog: ready")
                 .contains("Language source reference: 30e3b4eea5852ffa879d8371d556cd4b9b9fdbe7")
                 .contains("Portal registry details")
@@ -112,7 +78,6 @@ final class ShapedDebugReportTest {
                 .contains("effects.endCreationSoundType: minecraft:block.end_portal.spawn")
                 .contains("bStats integration: initialized")
                 .contains("React metric provider: registered")
-                .contains("ShapedPortals 2.0.0 | enabled=true")
                 .doesNotContain("== Threads ==")
                 .doesNotContain("Deadlocked:")
                 .doesNotContain("Deadlock thread")

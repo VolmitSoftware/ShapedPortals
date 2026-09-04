@@ -1,16 +1,67 @@
 # Ngôn ngữ ShapedPortals: vi_VI
+#
 # Tệp này chỉ được tải xuống khi chưa tồn tại; hãy sửa trực tiếp languages/vi_VI.toml.
 # Thay đổi cục bộ không bao giờ bị tự động thay thế; mục còn thiếu dùng tiếng Anh.
+#
 # Màu: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B và [RRGGBB]. MiniMessage vẫn dùng được cho định dạng tùy chỉnh.
 # Mỗi chỗ giữ chỗ chỉ thuộc về các thông báo cụ thể. Chỉ giữ các mã đã có trong thông báo và không đổi tên chúng.
-# Lệnh: {argument}=đối số ngoài dự kiến; {command}=đường dẫn lệnh; {key}=khóa tham số; {parameter}=tên tham số; {type}=kiểu; {usage}=cách dùng lệnh.
-# Hoạt động: {attempts}=lần thử tạo; {created}=số đã tạo hoặc thời điểm tạo; {rejected}=lần bị từ chối; {enabled}=trạng thái tạo; {hot_reload}=trạng thái tải lại; {scheduler}=bộ lập lịch.
-# Cổng: {portal}=mã định danh; {portals}=số được quản lý; {id}=ID ngắn; {uuid}=UUID đầy đủ; {world}=thế giới; {axis}=trục; {x}/{y}/{z}=tọa độ neo; {blocks}=ô cổng; {cells}=tất cả ô; {creator}=người tạo; {materials}=vật liệu khung đã ghi.
-# Danh sách: {matches}=cổng khớp; {seconds}=thời hạn xác nhận tính bằng giây.
-# Cấu hình: {category}=danh mục; {setting}=tên cài đặt; {status}=dấu chọn; {value}=giá trị hiện tại, mặc định hoặc thô; {language}=ngôn ngữ đang dùng; {locale}=mã vùng; {name}=tên đầy đủ của ngôn ngữ.
-# Trình sửa ngôn ngữ: {variables}=chỗ giữ chỗ hợp lệ; {old}=giá trị trước; {new}=giá trị mới.
-# Khác: {duration}=mili giây; {path}=đường dẫn báo cáo cục bộ; {url}=URL công khai; {reason}=lý do lỗi.
-# Tiền tố: {prefix}=giá trị runtime.prefix toàn cục. Xóa {prefix} khỏi từng thông báo nếu không muốn hiện ở thông báo đó.
+#
+# Lệnh
+#   {argument}      đối số ngoài dự kiến
+#   {command}       đường dẫn lệnh
+#   {key}           khóa tham số
+#   {parameter}     tên tham số
+#   {type}          kiểu
+#   {usage}         cách dùng lệnh
+#
+# Hoạt động
+#   {attempts}      lần thử tạo
+#   {created}       số đã tạo hoặc thời điểm tạo
+#   {rejected}      lần bị từ chối
+#   {enabled}       trạng thái tạo
+#   {hot_reload}    trạng thái tải lại
+#   {scheduler}     bộ lập lịch
+#
+# Cổng
+#   {portal}        mã định danh
+#   {portals}       số được quản lý
+#   {id}            ID ngắn
+#   {uuid}          UUID đầy đủ
+#   {world}         thế giới
+#   {axis}          trục
+#   {x}/{y}/{z}     tọa độ neo
+#   {blocks}        ô cổng
+#   {cells}         tất cả ô
+#   {creator}       người tạo
+#   {materials}     vật liệu khung đã ghi
+#
+# Danh sách
+#   {matches}       cổng khớp
+#   {seconds}       thời hạn xác nhận tính bằng giây
+#
+# Cấu hình
+#   {category}      danh mục
+#   {setting}       tên cài đặt
+#   {status}        dấu chọn
+#   {value}         giá trị hiện tại, mặc định hoặc thô
+#   {language}      ngôn ngữ đang dùng
+#   {locale}        mã vùng
+#   {personal}      mã vùng cá nhân
+#   {name}          tên đầy đủ của ngôn ngữ
+#
+# Trình sửa ngôn ngữ
+#   {variables}     chỗ giữ chỗ hợp lệ
+#   {old}           giá trị trước
+#   {new}           giá trị mới
+#
+# Khác
+#   {path}          đường dẫn báo cáo cục bộ
+#   {url}           URL công khai
+#   {reason}        lý do lỗi
+#
+# Tiền tố
+#   {prefix}        giá trị runtime.prefix toàn cục. Xóa {prefix} khỏi từng thông báo nếu không muốn hiện ở thông báo đó
+#
 # Thêm dấu gạch chéo ngược trước & hoặc [ để hiển thị ký tự theo nghĩa đen.
 
 [runtime]
@@ -24,13 +75,9 @@ denied = "{prefix}&cBạn không có quyền thực hiện thao tác này.&r"
 success = "{prefix}&aĐã áp dụng các thay đổi trong tệp cấu hình và ngôn ngữ.&r"
 failed = "{prefix}&cĐã từ chối thay đổi tệp; các thiết lập hợp lệ gần nhất vẫn đang hoạt động.&r"
 
-[command.feedback.reload]
-success = "{prefix}&aĐã tải lại trong &f{duration}&r&a mili giây.&r &7Ngôn ngữ:&r &f{locale}&r"
-failed = "{prefix}&cTải lại thất bại sau {duration} mili giây.&r &7Các thiết lập hợp lệ gần nhất vẫn đang hoạt động; hãy xem toàn bộ lỗi trong bảng điều khiển.&r"
-
 [command.feedback.config]
 opened = "{prefix}&aĐã mở trình chỉnh sửa cấu hình đầy đủ trong trò chơi.&r"
-saved = "{prefix}&aĐã lưu và áp dụng &f{setting}&r&a.&r"
+saved = "{prefix}&a{setting}&r &7đã đổi từ &f{old}&r &7thành &f{new}&r&7.&r"
 save_failed = "{prefix}&cKhông thể áp dụng &f{setting}&r&c: {reason}&r"
 
 [command.feedback]
@@ -56,7 +103,8 @@ compatibility = "{prefix}&7Gói dựng:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7B
 root = "Trợ giúp và quản trị ShapedPortals"
 config = "Mở trình chỉnh sửa cấu hình đầy đủ trong trò chơi"
 language = "Chọn một ngôn ngữ ShapedPortals khả dụng"
-debug = "Tạo báo cáo chẩn đoán ShapedPortals toàn diện"
+debug = "Công cụ chẩn đoán ShapedPortals"
+debug_dump = "Tạo báo cáo chẩn đoán ShapedPortals toàn diện"
 portals = "Liệt kê mọi cổng được quản lý và lối tắt dịch chuyển của chúng"
 teleport = "Dịch chuyển an toàn đến cạnh một cổng được quản lý hoặc liệt kê cổng nếu bỏ trống"
 status = "Hiển thị thống kê cổng được quản lý và số lần thử"
@@ -65,6 +113,7 @@ status = "Hiển thị thống kê cổng được quản lý và số lần th�
 locale = "Mã vùng ngôn ngữ khả dụng"
 page = "Trang danh sách cổng được đánh số từ một"
 portal = "UUID cổng, tiền tố duy nhất hoặc list"
+upload = "Tải báo cáo lên khi bật tải lên công khai"
 
 [portal.notice]
 nether_created = "{prefix}&dĐã tạo một cổng tùy hình với {blocks} khối bên trong.&r"
@@ -121,7 +170,6 @@ languages = "&dNgôn ngữ&r"
 
 [gui.navigation]
 back = "&eQuay lại&r"
-reload = "&bTải lại tệp&r"
 close = "&cĐóng&r"
 
 [gui.lore]
@@ -250,3 +298,19 @@ unknown_parameter = "Khóa tham số không xác định: {key}"
 
 [director.runtime]
 usage = "Cách dùng: {usage}"
+
+[language.menu]
+your_language = "Ngôn ngữ của bạn"
+reset_your_language = "Đặt lại ngôn ngữ của bạn"
+server_default = "Ngôn ngữ mặc định của máy chủ"
+edit_messages = "Chỉnh sửa thông báo ngôn ngữ"
+use_server_default = "Dùng ngôn ngữ mặc định của máy chủ"
+current = "Hiện tại: {locale}"
+current_with_personal = "Hiện tại: {locale} (Của bạn: {personal})"
+your_description = "Chỉ thay đổi những thông báo bạn thấy."
+reset_description = "Dùng ngôn ngữ mặc định của máy chủ."
+server_description = "Thay đổi ngôn ngữ mặc định của máy chủ."
+edit_description = "Mở trình chỉnh sửa thông báo cho từng ngôn ngữ."
+select_description = "Nhấp để chọn ngôn ngữ này."
+remove_personal_description = "Xóa lựa chọn ngôn ngữ cá nhân của bạn."
+no_controls = "Bạn không có quyền dùng các tùy chọn ngôn ngữ."

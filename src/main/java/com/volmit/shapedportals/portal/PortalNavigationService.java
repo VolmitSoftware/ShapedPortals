@@ -133,6 +133,7 @@ public final class PortalNavigationService {
         return new DirectorMiniMenu.ContentMenu(
                 "/shapedportals portals",
                 "/shapedportals portals",
+                "/shapedportals",
                 entries,
                 emptyLine,
                 requestedPage,

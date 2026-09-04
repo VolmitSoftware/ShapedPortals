@@ -1,21 +1,73 @@
 # ShapedPortals の言語: ja-JP
+#
 # このファイルは存在しない場合にのみダウンロードされます。languages/ja-JP.toml を直接編集してください。
 # ローカルの変更は自動的に上書きされません。未指定の項目は英語で補完されます。
+#
 # 色: &0-&f、&k-&r、&#RRGGBB、&xRRGGBB、&x&R&R&G&G&B&B、[RRGGBB]。独自書式には MiniMessage も使用できます。
 # プレースホルダーはメッセージごとに固有です。各メッセージに元からあるものだけを残し、名前を変更しないでください。
-# コマンド: {argument}=予期しない引数; {command}=コマンド経路; {key}=パラメーターキー; {parameter}=パラメーター名; {type}=型; {usage}=使用法。
-# 実行状態: {attempts}=作成試行数; {created}=作成数または作成日時; {rejected}=拒否数; {enabled}=作成状態; {hot_reload}=ホットリロード状態; {scheduler}=スケジューラー。
-# ポータル: {portal}=識別子; {portals}=管理数; {id}=短縮 ID; {uuid}=完全な UUID; {world}=ワールド; {axis}=軸; {x}/{y}/{z}=アンカー座標; {blocks}=ポータルセル数; {cells}=全管理セル数; {creator}=作成者; {materials}=記録されたフレーム素材。
-# 一覧: {matches}=一致するポータル数; {seconds}=確認期限（秒）。
-# 設定: {category}=カテゴリ; {setting}=設定名; {status}=選択記号; {value}=現在値、既定値、または入力値; {language}=使用中の言語; {locale}=ロケール; {name}=言語の正式名。
-# 言語エディター: {variables}=使用可能なプレースホルダー; {old}=変更前の値; {new}=変更後の値。
-# その他: {duration}=経過ミリ秒; {path}=ローカル報告書のパス; {url}=公開 URL; {reason}=失敗理由.
-# 接頭辞: {prefix}=グローバルな runtime.prefix の値です。個別のメッセージから {prefix} を削除すると、その場所だけ非表示になります。
+#
+# コマンド
+#   {argument}      予期しない引数
+#   {command}       コマンド経路
+#   {key}           パラメーターキー
+#   {parameter}     パラメーター名
+#   {type}          型
+#   {usage}         使用法
+#
+# 実行状態
+#   {attempts}      作成試行数
+#   {created}       作成数または作成日時
+#   {rejected}      拒否数
+#   {enabled}       作成状態
+#   {hot_reload}    ホットリロード状態
+#   {scheduler}     スケジューラー
+#
+# ポータル
+#   {portal}        識別子
+#   {portals}       管理数
+#   {id}            短縮 ID
+#   {uuid}          完全な UUID
+#   {world}         ワールド
+#   {axis}          軸
+#   {x}/{y}/{z}     アンカー座標
+#   {blocks}        ポータルセル数
+#   {cells}         全管理セル数
+#   {creator}       作成者
+#   {materials}     記録されたフレーム素材
+#
+# 一覧
+#   {matches}       一致するポータル数
+#   {seconds}       確認期限（秒）
+#
+# 設定
+#   {category}      カテゴリ
+#   {setting}       設定名
+#   {status}        選択記号
+#   {value}         現在値、既定値、または入力値
+#   {language}      使用中の言語
+#   {locale}        ロケール
+#   {personal}      個人設定のロケール
+#   {name}          言語の正式名
+#
+# 言語エディター
+#   {variables}     使用可能なプレースホルダー
+#   {old}           変更前の値
+#   {new}           変更後の値
+#
+# その他
+#   {path}          ローカル報告書のパス
+#   {url}           公開 URL
+#   {reason}        失敗理由
+#
+# 接頭辞
+#   {prefix}        グローバルな runtime.prefix の値です。個別のメッセージから {prefix} を削除すると、その場所だけ非表示になります
+#
 # & または [ の前にバックスラッシュを付けると、その文字をそのまま表示できます。
 
 [command.description]
 config = "完全なゲーム内設定エディターを開く"
-debug = "包括的なShapedPortals診断レポートを作成"
+debug = "ShapedPortals診断ツール"
+debug_dump = "包括的なShapedPortals診断レポートを作成"
 language = "利用可能な ShapedPortals 言語を選択"
 portals = "すべての管理ポータルとそのテレポートショートカットを一覧表示"
 root = "ShapedPortalsヘルプと管理"
@@ -25,7 +77,7 @@ teleport = "管理ポータルの近くに安全にテレポートするか、�
 [command.feedback.config]
 opened = "{prefix}&aゲーム内の完全な設定エディターを開きました。&r"
 save_failed = "{prefix}&c&f{setting}&r&cを適用できませんでした:{reason}&r"
-saved = "{prefix}&a&f{setting}&r&aを保存して適用しました。&r"
+saved = "{prefix}&a{setting}&r &7を&f{old}&r &7から&f{new}&r &7に変更しました。&r"
 
 [command.feedback.debug]
 busy = "{prefix}&eShapedPortals診断レポートはすでに作成中です。&r"
@@ -39,14 +91,11 @@ uploaded = "{prefix}&a診断レポートをアップロードしました:&r&b&n
 [command.feedback]
 failed = "{prefix}&cコマンドを完了できませんでした。詳細はコンソールを参照してください。&r"
 
-[command.feedback.reload]
-failed = "{prefix}&c{duration}ミリ秒後の再読み込みに失敗しました。&r&7最後に確認された正常な設定は依然として有効です；完全なコンソールエラーを参照してください。&r"
-success = "{prefix}&a&f{duration}&r&aミリ秒で再読み込みされました。&r&7ロケール:&r&f{locale}&r"
-
 [command.parameter]
 locale = "利用可能な言語ロケール"
 page = "1始まりのポータル一覧ページ"
 portal = "ポータルUUID、ユニーク接頭辞、または一覧"
+upload = "公開アップロードが有効な場合にレポートをアップロード"
 
 [command.status]
 attempts = "{prefix}&7試行回数:&r&f{attempts}&r&8|&r&7作成日:&r&a{created}&r&8|&r&7拒否:&r&c{rejected}&r"
@@ -126,7 +175,6 @@ toggle = "&8切り替えるにはクリック.&r"
 [gui.navigation]
 back = "&e戻る&r"
 close = "&c閉じる&r"
-reload = "&bファイルをリロード&r"
 
 [gui.prompt]
 cancel = "{prefix}&7停止するには&fcancel&r&7と入力してください。このプロンプトは60秒で期限切れになります。&r"
@@ -250,3 +298,19 @@ denied = "{prefix}&cそれを行う権限がありません。&r"
 [runtime]
 player_only = "{prefix}&cこのコマンドはプレイヤーのみ使用できます。&r"
 prefix = "&d&lShapedPortals&r&8›&r "
+
+[language.menu]
+your_language = "あなたの言語"
+reset_your_language = "自分の言語をリセット"
+server_default = "サーバーのデフォルト"
+edit_messages = "言語メッセージを編集"
+use_server_default = "サーバーのデフォルトを使用"
+current = "現在: {locale}"
+current_with_personal = "現在: {locale} (あなた: {personal})"
+your_description = "表示されるメッセージだけを変更します。"
+reset_description = "サーバーのデフォルト言語を使用します。"
+server_description = "サーバーのデフォルト言語を変更します。"
+edit_description = "言語ごとのメッセージエディターを開きます。"
+select_description = "クリックしてこの言語を選択します。"
+remove_personal_description = "個人の言語選択を削除します。"
+no_controls = "利用できる言語設定はありません。"

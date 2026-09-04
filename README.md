@@ -40,10 +40,13 @@ Free-form Nether and End portals with durable registration, configurable present
 | `/sp language self <locale\|reset>` | Select a personal language or return to the server default. |
 | `/sp language server <locale>` | Change the server default. |
 | `/sp language server edit [locale]` | Open the per-language message editor. |
+| `/volmit plugins` | Open the shared Volmit language and diagnostic tools. |
 | `/volmit plugins languages [locale]` | Change the server default across registered Volmit plugins. |
+| `/volmit plugins debug [plugin] [upload=true\|false]` | List shared debug providers or request one report. |
 | `/sp portals [page]` | List managed portals with frame status and teleport shortcuts. |
 | `/sp teleport [UUID/prefix]` | Teleport safely beside a managed portal; authorized operators may confirm an unsafe landing. |
-| `/sp debug` | Save a diagnostic report and optionally upload the saved report to mclo.gs. |
+| `/sp debug` | Open the diagnostic command help menu. |
+| `/sp debug dump [upload=true]` | Save a diagnostic report and optionally upload it to mclo.gs. |
 
 ## Building
 
@@ -55,7 +58,7 @@ Free-form Nether and End portals with durable registration, configurable present
 
 The build runs on Java 25 and emits Java 17 bytecode. A sibling `VolmLib` checkout is resolved automatically as a composite build; pass `-PuseLocalVolmLib=false` to use the configured remote dependency instead.
 
-The versioned plugin is written to `build/libs/ShapedPortals-2.0.0.jar`. Successful full builds also refresh `C:/VolmitSoftware/BUILDS/ShapedPortals.jar`, and the React API Pack is copied to `build/distributions/react-api-packs/`.
+The versioned plugin is written to `build/libs/ShapedPortals-2.0.0-1.20.1-26.2.jar`. Successful full builds also refresh `C:/VolmitSoftware/BUILDS/ShapedPortals.jar`, and the React API Pack is copied to `build/distributions/react-api-packs/`.
 
 ## Data layout
 
@@ -64,11 +67,12 @@ ShapedPortals creates its configuration and English fallback on first start. Oth
 ```text
 plugins/ShapedPortals/
 ├── config.toml                              all runtime settings; always
-├── language-preferences.properties          persistent personal choices, after the first selection
-├── languages/en_US.toml                    editable English fallback; always
-├── languages/<locale>.toml                 selected repository or custom locales
+├── languages/
+│   ├── language-preferences.properties     persistent personal choices, after the first selection
+│   ├── en_US.toml                          editable English fallback; always
+│   └── <locale>.toml                       selected repository or custom locales
 ├── portals.json                            persisted managed portals, after the first registry write
-└── debug/shapedportals-debug-<time>.txt    locally saved `/sp debug` reports
+└── debug/shapedportals-v<version>-debugdump-yyyy-MM-dd-HH-mm-ss.txt    locally saved `/sp debug dump` reports
 ```
 
 `config.toml` and the active server language file hot-reload. A missing repository locale is fetched from the latest `main` language directory, validated, installed once, and activated by the original selection; the console reports its source URL and final path. Existing files and local edits are never automatically replaced.

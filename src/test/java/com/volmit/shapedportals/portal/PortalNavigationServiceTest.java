@@ -151,6 +151,7 @@ class PortalNavigationServiceTest {
                 .isEqualTo(new DirectorMiniMenu.ContentPage(1, 2, 0, 4, 5));
         assertThat(second.page())
                 .isEqualTo(new DirectorMiniMenu.ContentPage(2, 2, 4, 5, 5));
+        assertThat(first.parentCommand()).isEqualTo("/shapedportals");
     }
 
     @Test

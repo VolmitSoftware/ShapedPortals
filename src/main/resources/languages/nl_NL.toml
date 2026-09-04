@@ -1,16 +1,67 @@
 # ShapedPortals-taal: nl_NL
+#
 # Dit bestand wordt alleen gedownload als het ontbreekt; bewerk languages/nl_NL.toml rechtstreeks.
 # Lokale wijzigingen worden nooit automatisch vervangen; ontbrekende waarden gebruiken Engels.
+#
 # Kleuren: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B en [RRGGBB]. MiniMessage blijft beschikbaar voor eigen opmaak.
 # Tijdelijke aanduidingen horen bij specifieke berichten. Behoud alleen de al aanwezige aanduidingen en hernoem ze nooit.
-# Opdrachten: {argument}=onverwacht argument; {command}=opdrachtpad; {key}=parametersleutel; {parameter}=parameternaam; {type}=type; {usage}=opdrachtgebruik.
-# Uitvoering: {attempts}=aanmaakpogingen; {created}=aantal aangemaakt of aanmaaktijd; {rejected}=afgewezen pogingen; {enabled}=aanmaakstatus; {hot_reload}=hot-reloadstatus; {scheduler}=planner.
-# Portalen: {portal}=aanduiding; {portals}=beheerd aantal; {id}=korte ID; {uuid}=volledige UUID; {world}=wereld; {axis}=as; {x}/{y}/{z}=ankercoördinaten; {blocks}=portaalcellen; {cells}=alle beheerde cellen; {creator}=maker; {materials}=opgenomen framematerialen.
-# Lijsten: {matches}=overeenkomende portalen; {seconds}=bevestigingstijd in seconden.
-# Configuratie: {category}=categorie; {setting}=instellingsnaam; {status}=selectiemarkering; {value}=huidige, standaard- of ruwe waarde; {language}=actieve taal; {locale}=landinstelling; {name}=volledige taalnaam.
-# Taaleditor: {variables}=geldige tijdelijke aanduidingen; {old}=vorige waarde; {new}=nieuwe waarde.
-# Overig: {duration}=milliseconden; {path}=lokaal rapportpad; {url}=openbare URL; {reason}=foutreden.
-# Voorvoegsel: {prefix}=de globale waarde runtime.prefix. Verwijder {prefix} uit één bericht om het alleen daar te verbergen.
+#
+# Opdrachten
+#   {argument}      onverwacht argument
+#   {command}       opdrachtpad
+#   {key}           parametersleutel
+#   {parameter}     parameternaam
+#   {type}          type
+#   {usage}         opdrachtgebruik
+#
+# Uitvoering
+#   {attempts}      aanmaakpogingen
+#   {created}       aantal aangemaakt of aanmaaktijd
+#   {rejected}      afgewezen pogingen
+#   {enabled}       aanmaakstatus
+#   {hot_reload}    hot-reloadstatus
+#   {scheduler}     planner
+#
+# Portalen
+#   {portal}        aanduiding
+#   {portals}       beheerd aantal
+#   {id}            korte ID
+#   {uuid}          volledige UUID
+#   {world}         wereld
+#   {axis}          as
+#   {x}/{y}/{z}     ankercoördinaten
+#   {blocks}        portaalcellen
+#   {cells}         alle beheerde cellen
+#   {creator}       maker
+#   {materials}     opgenomen framematerialen
+#
+# Lijsten
+#   {matches}       overeenkomende portalen
+#   {seconds}       bevestigingstijd in seconden
+#
+# Configuratie
+#   {category}      categorie
+#   {setting}       instellingsnaam
+#   {status}        selectiemarkering
+#   {value}         huidige, standaard- of ruwe waarde
+#   {language}      actieve taal
+#   {locale}        landinstelling
+#   {personal}      persoonlijke landinstelling
+#   {name}          volledige taalnaam
+#
+# Taaleditor
+#   {variables}     geldige tijdelijke aanduidingen
+#   {old}           vorige waarde
+#   {new}           nieuwe waarde
+#
+# Overig
+#   {path}          lokaal rapportpad
+#   {url}           openbare URL
+#   {reason}        foutreden
+#
+# Voorvoegsel
+#   {prefix}        de globale waarde runtime.prefix. Verwijder {prefix} uit één bericht om het alleen daar te verbergen
+#
 # Zet een backslash voor & of [ om het teken letterlijk weer te geven.
 
 [runtime]
@@ -24,13 +75,9 @@ denied = "{prefix}&cJe hebt geen toestemming om dat te doen.&r"
 success = "{prefix}&aDe wijzigingen aan de configuratie en taalbestanden zijn toegepast.&r"
 failed = "{prefix}&cDe bestandswijzigingen zijn geweigerd; de laatst geldige instellingen blijven actief.&r"
 
-[command.feedback.reload]
-success = "{prefix}&aOpnieuw geladen in &f{duration}&r&a ms.&r &7Taal:&r &f{locale}&r"
-failed = "{prefix}&cOpnieuw laden is na {duration} ms mislukt.&r &7De laatst geldige instellingen blijven actief; bekijk de volledige fout in de console.&r"
-
 [command.feedback.config]
 opened = "{prefix}&aDe volledige configuratie-editor in het spel is geopend.&r"
-saved = "{prefix}&a&f{setting}&r&a is opgeslagen en toegepast.&r"
+saved = "{prefix}&a{setting}&r &7is gewijzigd van &f{old}&r &7naar &f{new}&r&7.&r"
 save_failed = "{prefix}&c&f{setting}&r&c kon niet worden toegepast: {reason}&r"
 
 [command.feedback]
@@ -56,7 +103,8 @@ compatibility = "{prefix}&7Artefact:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Plan
 root = "Hulp en beheer voor ShapedPortals"
 config = "De volledige configuratie-editor in het spel openen"
 language = "Een beschikbare ShapedPortals-taal selecteren"
-debug = "Een uitgebreid diagnostisch rapport voor ShapedPortals maken"
+debug = "Diagnosehulpmiddelen voor ShapedPortals"
+debug_dump = "Een uitgebreid diagnostisch rapport voor ShapedPortals maken"
 portals = "Alle beheerde portalen en hun teleportatiesnelkoppeling weergeven"
 teleport = "Veilig naast een beheerd portaal teleporteren of zonder invoer de portalen weergeven"
 status = "Statistieken van beheerde portalen en pogingen weergeven"
@@ -65,6 +113,7 @@ status = "Statistieken van beheerde portalen en pogingen weergeven"
 locale = "Beschikbare landinstelling"
 page = "Pagina van de portalenlijst, beginnend bij één"
 portal = "Portaal-UUID, uniek voorvoegsel of list"
+upload = "Het rapport uploaden wanneer openbare uploads zijn ingeschakeld"
 
 [portal.notice]
 nether_created = "{prefix}&dEen gevormd portaal met {blocks} binnenblokken is aangemaakt.&r"
@@ -121,7 +170,6 @@ languages = "&dTalen&r"
 
 [gui.navigation]
 back = "&eTerug&r"
-reload = "&bBestanden opnieuw laden&r"
 close = "&cSluiten&r"
 
 [gui.lore]
@@ -250,3 +298,19 @@ unknown_parameter = "Onbekende parametersleutel: {key}"
 
 [director.runtime]
 usage = "Gebruik: {usage}"
+
+[language.menu]
+your_language = "Jouw taal"
+reset_your_language = "Jouw taalkeuze herstellen"
+server_default = "Standaardtaal van de server"
+edit_messages = "Taalberichten bewerken"
+use_server_default = "Standaardtaal van de server gebruiken"
+current = "Huidig: {locale}"
+current_with_personal = "Huidig: {locale} (Jouw keuze: {personal})"
+your_description = "Wijzig alleen de berichten die jij ziet."
+reset_description = "Gebruik de standaardtaal van de server."
+server_description = "Wijzig de standaardtaal van de server."
+edit_description = "Open de berichteneditor voor elke taal."
+select_description = "Klik om deze taal te selecteren."
+remove_personal_description = "Verwijder jouw persoonlijke taalkeuze."
+no_controls = "Je hebt geen toegang tot taalinstellingen."

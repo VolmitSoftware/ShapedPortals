@@ -1,16 +1,67 @@
 # ShapedPortals kalba: lt_LT
+#
 # Šis failas atsisiunčiamas tik tada, kai jo nėra; redaguokite languages/lt_LT.toml tiesiogiai.
 # Vietiniai pakeitimai niekada automatiškai nekeičiami; trūkstamos reikšmės naudoja anglų kalbą.
+#
 # Spalvos: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B ir [RRGGBB]. Pasirinktiniam formatavimui galima naudoti MiniMessage.
 # Vietos žymekliai priklauso konkretiems pranešimams. Palikite tik jau esančius žymeklius ir jų nepervadinkite.
-# Komandos: {argument}=netikėtas argumentas; {command}=komandos kelias; {key}=parametro raktas; {parameter}=parametro vardas; {type}=tipas; {usage}=komandos naudojimas.
-# Vykdymas: {attempts}=kūrimo bandymai; {created}=sukurtų skaičius arba laikas; {rejected}=atmesti bandymai; {enabled}=kūrimo būsena; {hot_reload}=karštojo įkėlimo būsena; {scheduler}=planavimo sistema.
-# Portalai: {portal}=identifikatorius; {portals}=valdomų skaičius; {id}=trumpas ID; {uuid}=visas UUID; {world}=pasaulis; {axis}=ašis; {x}/{y}/{z}=inkaro koordinatės; {blocks}=portalo langeliai; {cells}=visi langeliai; {creator}=kūrėjas; {materials}=įrašytos rėmo medžiagos.
-# Sąrašai: {matches}=atitinkantys portalai; {seconds}=patvirtinimo laikas sekundėmis.
-# Konfigūracija: {category}=kategorija; {setting}=nuostatos vardas; {status}=pasirinkimo žyma; {value}=dabartinė, numatytoji arba neapdorota reikšmė; {language}=aktyvi kalba; {locale}=lokalė; {name}=visas kalbos pavadinimas.
-# Kalbos redaktorius: {variables}=galimi vietos žymekliai; {old}=ankstesnė reikšmė; {new}=nauja reikšmė.
-# Kita: {duration}=milisekundės; {path}=vietinio pranešimo kelias; {url}=viešas URL; {reason}=klaidos priežastis.
-# Priešdėlis: {prefix}=visuotinė runtime.prefix reikšmė. Pašalinkite {prefix} iš atskiro pranešimo, kad jame jo nerodytų.
+#
+# Komandos
+#   {argument}      netikėtas argumentas
+#   {command}       komandos kelias
+#   {key}           parametro raktas
+#   {parameter}     parametro vardas
+#   {type}          tipas
+#   {usage}         komandos naudojimas
+#
+# Vykdymas
+#   {attempts}      kūrimo bandymai
+#   {created}       sukurtų skaičius arba laikas
+#   {rejected}      atmesti bandymai
+#   {enabled}       kūrimo būsena
+#   {hot_reload}    karštojo įkėlimo būsena
+#   {scheduler}     planavimo sistema
+#
+# Portalai
+#   {portal}        identifikatorius
+#   {portals}       valdomų skaičius
+#   {id}            trumpas ID
+#   {uuid}          visas UUID
+#   {world}         pasaulis
+#   {axis}          ašis
+#   {x}/{y}/{z}     inkaro koordinatės
+#   {blocks}        portalo langeliai
+#   {cells}         visi langeliai
+#   {creator}       kūrėjas
+#   {materials}     įrašytos rėmo medžiagos
+#
+# Sąrašai
+#   {matches}       atitinkantys portalai
+#   {seconds}       patvirtinimo laikas sekundėmis
+#
+# Konfigūracija
+#   {category}      kategorija
+#   {setting}       nuostatos vardas
+#   {status}        pasirinkimo žyma
+#   {value}         dabartinė, numatytoji arba neapdorota reikšmė
+#   {language}      aktyvi kalba
+#   {locale}        lokalė
+#   {personal}      asmeninė lokalė
+#   {name}          visas kalbos pavadinimas
+#
+# Kalbos redaktorius
+#   {variables}     galimi vietos žymekliai
+#   {old}           ankstesnė reikšmė
+#   {new}           nauja reikšmė
+#
+# Kita
+#   {path}          vietinio pranešimo kelias
+#   {url}           viešas URL
+#   {reason}        klaidos priežastis
+#
+# Priešdėlis
+#   {prefix}        visuotinė runtime.prefix reikšmė. Pašalinkite {prefix} iš atskiro pranešimo, kad jame jo nerodytų
+#
 # Norėdami & arba [ rodyti tiesiogiai, prieš juos rašykite pasvirąjį brūkšnį atgal.
 
 [runtime]
@@ -24,13 +75,9 @@ denied = "{prefix}&cNeturite leidimo to daryti.&r"
 success = "{prefix}&aKonfigūracijos ir kalbos failų pakeitimai pritaikyti.&r"
 failed = "{prefix}&cFailų pakeitimai atmesti; lieka aktyvūs paskutiniai tinkami nustatymai.&r"
 
-[command.feedback.reload]
-success = "{prefix}&aIš naujo įkelta per &f{duration}&r&a ms.&r &7Kalba:&r &f{locale}&r"
-failed = "{prefix}&cPakartotinis įkėlimas nepavyko po {duration} ms.&r &7Paskutiniai tinkami nustatymai tebėra aktyvūs; visą klaidą rasite konsolėje.&r"
-
 [command.feedback.config]
 opened = "{prefix}&aAtidarytas visas žaidimo konfigūracijos redaktorius.&r"
-saved = "{prefix}&aNustatymas &f{setting}&r&a išsaugotas ir pritaikytas.&r"
+saved = "{prefix}&a{setting}&r &7pakeistas iš &f{old}&r &7į &f{new}&r&7.&r"
 save_failed = "{prefix}&cNepavyko pritaikyti &f{setting}&r&c: {reason}&r"
 
 [command.feedback]
@@ -56,7 +103,8 @@ compatibility = "{prefix}&7Artefaktas:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Pl
 root = "ShapedPortals pagalba ir administravimas"
 config = "Atidaryti visą žaidimo konfigūracijos redaktorių"
 language = "Pasirinkti prieinamą ShapedPortals kalbą"
-debug = "Sukurti išsamią ShapedPortals diagnostikos ataskaitą"
+debug = "ShapedPortals diagnostikos įrankiai"
+debug_dump = "Sukurti išsamią ShapedPortals diagnostikos ataskaitą"
 portals = "Išvardyti visus valdomus portalus ir jų persikėlimo nuorodas"
 teleport = "Saugiai persikelti šalia valdomo portalo arba, jei nenurodytas, išvardyti portalus"
 status = "Rodyti valdomų portalų ir bandymų statistiką"
@@ -65,6 +113,7 @@ status = "Rodyti valdomų portalų ir bandymų statistiką"
 locale = "Prieinamos kalbos lokalė"
 page = "Portalo sąrašo puslapis, skaičiuojamas nuo vieno"
 portal = "Portalo UUID, unikali pradžia arba list"
+upload = "Įkelti ataskaitą, kai viešas įkėlimas įjungtas"
 
 [portal.notice]
 nether_created = "{prefix}&dSukurtas formos portalas su {blocks} vidiniais blokais.&r"
@@ -121,7 +170,6 @@ languages = "&dKalbos&r"
 
 [gui.navigation]
 back = "&eAtgal&r"
-reload = "&bIš naujo įkelti failus&r"
 close = "&cUždaryti&r"
 
 [gui.lore]
@@ -250,3 +298,19 @@ unknown_parameter = "Nežinomas parametro raktas: {key}"
 
 [director.runtime]
 usage = "Naudojimas: {usage}"
+
+[language.menu]
+your_language = "Jūsų kalba"
+reset_your_language = "Atkurti jūsų kalbą"
+server_default = "Numatytoji serverio kalba"
+edit_messages = "Redaguoti kalbos pranešimus"
+use_server_default = "Naudoti numatytąją serverio kalbą"
+current = "Dabartinė: {locale}"
+current_with_personal = "Dabartinė: {locale} (Jūsų: {personal})"
+your_description = "Keiskite tik jums rodomus pranešimus."
+reset_description = "Naudokite numatytąją serverio kalbą."
+server_description = "Keiskite numatytąją serverio kalbą."
+edit_description = "Atverkite kiekvienos kalbos pranešimų redaktorių."
+select_description = "Spustelėkite, kad pasirinktumėte šią kalbą."
+remove_personal_description = "Pašalinkite asmeninį kalbos pasirinkimą."
+no_controls = "Jums nepasiekiami kalbos nustatymai."

@@ -97,10 +97,22 @@ public final class PortalService {
 
     public void attemptEnd(Block changedFrame, Player creator) {
         RuntimeConfig config = configService.runtime();
-        if (!config.enabled() || !config.endPortalCreation() || !config.allowsWorld(changedFrame.getWorld())) {
+        if (!config.enabled()
+                || !config.endPortalCreation()
+                || !config.allowsWorld(changedFrame.getWorld())) {
             return;
         }
         if (isDuplicate(changedFrame, config.deduplicationMillis())) {
+            return;
+        }
+        EndShape proposed = analyzeEnd(changedFrame, config);
+        if (proposed == null || !proposed.result().valid()) {
+            return;
+        }
+        World world = changedFrame.getWorld();
+        List<BlockPosition> proposedFramePositions = absolutePositions(
+                proposed.origin(), PortalAxis.Y, proposed.result().shape().frame());
+        if (!hasEveryEndEye(world, proposedFramePositions)) {
             return;
         }
         boolean hasCreatePermission = creator.hasPermission("shapedportals.create");
@@ -249,6 +261,10 @@ public final class PortalService {
         PortalShape shape = selected.result().shape();
         List<BlockPosition> interior = absolutePositions(selected.origin(), PortalAxis.Y, shape.interior());
         World world = changedFrame.getWorld();
+        List<BlockPosition> frame = absolutePositions(selected.origin(), PortalAxis.Y, shape.frame());
+        if (!hasEveryEndEye(world, frame)) {
+            return;
+        }
         if (interior.stream().anyMatch(position -> position.block(world).getType() == Material.END_PORTAL)) {
             return;
         }
@@ -258,7 +274,6 @@ public final class PortalService {
         }
 
         stats.attempted();
-        List<BlockPosition> frame = absolutePositions(selected.origin(), PortalAxis.Y, shape.frame());
         BlockData portalData = PortalType.END.createBlockData(PortalAxis.Y);
         if (!canBuildEndPortal(creator, world, interior, portalData)) {
             stats.rejected(RejectionReason.EVENT_CANCELLED);
@@ -269,7 +284,8 @@ public final class PortalService {
         EndShape revalidated = analyzeEnd(changedFrame, config);
         if (revalidated == null || !revalidated.result().valid()
                 || !revalidated.origin().equals(selected.origin())
-                || !revalidated.result().shape().equals(shape)) {
+                || !revalidated.result().shape().equals(shape)
+                || !hasEveryEndEye(world, frame)) {
             stats.rejected(RejectionReason.FRAME_CHANGED);
             fail(creator, "the frame changed during creation");
             return;
@@ -363,7 +379,7 @@ public final class PortalService {
                 return PortalCell.UNOWNED;
             }
             Block block = world.getBlockAt(x, y, z);
-            if (block.getBlockData() instanceof EndPortalFrame endFrame && endFrame.hasEye()) {
+            if (block.getBlockData() instanceof EndPortalFrame) {
                 return PortalCell.FRAME;
             }
             Material material = block.getType();
@@ -372,6 +388,15 @@ public final class PortalService {
             }
             return PortalCell.BLOCKED;
         }, config.endScanLimits());
+    }
+
+    private boolean hasEveryEndEye(World world, List<BlockPosition> frame) {
+        for (BlockPosition position : frame) {
+            if (!(position.block(world).getBlockData() instanceof EndPortalFrame endFrame) || !endFrame.hasEye()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean canBuildEndPortal(Player creator, World world, List<BlockPosition> interior, BlockData portalData) {

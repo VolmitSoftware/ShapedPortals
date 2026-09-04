@@ -21,9 +21,11 @@ import java.util.ArrayList;
 @Director(name = "shapedportals", aliases = {"shapedportal", "sp"}, description = "ShapedPortals help and administration", descriptionKey = "command.description.root")
 public final class ShapedPortalsCommands {
     private final ShapedPortals plugin;
+    private ShapedPortalsDebugCommands debug;
 
     public ShapedPortalsCommands(ShapedPortals plugin) {
         this.plugin = plugin;
+        debug = new ShapedPortalsDebugCommands(plugin);
     }
 
     @Director(name = "config", sync = true, description = "Open the complete in-game configuration editor", descriptionKey = "command.description.config")
@@ -43,15 +45,6 @@ public final class ShapedPortalsCommands {
     @Director(name = "language", sync = true, description = "Select an available ShapedPortals language", descriptionKey = "command.description.language")
     public void language(@Param(name = "sender", contextual = true) CommandSender sender) {
         plugin.getLanguageSwitcher().open(sender);
-    }
-
-    @Director(name = "debug", sync = true, description = "Create a comprehensive ShapedPortals diagnostic report", descriptionKey = "command.description.debug")
-    public void debug(@Param(name = "sender", contextual = true) CommandSender sender) {
-        if (!sender.hasPermission("shapedportals.debug")) {
-            plugin.getPresentationService().command(sender, ShapedMessages.NO_PERMISSION, FeedbackTone.FAILURE);
-            return;
-        }
-        plugin.getDebugService().generate(sender);
     }
 
     @Director(name = "portals", sync = true, description = "List every managed portal and its teleport shortcut", descriptionKey = "command.description.portals")
@@ -121,6 +114,7 @@ public final class ShapedPortalsCommands {
         DirectorMiniMenu.ContentMenu menu = new DirectorMiniMenu.ContentMenu(
                 title,
                 "/shapedportals status",
+                "/shapedportals",
                 entries,
                 "",
                 1,

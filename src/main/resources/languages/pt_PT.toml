@@ -1,16 +1,67 @@
 # Idioma do ShapedPortals: pt_PT
+#
 # Este ficheiro é transferido apenas quando falta; edita diretamente languages/pt_PT.toml.
 # As alterações locais nunca são substituídas automaticamente; as entradas ausentes usam inglês.
+#
 # Cores: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B e [RRGGBB]. O MiniMessage continua disponível para formatação personalizada.
 # Os marcadores pertencem a mensagens específicas. Mantém apenas os marcadores já presentes e nunca alteres os seus nomes.
-# Comandos: {argument}=argumento inesperado; {command}=caminho do comando; {key}=chave do parâmetro; {parameter}=nome do parâmetro; {type}=tipo; {usage}=utilização do comando.
-# Execução: {attempts}=tentativas de criação; {created}=quantidade criada ou data de criação; {rejected}=tentativas rejeitadas; {enabled}=estado de criação; {hot_reload}=estado do recarregamento; {scheduler}=agendador.
-# Portais: {portal}=identificador; {portals}=quantidade gerida; {id}=ID curto; {uuid}=UUID completo; {world}=mundo; {axis}=eixo; {x}/{y}/{z}=coordenadas da âncora; {blocks}=células do portal; {cells}=todas as células; {creator}=criador; {materials}=materiais de moldura registados.
-# Listas: {matches}=portais correspondentes; {seconds}=prazo de confirmação em segundos.
-# Configuração: {category}=categoria; {setting}=nome da definição; {status}=marca de seleção; {value}=valor atual, predefinido ou bruto; {language}=idioma ativo; {locale}=região; {name}=nome completo do idioma.
-# Editor de idioma: {variables}=marcadores válidos; {old}=valor anterior; {new}=valor novo.
-# Outros: {duration}=milissegundos; {path}=caminho do relatório local; {url}=URL público; {reason}=motivo da falha.
-# Prefixo: {prefix}=o valor global runtime.prefix. Remove {prefix} de uma mensagem para o ocultar apenas aí.
+#
+# Comandos
+#   {argument}      argumento inesperado
+#   {command}       caminho do comando
+#   {key}           chave do parâmetro
+#   {parameter}     nome do parâmetro
+#   {type}          tipo
+#   {usage}         utilização do comando
+#
+# Execução
+#   {attempts}      tentativas de criação
+#   {created}       quantidade criada ou data de criação
+#   {rejected}      tentativas rejeitadas
+#   {enabled}       estado de criação
+#   {hot_reload}    estado do recarregamento
+#   {scheduler}     agendador
+#
+# Portais
+#   {portal}        identificador
+#   {portals}       quantidade gerida
+#   {id}            ID curto
+#   {uuid}          UUID completo
+#   {world}         mundo
+#   {axis}          eixo
+#   {x}/{y}/{z}     coordenadas da âncora
+#   {blocks}        células do portal
+#   {cells}         todas as células
+#   {creator}       criador
+#   {materials}     materiais de moldura registados
+#
+# Listas
+#   {matches}       portais correspondentes
+#   {seconds}       prazo de confirmação em segundos
+#
+# Configuração
+#   {category}      categoria
+#   {setting}       nome da definição
+#   {status}        marca de seleção
+#   {value}         valor atual, predefinido ou bruto
+#   {language}      idioma ativo
+#   {locale}        região
+#   {personal}      região pessoal
+#   {name}          nome completo do idioma
+#
+# Editor de idioma
+#   {variables}     marcadores válidos
+#   {old}           valor anterior
+#   {new}           valor novo
+#
+# Outros
+#   {path}          caminho do relatório local
+#   {url}           URL público
+#   {reason}        motivo da falha
+#
+# Prefixo
+#   {prefix}        o valor global runtime.prefix. Remove {prefix} de uma mensagem para o ocultar apenas aí
+#
 # Coloca uma barra inversa antes de & ou [ para apresentar o carácter literalmente.
 
 [runtime]
@@ -24,13 +75,9 @@ denied = "{prefix}&cNão tens permissão para fazer isso.&r"
 success = "{prefix}&aAs alterações à configuração e aos ficheiros de idioma foram aplicadas.&r"
 failed = "{prefix}&cAs alterações aos ficheiros foram rejeitadas; as últimas definições válidas permanecem ativas.&r"
 
-[command.feedback.reload]
-success = "{prefix}&aRecarregado em &f{duration}&r&a ms.&r &7Idioma:&r &f{locale}&r"
-failed = "{prefix}&cO recarregamento falhou após {duration} ms.&r &7As últimas definições válidas permanecem ativas; consulta o erro completo na consola.&r"
-
 [command.feedback.config]
 opened = "{prefix}&aO editor completo de configuração no jogo foi aberto.&r"
-saved = "{prefix}&aA definição &f{setting}&r&a foi guardada e aplicada.&r"
+saved = "{prefix}&a{setting}&r &7foi alterada de &f{old}&r &7para &f{new}&r&7.&r"
 save_failed = "{prefix}&cNão foi possível aplicar &f{setting}&r&c: {reason}&r"
 
 [command.feedback]
@@ -56,7 +103,8 @@ compatibility = "{prefix}&7Artefacto:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Age
 root = "Ajuda e administração do ShapedPortals"
 config = "Abrir o editor completo de configuração no jogo"
 language = "Selecionar um idioma ShapedPortals disponível"
-debug = "Criar um relatório de diagnóstico completo do ShapedPortals"
+debug = "Ferramentas de diagnóstico do ShapedPortals"
+debug_dump = "Criar um relatório de diagnóstico completo do ShapedPortals"
 portals = "Listar todos os portais geridos e o respetivo atalho de teletransporte"
 teleport = "Teletransportar em segurança para junto de um portal gerido ou listar os portais quando omitido"
 status = "Mostrar estatísticas de portais geridos e tentativas"
@@ -65,6 +113,7 @@ status = "Mostrar estatísticas de portais geridos e tentativas"
 locale = "Região do idioma disponível"
 page = "Página da lista de portais, começando em um"
 portal = "UUID do portal, prefixo exclusivo ou list"
+upload = "Carregar o relatório quando os carregamentos públicos estão ativados"
 
 [portal.notice]
 nether_created = "{prefix}&dFoi criado um portal moldado com {blocks} blocos interiores.&r"
@@ -121,7 +170,6 @@ languages = "&dIdiomas&r"
 
 [gui.navigation]
 back = "&eVoltar&r"
-reload = "&bRecarregar ficheiros&r"
 close = "&cFechar&r"
 
 [gui.lore]
@@ -250,3 +298,19 @@ unknown_parameter = "Chave de parâmetro desconhecida: {key}"
 
 [director.runtime]
 usage = "Utilização: {usage}"
+
+[language.menu]
+your_language = "O teu idioma"
+reset_your_language = "Repor o teu idioma"
+server_default = "Idioma predefinido do servidor"
+edit_messages = "Editar mensagens do idioma"
+use_server_default = "Usar o idioma predefinido do servidor"
+current = "Atual: {locale}"
+current_with_personal = "Atual: {locale} (O teu: {personal})"
+your_description = "Altera apenas as mensagens que vês."
+reset_description = "Usa o idioma predefinido do servidor."
+server_description = "Altera o idioma predefinido do servidor."
+edit_description = "Abre o editor de mensagens de cada idioma."
+select_description = "Clica para selecionar este idioma."
+remove_personal_description = "Remove a tua escolha pessoal de idioma."
+no_controls = "Não tens acesso às opções de idioma."

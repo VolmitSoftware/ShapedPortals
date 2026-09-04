@@ -15,7 +15,7 @@ plugins {
 }
 
 group = 'com.volmit'
-version = '2.0.0'
+version = '2.0.0-1.20.1-26.2'
 
 String mainClass = 'com.volmit.shapedportals.ShapedPortals'
 String apiVersion = '1.20'
@@ -112,6 +112,7 @@ dependencies {
     testImplementation(platform('org.junit:junit-bom:5.13.4'))
     testImplementation('org.junit.jupiter:junit-jupiter')
     testImplementation('org.assertj:assertj-core:3.27.4')
+    testImplementation('org.mockito:mockito-core:5.20.0')
     testImplementation('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
     testRuntimeOnly('org.junit.platform:junit-platform-launcher')
 }

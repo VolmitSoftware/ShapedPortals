@@ -383,7 +383,7 @@ tasks.register('buildPsychoLT', Copy) {
     }
 }
 
-def buildSwiftSwampTask = tasks.register('buildSwiftSwamp', Copy) {
+tasks.register('buildSwiftSwamp', Copy) {
     group = 'development'
     description = 'Builds, verifies, and stages ShapedPortals in the workspace BUILDS directory.'
     outputs.upToDateWhen { false }
@@ -392,14 +392,6 @@ def buildSwiftSwampTask = tasks.register('buildSwiftSwamp', Copy) {
     from(tasks.named('shadowJar').flatMap { it.archiveFile })
     into(file('C://VolmitSoftware/BUILDS'))
     rename { String ignored -> 'ShapedPortals.jar' }
-}
-
-tasks.named('build').configure {
-    finalizedBy(buildSwiftSwampTask)
-}
-
-tasks.named('publishToMavenLocal').configure {
-    finalizedBy(buildSwiftSwampTask)
 }
 
 configurations.configureEach {

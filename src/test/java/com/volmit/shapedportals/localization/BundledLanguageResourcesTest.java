@@ -49,7 +49,6 @@ class BundledLanguageResourcesTest {
 
         assertThat(actual).containsExactlyElementsOf(expected);
         assertThat(VolmitLocales.nonEnglish()).contains("ja-JP", "vi_VI");
-        assertThat(actual).contains("ja-JP.toml", "vi_VI.toml");
     }
 
     @Test

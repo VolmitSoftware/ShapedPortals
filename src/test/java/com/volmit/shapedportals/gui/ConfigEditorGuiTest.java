@@ -35,7 +35,6 @@ class ConfigEditorGuiTest {
     @Test
     void usesAFullChest() {
         assertThat(ConfigEditorGui.inventorySize()).isEqualTo(54);
-        assertThat(ConfigEditorGui.inventorySize() % 9).isZero();
     }
 
     @Test

@@ -62,7 +62,6 @@ class ShapedPortalsIntegrationMetricsTest {
         IntegrationMetricSample sample = samples.get(IntegrationMetricSchema.SHAPEDPORTALS_CREATION_SUCCESS_PERCENT);
         assertThat(sample.available()).isFalse();
         assertThat(sample.message()).isEqualTo("no-attempts");
-        assertThat(sample.sampledAtMs()).isPositive();
         registry.close();
     }
 

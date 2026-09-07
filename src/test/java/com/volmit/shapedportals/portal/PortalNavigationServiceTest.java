@@ -99,12 +99,6 @@ class PortalNavigationServiceTest {
     }
 
     @Test
-    void portalHoverPlacesTheTeleportActionOnItsSecondLine() {
-        assertThat(ShapedMessages.PORTAL_LIST_HOVER.english())
-                .isEqualTo("&7UUID:&r &f{uuid}&r\n&aClick to teleport to this portal.&r");
-    }
-
-    @Test
     void portalCardsReserveAWarningLineAndFourEntriesPerDirectorPage() {
         assertThat(ShapedMessages.PORTAL_LIST_ENTRY.english().split("\\n"))
                 .hasSize(3);

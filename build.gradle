@@ -217,10 +217,20 @@ def runtimeLibraryTestJar = tasks.register('runtimeLibraryTestJar', com.github.j
 }
 
 tasks.named('test').configure {
+    useJUnitPlatform()
+    systemProperty('shapedportals.projectDir', layout.projectDirectory.asFile.absolutePath)
+    exclude('com/volmit/shapedportals/RuntimeJarTest.class')
+}
+
+def packagingTest = tasks.register('packagingTest', Test) {
+    group = 'verification'
+    description = 'Runs the tests that load the packaged runtime jars.'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    include('com/volmit/shapedportals/RuntimeJarTest.class')
     dependsOn(tasks.named('shadowJar'))
     dependsOn(runtimeLibraryTestJar)
     useJUnitPlatform()
-    systemProperty('shapedportals.projectDir', layout.projectDirectory.asFile.absolutePath)
     inputs.file(tasks.named('shadowJar').flatMap { it.archiveFile })
     inputs.file(runtimeLibraryTestJar.flatMap { it.archiveFile })
     doFirst {
@@ -318,6 +328,7 @@ tasks.register('verifyJava17Artifact') {
 }
 
 tasks.named('check').configure {
+    dependsOn(packagingTest)
     dependsOn(tasks.named('compileCurrentPaperCompatibility'))
     dependsOn(tasks.named('compileCurrentSpigotCompatibility'))
     dependsOn(tasks.named('verifyJava17Artifact'))

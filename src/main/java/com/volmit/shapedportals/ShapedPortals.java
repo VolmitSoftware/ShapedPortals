@@ -25,6 +25,7 @@ import com.volmit.shapedportals.portal.PortalStats;
 import com.volmit.shapedportals.presentation.ChatMenuStyle;
 import com.volmit.shapedportals.presentation.PresentationService;
 import com.volmit.shapedportals.util.SplashScreen;
+import io.github.slimjar.app.builder.SpigotApplicationBuilder;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -49,6 +50,12 @@ public final class ShapedPortals extends JavaPlugin {
     private MetricsService metricsService;
     private ShapedPortalsIntegrationService integrationService;
     private final Set<String> pendingLanguageActivations = ConcurrentHashMap.newKeySet();
+
+    public ShapedPortals() {
+        getLogger().info("Loading libraries...");
+        new SpigotApplicationBuilder(this).build();
+        getLogger().info("Libraries loaded.");
+    }
 
     @Override
     public void onEnable() {

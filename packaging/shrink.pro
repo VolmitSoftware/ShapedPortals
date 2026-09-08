@@ -1,0 +1,2 @@
+-keep class com.volmit.shapedportals.libs.volmlib.integration.** { *; }
+-keep class * implements com.volmit.shapedportals.libs.volmlib.integration.IntegrationServiceContract { *; }

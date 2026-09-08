@@ -406,6 +406,12 @@ pluginPackaging {
             policyName = 'ShapedPortals'
             prunePrefixes = ['com/volmit/shapedportals/libs/volmlib/']
             keepPrefixes = ['com/volmit/shapedportals/libs/volmlib/util/matter/slices/']
+            shrinkRules = [file('packaging/shrink.pro')]
+            shrinkRelocations = [
+                'com.google.gson': "${relocatedLibraryPackage}.gson",
+                'com.moandjiezana.toml': "${relocatedLibraryPackage}.toml",
+                'net.kyori': "${relocatedLibraryPackage}.kyori"
+            ]
         }
     }
 }

@@ -1,68 +1,71 @@
-# ShapedPortals-taal: nl_NL
+# ShapedPortals — nl_NL
 #
-# Dit bestand wordt alleen gedownload als het ontbreekt; bewerk languages/nl_NL.toml rechtstreeks.
-# Lokale wijzigingen worden nooit automatisch vervangen; ontbrekende waarden gebruiken Engels.
+# === Bestand bewerken ===
+# plugins/ShapedPortals/languages/nl_NL.toml
+# Je kunt dit bestand rechtstreeks bewerken. Lokale wijzigingen blijven behouden; ontbrekende of ongeldige vermeldingen gebruiken het ingebouwde Engels.
+# /shapedportals language server edit nl_NL
 #
+# === Voorvoegsel ===
+# {prefix}  de globale waarde runtime.prefix. Verwijder {prefix} uit één bericht om het alleen daar te verbergen
+#
+# === Opmaak ===
 # Kleuren: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B en [RRGGBB]. MiniMessage blijft beschikbaar voor eigen opmaak.
-# Tijdelijke aanduidingen horen bij specifieke berichten. Behoud alleen de al aanwezige aanduidingen en hernoem ze nooit.
-#
-# Opdrachten
-#   {argument}      onverwacht argument
-#   {command}       opdrachtpad
-#   {key}           parametersleutel
-#   {parameter}     parameternaam
-#   {type}          type
-#   {usage}         opdrachtgebruik
-#
-# Uitvoering
-#   {attempts}      aanmaakpogingen
-#   {created}       aantal aangemaakt of aanmaaktijd
-#   {rejected}      afgewezen pogingen
-#   {enabled}       aanmaakstatus
-#   {hot_reload}    hot-reloadstatus
-#   {scheduler}     planner
-#
-# Portalen
-#   {portal}        aanduiding
-#   {portals}       beheerd aantal
-#   {id}            korte ID
-#   {uuid}          volledige UUID
-#   {world}         wereld
-#   {axis}          as
-#   {x}/{y}/{z}     ankercoördinaten
-#   {blocks}        portaalcellen
-#   {cells}         alle beheerde cellen
-#   {creator}       maker
-#   {materials}     opgenomen framematerialen
-#
-# Lijsten
-#   {matches}       overeenkomende portalen
-#   {seconds}       bevestigingstijd in seconden
-#
-# Configuratie
-#   {category}      categorie
-#   {setting}       instellingsnaam
-#   {status}        selectiemarkering
-#   {value}         huidige, standaard- of ruwe waarde
-#   {language}      actieve taal
-#   {locale}        landinstelling
-#   {personal}      persoonlijke landinstelling
-#   {name}          volledige taalnaam
-#
-# Taaleditor
-#   {variables}     geldige tijdelijke aanduidingen
-#   {old}           vorige waarde
-#   {new}           nieuwe waarde
-#
-# Overig
-#   {path}          lokaal rapportpad
-#   {url}           openbare URL
-#   {reason}        foutreden
-#
-# Voorvoegsel
-#   {prefix}        de globale waarde runtime.prefix. Verwijder {prefix} uit één bericht om het alleen daar te verbergen
-#
 # Zet een backslash voor & of [ om het teken letterlijk weer te geven.
+#
+# === Variabelen ===
+# Behoud de namen van variabelen en gebruik alleen de variabelen die bij het bericht horen.
+#   {after}  Waarde na de wijziging
+#   {argument}  onverwacht argument
+#   {attempts}  aanmaakpogingen
+#   {axis}  as
+#   {before}  Waarde vóór de wijziging
+#   {blocks}  portaalcellen
+#   {category}  categorie
+#   {cells}  alle beheerde cellen
+#   {command}  opdrachtpad
+#   {count}  Aantal overeenkomstige vermeldingen
+#   {created}  aantal aangemaakt of aanmaaktijd
+#   {creator}  maker
+#   {enabled}  aanmaakstatus
+#   {group}  Toestemming of spelersgroep
+#   {hot_reload}  hot-reloadstatus
+#   {id}  korte ID
+#   {key}  parametersleutel
+#   {language}  actieve taal
+#   {line}  Bronregel of regelnummer
+#   {locale}  landinstelling
+#   {matches}  overeenkomende portalen
+#   {materials}  opgenomen framematerialen
+#   {maximum}  Maximaal toegestane waarde
+#   {name}  volledige taalnaam
+#   {new}  nieuwe waarde
+#   {old}  vorige waarde
+#   {parameter}  parameternaam
+#   {path}  lokaal rapportpad
+#   {permission}  vereiste machtiging
+#   {personal}  persoonlijke landinstelling
+#   {plugin}  Pluginnaam
+#   {portal}  aanduiding
+#   {portals}  beheerd aantal
+#   {prefix}  de globale waarde runtime.prefix. Verwijder {prefix} uit één bericht om het alleen daar te verbergen
+#   {reason}  foutreden
+#   {rejected}  afgewezen pogingen
+#   {scheduler}  planner
+#   {seconds}  bevestigingstijd in seconden
+#   {setting}  instellingsnaam
+#   {status}  selectiemarkering
+#   {target}  Doelspeler, entiteit of waarde
+#   {type}  type
+#   {url}  openbare URL
+#   {usage}  opdrachtgebruik
+#   {uuid}  volledige UUID
+#   {value}  huidige, standaard- of ruwe waarde
+#   {variables}  geldige tijdelijke aanduidingen
+#   {version}  pluginversie
+#   {world}  wereld
+#   {x}  ankercoördinaten
+#   {y}  ankercoördinaten
+#   {z}  ankercoördinaten
 
 [runtime]
 prefix = "&d&lShapedPortals&r &8›&r "
@@ -75,13 +78,13 @@ denied = "{prefix}&cJe hebt geen toestemming om dat te doen.&r"
 success = "{prefix}&aDe wijzigingen aan de configuratie en taalbestanden zijn toegepast.&r"
 failed = "{prefix}&cDe bestandswijzigingen zijn geweigerd; de laatst geldige instellingen blijven actief.&r"
 
+[command.feedback]
+failed = "{prefix}&cDe opdracht kon niet worden uitgevoerd. Bekijk de console voor meer informatie.&r"
+
 [command.feedback.config]
 opened = "{prefix}&aDe volledige configuratie-editor in het spel is geopend.&r"
 saved = "{prefix}&a{setting}&r &7is gewijzigd van &f{old}&r &7naar &f{new}&r&7.&r"
 save_failed = "{prefix}&c&f{setting}&r&c kon niet worden toegepast: {reason}&r"
-
-[command.feedback]
-failed = "{prefix}&cDe opdracht kon niet worden uitgevoerd. Bekijk de console voor meer informatie.&r"
 
 [command.feedback.debug]
 started = "{prefix}&7Diagnostische gegevens van de server en ShapedPortals worden verzameld…&r"
@@ -121,8 +124,8 @@ end_created = "{prefix}&5End&r &dEen gevormd portaal met {blocks} binnenblokken 
 failed = "{prefix}&cDit frame kan geen gevormd portaal worden: &f{reason}&r&c.&r"
 
 [portal.title]
-nether_created = "&5&lNether Portal Created&r"
-end_created = "&5&lEnd Portal Created&r"
+nether_created = "&5&lNetherportaal gemaakt&r"
+end_created = "&5&lEndportaal gemaakt&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cNaast &f{portal}&r&c is geen veilige plek om te staan. &eKlik binnen &f{seconds}&r&e seconden opnieuw op hetzelfde portaal om er toch in te teleporteren.&r"
@@ -165,7 +168,6 @@ hot_reload = "&dAutomatisch herladen&r"
 integrity = "&dIntegriteit&r"
 presentation = "&dPresentatie&r"
 debug = "&dDiagnostiek&r"
-
 languages = "&dTalen&r"
 
 [gui.navigation]
@@ -286,6 +288,9 @@ optional = "Deze parameter is optioneel."
 required = "Deze parameter is verplicht."
 type = "Deze parameter is van het type {type}."
 
+[director.runtime]
+usage = "Gebruik: {usage}"
+
 [director.runtime.error]
 conversion_failed = "Kan \"{value}\" voor {parameter} niet naar {type} converteren"
 default_parse_failed = "Kan de standaardwaarde voor parameter {parameter} niet verwerken"
@@ -295,9 +300,6 @@ missing_argument = "Ontbrekend argument \"{parameter}\" ({type})"
 unexpected_argument = "Onverwacht argument \"{argument}\". Optionele parameters moeten met een sleutel worden opgegeven, bijv. seed=123"
 unclosed_group = "Ontbrekende sluitende \"]\" voor parameter {key}"
 unknown_parameter = "Onbekende parametersleutel: {key}"
-
-[director.runtime]
-usage = "Gebruik: {usage}"
 
 [language.menu]
 your_language = "Jouw taal"
@@ -314,3 +316,119 @@ edit_description = "Open de berichteneditor voor elke taal."
 select_description = "Klik om deze taal te selecteren."
 remove_personal_description = "Verwijder jouw persoonlijke taalkeuze."
 no_controls = "Je hebt geen toegang tot taalinstellingen."
+command = "Commando: {command}"
+selected = "geselecteerd"
+all-volmit-plugins = "Alle Volmit-plugins"
+
+[language.error]
+stopping = "Taalselectie is niet beschikbaar terwijl de plugin stopt."
+editor-player-only = "Open de taalbewerker in het spel."
+no-providers = "Er zijn geen Volmit-taalaanbieders beschikbaar."
+numeric-page = "Voer een paginanummer in."
+personal-player-only = "Spelertaalvoorkeuren moeten in het spel worden geselecteerd."
+personal-permission = "U hebt geen toestemming om uw taal te selecteren."
+plugin-personal-permission = "Je hebt geen toestemming om je taal voor {plugin} te kiezen."
+plugin-server-permission = "Je hebt geen toestemming om de servertaal voor {plugin} te wijzigen."
+server-locale-required = "Kies een taalcode zoals en_US voor de standaardtaal van de server."
+unavailable-for-all = "De taal {locale} is niet voor alle geselecteerde plugins beschikbaar."
+
+[language.usage]
+editor = "Gebruik: /{command} language server edit [locale]"
+selection = "Gebruik: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "Gebruik: /volmit plugins languages [locale]"
+
+[language.selection]
+preparing = "Taal {locale} wordt voorbereid voor {target}..."
+save-failed = "{plugin}: de taalkeuze kon niet worden opgeslagen; controleer de serverconsole."
+english-fallback = "{plugin}: {locale} is niet beschikbaar; Engels (en_US) wordt gebruikt."
+personal-selected = "{plugin}: uw taal is nu {locale}."
+server-selected = "{plugin}: servertaal is nu {locale}."
+server-default-selected = "{plugin}: je taal volgt nu de standaardtaal van de server."
+
+[language.editor]
+loading = "Berichten voor {locale} laden..."
+
+[language.editor.section]
+languages = "Talen"
+search = "Zoeken"
+search-title = "{locale} / Zoeken"
+group-title = "{locale} / {group}"
+
+[language.editor.prompt]
+search = "Zoek op berichtsleutel of tekst. Typ cancel om terug te gaan."
+value = "Typ in de chat een nieuwe waarde voor {key}."
+current = "Huidige waarde: {value}"
+variables = "Variabelen: {variables}"
+guidance = "Gebruik \\n voor een nieuwe regel, \\\\ voor een backslash, of typ cancel om terug te gaan."
+
+[language.editor.input]
+expired = "De invoer voor de taalbewerker is verlopen."
+too-long = "De invoer mag maximaal {maximum} tekens bevatten."
+unable-to-save = "Opslaan mislukt: {reason}"
+
+[language.editor.navigation]
+back = "&eTerug&r"
+close = "&cSluiten&r"
+previous-page = "&eVorige pagina&r"
+next-page = "&eVolgende pagina&r"
+
+[language.editor.search]
+messages = "Berichten doorzoeken"
+messages-lore = "Klik om alle berichten te doorzoeken."
+clear = "Zoekopdracht wissen"
+
+[language.editor.message]
+current-value = "&7Huidige waarde:&r"
+variables = "&8{variables}&r"
+edit-plural = "&7Klik om een meervoudsvorm te bewerken.&r"
+edit-lines = "&7Klik om afzonderlijke regels te bewerken.&r"
+edit-chat = "&7Klik om in de chat te bewerken.&r"
+
+[language.editor.locale]
+open = "&8Klik om deze taal te openen.&r"
+
+[language.editor.category]
+message-count = "&7{count} berichten&r"
+open = "&8Klik om deze categorie te openen.&r"
+
+[language.editor.error]
+no-permission = "Je hebt geen toestemming om de talen van {plugin} te bewerken."
+unable-to-edit = "Bewerken mislukt: {reason}"
+
+[language.editor.saved]
+summary = "{locale} opgeslagen. De taalkeuzes blijven ongewijzigd."
+change = "{key}: “{before}” is gewijzigd in “{after}”."
+
+[language.editor.part]
+line = "Regel {line}"
+
+[language.editor.value]
+none = "Geen"
+empty = "(leeg)"
+
+[debug]
+preparing = "Diagnoserapport voor {plugin} wordt voorbereid..."
+saved = "Diagnoserapport voor {plugin} opgeslagen in {path}."
+
+[debug.error]
+missing-permission = "Ontbrekende machtiging: {permission}"
+already-preparing = "Er wordt al een diagnoserapport voor {plugin} voorbereid."
+already-preparing-short = "Er wordt al een diagnoserapport voorbereid."
+schedule-failed = "Het maken van het diagnoserapport kon niet worden ingepland."
+provider-closed = "De diagnoseprovider is gesloten."
+closed-before-capture = "De diagnoseprovider is gesloten voordat de rapportgegevens waren verzameld."
+writer-schedule-failed = "Het schrijven van het diagnoserapport kon niet worden ingepland."
+capture-failed = "De gegevens voor het diagnoserapport konden niet worden verzameld. Controleer de serverconsole."
+closed-before-write = "De diagnoseprovider is gesloten voordat het rapport was geschreven."
+write-failed = "Het diagnoserapport kon niet worden geschreven. Controleer de serverconsole."
+
+[debug.upload]
+interrupted = "Het uploaden van het diagnoserapport is onderbroken. Het lokale rapport is opgeslagen."
+failed = "Het uploaden van het diagnoserapport is mislukt. Het lokale rapport is opgeslagen."
+completed = "Geüpload als VolmitSoftware - {plugin} - v{version}."
+
+[debug.action]
+open = "Openen: {url}"
+open-description = "Open het geüploade diagnoserapport."
+copy-path = "Lokaal pad kopiëren"
+copy-path-description = "Kopieer het pad van het lokale rapport."

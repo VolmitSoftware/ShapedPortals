@@ -45,7 +45,7 @@ class ConfigHotReloadServiceTest {
 
             ConfigHotReloadService.ReloadOutcome outcome = ConfigHotReloadService.processSnapshots(
                     engine,
-                    Set.of(new ConfigHotloadEngine.StableContentSnapshot(config, "updated", updated)),
+                    Set.of(new ConfigHotloadEngine.StableContentSnapshot(config, "updated", updated, 1L)),
                     true,
                     () -> {
                         reloads.incrementAndGet();
@@ -76,8 +76,8 @@ class ConfigHotReloadServiceTest {
             ConfigHotReloadService.ReloadOutcome outcome = ConfigHotReloadService.processSnapshots(
                     engine,
                     Set.of(
-                            new ConfigHotloadEngine.StableContentSnapshot(config, "config", updatedConfig),
-                            new ConfigHotloadEngine.StableContentSnapshot(active, "language", updatedLanguage)
+                            new ConfigHotloadEngine.StableContentSnapshot(config, "config", updatedConfig, 0L),
+                            new ConfigHotloadEngine.StableContentSnapshot(active, "language", updatedLanguage, 0L)
                     ),
                     true,
                     () -> {

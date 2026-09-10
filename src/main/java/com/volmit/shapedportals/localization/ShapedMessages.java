@@ -1,5 +1,6 @@
 package com.volmit.shapedportals.localization;
 
+import art.arcane.volmlib.util.diagnostics.BukkitDebugMessages;
 import art.arcane.volmlib.util.director.DirectorMessages;
 import art.arcane.volmlib.util.localization.BukkitLanguageMessages;
 import art.arcane.volmlib.util.localization.MessageCatalog;
@@ -159,6 +160,7 @@ public final class ShapedMessages {
         builder.addAll(productKeys());
         builder.addAll(DirectorMessages.keys());
         builder.addAll(BukkitLanguageMessages.keys());
+        builder.addAll(BukkitDebugMessages.keys());
         return builder.build();
     }
 

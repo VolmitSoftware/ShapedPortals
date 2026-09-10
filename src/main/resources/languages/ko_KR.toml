@@ -1,68 +1,71 @@
-# ShapedPortals 언어: ko_KR
+# ShapedPortals — ko_KR
 #
-# 이 파일은 없을 때만 다운로드됩니다. languages/ko_KR.toml을 직접 편집하세요.
-# 로컬 변경 사항은 자동으로 덮어쓰지 않으며 누락된 항목은 영어를 사용합니다.
+# === 파일 편집 ===
+# plugins/ShapedPortals/languages/ko_KR.toml
+# 이 파일을 직접 편집할 수 있습니다. 로컬 변경은 유지되며, 누락되거나 잘못된 항목에는 내장 영어를 사용합니다.
+# /shapedportals language server edit ko_KR
 #
+# === 접두사 ===
+# {prefix}  전역 runtime.prefix 값입니다. 개별 메시지에서 {prefix}를 제거하면 그 메시지에서만 숨겨집니다
+#
+# === 서식 ===
 # 색상: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B, [RRGGBB]. 사용자 지정 서식에는 MiniMessage도 사용할 수 있습니다.
-# 자리표시자는 메시지별로 다릅니다. 각 메시지에 이미 있는 자리표시자만 그대로 두고 이름을 바꾸지 마세요.
-#
-# 명령어
-#   {argument}      예상하지 못한 인수
-#   {command}       명령 경로
-#   {key}           매개변수 키
-#   {parameter}     매개변수 이름
-#   {type}          형식
-#   {usage}         사용법
-#
-# 실행 상태
-#   {attempts}      생성 시도 수
-#   {created}       생성 수 또는 생성 시각
-#   {rejected}      거부 수
-#   {enabled}       생성 상태
-#   {hot_reload}    핫 리로드 상태
-#   {scheduler}     스케줄러
-#
-# 포털
-#   {portal}        식별자
-#   {portals}       관리 수
-#   {id}            짧은 ID
-#   {uuid}          전체 UUID
-#   {world}         월드
-#   {axis}          축
-#   {x}/{y}/{z}     기준 좌표
-#   {blocks}        포털 셀 수
-#   {cells}         전체 관리 셀
-#   {creator}       생성자
-#   {materials}     기록된 프레임 재료
-#
-# 목록
-#   {matches}       일치하는 포털 수
-#   {seconds}       확인 제한 시간(초)
-#
-# 설정
-#   {category}      편집기 범주
-#   {setting}       설정 이름
-#   {status}        선택 표시
-#   {value}         현재값, 기본값 또는 원시값
-#   {language}      활성 언어
-#   {locale}        로케일
-#   {personal}      개인 로케일
-#   {name}          언어 전체 이름
-#
-# 언어 편집기
-#   {variables}     사용 가능한 자리표시자
-#   {old}           이전 값
-#   {new}           새 값
-#
-# 기타
-#   {path}          로컬 보고서 경로
-#   {url}           공개 URL
-#   {reason}        실패 이유
-#
-# 접두사
-#   {prefix}        전역 runtime.prefix 값입니다. 개별 메시지에서 {prefix}를 제거하면 그 메시지에서만 숨겨집니다
-#
 # & 또는 [ 앞에 백슬래시를 붙이면 문자를 그대로 표시합니다.
+#
+# === 변수 ===
+# 변수 이름을 변경하지 말고 각 메시지에 원래 있는 변수만 사용하세요.
+#   {after}  변경 후 가치
+#   {argument}  예상하지 못한 인수
+#   {attempts}  생성 시도 수
+#   {axis}  축
+#   {before}  변경 전의 값
+#   {blocks}  포털 셀 수
+#   {category}  편집기 범주
+#   {cells}  전체 관리 셀
+#   {command}  명령 경로
+#   {count}  일치하는 항목의 수
+#   {created}  생성 수 또는 생성 시각
+#   {creator}  생성자
+#   {enabled}  생성 상태
+#   {group}  권한 또는 선수 그룹
+#   {hot_reload}  핫 리로드 상태
+#   {id}  짧은 ID
+#   {key}  매개변수 키
+#   {language}  활성 언어
+#   {line}  소스 라인 또는 라인 번호
+#   {locale}  로케일
+#   {matches}  일치하는 포털 수
+#   {materials}  기록된 프레임 재료
+#   {maximum}  최대 허용 값
+#   {name}  언어 전체 이름
+#   {new}  새 값
+#   {old}  이전 값
+#   {parameter}  매개변수 이름
+#   {path}  로컬 보고서 경로
+#   {permission}  필요한 권한
+#   {personal}  개인 로케일
+#   {plugin}  Plugin 이름
+#   {portal}  식별자
+#   {portals}  관리 수
+#   {prefix}  전역 runtime.prefix 값입니다. 개별 메시지에서 {prefix}를 제거하면 그 메시지에서만 숨겨집니다
+#   {reason}  실패 이유
+#   {rejected}  거부 수
+#   {scheduler}  스케줄러
+#   {seconds}  확인 제한 시간(초)
+#   {setting}  설정 이름
+#   {status}  선택 표시
+#   {target}  대상 플레이어, 단체, 또는 가치
+#   {type}  형식
+#   {url}  공개 URL
+#   {usage}  사용법
+#   {uuid}  전체 UUID
+#   {value}  현재값, 기본값 또는 원시값
+#   {variables}  사용 가능한 자리표시자
+#   {version}  플러그인 버전
+#   {world}  월드
+#   {x}  기준 좌표
+#   {y}  기준 좌표
+#   {z}  기준 좌표
 
 [command.description]
 config = "전체 게임 내 구성 편집기 열기"
@@ -73,6 +76,9 @@ portals = "관리되는 모든 포털과 해당 순간이동 단축키 나열"
 root = "ShapedPortals도움말 및 관리"
 status = "관리 포털 및 시도 통계 표시"
 teleport = "관리되는 포털 옆으로 안전하게 순간이동 또는 생략 시 포털 나열"
+
+[command.feedback]
+failed = "{prefix}&c명령을 완료할 수 없습니다. 자세한 내용은 콘솔을 참조하십시오.&r"
 
 [command.feedback.config]
 opened = "{prefix}&a게임 내 전체 구성 편집기를 열었습니다.&r"
@@ -87,9 +93,6 @@ saved = "{prefix}&a진단 보고서를&f{path}&r&a에 저장했습니다.&r"
 started = "{prefix}&7서버 및ShapedPortals진단 정보를 캡처하는 중…&r"
 upload_failed = "{prefix}&e로컬 보고서는 저장되었지만,mclo.gs업로드에 실패했습니다. 자세한 내용은 콘솔을 참조하십시오.&r"
 uploaded = "{prefix}&a진단 보고서를 업로드했습니다:&r&b&n{url}&r"
-
-[command.feedback]
-failed = "{prefix}&c명령을 완료할 수 없습니다. 자세한 내용은 콘솔을 참조하십시오.&r"
 
 [command.parameter]
 locale = "사용 가능한 언어 로케일"
@@ -131,6 +134,9 @@ optional = "이 매개변수는 선택 사항입니다."
 required = "이 매개변수는 필수입니다."
 type = "이 매개변수의 유형은 {type}입니다."
 
+[director.runtime]
+usage = "사용법: {usage}"
+
 [director.runtime.error]
 conversion_failed = "\"{value}\" 값을 {parameter}용 {type} 형식으로 변환할 수 없습니다"
 default_parse_failed = "매개변수 {parameter}의 기본값을 분석할 수 없습니다"
@@ -140,9 +146,6 @@ missing_argument = "인수 \"{parameter}\" ({type})가 필요합니다"
 unclosed_group = "매개변수 {key}의 닫는 \"]\"가 누락되었습니다"
 unexpected_argument = "예상하지 못한 인수 \"{argument}\". 선택적 매개변수는 키와 함께 지정해야 합니다. 예: seed=123"
 unknown_parameter = "알 수 없는 매개변수 키: {key}"
-
-[director.runtime]
-usage = "사용법: {usage}"
 
 [gui.category]
 debug = "&d진단&r"
@@ -170,7 +173,6 @@ number = "&8왼쪽 +1, 오른쪽 -1, 시프트 ×10, 형식에 드롭.&r"
 state = "&7현재:&r{value}"
 text = "&8채팅에서 새 값을 입력하려면 클릭하세요.&r"
 toggle = "&8클릭하여 전환.&r"
-
 
 [gui.navigation]
 back = "&e뒤로&r"
@@ -257,8 +259,8 @@ success = "&a성공&r"
 title = "&d&lShapedPortals&r"
 
 [portal.title]
-nether_created = "&5&lNether Portal Created&r"
-end_created = "&5&lEnd Portal Created&r"
+nether_created = "&5&l네더 차원문 생성 완료&r"
+end_created = "&5&l엔드 차원문 생성 완료&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&c&f{portal}&r&c 옆에 안전하게 설 수 있는 공간이 없습니다. &e같은 포털을 &f{seconds}&r&e초 이내에 다시 클릭하면 안전 여부와 관계없이 포털 안으로 순간이동합니다.&r"
@@ -288,16 +290,16 @@ nether_created = "{prefix}&d{blocks}내부 블록으로 형태가 있는 포털�
 end_created = "{prefix}&5End&r &d{blocks}내부 블록으로 형태가 있는 포털을 생성했습니다.&r"
 failed = "{prefix}&c그 프레임은 형태가 있는 포털이 될 수 없습니다:&f{reason}&r&c.&r"
 
+[runtime]
+player_only = "{prefix}&c이 명령은 플레이어만 사용할 수 있습니다.&r"
+prefix = "&d&lShapedPortals&r&8›&r "
+
 [runtime.hot_reload]
 failed = "{prefix}&c파일 변경이 거부되었습니다; 마지막 정상 설정이 유지됩니다.&r"
 success = "{prefix}&a적용된 구성 및 언어 파일 변경사항.&r"
 
 [runtime.permission]
 denied = "{prefix}&c당신은 그것을 수행할 권한이 없습니다.&r"
-
-[runtime]
-player_only = "{prefix}&c이 명령은 플레이어만 사용할 수 있습니다.&r"
-prefix = "&d&lShapedPortals&r&8›&r "
 
 [language.menu]
 your_language = "내 언어"
@@ -314,3 +316,119 @@ edit_description = "언어별 메시지 편집기를 엽니다."
 select_description = "클릭하여 이 언어를 선택합니다."
 remove_personal_description = "개인 언어 선택을 제거합니다."
 no_controls = "사용할 수 있는 언어 설정이 없습니다."
+command = "명령어: {command}"
+selected = "선택됨"
+all-volmit-plugins = "모든 Volmit 플러그인"
+
+[language.error]
+stopping = "플러그인이 중지되는 동안에는 언어를 선택할 수 없습니다."
+editor-player-only = "게임 안에서 언어 편집기를 여세요."
+no-providers = "사용 가능한 Volmit 언어 제공자가 없습니다."
+numeric-page = "페이지 번호를 숫자로 입력하세요."
+personal-player-only = "개인 언어는 게임 안에서 선택해야 합니다."
+personal-permission = "개인 언어를 선택할 권한이 없습니다."
+plugin-personal-permission = "{plugin}의 개인 언어를 선택할 권한이 없습니다."
+plugin-server-permission = "{plugin}의 서버 언어를 변경할 권한이 없습니다."
+server-locale-required = "서버 기본 언어로 en_US 같은 언어 코드를 선택하세요."
+unavailable-for-all = "{locale} 언어는 선택한 모든 플러그인에서 지원되는 것은 아닙니다."
+
+[language.usage]
+editor = "사용법: /{command} language server edit [locale]"
+selection = "사용법: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "사용법: /volmit plugins languages [locale]"
+
+[language.selection]
+preparing = "{target}의 {locale} 언어를 준비하는 중..."
+save-failed = "{plugin}: 언어 선택을 저장하지 못했습니다. 서버 콘솔을 확인하세요."
+english-fallback = "{plugin}: {locale}을 사용할 수 없어 영어(en_US)를 사용합니다."
+personal-selected = "{plugin}: 개인 언어를 {locale}으로 변경했습니다."
+server-selected = "{plugin}: 서버 언어를 {locale}으로 변경했습니다."
+server-default-selected = "{plugin}: 개인 언어가 이제 서버 기본 언어를 따릅니다."
+
+[language.editor]
+loading = "{locale} 메시지를 불러오는 중..."
+
+[language.editor.section]
+languages = "언어"
+search = "검색"
+search-title = "{locale} / 검색"
+group-title = "{locale} / {group}"
+
+[language.editor.prompt]
+search = "메시지 키 또는 내용을 검색하세요. 돌아가려면 cancel을 입력하세요."
+value = "채팅에 {key}의 새 값을 입력하세요."
+current = "현재 값: {value}"
+variables = "변수: {variables}"
+guidance = "줄바꿈에는 \\n, 역슬래시에는 \\\\를 사용하세요. 돌아가려면 cancel을 입력하세요."
+
+[language.editor.input]
+expired = "언어 편집기의 입력 시간이 만료되었습니다."
+too-long = "입력은 최대 {maximum}자까지 가능합니다."
+unable-to-save = "저장하지 못했습니다: {reason}"
+
+[language.editor.navigation]
+back = "&e뒤로&r"
+close = "&c닫기&r"
+previous-page = "&e이전 페이지&r"
+next-page = "&e다음 페이지&r"
+
+[language.editor.search]
+messages = "메시지 검색"
+messages-lore = "클릭하여 모든 메시지를 검색합니다."
+clear = "검색 지우기"
+
+[language.editor.message]
+current-value = "&7현재 값:&r"
+variables = "&8{variables}&r"
+edit-plural = "&7클릭하여 복수형을 편집합니다.&r"
+edit-lines = "&7클릭하여 개별 줄을 편집합니다.&r"
+edit-chat = "&7클릭하여 채팅에서 편집합니다.&r"
+
+[language.editor.locale]
+open = "&8클릭하여 이 언어를 엽니다.&r"
+
+[language.editor.category]
+message-count = "&7메시지 {count}개&r"
+open = "&8클릭하여 이 그룹을 엽니다.&r"
+
+[language.editor.error]
+no-permission = "{plugin}의 언어를 편집할 권한이 없습니다."
+unable-to-edit = "편집하지 못했습니다: {reason}"
+
+[language.editor.saved]
+summary = "{locale}을 저장했습니다. 언어 선택은 변경되지 않았습니다."
+change = "{key}: “{before}”에서 “{after}”로 변경했습니다."
+
+[language.editor.part]
+line = "{line}번째 줄"
+
+[language.editor.value]
+none = "없음"
+empty = "(비어 있음)"
+
+[debug.error]
+missing-permission = "권한이 없습니다: {permission}"
+already-preparing = "{plugin}의 진단 보고서를 이미 준비 중입니다."
+already-preparing-short = "진단 보고서를 이미 준비 중입니다."
+schedule-failed = "진단 보고서 생성 작업을 예약할 수 없습니다."
+provider-closed = "진단 제공자가 종료되었습니다."
+closed-before-capture = "보고서 데이터를 수집하기 전에 진단 제공자가 종료되었습니다."
+writer-schedule-failed = "진단 보고서 쓰기 작업을 예약할 수 없습니다."
+capture-failed = "진단 보고서 데이터를 수집할 수 없습니다. 서버 콘솔을 확인하세요."
+closed-before-write = "보고서를 쓰기 전에 진단 제공자가 종료되었습니다."
+write-failed = "진단 보고서를 쓸 수 없습니다. 서버 콘솔을 확인하세요."
+
+[debug]
+preparing = "{plugin}의 진단 보고서를 준비하는 중..."
+saved = "{plugin}의 진단 보고서를 {path}에 저장했습니다."
+
+[debug.upload]
+interrupted = "진단 보고서 업로드가 중단되었습니다. 로컬 보고서는 저장되어 있습니다."
+failed = "진단 보고서 업로드에 실패했습니다. 로컬 보고서는 저장되어 있습니다."
+completed = "VolmitSoftware - {plugin} - v{version} 이름으로 업로드했습니다."
+
+[debug.action]
+open = "열기: {url}"
+open-description = "업로드한 진단 보고서를 엽니다."
+copy-path = "로컬 경로 복사"
+copy-path-description = "로컬 보고서 경로를 복사합니다."

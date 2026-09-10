@@ -1,68 +1,71 @@
-# Język ShapedPortals: pl_PL
+# ShapedPortals — pl_PL
 #
-# Ten plik jest pobierany tylko wtedy, gdy go brakuje; edytuj bezpośrednio languages/pl_PL.toml.
-# Lokalne zmiany nigdy nie są automatycznie zastępowane; brakujące wpisy używają angielskiego.
+# === Edycja pliku ===
+# plugins/ShapedPortals/languages/pl_PL.toml
+# Ten plik można edytować bezpośrednio. Lokalne zmiany są zachowywane; brakujące lub nieprawidłowe wpisy korzystają z wbudowanego angielskiego tekstu.
+# /shapedportals language server edit pl_PL
 #
+# === Prefiks ===
+# {prefix}  globalna wartość runtime.prefix. Usuń {prefix} z pojedynczej wiadomości, aby ukryć go tylko tam
+#
+# === Formatowanie ===
 # Kolory: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B i [RRGGBB]. MiniMessage pozostaje dostępny dla własnego formatowania.
-# Symbole zastępcze są przypisane do konkretnych wiadomości. Zachowaj tylko już obecne symbole i nigdy nie zmieniaj ich nazw.
-#
-# Polecenia
-#   {argument}      nieoczekiwany argument
-#   {command}       ścieżka polecenia
-#   {key}           klucz parametru
-#   {parameter}     nazwa parametru
-#   {type}          typ
-#   {usage}         użycie polecenia
-#
-# Działanie
-#   {attempts}      próby utworzenia
-#   {created}       liczba utworzonych lub czas utworzenia
-#   {rejected}      odrzucone próby
-#   {enabled}       stan tworzenia
-#   {hot_reload}    stan przeładowania
-#   {scheduler}     planista
-#
-# Portale
-#   {portal}        identyfikator
-#   {portals}       liczba zarządzanych
-#   {id}            krótkie ID
-#   {uuid}          pełny UUID
-#   {world}         świat
-#   {axis}          oś
-#   {x}/{y}/{z}     współrzędne kotwicy
-#   {blocks}        komórki portalu
-#   {cells}         wszystkie komórki
-#   {creator}       twórca
-#   {materials}     zapisane materiały ramy
-#
-# Listy
-#   {matches}       pasujące portale
-#   {seconds}       czas na potwierdzenie w sekundach
-#
-# Konfiguracja
-#   {category}      kategoria
-#   {setting}       nazwa ustawienia
-#   {status}        znacznik wyboru
-#   {value}         wartość bieżąca, domyślna lub surowa
-#   {language}      aktywny język
-#   {locale}        ustawienia regionalne
-#   {personal}      osobiste ustawienie regionalne
-#   {name}          pełna nazwa języka
-#
-# Edytor języka
-#   {variables}     dozwolone symbole zastępcze
-#   {old}           poprzednia wartość
-#   {new}           nowa wartość
-#
-# Inne
-#   {path}          lokalna ścieżka raportu
-#   {url}           publiczny URL
-#   {reason}        powód błędu
-#
-# Prefiks
-#   {prefix}        globalna wartość runtime.prefix. Usuń {prefix} z pojedynczej wiadomości, aby ukryć go tylko tam
-#
 # Dodaj ukośnik odwrotny przed & lub [, aby wyświetlić znak dosłownie.
+#
+# === Zmienne ===
+# Zachowaj nazwy zmiennych i używaj tylko tych, które występują w danej wiadomości.
+#   {after}  Wartość po zmianie
+#   {argument}  nieoczekiwany argument
+#   {attempts}  próby utworzenia
+#   {axis}  oś
+#   {before}  Wartość przed zmianą
+#   {blocks}  komórki portalu
+#   {category}  kategoria
+#   {cells}  wszystkie komórki
+#   {command}  ścieżka polecenia
+#   {count}  Liczba pasujących wpisów
+#   {created}  liczba utworzonych lub czas utworzenia
+#   {creator}  twórca
+#   {enabled}  stan tworzenia
+#   {group}  Zezwolenie lub grupa graczy
+#   {hot_reload}  stan przeładowania
+#   {id}  krótkie ID
+#   {key}  klucz parametru
+#   {language}  aktywny język
+#   {line}  Numer linii źródłowej lub linii
+#   {locale}  ustawienia regionalne
+#   {matches}  pasujące portale
+#   {materials}  zapisane materiały ramy
+#   {maximum}  Maksymalna dopuszczalna wartość
+#   {name}  pełna nazwa języka
+#   {new}  nowa wartość
+#   {old}  poprzednia wartość
+#   {parameter}  nazwa parametru
+#   {path}  lokalna ścieżka raportu
+#   {permission}  wymagane uprawnienie
+#   {personal}  osobiste ustawienie regionalne
+#   {plugin}  Nazwa wtyczki
+#   {portal}  identyfikator
+#   {portals}  liczba zarządzanych
+#   {prefix}  globalna wartość runtime.prefix. Usuń {prefix} z pojedynczej wiadomości, aby ukryć go tylko tam
+#   {reason}  powód błędu
+#   {rejected}  odrzucone próby
+#   {scheduler}  planista
+#   {seconds}  czas na potwierdzenie w sekundach
+#   {setting}  nazwa ustawienia
+#   {status}  znacznik wyboru
+#   {target}  Gracz docelowy, podmiot lub wartość
+#   {type}  typ
+#   {url}  publiczny URL
+#   {usage}  użycie polecenia
+#   {uuid}  pełny UUID
+#   {value}  wartość bieżąca, domyślna lub surowa
+#   {variables}  dozwolone symbole zastępcze
+#   {version}  wersja wtyczki
+#   {world}  świat
+#   {x}  współrzędne kotwicy
+#   {y}  współrzędne kotwicy
+#   {z}  współrzędne kotwicy
 
 [runtime]
 prefix = "&d&lShapedPortals&r &8›&r "
@@ -75,13 +78,13 @@ denied = "{prefix}&cNie masz uprawnień, aby to zrobić.&r"
 success = "{prefix}&aZastosowano zmiany konfiguracji i plików językowych.&r"
 failed = "{prefix}&cZmiany plików zostały odrzucone; ostatnie prawidłowe ustawienia pozostają aktywne.&r"
 
+[command.feedback]
+failed = "{prefix}&cNie udało się wykonać komendy. Szczegóły znajdziesz w konsoli.&r"
+
 [command.feedback.config]
 opened = "{prefix}&aOtwarto pełny edytor konfiguracji w grze.&r"
 saved = "{prefix}&a{setting}&r &7zmieniono z &f{old}&r &7na &f{new}&r&7.&r"
 save_failed = "{prefix}&cNie udało się zastosować ustawienia &f{setting}&r&c: {reason}&r"
-
-[command.feedback]
-failed = "{prefix}&cNie udało się wykonać komendy. Szczegóły znajdziesz w konsoli.&r"
 
 [command.feedback.debug]
 started = "{prefix}&7Zbieranie danych diagnostycznych serwera i ShapedPortals…&r"
@@ -121,8 +124,8 @@ end_created = "{prefix}&5End&r &dUtworzono portal o dowolnym kształcie z {block
 failed = "{prefix}&cTa rama nie może stać się portalem o dowolnym kształcie: &f{reason}&r&c.&r"
 
 [portal.title]
-nether_created = "&5&lNether Portal Created&r"
-end_created = "&5&lEnd Portal Created&r"
+nether_created = "&5&lUtworzono portal do Netheru&r"
+end_created = "&5&lUtworzono portal do Endu&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cObok &f{portal}&r&c nie ma bezpiecznego miejsca do stania. &eKliknij ten sam portal ponownie w ciągu &f{seconds}&r&e sekund, aby mimo to teleportować się do jego wnętrza.&r"
@@ -165,7 +168,6 @@ hot_reload = "&dAutomatyczne wczytywanie&r"
 integrity = "&dIntegralność&r"
 presentation = "&dPrezentacja&r"
 debug = "&dDiagnostyka&r"
-
 languages = "&dJęzyki&r"
 
 [gui.navigation]
@@ -286,6 +288,9 @@ optional = "Ten parametr jest opcjonalny."
 required = "Ten parametr jest wymagany."
 type = "Ten parametr jest typu {type}."
 
+[director.runtime]
+usage = "Użycie: {usage}"
+
 [director.runtime.error]
 conversion_failed = "Nie można przekonwertować \"{value}\" na {type} dla {parameter}"
 default_parse_failed = "Nie można odczytać wartości domyślnej parametru {parameter}"
@@ -295,9 +300,6 @@ missing_argument = "Brak argumentu \"{parameter}\" ({type})"
 unexpected_argument = "Nieoczekiwany argument \"{argument}\". Parametry opcjonalne muszą mieć klucz, np. seed=123"
 unclosed_group = "Brak zamykającego \"]\" dla parametru {key}"
 unknown_parameter = "Nieznany klucz parametru: {key}"
-
-[director.runtime]
-usage = "Użycie: {usage}"
 
 [language.menu]
 your_language = "Twój język"
@@ -314,3 +316,119 @@ edit_description = "Otwórz edytor komunikatów dla każdego języka."
 select_description = "Kliknij, aby wybrać ten język."
 remove_personal_description = "Usuń swój osobisty wybór języka."
 no_controls = "Nie masz dostępu do ustawień języka."
+command = "Polecenie: {command}"
+selected = "wybrany"
+all-volmit-plugins = "Wszystkie wtyczki Volmit"
+
+[language.error]
+stopping = "Wybór języka jest niedostępny podczas zatrzymywania wtyczki."
+editor-player-only = "Otwórz edytor języka w grze."
+no-providers = "Brak dostępnych dostawców języków Volmit."
+numeric-page = "Podaj numer strony."
+personal-player-only = "Preferencje językowe gracza muszą być wybrane w grze."
+personal-permission = "Nie masz pozwolenia na wybranie języka."
+plugin-personal-permission = "Nie masz uprawnienia do wyboru swojego języka we wtyczce {plugin}."
+plugin-server-permission = "Nie masz uprawnienia do zmiany języka serwera we wtyczce {plugin}."
+server-locale-required = "Wybierz kod języka, np. en_US, jako domyślny język serwera."
+unavailable-for-all = "Język {locale} nie jest dostępny we wszystkich wybranych wtyczkach."
+
+[language.usage]
+editor = "Użycie: /{command} language server edit [locale]"
+selection = "Użycie: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "Użycie: /volmit plugins languages [locale]"
+
+[language.selection]
+preparing = "Przygotowywanie języka {locale} dla {target}..."
+save-failed = "{plugin}: nie udało się zapisać wyboru języka; sprawdź konsolę serwera."
+english-fallback = "{plugin}: {locale} jest niedostępny; używany będzie angielski (en_US)."
+personal-selected = "{plugin}: Twój język jest teraz {locale}."
+server-selected = "{plugin}: język serwera jest teraz {locale}."
+server-default-selected = "{plugin}: twój język jest teraz zgodny z domyślnym językiem serwera."
+
+[language.editor]
+loading = "Wczytywanie wiadomości w języku {locale}..."
+
+[language.editor.section]
+languages = "Języki"
+search = "Szukaj"
+search-title = "{locale} / Szukaj"
+group-title = "{locale} / {group}"
+
+[language.editor.prompt]
+search = "Wyszukaj klucz lub tekst wiadomości. Wpisz cancel, aby wrócić."
+value = "Wpisz na czacie nową wartość dla {key}."
+current = "Bieżąca wartość: {value}"
+variables = "Zmienne: {variables}"
+guidance = "Użyj \\n dla nowej linii, \\\\ dla odwrotnego ukośnika lub wpisz cancel, aby wrócić."
+
+[language.editor.input]
+expired = "Czas na wpisanie tekstu w edytorze języka minął."
+too-long = "Wpisany tekst może mieć najwyżej {maximum} znaków."
+unable-to-save = "Nie udało się zapisać: {reason}"
+
+[language.editor.navigation]
+back = "&eWstecz&r"
+close = "&cZamknij&r"
+previous-page = "&ePoprzednia strona&r"
+next-page = "&eNastępna strona&r"
+
+[language.editor.search]
+messages = "Wyszukaj wiadomości"
+messages-lore = "Kliknij, aby przeszukać wszystkie wiadomości."
+clear = "Wyczyść wyszukiwanie"
+
+[language.editor.message]
+current-value = "&7Bieżąca wartość:&r"
+variables = "&8{variables}&r"
+edit-plural = "&7Kliknij, aby edytować formę liczby mnogiej.&r"
+edit-lines = "&7Kliknij, aby edytować poszczególne linie.&r"
+edit-chat = "&7Kliknij, aby edytować na czacie.&r"
+
+[language.editor.locale]
+open = "&8Kliknij, aby otworzyć ten język.&r"
+
+[language.editor.category]
+message-count = "&7{count} wiadomości&r"
+open = "&8Kliknij, aby otworzyć tę kategorię.&r"
+
+[language.editor.error]
+no-permission = "Nie masz uprawnienia do edycji języków wtyczki {plugin}."
+unable-to-edit = "Nie udało się edytować: {reason}"
+
+[language.editor.saved]
+summary = "Zapisano {locale}. Wybory języka pozostały bez zmian."
+change = "{key}: „{before}” zmieniono na „{after}”."
+
+[language.editor.part]
+line = "Linia {line}"
+
+[language.editor.value]
+none = "Brak"
+empty = "(pusty)"
+
+[debug]
+preparing = "Przygotowywanie raportu diagnostycznego dla {plugin}..."
+saved = "Zapisano raport diagnostyczny dla {plugin} w {path}."
+
+[debug.error]
+missing-permission = "Brak uprawnienia: {permission}"
+already-preparing = "Raport diagnostyczny dla {plugin} jest już przygotowywany."
+already-preparing-short = "Raport diagnostyczny jest już przygotowywany."
+schedule-failed = "Nie można zaplanować utworzenia raportu diagnostycznego."
+provider-closed = "Dostawca danych diagnostycznych został zamknięty."
+closed-before-capture = "Dostawca danych diagnostycznych został zamknięty przed zebraniem danych do raportu."
+writer-schedule-failed = "Nie można zaplanować zapisania raportu diagnostycznego."
+capture-failed = "Nie można zebrać danych do raportu diagnostycznego. Sprawdź konsolę serwera."
+closed-before-write = "Dostawca danych diagnostycznych został zamknięty przed zapisaniem raportu."
+write-failed = "Nie można zapisać raportu diagnostycznego. Sprawdź konsolę serwera."
+
+[debug.upload]
+interrupted = "Przesyłanie raportu diagnostycznego zostało przerwane. Raport lokalny został zapisany."
+failed = "Przesyłanie raportu diagnostycznego nie powiodło się. Raport lokalny został zapisany."
+completed = "Przesłano jako VolmitSoftware - {plugin} - v{version}."
+
+[debug.action]
+open = "Otwórz: {url}"
+open-description = "Otwórz przesłany raport diagnostyczny."
+copy-path = "Kopiuj lokalną ścieżkę"
+copy-path-description = "Skopiuj ścieżkę raportu lokalnego."

@@ -1,68 +1,71 @@
-# Ngôn ngữ ShapedPortals: vi_VI
+# ShapedPortals — vi_VI
 #
-# Tệp này chỉ được tải xuống khi chưa tồn tại; hãy sửa trực tiếp languages/vi_VI.toml.
-# Thay đổi cục bộ không bao giờ bị tự động thay thế; mục còn thiếu dùng tiếng Anh.
+# === Chỉnh sửa tệp ===
+# plugins/ShapedPortals/languages/vi_VI.toml
+# Bạn có thể chỉnh sửa trực tiếp tệp này. Thay đổi cục bộ được giữ lại; mục thiếu hoặc không hợp lệ dùng bản tiếng Anh tích hợp.
+# /shapedportals language server edit vi_VI
 #
+# === Tiền tố ===
+# {prefix}  giá trị runtime.prefix toàn cục. Xóa {prefix} khỏi từng thông báo nếu không muốn hiện ở thông báo đó
+#
+# === Định dạng ===
 # Màu: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B và [RRGGBB]. MiniMessage vẫn dùng được cho định dạng tùy chỉnh.
-# Mỗi chỗ giữ chỗ chỉ thuộc về các thông báo cụ thể. Chỉ giữ các mã đã có trong thông báo và không đổi tên chúng.
-#
-# Lệnh
-#   {argument}      đối số ngoài dự kiến
-#   {command}       đường dẫn lệnh
-#   {key}           khóa tham số
-#   {parameter}     tên tham số
-#   {type}          kiểu
-#   {usage}         cách dùng lệnh
-#
-# Hoạt động
-#   {attempts}      lần thử tạo
-#   {created}       số đã tạo hoặc thời điểm tạo
-#   {rejected}      lần bị từ chối
-#   {enabled}       trạng thái tạo
-#   {hot_reload}    trạng thái tải lại
-#   {scheduler}     bộ lập lịch
-#
-# Cổng
-#   {portal}        mã định danh
-#   {portals}       số được quản lý
-#   {id}            ID ngắn
-#   {uuid}          UUID đầy đủ
-#   {world}         thế giới
-#   {axis}          trục
-#   {x}/{y}/{z}     tọa độ neo
-#   {blocks}        ô cổng
-#   {cells}         tất cả ô
-#   {creator}       người tạo
-#   {materials}     vật liệu khung đã ghi
-#
-# Danh sách
-#   {matches}       cổng khớp
-#   {seconds}       thời hạn xác nhận tính bằng giây
-#
-# Cấu hình
-#   {category}      danh mục
-#   {setting}       tên cài đặt
-#   {status}        dấu chọn
-#   {value}         giá trị hiện tại, mặc định hoặc thô
-#   {language}      ngôn ngữ đang dùng
-#   {locale}        mã vùng
-#   {personal}      mã vùng cá nhân
-#   {name}          tên đầy đủ của ngôn ngữ
-#
-# Trình sửa ngôn ngữ
-#   {variables}     chỗ giữ chỗ hợp lệ
-#   {old}           giá trị trước
-#   {new}           giá trị mới
-#
-# Khác
-#   {path}          đường dẫn báo cáo cục bộ
-#   {url}           URL công khai
-#   {reason}        lý do lỗi
-#
-# Tiền tố
-#   {prefix}        giá trị runtime.prefix toàn cục. Xóa {prefix} khỏi từng thông báo nếu không muốn hiện ở thông báo đó
-#
 # Thêm dấu gạch chéo ngược trước & hoặc [ để hiển thị ký tự theo nghĩa đen.
+#
+# === Biến ===
+# Giữ nguyên tên biến và chỉ dùng những biến có sẵn trong từng thông báo.
+#   {after}  Giá trị sau khi thay đổi
+#   {argument}  đối số ngoài dự kiến
+#   {attempts}  lần thử tạo
+#   {axis}  trục
+#   {before}  Giá trị trước khi thay đổi
+#   {blocks}  ô cổng
+#   {category}  danh mục
+#   {cells}  tất cả ô
+#   {command}  đường dẫn lệnh
+#   {count}  Số mục khớp
+#   {created}  số đã tạo hoặc thời điểm tạo
+#   {creator}  người tạo
+#   {enabled}  trạng thái tạo
+#   {group}  Cho phép hay nhóm người chơi
+#   {hot_reload}  trạng thái tải lại
+#   {id}  ID ngắn
+#   {key}  khóa tham số
+#   {language}  ngôn ngữ đang dùng
+#   {line}  Số dòng hay dòng nguồn
+#   {locale}  mã vùng
+#   {matches}  cổng khớp
+#   {materials}  vật liệu khung đã ghi
+#   {maximum}  Giá trị được chấp nhận tối đa
+#   {name}  tên đầy đủ của ngôn ngữ
+#   {new}  giá trị mới
+#   {old}  giá trị trước
+#   {parameter}  tên tham số
+#   {path}  đường dẫn báo cáo cục bộ
+#   {permission}  quyền cần có
+#   {personal}  mã vùng cá nhân
+#   {plugin}  Tên phần bổ sung
+#   {portal}  mã định danh
+#   {portals}  số được quản lý
+#   {prefix}  giá trị runtime.prefix toàn cục. Xóa {prefix} khỏi từng thông báo nếu không muốn hiện ở thông báo đó
+#   {reason}  lý do lỗi
+#   {rejected}  lần bị từ chối
+#   {scheduler}  bộ lập lịch
+#   {seconds}  thời hạn xác nhận tính bằng giây
+#   {setting}  tên cài đặt
+#   {status}  dấu chọn
+#   {target}  Người chơi đích, thực thể hay giá trị
+#   {type}  kiểu
+#   {url}  URL công khai
+#   {usage}  cách dùng lệnh
+#   {uuid}  UUID đầy đủ
+#   {value}  giá trị hiện tại, mặc định hoặc thô
+#   {variables}  chỗ giữ chỗ hợp lệ
+#   {version}  phiên bản plugin
+#   {world}  thế giới
+#   {x}  tọa độ neo
+#   {y}  tọa độ neo
+#   {z}  tọa độ neo
 
 [runtime]
 prefix = "&d&lShapedPortals&r &8›&r "
@@ -75,13 +78,13 @@ denied = "{prefix}&cBạn không có quyền thực hiện thao tác này.&r"
 success = "{prefix}&aĐã áp dụng các thay đổi trong tệp cấu hình và ngôn ngữ.&r"
 failed = "{prefix}&cĐã từ chối thay đổi tệp; các thiết lập hợp lệ gần nhất vẫn đang hoạt động.&r"
 
+[command.feedback]
+failed = "{prefix}&cKhông thể hoàn tất lệnh. Hãy xem bảng điều khiển để biết chi tiết.&r"
+
 [command.feedback.config]
 opened = "{prefix}&aĐã mở trình chỉnh sửa cấu hình đầy đủ trong trò chơi.&r"
 saved = "{prefix}&a{setting}&r &7đã đổi từ &f{old}&r &7thành &f{new}&r&7.&r"
 save_failed = "{prefix}&cKhông thể áp dụng &f{setting}&r&c: {reason}&r"
-
-[command.feedback]
-failed = "{prefix}&cKhông thể hoàn tất lệnh. Hãy xem bảng điều khiển để biết chi tiết.&r"
 
 [command.feedback.debug]
 started = "{prefix}&7Đang thu thập thông tin chẩn đoán máy chủ và ShapedPortals…&r"
@@ -121,8 +124,8 @@ end_created = "{prefix}&5End&r &dĐã tạo một cổng tùy hình với {block
 failed = "{prefix}&cKhung này không thể trở thành cổng tùy hình: &f{reason}&r&c.&r"
 
 [portal.title]
-nether_created = "&5&lNether Portal Created&r"
-end_created = "&5&lEnd Portal Created&r"
+nether_created = "&5&lĐã tạo cổng Nether&r"
+end_created = "&5&lĐã tạo cổng End&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cKhông có vị trí đứng an toàn bên cạnh &f{portal}&r&c. &eNhấp lại vào cùng cổng trong vòng &f{seconds}&r&e giây để vẫn dịch chuyển vào bên trong.&r"
@@ -165,7 +168,6 @@ hot_reload = "&dTải lại tức thời&r"
 integrity = "&dTính toàn vẹn&r"
 presentation = "&dTrình bày&r"
 debug = "&dChẩn đoán&r"
-
 languages = "&dNgôn ngữ&r"
 
 [gui.navigation]
@@ -286,6 +288,9 @@ optional = "Tham số này là tùy chọn."
 required = "Tham số này là bắt buộc."
 type = "Tham số này có kiểu {type}."
 
+[director.runtime]
+usage = "Cách dùng: {usage}"
+
 [director.runtime.error]
 conversion_failed = "Không thể chuyển \"{value}\" thành {type} cho {parameter}"
 default_parse_failed = "Không thể phân tích giá trị mặc định của tham số {parameter}"
@@ -295,9 +300,6 @@ missing_argument = "Thiếu đối số \"{parameter}\" ({type})"
 unexpected_argument = "Đối số không mong đợi \"{argument}\". Các tham số tùy chọn phải được chỉ định bằng khóa, ví dụ seed=123"
 unclosed_group = "Thiếu dấu \"]\" đóng cho tham số {key}"
 unknown_parameter = "Khóa tham số không xác định: {key}"
-
-[director.runtime]
-usage = "Cách dùng: {usage}"
 
 [language.menu]
 your_language = "Ngôn ngữ của bạn"
@@ -314,3 +316,119 @@ edit_description = "Mở trình chỉnh sửa thông báo cho từng ngôn ngữ
 select_description = "Nhấp để chọn ngôn ngữ này."
 remove_personal_description = "Xóa lựa chọn ngôn ngữ cá nhân của bạn."
 no_controls = "Bạn không có quyền dùng các tùy chọn ngôn ngữ."
+command = "Câu lệnh: {command}"
+selected = "Đã chọn"
+all-volmit-plugins = "Tất cả plugin Volmit"
+
+[language.error]
+stopping = "Không có khả năng chọn ngôn ngữ trong khi bổ sung đang dừng."
+editor-player-only = "Mở trình soạn thảo ngôn ngữ trong trò chơi."
+no-providers = "Không có nhà cung cấp ngôn ngữ Volmit nào khả dụng."
+numeric-page = "Nhập số trang bằng chữ số."
+personal-player-only = "Bạn phải chọn ngôn ngữ cá nhân trong trò chơi."
+personal-permission = "Bạn không có quyền chọn ngôn ngữ của mình."
+plugin-personal-permission = "Bạn không có quyền chọn ngôn ngữ cá nhân cho {plugin}."
+plugin-server-permission = "Bạn không có quyền thay đổi ngôn ngữ máy chủ cho {plugin}."
+server-locale-required = "Chọn mã ngôn ngữ như en_US làm ngôn ngữ mặc định của máy chủ."
+unavailable-for-all = "Ngôn ngữ {locale} không khả dụng cho tất cả plugin đã chọn."
+
+[language.usage]
+editor = "Cách dùng: /{command} language server edit [locale]"
+selection = "Cách dùng: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "Cách dùng: /volmit plugins languages [locale]"
+
+[language.selection]
+preparing = "Đang chuẩn bị ngôn ngữ {locale} cho {target}..."
+save-failed = "{plugin}: không thể lưu lựa chọn ngôn ngữ; hãy kiểm tra bảng điều khiển máy chủ."
+english-fallback = "{plugin}: {locale} không khả dụng; sẽ dùng tiếng Anh (en_US)."
+personal-selected = "{plugin}: ngôn ngữ của bạn hiện là {locale}."
+server-selected = "{plugin}: ngôn ngữ máy chủ hiện là {locale}."
+server-default-selected = "{plugin}: ngôn ngữ của bạn hiện theo ngôn ngữ mặc định của máy chủ."
+
+[language.editor]
+loading = "Đang tải tin nhắn cho {locale}..."
+
+[language.editor.section]
+languages = "Ngôn ngữ"
+search = "Tìm kiếm"
+search-title = "{locale} / Tìm kiếm"
+group-title = "{locale} / {group}"
+
+[language.editor.prompt]
+search = "Tìm khóa hoặc nội dung tin nhắn. Nhập cancel để quay lại."
+value = "Nhập giá trị mới cho {key} trong trò chuyện."
+current = "Giá trị hiện tại: {value}"
+variables = "Biến: {variables}"
+guidance = "Dùng \\n để xuống dòng, \\\\ để nhập dấu gạch chéo ngược, hoặc nhập cancel để quay lại."
+
+[language.editor.input]
+expired = "Đã hết thời gian nhập trong trình chỉnh sửa ngôn ngữ."
+too-long = "Nội dung nhập chỉ được có tối đa {maximum} ký tự."
+unable-to-save = "Không thể lưu: {reason}"
+
+[language.editor.navigation]
+back = "&eQuay lại&r"
+close = "&cĐóng&r"
+previous-page = "&eTrang trước&r"
+next-page = "&eTrang kế&r"
+
+[language.editor.search]
+messages = "Tìm tin nhắn"
+messages-lore = "Nhấn vào để tìm kiếm mọi tin nhắn."
+clear = "Xóa tìm kiếm"
+
+[language.editor.message]
+current-value = "&7Giá trị hiện có:&r"
+variables = "&8{variables}&r"
+edit-plural = "&7Nhấp để chỉnh sửa một dạng số nhiều.&r"
+edit-lines = "&7Nhấp để chỉnh sửa từng dòng.&r"
+edit-chat = "&7Nhấp để chỉnh sửa trong trò chuyện.&r"
+
+[language.editor.locale]
+open = "&8Nhấn vào để mở ngôn ngữ này.&r"
+
+[language.editor.category]
+message-count = "&7{count} tin nhắn&r"
+open = "&8Nhấn vào để mở phân loại này.&r"
+
+[language.editor.error]
+no-permission = "Bạn không có quyền chỉnh sửa ngôn ngữ của {plugin}."
+unable-to-edit = "Không thể chỉnh sửa: {reason}"
+
+[language.editor.saved]
+summary = "Đã lưu {locale}. Các lựa chọn ngôn ngữ không thay đổi."
+change = "{key}: “{before}” đã đổi thành “{after}”."
+
+[language.editor.part]
+line = "Dòng {line}"
+
+[language.editor.value]
+none = "Không có"
+empty = "(trống)"
+
+[debug.error]
+missing-permission = "Thiếu quyền: {permission}"
+already-preparing = "Một báo cáo chẩn đoán cho {plugin} đang được chuẩn bị."
+already-preparing-short = "Một báo cáo chẩn đoán đang được chuẩn bị."
+schedule-failed = "Không thể lên lịch tạo báo cáo chẩn đoán."
+provider-closed = "Bộ cung cấp dữ liệu chẩn đoán đã đóng."
+closed-before-capture = "Bộ cung cấp dữ liệu chẩn đoán đã đóng trước khi thu thập dữ liệu báo cáo."
+writer-schedule-failed = "Không thể lên lịch ghi báo cáo chẩn đoán."
+capture-failed = "Không thể thu thập dữ liệu báo cáo chẩn đoán; hãy kiểm tra bảng điều khiển máy chủ."
+closed-before-write = "Bộ cung cấp dữ liệu chẩn đoán đã đóng trước khi ghi báo cáo."
+write-failed = "Không thể ghi báo cáo chẩn đoán; hãy kiểm tra bảng điều khiển máy chủ."
+
+[debug]
+preparing = "Đang chuẩn bị báo cáo chẩn đoán {plugin}..."
+saved = "Đã lưu báo cáo chẩn đoán {plugin} vào {path}."
+
+[debug.upload]
+interrupted = "Việc tải báo cáo chẩn đoán lên đã bị gián đoạn; báo cáo cục bộ đã được lưu."
+failed = "Không thể tải báo cáo chẩn đoán lên; báo cáo cục bộ đã được lưu."
+completed = "Đã tải lên với tên VolmitSoftware - {plugin} - v{version}."
+
+[debug.action]
+open = "Mở: {url}"
+open-description = "Mở báo cáo chẩn đoán đã tải lên."
+copy-path = "Sao chép đường dẫn cục bộ"
+copy-path-description = "Sao chép đường dẫn của báo cáo cục bộ."

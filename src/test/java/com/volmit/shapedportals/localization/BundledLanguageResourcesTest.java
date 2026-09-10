@@ -87,9 +87,13 @@ class BundledLanguageResourcesTest {
                     .describedAs("catalog coverage in %s", resource)
                     .containsExactlyInAnyOrderElementsOf(catalog.ids());
             for (MessageKey key : BukkitLanguageMessages.keys()) {
+                TextKey textKey = (TextKey) key;
+                if (!hasTranslatableText(textKey)) {
+                    continue;
+                }
                 assertThat(messages.get(key.id()))
                         .describedAs("translated shared language menu key %s in %s", key.id(), resource)
-                        .isNotEqualTo(((TextKey) key).english());
+                        .isNotEqualTo(textKey.english());
             }
 
             int changed = 0;
@@ -135,5 +139,11 @@ class BundledLanguageResourcesTest {
             placeholders.add(matcher.group(1));
         }
         return Set.copyOf(placeholders);
+    }
+
+    private boolean hasTranslatableText(TextKey key) {
+        String text = PLACEHOLDER.matcher(key.english()).replaceAll("");
+        text = AMPERSAND_FORMATTING.matcher(text).replaceAll("");
+        return text.codePoints().anyMatch(Character::isLetter);
     }
 }

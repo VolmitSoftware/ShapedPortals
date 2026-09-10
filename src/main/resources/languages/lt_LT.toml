@@ -1,68 +1,71 @@
-# ShapedPortals kalba: lt_LT
+# ShapedPortals — lt_LT
 #
-# Šis failas atsisiunčiamas tik tada, kai jo nėra; redaguokite languages/lt_LT.toml tiesiogiai.
-# Vietiniai pakeitimai niekada automatiškai nekeičiami; trūkstamos reikšmės naudoja anglų kalbą.
+# === Failo redagavimas ===
+# plugins/ShapedPortals/languages/lt_LT.toml
+# Šį failą galima redaguoti tiesiogiai. Vietiniai pakeitimai išsaugomi; trūkstamiems ar netinkamiems įrašams naudojama integruota anglų kalba.
+# /shapedportals language server edit lt_LT
 #
+# === Priešdėlis ===
+# {prefix}  visuotinė runtime.prefix reikšmė. Pašalinkite {prefix} iš atskiro pranešimo, kad jame jo nerodytų
+#
+# === Formatavimas ===
 # Spalvos: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B ir [RRGGBB]. Pasirinktiniam formatavimui galima naudoti MiniMessage.
-# Vietos žymekliai priklauso konkretiems pranešimams. Palikite tik jau esančius žymeklius ir jų nepervadinkite.
-#
-# Komandos
-#   {argument}      netikėtas argumentas
-#   {command}       komandos kelias
-#   {key}           parametro raktas
-#   {parameter}     parametro vardas
-#   {type}          tipas
-#   {usage}         komandos naudojimas
-#
-# Vykdymas
-#   {attempts}      kūrimo bandymai
-#   {created}       sukurtų skaičius arba laikas
-#   {rejected}      atmesti bandymai
-#   {enabled}       kūrimo būsena
-#   {hot_reload}    karštojo įkėlimo būsena
-#   {scheduler}     planavimo sistema
-#
-# Portalai
-#   {portal}        identifikatorius
-#   {portals}       valdomų skaičius
-#   {id}            trumpas ID
-#   {uuid}          visas UUID
-#   {world}         pasaulis
-#   {axis}          ašis
-#   {x}/{y}/{z}     inkaro koordinatės
-#   {blocks}        portalo langeliai
-#   {cells}         visi langeliai
-#   {creator}       kūrėjas
-#   {materials}     įrašytos rėmo medžiagos
-#
-# Sąrašai
-#   {matches}       atitinkantys portalai
-#   {seconds}       patvirtinimo laikas sekundėmis
-#
-# Konfigūracija
-#   {category}      kategorija
-#   {setting}       nuostatos vardas
-#   {status}        pasirinkimo žyma
-#   {value}         dabartinė, numatytoji arba neapdorota reikšmė
-#   {language}      aktyvi kalba
-#   {locale}        lokalė
-#   {personal}      asmeninė lokalė
-#   {name}          visas kalbos pavadinimas
-#
-# Kalbos redaktorius
-#   {variables}     galimi vietos žymekliai
-#   {old}           ankstesnė reikšmė
-#   {new}           nauja reikšmė
-#
-# Kita
-#   {path}          vietinio pranešimo kelias
-#   {url}           viešas URL
-#   {reason}        klaidos priežastis
-#
-# Priešdėlis
-#   {prefix}        visuotinė runtime.prefix reikšmė. Pašalinkite {prefix} iš atskiro pranešimo, kad jame jo nerodytų
-#
 # Norėdami & arba [ rodyti tiesiogiai, prieš juos rašykite pasvirąjį brūkšnį atgal.
+#
+# === Kintamieji ===
+# Nekeiskite kintamųjų pavadinimų ir naudokite tik konkrečiame pranešime esančius kintamuosius.
+#   {after}  Vertė po pakeitimo
+#   {argument}  netikėtas argumentas
+#   {attempts}  kūrimo bandymai
+#   {axis}  ašis
+#   {before}  Vertė prieš pakeitimą
+#   {blocks}  portalo langeliai
+#   {category}  kategorija
+#   {cells}  visi langeliai
+#   {command}  komandos kelias
+#   {count}  Atitinkamų įrašų skaičius
+#   {created}  sukurtų skaičius arba laikas
+#   {creator}  kūrėjas
+#   {enabled}  kūrimo būsena
+#   {group}  Leidimas arba žaidėjo grupė
+#   {hot_reload}  karštojo įkėlimo būsena
+#   {id}  trumpas ID
+#   {key}  parametro raktas
+#   {language}  aktyvi kalba
+#   {line}  Pradinės eilutės arba eilutės numeris
+#   {locale}  lokalė
+#   {matches}  atitinkantys portalai
+#   {materials}  įrašytos rėmo medžiagos
+#   {maximum}  Didžiausia leidžiama vertė
+#   {name}  visas kalbos pavadinimas
+#   {new}  nauja reikšmė
+#   {old}  ankstesnė reikšmė
+#   {parameter}  parametro vardas
+#   {path}  vietinio pranešimo kelias
+#   {permission}  reikalingas leidimas
+#   {personal}  asmeninė lokalė
+#   {plugin}  Įskiepio pavadinimas
+#   {portal}  identifikatorius
+#   {portals}  valdomų skaičius
+#   {prefix}  visuotinė runtime.prefix reikšmė. Pašalinkite {prefix} iš atskiro pranešimo, kad jame jo nerodytų
+#   {reason}  klaidos priežastis
+#   {rejected}  atmesti bandymai
+#   {scheduler}  planavimo sistema
+#   {seconds}  patvirtinimo laikas sekundėmis
+#   {setting}  nuostatos vardas
+#   {status}  pasirinkimo žyma
+#   {target}  Tikslinis žaidėjas, subjektas arba vertė
+#   {type}  tipas
+#   {url}  viešas URL
+#   {usage}  komandos naudojimas
+#   {uuid}  visas UUID
+#   {value}  dabartinė, numatytoji arba neapdorota reikšmė
+#   {variables}  galimi vietos žymekliai
+#   {version}  įskiepio versija
+#   {world}  pasaulis
+#   {x}  inkaro koordinatės
+#   {y}  inkaro koordinatės
+#   {z}  inkaro koordinatės
 
 [runtime]
 prefix = "&d&lShapedPortals&r &8›&r "
@@ -75,13 +78,13 @@ denied = "{prefix}&cNeturite leidimo to daryti.&r"
 success = "{prefix}&aKonfigūracijos ir kalbos failų pakeitimai pritaikyti.&r"
 failed = "{prefix}&cFailų pakeitimai atmesti; lieka aktyvūs paskutiniai tinkami nustatymai.&r"
 
+[command.feedback]
+failed = "{prefix}&cKomandos įvykdyti nepavyko. Išsamesnę informaciją rasite konsolėje.&r"
+
 [command.feedback.config]
 opened = "{prefix}&aAtidarytas visas žaidimo konfigūracijos redaktorius.&r"
 saved = "{prefix}&a{setting}&r &7pakeistas iš &f{old}&r &7į &f{new}&r&7.&r"
 save_failed = "{prefix}&cNepavyko pritaikyti &f{setting}&r&c: {reason}&r"
-
-[command.feedback]
-failed = "{prefix}&cKomandos įvykdyti nepavyko. Išsamesnę informaciją rasite konsolėje.&r"
 
 [command.feedback.debug]
 started = "{prefix}&7Renkama serverio ir ShapedPortals diagnostikos informacija…&r"
@@ -121,8 +124,8 @@ end_created = "{prefix}&5End&r &dSukurtas formos portalas su {blocks} vidiniais 
 failed = "{prefix}&cŠis rėmas negali tapti formos portalu: &f{reason}&r&c.&r"
 
 [portal.title]
-nether_created = "&5&lNether Portal Created&r"
-end_created = "&5&lEnd Portal Created&r"
+nether_created = "&5&lSukurtas Nether portalas&r"
+end_created = "&5&lSukurtas End portalas&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cŠalia &f{portal}&r&c nėra saugios vietos atsistoti. &ePer &f{seconds}&r&e sekundes dar kartą spustelėkite tą patį portalą, kad vis tiek persikeltumėte į jo vidų.&r"
@@ -165,7 +168,6 @@ hot_reload = "&dAutomatinis įkėlimas&r"
 integrity = "&dVientisumas&r"
 presentation = "&dPateikimas&r"
 debug = "&dDiagnostika&r"
-
 languages = "&dKalbos&r"
 
 [gui.navigation]
@@ -286,6 +288,9 @@ optional = "Šis parametras yra neprivalomas."
 required = "Šis parametras yra privalomas."
 type = "Šio parametro tipas yra {type}."
 
+[director.runtime]
+usage = "Naudojimas: {usage}"
+
 [director.runtime.error]
 conversion_failed = "Reikšmės \"{value}\" nepavyko konvertuoti į {type} parametrui {parameter}"
 default_parse_failed = "Nepavyko nuskaityti parametro {parameter} numatytosios reikšmės"
@@ -295,9 +300,6 @@ missing_argument = "Trūksta argumento \"{parameter}\" ({type})"
 unexpected_argument = "Netikėtas argumentas \"{argument}\". Pasirenkami parametrai turi būti nurodyti su raktu, pvz. seed=123"
 unclosed_group = "Trūksta uždarančio \"]\" parametrui {key}"
 unknown_parameter = "Nežinomas parametro raktas: {key}"
-
-[director.runtime]
-usage = "Naudojimas: {usage}"
 
 [language.menu]
 your_language = "Jūsų kalba"
@@ -314,3 +316,119 @@ edit_description = "Atverkite kiekvienos kalbos pranešimų redaktorių."
 select_description = "Spustelėkite, kad pasirinktumėte šią kalbą."
 remove_personal_description = "Pašalinkite asmeninį kalbos pasirinkimą."
 no_controls = "Jums nepasiekiami kalbos nustatymai."
+command = "Komanda: {command}"
+selected = "pasirinkta"
+all-volmit-plugins = "Visi Volmit papildiniai"
+
+[language.error]
+stopping = "Stabdant papildinį kalbos pasirinkimas nepasiekiamas."
+editor-player-only = "Atverti kalbos rengyklę žaidime."
+no-providers = "Nėra prieinamų Volmit kalbų teikėjų."
+numeric-page = "Įveskite puslapio numerį."
+personal-player-only = "Žaidžiant turi būti pasirinkti žaidėjų kalbos nustatymai."
+personal-permission = "Jūs neturite leidimo pasirinkti savo kalbą."
+plugin-personal-permission = "Neturite leidimo pasirinkti savo kalbos papildiniui {plugin}."
+plugin-server-permission = "Neturite leidimo keisti papildinio {plugin} serverio kalbos."
+server-locale-required = "Pasirinkite numatytosios serverio kalbos kodą, pavyzdžiui, en_US."
+unavailable-for-all = "Kalba {locale} prieinama ne visiems pasirinktiems papildiniams."
+
+[language.usage]
+editor = "Naudojimas: /{command} language server edit [locale]"
+selection = "Naudojimas: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "Naudojimas: /volmit plugins languages [locale]"
+
+[language.selection]
+preparing = "Ruošiama kalba {locale} papildiniui {target}..."
+save-failed = "{plugin}: nepavyko išsaugoti kalbos pasirinkimo; patikrinkite serverio konsolę."
+english-fallback = "{plugin}: {locale} neprieinama; naudojama anglų kalba (en_US)."
+personal-selected = "{plugin}: dabar jūsų kalba {locale}."
+server-selected = "{plugin}: serverio kalba yra dabar {locale}."
+server-default-selected = "{plugin}: jūsų kalba dabar atitinka numatytąją serverio kalbą."
+
+[language.editor]
+loading = "Įkeliami kalbos {locale} pranešimai..."
+
+[language.editor.section]
+languages = "Kalbos"
+search = "Ieškoti"
+search-title = "{locale} / Ieškoti"
+group-title = "{locale} / {group}"
+
+[language.editor.prompt]
+search = "Ieškokite pranešimo rakto arba teksto. Norėdami grįžti, įveskite cancel."
+value = "Pokalbyje įveskite naują rakto {key} reikšmę."
+current = "Dabartinė reikšmė: {value}"
+variables = "Kintamieji: {variables}"
+guidance = "Naudokite \\n naujai eilutei, \\\\ atvirkštiniam pasvirajam brūkšniui arba įveskite cancel, kad grįžtumėte."
+
+[language.editor.input]
+expired = "Baigėsi kalbos rengyklės įvesties laikas."
+too-long = "Įvestyje gali būti ne daugiau kaip {maximum} simbolių."
+unable-to-save = "Nepavyko išsaugoti: {reason}"
+
+[language.editor.navigation]
+back = "&eAtgal&r"
+close = "&cUždaryti&r"
+previous-page = "&eAnkstesnis puslapis&r"
+next-page = "&eKitas puslapis&r"
+
+[language.editor.search]
+messages = "Ieškoti pranešimų"
+messages-lore = "Spustelėkite norėdami ieškoti visuose pranešimuose."
+clear = "Išvalyti paiešką"
+
+[language.editor.message]
+current-value = "&7Dabartinė reikšmė:&r"
+variables = "&8{variables}&r"
+edit-plural = "&7Spustelėkite norėdami redaguoti daugiskaitos formą.&r"
+edit-lines = "&7Spustelėkite norėdami redaguoti atskiras eilutes.&r"
+edit-chat = "&7Spustelėkite norėdami redaguoti pokalbyje.&r"
+
+[language.editor.locale]
+open = "&8Spauskite norėdami atverti šią kalbą.&r"
+
+[language.editor.category]
+message-count = "&7{count} pranešimai&r"
+open = "&8Spustelėkite norėdami atverti šią kategoriją.&r"
+
+[language.editor.error]
+no-permission = "Neturite leidimo redaguoti papildinio {plugin} kalbų."
+unable-to-edit = "Nepavyko redaguoti: {reason}"
+
+[language.editor.saved]
+summary = "{locale} išsaugota. Kalbų pasirinkimai nepakeisti."
+change = "{key}: „{before}“ pakeista į „{after}“."
+
+[language.editor.part]
+line = "Eilutė {line}"
+
+[language.editor.value]
+none = "Nėra"
+empty = "(tuščia)"
+
+[debug.error]
+missing-permission = "Trūksta leidimo: {permission}"
+already-preparing = "Įskiepio {plugin} diagnostikos ataskaita jau rengiama."
+already-preparing-short = "Diagnostikos ataskaita jau rengiama."
+schedule-failed = "Nepavyko suplanuoti diagnostikos ataskaitos rengimo."
+provider-closed = "Diagnostikos duomenų teikėjas uždarytas."
+closed-before-capture = "Diagnostikos duomenų teikėjas buvo uždarytas prieš surenkant ataskaitos duomenis."
+writer-schedule-failed = "Nepavyko suplanuoti diagnostikos ataskaitos rašymo."
+capture-failed = "Nepavyko surinkti diagnostikos ataskaitos duomenų; patikrinkite serverio konsolę."
+closed-before-write = "Diagnostikos duomenų teikėjas buvo uždarytas prieš įrašant ataskaitą."
+write-failed = "Nepavyko įrašyti diagnostikos ataskaitos; patikrinkite serverio konsolę."
+
+[debug]
+preparing = "Rengiama įskiepio {plugin} diagnostikos ataskaita..."
+saved = "Įskiepio {plugin} diagnostikos ataskaita išsaugota: {path}."
+
+[debug.upload]
+interrupted = "Diagnostikos ataskaitos įkėlimas nutrauktas; vietinė ataskaita išsaugota."
+failed = "Nepavyko įkelti diagnostikos ataskaitos; vietinė ataskaita išsaugota."
+completed = "Įkelta pavadinimu VolmitSoftware - {plugin} - v{version}."
+
+[debug.action]
+open = "Atidaryti: {url}"
+open-description = "Atidaryti įkeltą diagnostikos ataskaitą."
+copy-path = "Kopijuoti vietinį kelią"
+copy-path-description = "Kopijuoti vietinės ataskaitos kelią."

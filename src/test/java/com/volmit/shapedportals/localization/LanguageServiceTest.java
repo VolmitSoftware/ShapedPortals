@@ -52,16 +52,16 @@ class LanguageServiceTest {
         assertThat(service.hasRemoteCatalogLocale("fr_FR")).isTrue();
         assertThat(service.hasRemoteCatalogLocale("en_US")).isFalse();
         assertThat(toml)
-                .contains("This file is editable in a text editor or through /sp config")
-                .contains("Local changes are not replaced")
-                .contains("Colors and styles  &0 through &f")
+                .contains("=== File editing ===")
+                .contains("Local changes are preserved")
+                .contains("Colors and styles: &0-&f")
                 .contains("[runtime]")
                 .contains("[language.menu]")
                 .contains("[portal.navigation.error]")
                 .contains("[hud]")
                 .contains("[gui.title]")
                 .contains("[director.runtime]")
-                .contains("{prefix}       Global runtime.prefix value")
+                .contains("{prefix}  Global runtime.prefix value")
                 .contains("&cYou do not have permission")
                 .contains("&d&lShapedPortals")
                 .doesNotContain("<red>")
@@ -84,6 +84,14 @@ class LanguageServiceTest {
         LanguageService service = service();
 
         service.validateDownloadedContent("es_ES", "[runtime]\nprefix = \"&6Portales &8> \"\n");
+    }
+
+    @Test
+    void emptyAndInvalidDownloadedEntriesUseEnglish() throws IOException {
+        LanguageService service = service();
+        service.validateDownloadedContent("es_ES", "");
+        service.validateDownloadedContent("es_ES", "[runtime]\nprefix = 42\n");
+        service.validateDownloadedContent("es_ES", "[portal.notice]\nfailed = \"{wrong}\"\n");
     }
 
     @Test
@@ -178,8 +186,8 @@ class LanguageServiceTest {
         byte[] invalid = "[runtime]\nprefix = 42\n".getBytes(StandardCharsets.UTF_8);
         Files.write(file, invalid);
 
-        assertThatThrownBy(() -> service.prepare("fr_FR")).isInstanceOf(IOException.class);
-        LanguageService.PreparedLanguage fallback = service.englishFallback("fr_FR");
+        LanguageService.PreparedLanguage fallback = service.prepare("fr_FR");
+        assertThat(fallback.selectionReady()).isTrue();
         service.install(fallback);
 
         assertThat(service.render(ShapedMessages.PREFIX)).isEqualTo(ShapedMessages.PREFIX.english());
@@ -273,16 +281,16 @@ class LanguageServiceTest {
     }
 
     @Test
-    void rejectsInvalidMarkupAndPreservesTheFile() throws IOException {
+    void invalidMarkupFallsBackWithoutDiscardingValidMessages() throws IOException {
         LanguageService service = service();
         Path file = service.languageFile("en_US").toPath();
         Files.createDirectories(file.getParent());
         String content = "[command.status]\nheader = \"<green><bold>Broken</green>\"\n";
         Files.writeString(file, content, StandardCharsets.UTF_8);
 
-        assertThatThrownBy(() -> service.prepare("en_US"))
-                .isInstanceOf(IOException.class)
-                .hasMessageContaining("invalid message markup");
+        service.install(service.prepare("en_US"));
+        assertThat(service.render(ShapedMessages.STATUS_HEADER))
+                .isEqualTo(ShapedMessages.STATUS_HEADER.english().replace("{prefix}", ShapedMessages.PREFIX.english()));
         assertThat(Files.readString(file)).isEqualTo(content);
     }
 
@@ -306,7 +314,7 @@ class LanguageServiceTest {
 
         assertThat(updated.selectionReady()).isTrue();
         assertThat(editedFile)
-                .startsWith("# ShapedPortals language: en_US")
+                .startsWith("# ShapedPortals — en_US")
                 .contains("[runtime.permission]\ndenied = \"&cEdited permission message&r\"")
                 .contains("[unknown]\nenabled = true")
                 .doesNotContain("  denied =");
@@ -355,7 +363,6 @@ class LanguageServiceTest {
                     .contains("Pirate", "You do not have permission");
             assertThat(Files.readString(temporaryDirectory.resolve("languages/language-preferences.properties")))
                     .contains(playerId + "=pirate");
-            assertThat(temporaryDirectory.resolve("language-preferences.properties")).doesNotExist();
             assertThat(Files.readString(pirate)).isEqualTo(pirateContent);
 
             selections.selectDefault("pirate").get(5L, TimeUnit.SECONDS);

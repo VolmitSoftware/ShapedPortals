@@ -1,68 +1,71 @@
-# שפת ShapedPortals: he_IL
+# ShapedPortals — he_IL
 #
-# הקובץ יורד רק אם הוא חסר; יש לערוך ישירות את languages/he_IL.toml.
-# שינויים מקומיים לעולם אינם מוחלפים אוטומטית; ערכים חסרים משתמשים באנגלית.
+# === עריכת הקובץ ===
+# plugins/ShapedPortals/languages/he_IL.toml
+# אפשר לערוך קובץ זה ישירות. שינויים מקומיים נשמרים; ערכים חסרים או לא תקינים משתמשים באנגלית המובנית.
+# /shapedportals language server edit he_IL
 #
+# === קידומת ===
+# {prefix}  הערך הגלובלי runtime.prefix. הסירו את {prefix} מהודעה מסוימת כדי להסתיר אותה רק שם
+#
+# === עיצוב ===
 # צבעים: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B וגם [RRGGBB]. ניתן להשתמש גם ב-MiniMessage לעיצוב מותאם.
-# מצייני המקום שייכים להודעות מסוימות. יש להשאיר רק את המציינים שכבר מופיעים בהודעה ולא לשנות את שמם.
-#
-# פקודות
-#   {argument}      ארגומנט לא צפוי
-#   {command}       נתיב פקודה
-#   {key}           מפתח פרמטר
-#   {parameter}     שם פרמטר
-#   {type}          סוג
-#   {usage}         אופן שימוש
-#
-# זמן ריצה
-#   {attempts}      ניסיונות יצירה
-#   {created}       כמות שנוצרה או זמן יצירה
-#   {rejected}      ניסיונות שנדחו
-#   {enabled}       מצב יצירה
-#   {hot_reload}    מצב טעינה חמה
-#   {scheduler}     מתזמן
-#
-# פורטלים
-#   {portal}        מזהה
-#   {portals}       כמות מנוהלת
-#   {id}            מזהה קצר
-#   {uuid}          UUID מלא
-#   {world}         עולם
-#   {axis}          ציר
-#   {x}/{y}/{z}     קואורדינטות עוגן
-#   {blocks}        תאי פורטל
-#   {cells}         כל התאים
-#   {creator}       יוצר
-#   {materials}     חומרי המסגרת שנרשמו
-#
-# רשימות
-#   {matches}       פורטלים תואמים
-#   {seconds}       חלון אישור בשניות
-#
-# הגדרות
-#   {category}      קטגוריה
-#   {setting}       שם הגדרה
-#   {status}        סימן בחירה
-#   {value}         ערך נוכחי, ברירת מחדל או גולמי
-#   {language}      שפה פעילה
-#   {locale}        אזור שפה
-#   {personal}      אזור השפה האישי
-#   {name}          שם השפה המלא
-#
-# עורך שפה
-#   {variables}     מצייני מקום תקינים
-#   {old}           הערך הקודם
-#   {new}           הערך החדש
-#
-# אחר
-#   {path}          נתיב דוח מקומי
-#   {url}           כתובת דוח ציבורית
-#   {reason}        סיבת כשל
-#
-# קידומת
-#   {prefix}        הערך הגלובלי runtime.prefix. הסירו את {prefix} מהודעה מסוימת כדי להסתיר אותה רק שם
-#
 # כדי להציג & או [ כלשונם, יש להוסיף לפניהם לוכסן הפוך.
+#
+# === משתנים ===
+# יש לשמור על שמות המשתנים ולהשתמש רק במשתנים הקיימים בכל הודעה.
+#   {after}  ערך לאחר השינוי
+#   {argument}  ארגומנט לא צפוי
+#   {attempts}  ניסיונות יצירה
+#   {axis}  ציר
+#   {before}  ערך לפני השינוי
+#   {blocks}  תאי פורטל
+#   {category}  קטגוריה
+#   {cells}  כל התאים
+#   {command}  נתיב פקודה
+#   {count}  מספר הערכים
+#   {created}  כמות שנוצרה או זמן יצירה
+#   {creator}  יוצר
+#   {enabled}  מצב יצירה
+#   {group}  Permission או שחקן
+#   {hot_reload}  מצב טעינה חמה
+#   {id}  מזהה קצר
+#   {key}  מפתח פרמטר
+#   {language}  שפה פעילה
+#   {line}  מקור או קו מספר
+#   {locale}  אזור שפה
+#   {matches}  פורטלים תואמים
+#   {materials}  חומרי המסגרת שנרשמו
+#   {maximum}  ערך מותר מקסימלי
+#   {name}  שם השפה המלא
+#   {new}  הערך החדש
+#   {old}  הערך הקודם
+#   {parameter}  שם פרמטר
+#   {path}  נתיב דוח מקומי
+#   {permission}  ההרשאה הנדרשת
+#   {personal}  אזור השפה האישי
+#   {plugin}  שם Plugin
+#   {portal}  מזהה
+#   {portals}  כמות מנוהלת
+#   {prefix}  הערך הגלובלי runtime.prefix. הסירו את {prefix} מהודעה מסוימת כדי להסתיר אותה רק שם
+#   {reason}  סיבת כשל
+#   {rejected}  ניסיונות שנדחו
+#   {scheduler}  מתזמן
+#   {seconds}  חלון אישור בשניות
+#   {setting}  שם הגדרה
+#   {status}  סימן בחירה
+#   {target}  שחקן היעד, הישות או הערך
+#   {type}  סוג
+#   {url}  כתובת דוח ציבורית
+#   {usage}  אופן שימוש
+#   {uuid}  UUID מלא
+#   {value}  ערך נוכחי, ברירת מחדל או גולמי
+#   {variables}  מצייני מקום תקינים
+#   {version}  גרסת התוסף
+#   {world}  עולם
+#   {x}  קואורדינטות עוגן
+#   {y}  קואורדינטות עוגן
+#   {z}  קואורדינטות עוגן
 
 [runtime]
 prefix = "&d&lShapedPortals&r &8›&r "
@@ -75,13 +78,13 @@ denied = "{prefix}&cאין לך הרשאה לבצע פעולה זו.&r"
 success = "{prefix}&aהשינויים בקובצי התצורה והשפה הוחלו.&r"
 failed = "{prefix}&cהשינויים בקבצים נדחו; ההגדרות התקינות האחרונות נשארו פעילות.&r"
 
+[command.feedback]
+failed = "{prefix}&cלא ניתן להשלים את הפקודה. פרטים נוספים מופיעים במסוף.&r"
+
 [command.feedback.config]
 opened = "{prefix}&aעורך התצורה המלא בתוך המשחק נפתח.&r"
 saved = "{prefix}&a{setting}&r &7שונה מ-&f{old}&r &7ל-&f{new}&r&7.&r"
 save_failed = "{prefix}&cלא ניתן להחיל את &f{setting}&r&c: {reason}&r"
-
-[command.feedback]
-failed = "{prefix}&cלא ניתן להשלים את הפקודה. פרטים נוספים מופיעים במסוף.&r"
 
 [command.feedback.debug]
 started = "{prefix}&7נאספים נתוני אבחון של השרת ושל ShapedPortals…&r"
@@ -121,8 +124,8 @@ end_created = "{prefix}&5End&r &dנוצר פורטל מעוצב עם {blocks} ב
 failed = "{prefix}&cלא ניתן להפוך את המסגרת הזו לפורטל מעוצב: &f{reason}&r&c.&r"
 
 [portal.title]
-nether_created = "&5&lNether Portal Created&r"
-end_created = "&5&lEnd Portal Created&r"
+nether_created = "&5&lנוצר שער לנתר&r"
+end_created = "&5&lנוצר שער לאנד&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&cאין מקום בטוח לעמוד ליד &f{portal}&r&c. &eלחצו שוב על אותו פורטל בתוך &f{seconds}&r&e שניות כדי להשתגר לתוכו בכל זאת.&r"
@@ -165,7 +168,6 @@ hot_reload = "&dטעינה חמה&r"
 integrity = "&dתקינות&r"
 presentation = "&dתצוגה&r"
 debug = "&dאבחון&r"
-
 languages = "&dשפות&r"
 
 [gui.navigation]
@@ -286,6 +288,9 @@ optional = "פרמטר זה הוא אופציונלי."
 required = "פרמטר זה הוא חובה."
 type = "פרמטר זה הוא מסוג {type}."
 
+[director.runtime]
+usage = "שימוש: {usage}"
+
 [director.runtime.error]
 conversion_failed = "לא ניתן להמיר את \"{value}\" ל-{type} עבור {parameter}"
 default_parse_failed = "לא ניתן לנתח את ערך ברירת המחדל של הפרמטר {parameter}"
@@ -295,9 +300,6 @@ missing_argument = "חסר ארגומנט \"{parameter}\" ({type})"
 unexpected_argument = "ארגומנט לא צפוי \"{argument}\". פרמטרים אופציונליים חייבים להינתן עם מפתח, לדוגמה seed=123"
 unclosed_group = "חסר סוגר \"]\" עבור הפרמטר {key}"
 unknown_parameter = "מפתח פרמטר לא ידוע: {key}"
-
-[director.runtime]
-usage = "שימוש: {usage}"
 
 [language.menu]
 your_language = "השפה שלך"
@@ -314,3 +316,119 @@ edit_description = "פתח את עורך ההודעות לכל שפה."
 select_description = "לחץ כדי לבחור בשפה זו."
 remove_personal_description = "הסר את בחירת השפה האישית שלך."
 no_controls = "אין לך גישה להגדרות שפה."
+command = "פקודה: {command}"
+selected = "נבחר"
+all-volmit-plugins = "כל תוספי Volmit"
+
+[language.error]
+stopping = "בחירת שפה אינה זמינה בזמן שהתוסף מפסיק."
+editor-player-only = "פתח את עורך השפה במשחק."
+no-providers = "אין ספקי שפה זמינים של Volmit."
+numeric-page = "יש להזין מספר עמוד."
+personal-player-only = "יש לבחור העדפות שפה של שחקן במשחק."
+personal-permission = "אין לך רשות לבחור את השפה שלך."
+plugin-personal-permission = "אין לך הרשאה לבחור שפה אישית עבור {plugin}."
+plugin-server-permission = "אין לך הרשאה לשנות את שפת השרת עבור {plugin}."
+server-locale-required = "יש לבחור קוד שפה כגון en_US כשפת ברירת המחדל של השרת."
+unavailable-for-all = "השפה {locale} אינה זמינה לכל התוספים שנבחרו."
+
+[language.usage]
+editor = "שימוש: /{command} language server edit [locale]"
+selection = "שימוש: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "שימוש: /volmit plugins languages [locale]"
+
+[language.selection]
+preparing = "מכין את השפה {locale} עבור {target}..."
+save-failed = "{plugin}: לא ניתן לשמור את בחירת השפה; יש לבדוק את מסוף השרת."
+english-fallback = "{plugin}: השפה {locale} אינה זמינה; נעשה שימוש באנגלית (en_US)."
+personal-selected = "{plugin}: השפה שלך עכשיו {locale}."
+server-selected = "{plugin}: שפת השרת עכשיו {locale}."
+server-default-selected = "{plugin}: השפה שלך תואמת כעת לשפת ברירת המחדל של השרת."
+
+[language.editor]
+loading = "טוען הודעות עבור {locale}..."
+
+[language.editor.section]
+languages = "שפות"
+search = "חיפוש"
+search-title = "{locale} / חיפוש"
+group-title = "{locale} / {group}"
+
+[language.editor.prompt]
+search = "יש לחפש מפתח הודעה או טקסט. לחזרה, יש להקליד cancel."
+value = "יש להקליד בצ׳אט ערך חדש עבור {key}."
+current = "ערך נוכחי: {value}"
+variables = "משתנים: {variables}"
+guidance = "יש להשתמש ב־\\n לשורה חדשה וב־\\\\ ללוכסן הפוך, או להקליד cancel כדי לחזור."
+
+[language.editor.input]
+expired = "זמן ההזנה בעורך השפה פג."
+too-long = "הקלט יכול להכיל לכל היותר {maximum} תווים."
+unable-to-save = "לא ניתן לשמור: {reason}"
+
+[language.editor.navigation]
+back = "&eחזרה&r"
+close = "&cסגור&r"
+previous-page = "&eהעמוד הקודם&r"
+next-page = "&eדף הבא&r"
+
+[language.editor.search]
+messages = "חיפוש הודעות"
+messages-lore = "לחיצה לחיפוש בכל ההודעות."
+clear = "ניקוי החיפוש"
+
+[language.editor.message]
+current-value = "&7ערך נוכחי:&r"
+variables = "&8{variables}&r"
+edit-plural = "&7לחיצה לעריכת צורת רבים.&r"
+edit-lines = "&7לחיצה לעריכת שורות בודדות.&r"
+edit-chat = "&7לחיצה לעריכה בצ׳אט.&r"
+
+[language.editor.locale]
+open = "&8לחץ לפתוח את השפה.&r"
+
+[language.editor.category]
+message-count = "&7{count} הודעות&r"
+open = "&8לחץ לפתוח קטגוריה זו.&r"
+
+[language.editor.error]
+no-permission = "אין לך הרשאה לערוך את השפות של {plugin}."
+unable-to-edit = "לא ניתן לערוך: {reason}"
+
+[language.editor.saved]
+summary = "{locale} נשמרה. בחירות השפה לא השתנו."
+change = "{key}: הערך ״{before}״ הוחלף ב־״{after}״."
+
+[language.editor.part]
+line = "שורה {line}"
+
+[language.editor.value]
+none = "אין"
+empty = "(ריק)"
+
+[debug.error]
+missing-permission = "חסרה הרשאה: {permission}"
+already-preparing = "כבר מתבצעת הכנת דוח אבחון עבור {plugin}."
+already-preparing-short = "כבר מתבצעת הכנת דוח אבחון."
+schedule-failed = "לא ניתן לתזמן את הכנת דוח האבחון."
+provider-closed = "ספק האבחון נסגר."
+closed-before-capture = "ספק האבחון נסגר לפני איסוף נתוני הדוח."
+writer-schedule-failed = "לא ניתן לתזמן את כתיבת דוח האבחון."
+capture-failed = "לא ניתן לאסוף את נתוני דוח האבחון; יש לבדוק את מסוף השרת."
+closed-before-write = "ספק האבחון נסגר לפני כתיבת הדוח."
+write-failed = "לא ניתן לכתוב את דוח האבחון; יש לבדוק את מסוף השרת."
+
+[debug]
+preparing = "מכין דוח אבחון של {plugin}..."
+saved = "דוח האבחון של {plugin} נשמר בנתיב {path}."
+
+[debug.upload]
+interrupted = "העלאת דוח האבחון הופסקה; הדוח המקומי נשמר."
+failed = "העלאת דוח האבחון נכשלה; הדוח המקומי נשמר."
+completed = "הועלה בשם VolmitSoftware - {plugin} - v{version}."
+
+[debug.action]
+open = "פתיחה: {url}"
+open-description = "פתיחת דוח האבחון שהועלה."
+copy-path = "העתקת הנתיב המקומי"
+copy-path-description = "העתקת הנתיב של הדוח המקומי."

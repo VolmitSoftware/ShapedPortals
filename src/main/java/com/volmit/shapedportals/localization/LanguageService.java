@@ -1,5 +1,7 @@
 package com.volmit.shapedportals.localization;
 
+import art.arcane.volmlib.util.localization.LanguageFileHeader;
+
 import art.arcane.volmlib.util.director.DirectorTextResolver;
 import art.arcane.volmlib.util.io.AtomicFileIO;
 import art.arcane.volmlib.util.localization.LocaleOverlay;
@@ -94,7 +96,6 @@ public final class LanguageService {
                     "src/main/resources/languages",
                     ".toml",
                     "shapedportals-language-source.properties",
-                    new File(dataFolder, ".language-cache").toPath(),
                     LanguageService.class.getClassLoader()
             ));
         } catch (Throwable failure) {
@@ -119,7 +120,11 @@ public final class LanguageService {
         }
         ArrayList<LocaleOverlay> overlays = new ArrayList<>();
         if (file.isFile()) {
-            overlays.add(createOverlay(requiredLocale, file.getPath(), loadEditableLanguage(file)));
+            try {
+                overlays.add(createOverlay(requiredLocale, file.getPath(), loadEditableLanguage(file)));
+            } catch (IOException | RuntimeException exception) {
+                logger.log(Level.WARNING, "Using English for unreadable language file " + file, exception);
+            }
         }
         boolean selectionReady = file.isFile();
         PreparedLanguage prepared = createPrepared(requiredLocale, file, overlays, selectionReady);
@@ -430,6 +435,13 @@ public final class LanguageService {
         if (!(definition instanceof TextKey)) {
             throw new IOException("Language editor does not support key shape: " + definition.id());
         }
+        try {
+            validateTemplate("language:" + key, value, sampleArguments(definition.placeholders()));
+            LocalizationSnapshot.create(new LocalizationCandidate(CATALOG,
+                    List.of(LocaleOverlay.builder("editor", requiredLocale).text(key, value).build()), ENGLISH_PLURALS));
+        } catch (RuntimeException exception) {
+            throw new IOException("Language file contains invalid message markup: " + key, exception);
+        }
         PreparedLanguage current = prepare(requiredLocale);
         if (!current.selectionReady()) {
             throw new IOException("Language file is not installed: " + requiredLocale);
@@ -442,7 +454,7 @@ public final class LanguageService {
         if (content.getBytes(StandardCharsets.UTF_8).length > MAXIMUM_LANGUAGE_BYTES) {
             throw new IOException("Language file exceeds the 2 MiB safety limit");
         }
-        Map<String, String> values = TomlLanguageParser.parseText(content, CATALOG.byId().keySet());
+        Map<String, String> values = TomlLanguageParser.parseValidText(content, CATALOG);
         ArrayList<LocaleOverlay> overlays = new ArrayList<>(1);
         overlays.add(createOverlay(requiredLocale, file.getPath(), values));
         PreparedLanguage prepared = createPrepared(
@@ -577,7 +589,8 @@ public final class LanguageService {
                 validateTemplate("language:" + entry.getKey(), entry.getValue(),
                         sampleArguments(definition.placeholders()));
             } catch (RuntimeException exception) {
-                throw new IOException("Language file contains invalid message markup: " + entry.getKey(), exception);
+                logger.log(Level.WARNING, "Using English for invalid language message " + source + ":" + entry.getKey(), exception);
+                continue;
             }
             overlay.text(entry.getKey(), entry.getValue());
         }
@@ -598,7 +611,7 @@ public final class LanguageService {
                 throw new IOException("Language file exceeds the 2 MiB safety limit");
             }
             String content = decodeUtf8(bytes);
-            return TomlLanguageParser.parseText(content, CATALOG.byId().keySet());
+            return TomlLanguageParser.parseValidText(content, CATALOG);
         } catch (CharacterCodingException exception) {
             throw new IOException("Invalid UTF-8 in " + file.getName(), exception);
         } catch (IOException exception) {
@@ -647,9 +660,6 @@ public final class LanguageService {
     void validateDownloadedContent(String locale, String content) throws IOException {
         Set<String> expected = CATALOG.byId().keySet();
         Map<String, String> values = parseStrictValues(content, locale, expected);
-        if (values.isEmpty()) {
-            throw new IOException("Downloaded locale does not contain any recognized ShapedPortals messages: " + locale);
-        }
         LocaleOverlay overlay = createOverlay(locale, "download:" + locale, values);
         try {
             LocalizationSnapshot.create(new LocalizationCandidate(CATALOG, List.of(overlay), ENGLISH_PLURALS));
@@ -663,7 +673,7 @@ public final class LanguageService {
             throw new IOException("Language file exceeds the 2 MiB safety limit");
         }
         try {
-            return TomlLanguageParser.parseText(content, expected);
+            return TomlLanguageParser.parseValidText(content, CATALOG);
         } catch (IOException exception) {
             throw new IOException("Invalid TOML in " + locale + ".toml: " + exception.getMessage(), exception);
         }
@@ -726,62 +736,64 @@ public final class LanguageService {
     }
 
     private static List<String> englishHeader(String locale) {
-        return List.of(
-                "ShapedPortals language: " + locale,
-                "",
-                "This file is editable in a text editor or through /sp config.",
-                "ShapedPortals creates or downloads it only when missing. Local changes are not replaced.",
-                "Missing messages use the built-in English catalog.",
-                "",
-                "Formatting",
-                "  Colors and styles  &0 through &f, &k through &r",
-                "  RGB                &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B, [RRGGBB]",
-                "  Custom markup      MiniMessage is supported",
-                "  Literal text       Put a backslash before & or [",
-                "",
-                "Placeholders",
-                "Keep the placeholders already used by a message. Do not rename them.",
-                "  {prefix}       Global runtime.prefix value; optional per message",
-                "  {argument}     Unexpected command argument",
-                "  {command}      Command path",
-                "  {key}          Parameter key",
-                "  {parameter}    Parameter name",
-                "  {type}         Parameter type or portal type",
-                "  {usage}        Command usage",
-                "  {attempts}     Portal creation attempts",
-                "  {created}      Created count or creation time",
-                "  {rejected}     Rejected creation attempts",
-                "  {enabled}      Portal creation state",
-                "  {hot_reload}   Hot-reload state",
-                "  {scheduler}    Scheduler implementation",
-                "  {portal}       Portal identifier",
-                "  {portals}      Managed portal count",
-                "  {id}           Short portal ID",
-                "  {uuid}         Full portal UUID",
-                "  {world}        World name",
-                "  {axis}         Portal axis",
-                "  {x} {y} {z}    Anchor coordinates",
-                "  {blocks}       Portal interior cells",
-                "  {cells}        All managed cells",
-                "  {creator}      Creator identity",
-                "  {materials}    Recorded frame materials",
-                "  {matches}      Matching portal count",
-                "  {seconds}      Confirmation window",
-                "  {category}     Editor category",
-                "  {setting}      Setting name",
-                "  {status}       Selection marker",
-                "  {value}        Current, default, or raw value",
-                "  {language}     Active language",
-                "  {locale}       Locale identifier",
-                "  {personal}     Personal locale when it differs from the server default",
-                "  {name}         Full language name",
-                "  {variables}    Placeholders valid for the selected message",
-                "  {old}          Previous rendered value",
-                "  {new}          Installed rendered value",
-                "  {path}         Local report path",
-                "  {url}          Public report URL",
-                "  {reason}       Failure reason"
-        );
+        return LanguageFileHeader.render(new LanguageFileHeader.Options(
+                "ShapedPortals", locale,
+                List.of("runtime.prefix supplies {prefix}. Remove {prefix} from an individual message to hide it there."),
+                List.of("Colors and styles: &0-&f, &k-&r.", "RGB colors: &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B, [RRGGBB].", "MiniMessage supports custom formatting. Put a backslash before & or [ to display it literally."),
+                Map.ofEntries(
+                        Map.entry("after", "Value after the change"),
+                        Map.entry("argument", "Unexpected command argument"),
+                        Map.entry("attempts", "Portal creation attempts"),
+                        Map.entry("axis", "Portal axis"),
+                        Map.entry("before", "Value before the change"),
+                        Map.entry("blocks", "Portal interior cells"),
+                        Map.entry("category", "Editor category"),
+                        Map.entry("cells", "All managed cells"),
+                        Map.entry("command", "Command path"),
+                        Map.entry("count", "Number of messages"),
+                        Map.entry("created", "Created count or creation time"),
+                        Map.entry("creator", "Creator identity"),
+                        Map.entry("enabled", "Portal creation state"),
+                        Map.entry("group", "Message category name"),
+                        Map.entry("hot_reload", "Hot-reload state"),
+                        Map.entry("id", "Short portal ID"),
+                        Map.entry("key", "Parameter key"),
+                        Map.entry("language", "Active language"),
+                        Map.entry("line", "Message line number"),
+                        Map.entry("locale", "Locale identifier"),
+                        Map.entry("matches", "Matching portal count"),
+                        Map.entry("materials", "Recorded frame materials"),
+                        Map.entry("maximum", "Maximum accepted value"),
+                        Map.entry("name", "Full language name"),
+                        Map.entry("new", "Installed rendered value"),
+                        Map.entry("old", "Previous rendered value"),
+                        Map.entry("parameter", "Parameter name"),
+                        Map.entry("path", "Local report path"),
+                        Map.entry("permission", "Required permission"),
+                        Map.entry("personal", "Personal locale when it differs from the server default"),
+                        Map.entry("plugin", "Plugin name"),
+                        Map.entry("portal", "Portal identifier"),
+                        Map.entry("portals", "Managed portal count"),
+                        Map.entry("prefix", "Global runtime.prefix value; optional per message"),
+                        Map.entry("reason", "Failure reason"),
+                        Map.entry("rejected", "Rejected creation attempts"),
+                        Map.entry("scheduler", "Scheduler implementation"),
+                        Map.entry("seconds", "Confirmation window"),
+                        Map.entry("setting", "Setting name"),
+                        Map.entry("status", "Selection marker"),
+                        Map.entry("target", "Language selection target"),
+                        Map.entry("type", "Parameter type or portal type"),
+                        Map.entry("url", "Public report URL"),
+                        Map.entry("usage", "Command usage"),
+                        Map.entry("uuid", "Full portal UUID"),
+                        Map.entry("value", "Current, default, or raw value"),
+                        Map.entry("variables", "Placeholders valid for the selected message"),
+                        Map.entry("version", "Plugin version"),
+                        Map.entry("world", "World name"),
+                        Map.entry("x", "Anchor coordinates"),
+                        Map.entry("y", "Anchor coordinates"),
+                        Map.entry("z", "Anchor coordinates")
+                )));
     }
 
     private void validateCatalogTemplates() {

@@ -148,8 +148,8 @@ public final class PresentationService implements Listener {
             boolean sound,
             TextKey title
     ) {
-        String markup = language.renderWithoutPrefix(player, key, arguments);
-        String chatMarkup = language.renderPrefixed(player, key, arguments);
+        ComponentText markup = language.renderWithoutPrefix(player, key, arguments);
+        ComponentText chatMarkup = language.renderPrefixed(player, key, arguments);
         Set<PresentationChannel> selected = Set.copyOf(channels);
         Runnable delivery = () -> displayOwned(player, purpose, selected, markup, chatMarkup, tone, sound, title);
         Runnable retired = () -> retire(player.getUniqueId(), purpose);
@@ -162,15 +162,15 @@ public final class PresentationService implements Listener {
             Player player,
             String purpose,
             Set<PresentationChannel> channels,
-            String markup,
-            String chatMarkup,
+            ComponentText markup,
+            ComponentText chatMarkup,
             FeedbackTone tone,
             boolean sound,
             TextKey title
     ) {
         RuntimeConfig config = configService.runtime();
         if (channels.contains(PresentationChannel.CHAT)) {
-            ComponentMessenger.sendMarkup(player, chatMarkup);
+            ComponentMessenger.send(player, chatMarkup);
         }
         if (channels.contains(PresentationChannel.ACTION_BAR)) {
             actionBar.publish(player, new HudSegment(
@@ -178,7 +178,7 @@ public final class PresentationService implements Listener {
                     HudPriority.NOTICE,
                     config.overlayDurationTicks() * 50L,
                     List.of(HudSlot.RIGHT, HudSlot.LEFT),
-                    ComponentText.markup(markup).legacy()
+                    markup.legacy()
             ));
         }
         if (channels.contains(PresentationChannel.TITLE)) {
@@ -192,7 +192,7 @@ public final class PresentationService implements Listener {
         }
     }
 
-    private void showTitle(Player player, String purpose, String markup, TextKey title, RuntimeConfig config) {
+    private void showTitle(Player player, String purpose, ComponentText markup, TextKey title, RuntimeConfig config) {
         String key = generationKey(player.getUniqueId(), purpose);
         HudTitleClaim previous = titleClaims.remove(key);
         if (previous != null) {
@@ -206,7 +206,7 @@ public final class PresentationService implements Listener {
             return;
         }
         titleClaims.put(key, claim);
-        ComponentMessenger.showTitleMarkup(
+        ComponentMessenger.showTitle(
                 player,
                 language.render(player, title),
                 markup,
@@ -222,14 +222,14 @@ public final class PresentationService implements Listener {
                 () -> retireTitle(key, claim));
     }
 
-    private void showBossBar(Player player, String purpose, String markup, FeedbackTone tone, long durationTicks) {
+    private void showBossBar(Player player, String purpose, ComponentText markup, FeedbackTone tone, long durationTicks) {
         String key = generationKey(player.getUniqueId(), purpose);
         long generation = generations.incrementAndGet();
         bossBarGenerations.put(key, generation);
         bossBars.show(
                 player,
                 purpose,
-                ComponentText.markup(markup).legacy(),
+                markup.legacy(),
                 1D,
                 barColor(tone),
                 BarStyle.SOLID,

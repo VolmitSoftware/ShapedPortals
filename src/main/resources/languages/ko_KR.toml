@@ -6,7 +6,7 @@
 # /shapedportals language server edit ko_KR
 #
 # === 접두사 ===
-# {prefix}  전역 runtime.prefix 값입니다. 개별 메시지에서 {prefix}를 제거하면 그 메시지에서만 숨겨집니다
+# {prefix}  runtime.prefix에 설정된 서식 있는 플러그인 이름입니다. 구분자는 메시지에 있습니다. 둘 다 숨기려면 {prefix}&r &7› &7을 제거하세요.
 #
 # === 서식 ===
 # 색상: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B, [RRGGBB]. 사용자 지정 서식에는 MiniMessage도 사용할 수 있습니다.
@@ -44,20 +44,19 @@
 #   {path}  로컬 보고서 경로
 #   {permission}  필요한 권한
 #   {personal}  개인 로케일
-#   {plugin}  Plugin 이름
 #   {portal}  식별자
 #   {portals}  관리 수
-#   {prefix}  전역 runtime.prefix 값입니다. 개별 메시지에서 {prefix}를 제거하면 그 메시지에서만 숨겨집니다
+#   {prefix}  runtime.prefix에 설정된 서식 있는 플러그인 이름입니다. 구분자는 메시지에 있습니다. 둘 다 숨기려면 {prefix}&r &7› &7을 제거하세요.
 #   {reason}  실패 이유
 #   {rejected}  거부 수
 #   {scheduler}  스케줄러
 #   {seconds}  확인 제한 시간(초)
+#   {section}  편집기 섹션
 #   {setting}  설정 이름
 #   {status}  선택 표시
 #   {target}  대상 플레이어, 단체, 또는 가치
 #   {type}  형식
 #   {url}  공개 URL
-#   {usage}  사용법
 #   {uuid}  전체 UUID
 #   {value}  현재값, 기본값 또는 원시값
 #   {variables}  사용 가능한 자리표시자
@@ -68,31 +67,36 @@
 #   {z}  기준 좌표
 
 [command.description]
+version = "설치된 {prefix} 버전 표시"
 config = "전체 게임 내 구성 편집기 열기"
-debug = "ShapedPortals 진단 도구"
-debug_dump = "포괄적인ShapedPortals진단 보고서 생성"
-language = "사용 가능한 ShapedPortals 언어 선택"
+debug = "{prefix} 진단 도구"
+debug_dump = "포괄적인{prefix}진단 보고서 생성"
+language = "사용 가능한 {prefix} 언어 선택"
 portals = "관리되는 모든 포털과 해당 순간이동 단축키 나열"
-root = "ShapedPortals도움말 및 관리"
+root = "{prefix}도움말 및 관리"
 status = "관리 포털 및 시도 통계 표시"
 teleport = "관리되는 포털 옆으로 안전하게 순간이동 또는 생략 시 포털 나열"
 
+[runtime.update]
+available = "{prefix}&r &7› &7&e{new}&7 버전을 사용할 수 있습니다 (설치된 버전: &f{old}&7).&r\n&7릴리스: &b{url}&r"
+
 [command.feedback]
-failed = "{prefix}&c명령을 완료할 수 없습니다. 자세한 내용은 콘솔을 참조하십시오.&r"
+version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
+failed = "{prefix}&r &7› &7&c명령을 완료할 수 없습니다. 자세한 내용은 콘솔을 참조하십시오.&r"
 
 [command.feedback.config]
-opened = "{prefix}&a게임 내 전체 구성 편집기를 열었습니다.&r"
-save_failed = "{prefix}&c&f{setting}&r&c적용할 수 없습니다:{reason}&r"
-saved = "{prefix}&a{setting}&r&7을(를) &f{old}&r&7에서 &f{new}&r&7(으)로 변경했습니다.&r"
+opened = "{prefix}&r &7› &7&7게임&7 내 전체 구성 편집기를 열었습니다.&r"
+save_failed = "{prefix}&r &7› &7&c&f{setting}&r&c적용할 수 없습니다:{reason}&r"
+saved = "{prefix}&r &7› &7&a{setting}&r&7을(를) &f{old}&r&7에서 &f{new}&r&7(으)로 변경했습니다.&r"
 
 [command.feedback.debug]
-busy = "{prefix}&eShapedPortals진단 보고서가 이미 생성되고 있습니다.&r"
-failed = "{prefix}&c진단 보고서를 생성할 수 없습니다. 자세한 내용은 콘솔을 참조하십시오.&r"
+busy = "{prefix}&r &7› &7{prefix}진단 보고서가 이미 생성되고 있습니다.&r"
+failed = "{prefix}&r &7› &7&c진단 보고서를 생성할 수 없습니다. 자세한 내용은 콘솔을 참조하십시오.&r"
 link_hover = "&7공개mclo.gs보고서를 엽니다.&r"
-saved = "{prefix}&a진단 보고서를&f{path}&r&a에 저장했습니다.&r"
-started = "{prefix}&7서버 및ShapedPortals진단 정보를 캡처하는 중…&r"
-upload_failed = "{prefix}&e로컬 보고서는 저장되었지만,mclo.gs업로드에 실패했습니다. 자세한 내용은 콘솔을 참조하십시오.&r"
-uploaded = "{prefix}&a진단 보고서를 업로드했습니다:&r&b&n{url}&r"
+saved = "{prefix}&r &7› &7&7진단&7 보고서를&f{path}&r&7에 저장했습니다.&r"
+started = "{prefix}&r &7› &7&7서버 및{prefix}진단 정보를 캡처하는 중…&r"
+upload_failed = "{prefix}&r &7› &7&e로컬 보고서는 저장되었지만,mclo.gs업로드에 실패했습니다. 자세한 내용은 콘솔을 참조하십시오.&r"
+uploaded = "{prefix}&r &7› &7&7진단&7 보고서를 업로드했습니다:&r&b&n{url}&r"
 
 [command.parameter]
 locale = "사용 가능한 언어 로케일"
@@ -101,11 +105,11 @@ portal = "포털UUID, 고유 접두사 또는 목록"
 upload = "공개 업로드가 활성화된 경우 보고서 업로드"
 
 [command.status]
-attempts = "{prefix}&7시도:&r&f{attempts}&r&8|&r&7생성됨:&r&a{created}&r&8|&r&7거부됨:&r&c{rejected}&r"
-compatibility = "{prefix}&7아티팩트:&r&fJava 17 / Bukkit 1.20.1+&r&8|&r&7스케줄러:&r&f{scheduler}&r"
-config = "{prefix}&7생성:&r{enabled}&8|&r&7언어:&r&f{language}&r&8|&r&7핫 리로드:&r{hot_reload}"
-header = "{prefix}&d&lShapedPortals런타임&r"
-portals = "{prefix}&7관리 포털:&r&f{portals}&r&8|&r&7내부 셀:&r&f{cells}&r"
+attempts = "{prefix}&r &7› &7&7시도:&r&f{attempts}&r&8|&r&7생성됨:&r&a{created}&r&8|&r&7거부됨:&r&c{rejected}&r"
+compatibility = "{prefix}&r &7› &7&7아티팩트:&r&fJava 17 / Bukkit 1.20.1+&r&8|&r&7스케줄러:&r&f{scheduler}&r"
+config = "{prefix}&r &7› &7&7생성:&r{enabled}&8|&r&7언어:&r&f{language}&r&8|&r&7핫 리로드:&r{hot_reload}"
+header = "{prefix}&r &7› &7런타임&r"
+portals = "{prefix}&r &7› &7&7관리 포털:&r&f{portals}&r&8|&r&7내부 셀:&r&f{cells}&r"
 
 [director.help]
 category = "명령어 카테고리"
@@ -135,7 +139,6 @@ required = "이 매개변수는 필수입니다."
 type = "이 매개변수의 유형은 {type}입니다."
 
 [director.runtime]
-usage = "사용법: {usage}"
 
 [director.runtime.error]
 conversion_failed = "\"{value}\" 값을 {parameter}용 {type} 형식으로 변환할 수 없습니다"
@@ -160,7 +163,7 @@ languages = "&d언어&r"
 [gui.language]
 empty = "&e사용 가능한 언어가 없습니다. 생성하려면 로케일 이름을 입력하세요.&r"
 hover = "&7선택하려면 클릭하십시오&f{locale}&r&7.&r"
-option = "{status} &f{locale}&r &8—&r &7{name}&r"
+option = "{status} &f{locale}&r &8›&r &7{name}&r"
 type = "&7채팅에 로케일 이름을 입력하여 생성하거나 선택하십시오.&r"
 current = "&7현재 값:&r {value}"
 variables = "&7현재 변수 / 자리표시자:&r &f{variables}&r"
@@ -179,11 +182,11 @@ back = "&e뒤로&r"
 close = "&c닫기&r"
 
 [gui.prompt]
-cancel = "{prefix}&7중지하려면&fcancel&r&7을 입력하세요. 이 프롬프트는 60초 후 만료됩니다.&r"
-cancelled = "{prefix}&e설정 편집을 취소했습니다.&r"
-list = "{prefix}&7목록 항목을 쉼표로 구분하세요. 빈 목록의 경우&fnone&r&7을 입력하세요.&r"
-request = "{prefix}&e채팅에서&f{setting}&r&e의 새 값을 입력하세요.&r"
-timeout = "{prefix}&e변경 없이 구성 편집이 만료되었습니다.&r"
+cancel = "{prefix}&r &7› &7&7중지하려면&fcancel&r&7을 입력하세요. 이 프롬프트는 60초 후 만료됩니다.&r"
+cancelled = "{prefix}&r &7› &7&e설정 편집을 취소했습니다.&r"
+list = "{prefix}&r &7› &7&7목록 항목을 쉼표로 구분하세요. 빈 목록의 경우&fnone&r&7을 입력하세요.&r"
+request = "{prefix}&r &7› &7&e채팅에서&f{setting}&r&e의 새 값을 입력하세요.&r"
+timeout = "{prefix}&r &7› &7&e변경 없이 구성 편집이 만료되었습니다.&r"
 
 [gui.setting.debug]
 upload_enabled = "&d디버그 보고서를 업로드mclo.gs&r"
@@ -199,6 +202,7 @@ creation_sound_type = "&dNether 생성 소리 유형&r"
 creation_sound_volume = "&dNether 생성 소리 볼륨&r"
 
 [gui.setting.general]
+update_notifications = "&dGitHub 업데이트 알림&r"
 enabled = "&d포털 생성&r"
 failure_feedback = "&d포털 실패 피드백&r"
 language = "&d활성 언어 로케일&r"
@@ -249,30 +253,30 @@ title_fade_out_ticks = "&d제목 페이드아웃 틱&r"
 title_stay_ticks = "&d제목 유지 틱&r"
 
 [gui.title]
-category = "&5ShapedPortals&r&8›&r{category}"
-root = "&5ShapedPortals구성&r"
+category = "{prefix}&r&8›&r{category}"
+root = "{prefix}구성&r"
 
 [hud]
 failure = "&c작업 실패&r"
-info = "&dShapedPortals&r"
+info = "{prefix}"
 success = "&a성공&r"
-title = "&d&lShapedPortals&r"
+title = "{prefix}"
 
 [portal.title]
 nether_created = "&5&l네더 차원문 생성 완료&r"
 end_created = "&5&l엔드 차원문 생성 완료&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&c&f{portal}&r&c 옆에 안전하게 설 수 있는 공간이 없습니다. &e같은 포털을 &f{seconds}&r&e초 이내에 다시 클릭하면 안전 여부와 관계없이 포털 안으로 순간이동합니다.&r"
+unsafe = "{prefix}&r &7› &7&c&f{portal}&r&c 옆에 안전하게 설 수 있는 공간이 없습니다. &e같은 포털을 &f{seconds}&r&e초 이내에 다시 클릭하면 안전 여부와 관계없이 포털 안으로 순간이동합니다.&r"
 
 [portal.navigation.error]
-ambiguous = "{prefix}&c접두사&f{portal}&r&c는{matches}개의 포털과 일치합니다.UUID을 더 입력하세요.&r"
-destination_unavailable = "{prefix}&c포털 목적지는 일시적으로 사용할 수 없습니다.&r"
-inactive = "{prefix}&c해당 포털은 더 이상 활성 상태가 아닙니다. 무결성 검사가 대기 중입니다.&r"
-no_safe_landing = "{prefix}&c해당 포털 옆에 안전한 서 있는 공간이 없습니다.&r"
-not_found = "{prefix}&c관리되는 포털과 일치하는 항목이 없습니다&f{portal}&r&c.&r"
-removed = "{prefix}&c해당 포털은 더 이상 등록되어 있지 않습니다.&r"
-world_unavailable = "{prefix}&c포털 세계&f{world}&r&c는 현재 이용할 수 없습니다.&r"
+ambiguous = "{prefix}&r &7› &7&c접두사&f{portal}&r&c는{matches}개의 포털과 일치합니다.UUID을 더 입력하세요.&r"
+destination_unavailable = "{prefix}&r &7› &7&c포털 목적지는 일시적으로 사용할 수 없습니다.&r"
+inactive = "{prefix}&r &7› &7&c해당 포털은 더 이상 활성 상태가 아닙니다. 무결성 검사가 대기 중입니다.&r"
+no_safe_landing = "{prefix}&r &7› &7&c해당 포털 옆에 안전한 서 있는 공간이 없습니다.&r"
+not_found = "{prefix}&r &7› &7&c관리되는 포털과 일치하는 항목이 없습니다&f{portal}&r&c.&r"
+removed = "{prefix}&r &7› &7&c해당 포털은 더 이상 등록되어 있지 않습니다.&r"
+world_unavailable = "{prefix}&r &7› &7&c포털 세계&f{world}&r&c는 현재 이용할 수 없습니다.&r"
 
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &e기존 프레임은 &f{materials}&r&e을(를) 사용하며, 이 재료로는 새 포털을 만들 수 없습니다.&r"
@@ -281,25 +285,25 @@ entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7
 hover = "&7UUID:&r&f{uuid}&r\n&a이 포털로 순간이동하려면 클릭하세요.&r"
 
 [portal.navigation.teleport]
-failed = "{prefix}&c포털 순간이동을 완료하지 못했습니다. 다른 플러그인에 의해 취소되었을 수 있습니다.&r"
-preparing = "{prefix}&7&f{portal}&r&7… 목적지를 준비 중입니다.&r"
-success = "{prefix}&a&f{world}&r&a에서&f{portal}&r&a옆으로 순간이동되었습니다.&r"
+failed = "{prefix}&r &7› &7&c포털 순간이동을 완료하지 못했습니다. 다른 플러그인에 의해 취소되었을 수 있습니다.&r"
+preparing = "{prefix}&r &7› &7&7&f{portal}&r&7… 목적지를 준비 중입니다.&r"
+success = "{prefix}&r &7› &7&7&f{world}&r&7에서&f{portal}&r&7옆으로 순간이동되었습니다.&r"
 
 [portal.notice]
-nether_created = "{prefix}&d{blocks}내부 블록으로 형태가 있는 포털을 생성했습니다.&r"
-end_created = "{prefix}&5End&r &d{blocks}내부 블록으로 형태가 있는 포털을 생성했습니다.&r"
-failed = "{prefix}&c그 프레임은 형태가 있는 포털이 될 수 없습니다:&f{reason}&r&c.&r"
+nether_created = "{prefix}&r &7› &7&7&f{blocks}&7내부 블록으로 형태가 있는 포털을 생성했습니다.&r"
+end_created = "{prefix}&r &7› &7&7End&7&r &7&f{blocks}&7내부 블록으로 형태가 있는 포털을 생성했습니다.&r"
+failed = "{prefix}&r &7› &7&c그 프레임은 형태가 있는 포털이 될 수 없습니다:&f{reason}&r&c.&r"
 
 [runtime]
-player_only = "{prefix}&c이 명령은 플레이어만 사용할 수 있습니다.&r"
-prefix = "&d&lShapedPortals&r&8›&r "
+player_only = "{prefix}&r &7› &7&c이 명령은 플레이어만 사용할 수 있습니다.&r"
+prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
 
 [runtime.hot_reload]
-failed = "{prefix}&c파일 변경이 거부되었습니다; 마지막 정상 설정이 유지됩니다.&r"
-success = "{prefix}&a적용된 구성 및 언어 파일 변경사항.&r"
+failed = "{prefix}&r &7› &7&c파일 변경이 거부되었습니다; 마지막 정상 설정이 유지됩니다.&r"
+success = "{prefix}&r &7› &7&7적용된&7 구성 및 언어 파일 변경사항.&r"
 
 [runtime.permission]
-denied = "{prefix}&c당신은 그것을 수행할 권한이 없습니다.&r"
+denied = "{prefix}&r &7› &7&c당신은 그것을 수행할 권한이 없습니다.&r"
 
 [language.menu]
 your_language = "내 언어"
@@ -321,32 +325,33 @@ selected = "선택됨"
 all-volmit-plugins = "모든 Volmit 플러그인"
 
 [language.error]
-stopping = "플러그인이 중지되는 동안에는 언어를 선택할 수 없습니다."
-editor-player-only = "게임 안에서 언어 편집기를 여세요."
-no-providers = "사용 가능한 Volmit 언어 제공자가 없습니다."
-numeric-page = "페이지 번호를 숫자로 입력하세요."
-personal-player-only = "개인 언어는 게임 안에서 선택해야 합니다."
-personal-permission = "개인 언어를 선택할 권한이 없습니다."
-plugin-personal-permission = "{plugin}의 개인 언어를 선택할 권한이 없습니다."
-plugin-server-permission = "{plugin}의 서버 언어를 변경할 권한이 없습니다."
-server-locale-required = "서버 기본 언어로 en_US 같은 언어 코드를 선택하세요."
-unavailable-for-all = "{locale} 언어는 선택한 모든 플러그인에서 지원되는 것은 아닙니다."
+stopping = "{prefix}&r &7› &7&c플러그인이 중지되는 동안에는 언어를 선택할 수 없습니다."
+editor-player-only = "{prefix}&r &7› &7&c게임 안에서 언어 편집기를 여세요."
+no-providers = "{prefix}&r &7› &7&c사용 가능한 Volmit 언어 제공자가 없습니다."
+numeric-page = "{prefix}&r &7› &7&c페이지 번호를 숫자로 입력하세요."
+personal-player-only = "{prefix}&r &7› &7&c개인 언어는 게임 안에서 선택해야 합니다."
+personal-permission = "{prefix}&r &7› &7&c개인 언어를 선택할 권한이 없습니다."
+plugin-personal-permission = "{prefix}&r &7› &7&c{prefix}의 개인 언어를 선택할 권한이 없습니다."
+plugin-server-permission = "{prefix}&r &7› &7&c{prefix}의 서버 언어를 변경할 권한이 없습니다."
+server-locale-required = "{prefix}&r &7› &7&c서버 기본 언어로 en_US 같은 언어 코드를 선택하세요."
+unavailable-for-all = "{prefix}&r &7› &7&c{locale} 언어는 선택한 모든 플러그인에서 지원되는 것은 아닙니다."
 
 [language.usage]
-editor = "사용법: /{command} language server edit [locale]"
-selection = "사용법: /{command} language self [locale|reset] or server [locale]"
-volmit-selection = "사용법: /volmit plugins languages [locale]"
+editor = "{prefix}&r &7› &7&7사용법: /{command} language server edit [locale]"
+selection = "{prefix}&r &7› &7&7사용법: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "{prefix}&r &7› &7&7사용법: /volmit plugins languages [locale]"
 
 [language.selection]
-preparing = "{target}의 {locale} 언어를 준비하는 중..."
-save-failed = "{plugin}: 언어 선택을 저장하지 못했습니다. 서버 콘솔을 확인하세요."
-english-fallback = "{plugin}: {locale}을 사용할 수 없어 영어(en_US)를 사용합니다."
-personal-selected = "{plugin}: 개인 언어를 {locale}으로 변경했습니다."
-server-selected = "{plugin}: 서버 언어를 {locale}으로 변경했습니다."
-server-default-selected = "{plugin}: 개인 언어가 이제 서버 기본 언어를 따릅니다."
+preparing = "{prefix}&r &7› &7&7{target}의 {locale} 언어를 준비하는 중..."
+save-failed = "{prefix}&r &7› &7&c언어 선택을 저장하지 못했습니다. 서버 콘솔을 확인하세요."
+english-fallback = "{prefix}&r &7› &7&e{locale}을 사용할 수 없어 영어(en_US)를 사용합니다."
+personal-selected = "{prefix}&r &7› &7&7개인 언어를 {locale}으로 변경했습니다."
+server-selected = "{prefix}&r &7› &7&7서버 언어를 {locale}으로 변경했습니다."
+server-default-selected = "{prefix}&r &7› &7&7개인 언어가 이제 서버 기본 언어를 따릅니다."
 
 [language.editor]
-loading = "{locale} 메시지를 불러오는 중..."
+title = "{prefix} › {section}"
+loading = "{prefix}&r &7› &7&7{locale} 메시지를 불러오는 중..."
 
 [language.editor.section]
 languages = "언어"
@@ -355,16 +360,16 @@ search-title = "{locale} / 검색"
 group-title = "{locale} / {group}"
 
 [language.editor.prompt]
-search = "메시지 키 또는 내용을 검색하세요. 돌아가려면 cancel을 입력하세요."
-value = "채팅에 {key}의 새 값을 입력하세요."
-current = "현재 값: {value}"
-variables = "변수: {variables}"
-guidance = "줄바꿈에는 \\n, 역슬래시에는 \\\\를 사용하세요. 돌아가려면 cancel을 입력하세요."
+search = "{prefix}&r &7› &7&7메시지 키 또는 내용을 검색하세요. 돌아가려면 cancel을 입력하세요."
+value = "{prefix}&r &7› &7&7채팅에 {key}의 새 값을 입력하세요."
+current = "{prefix}&r &7› &7&7현재 값: {value}"
+variables = "{prefix}&r &7› &7&7변수: {variables}"
+guidance = "{prefix}&r &7› &7&7줄바꿈에는 \\n, 역슬래시에는 \\\\를 사용하세요. 돌아가려면 cancel을 입력하세요."
 
 [language.editor.input]
-expired = "언어 편집기의 입력 시간이 만료되었습니다."
-too-long = "입력은 최대 {maximum}자까지 가능합니다."
-unable-to-save = "저장하지 못했습니다: {reason}"
+expired = "{prefix}&r &7› &7&e언어 편집기의 입력 시간이 만료되었습니다."
+too-long = "{prefix}&r &7› &7&c입력은 최대 {maximum}자까지 가능합니다."
+unable-to-save = "{prefix}&r &7› &7&c저장하지 못했습니다: {reason}"
 
 [language.editor.navigation]
 back = "&e뒤로&r"
@@ -392,12 +397,12 @@ message-count = "&7메시지 {count}개&r"
 open = "&8클릭하여 이 그룹을 엽니다.&r"
 
 [language.editor.error]
-no-permission = "{plugin}의 언어를 편집할 권한이 없습니다."
-unable-to-edit = "편집하지 못했습니다: {reason}"
+no-permission = "{prefix}&r &7› &7&c{prefix}의 언어를 편집할 권한이 없습니다."
+unable-to-edit = "{prefix}&r &7› &7&c편집하지 못했습니다: {reason}"
 
 [language.editor.saved]
-summary = "{locale}을 저장했습니다. 언어 선택은 변경되지 않았습니다."
-change = "{key}: “{before}”에서 “{after}”로 변경했습니다."
+summary = "{prefix}&r &7› &7&7{locale}을 저장했습니다. 언어 선택은 변경되지 않았습니다."
+change = "{prefix}&r &7› &7&7{key}: “{before}”에서 “{after}”로 변경했습니다."
 
 [language.editor.part]
 line = "{line}번째 줄"
@@ -407,25 +412,25 @@ none = "없음"
 empty = "(비어 있음)"
 
 [debug.error]
-missing-permission = "권한이 없습니다: {permission}"
-already-preparing = "{plugin}의 진단 보고서를 이미 준비 중입니다."
-already-preparing-short = "진단 보고서를 이미 준비 중입니다."
-schedule-failed = "진단 보고서 생성 작업을 예약할 수 없습니다."
-provider-closed = "진단 제공자가 종료되었습니다."
-closed-before-capture = "보고서 데이터를 수집하기 전에 진단 제공자가 종료되었습니다."
-writer-schedule-failed = "진단 보고서 쓰기 작업을 예약할 수 없습니다."
-capture-failed = "진단 보고서 데이터를 수집할 수 없습니다. 서버 콘솔을 확인하세요."
-closed-before-write = "보고서를 쓰기 전에 진단 제공자가 종료되었습니다."
-write-failed = "진단 보고서를 쓸 수 없습니다. 서버 콘솔을 확인하세요."
+missing-permission = "{prefix}&r &7› &7&c권한이 없습니다: {permission}"
+already-preparing = "{prefix}&r &7› &7&c{prefix}의 진단 보고서를 이미 준비 중입니다."
+already-preparing-short = "{prefix}&r &7› &7&c진단 보고서를 이미 준비 중입니다."
+schedule-failed = "{prefix}&r &7› &7&c진단 보고서 생성 작업을 예약할 수 없습니다."
+provider-closed = "{prefix}&r &7› &7&c진단 제공자가 종료되었습니다."
+closed-before-capture = "{prefix}&r &7› &7&c보고서 데이터를 수집하기 전에 진단 제공자가 종료되었습니다."
+writer-schedule-failed = "{prefix}&r &7› &7&c진단 보고서 쓰기 작업을 예약할 수 없습니다."
+capture-failed = "{prefix}&r &7› &7&c진단 보고서 데이터를 수집할 수 없습니다. 서버 콘솔을 확인하세요."
+closed-before-write = "{prefix}&r &7› &7&c보고서를 쓰기 전에 진단 제공자가 종료되었습니다."
+write-failed = "{prefix}&r &7› &7&c진단 보고서를 쓸 수 없습니다. 서버 콘솔을 확인하세요."
 
 [debug]
-preparing = "{plugin}의 진단 보고서를 준비하는 중..."
-saved = "{plugin}의 진단 보고서를 {path}에 저장했습니다."
+preparing = "{prefix}&r &7› &7&7{prefix}의 진단 보고서를 준비하는 중..."
+saved = "{prefix}&r &7› &7&7{prefix}의 진단 보고서를 {path}에 저장했습니다."
 
 [debug.upload]
-interrupted = "진단 보고서 업로드가 중단되었습니다. 로컬 보고서는 저장되어 있습니다."
-failed = "진단 보고서 업로드에 실패했습니다. 로컬 보고서는 저장되어 있습니다."
-completed = "VolmitSoftware - {plugin} - v{version} 이름으로 업로드했습니다."
+interrupted = "{prefix}&r &7› &7&7진단 보고서 업로드가 중단되었습니다. 로컬 보고서는 저장되어 있습니다."
+failed = "{prefix}&r &7› &7&c진단 보고서 업로드에 실패했습니다. 로컬 보고서는 저장되어 있습니다."
+completed = "{prefix}&r &7› &7&7VolmitSoftware - {prefix} - v{version} 이름으로 업로드했습니다."
 
 [debug.action]
 open = "열기: {url}"

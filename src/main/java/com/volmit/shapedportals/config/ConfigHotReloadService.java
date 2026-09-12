@@ -4,6 +4,7 @@ import art.arcane.volmlib.util.config.ConfigFileSupport;
 import art.arcane.volmlib.util.hotload.ConfigHotloadEngine;
 import art.arcane.volmlib.util.scheduling.FoliaScheduler;
 import com.volmit.shapedportals.ShapedPortals;
+import com.volmit.shapedportals.localization.LanguageService;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -12,7 +13,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
@@ -32,6 +36,8 @@ public final class ConfigHotReloadService implements AutoCloseable {
     private final ScheduledExecutorService executor;
     private final AtomicBoolean closed = new AtomicBoolean();
     private final AtomicBoolean reconfigureRequested = new AtomicBoolean();
+    private File configuredLanguageFile;
+    private boolean configuredEnabled;
 
     public ConfigHotReloadService(ShapedPortals plugin, ConfigService configService) {
         this.plugin = plugin;
@@ -40,7 +46,7 @@ public final class ConfigHotReloadService implements AutoCloseable {
                 this::isManagedFile,
                 this::knownFiles,
                 this::readFile,
-                ConfigFileSupport::normalize
+                content -> content == null ? null : ConfigFileSupport.normalize(content)
         );
         this.executor = Executors.newSingleThreadScheduledExecutor(runnable -> {
             Thread thread = new Thread(runnable, "ShapedPortals-HotReload");
@@ -106,7 +112,26 @@ public final class ConfigHotReloadService implements AutoCloseable {
 
     private void applySnapshots(Set<ConfigHotloadEngine.StableContentSnapshot> snapshots) {
         boolean enabled = configService.runtime().hotReloadEnabled();
-        ReloadOutcome outcome = processSnapshots(engine, snapshots, enabled, () -> plugin.reloadAll(false));
+        LanguageService language = plugin.getLanguageService();
+        LinkedHashSet<ConfigHotloadEngine.StableContentSnapshot> configuration = new LinkedHashSet<>();
+        ArrayList<ConfigHotloadEngine.StableContentSnapshot> personalLanguages = new ArrayList<>();
+        for (ConfigHotloadEngine.StableContentSnapshot snapshot : snapshots) {
+            if (language.isLanguageFile(snapshot.file())
+                    && !snapshot.file().getAbsoluteFile().equals(language.activeFile().getAbsoluteFile())) {
+                personalLanguages.add(snapshot);
+            } else {
+                configuration.add(snapshot);
+            }
+        }
+        ReloadOutcome outcome = processSnapshots(engine, configuration, enabled, () -> plugin.reloadAll(false));
+        for (ConfigHotloadEngine.StableContentSnapshot snapshot : personalLanguages) {
+            ReloadOutcome personalOutcome = processSnapshots(engine, Set.of(snapshot), enabled,
+                    () -> language.reloadSnapshot(snapshot.file(), snapshot.normalizedContent()));
+            if (personalOutcome == ReloadOutcome.REJECTED
+                    || outcome != ReloadOutcome.REJECTED && personalOutcome == ReloadOutcome.APPLIED) {
+                outcome = personalOutcome;
+            }
+        }
         if (outcome == ReloadOutcome.NOT_ATTEMPTED || outcome == ReloadOutcome.DISABLED) {
             return;
         }
@@ -120,12 +145,19 @@ public final class ConfigHotReloadService implements AutoCloseable {
 
     private void configureEngine() {
         RuntimeConfig config = configService.runtime();
+        File languageFile = plugin.getLanguageService().activeFile();
+        if (Objects.equals(configuredLanguageFile, languageFile) && configuredEnabled == config.hotReloadEnabled()) {
+            engine.updateTiming(config.hotReloadPollMillis(), config.hotReloadCooldownMillis());
+            return;
+        }
         engine.configure(
                 config.hotReloadPollMillis(),
                 config.hotReloadCooldownMillis(),
                 knownFiles(),
                 List.of(configService.dataFolder(), plugin.getLanguageService().languageDirectory())
         );
+        configuredLanguageFile = languageFile;
+        configuredEnabled = config.hotReloadEnabled();
     }
 
     private void notifyOperators(boolean success) {
@@ -142,11 +174,13 @@ public final class ConfigHotReloadService implements AutoCloseable {
     }
 
     private List<File> knownFiles() {
-        return List.of(configService.configFile(), plugin.getLanguageService().activeFile());
+        ArrayList<File> files = new ArrayList<>(plugin.getLanguageService().files());
+        files.add(configService.configFile());
+        return List.copyOf(files);
     }
 
     private boolean isManagedFile(File file) {
-        return isManagedFile(file, configService.configFile(), plugin.getLanguageService().activeFile());
+        return isManagedFile(file, configService.configFile(), plugin.getLanguageService());
     }
 
     static ReloadOutcome processSnapshots(
@@ -181,13 +215,13 @@ public final class ConfigHotReloadService implements AutoCloseable {
         return Boolean.TRUE.equals(result.get()) ? ReloadOutcome.APPLIED : ReloadOutcome.REJECTED;
     }
 
-    static boolean isManagedFile(File file, File configFile, File activeLanguageFile) {
+    static boolean isManagedFile(File file, File configFile, LanguageService language) {
         if (file == null) {
             return false;
         }
         File absolute = file.getAbsoluteFile();
         return absolute.equals(configFile.getAbsoluteFile())
-                || absolute.equals(activeLanguageFile.getAbsoluteFile());
+                || language.isLanguageFile(file);
     }
 
     private String readFile(File file) {

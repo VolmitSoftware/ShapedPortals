@@ -8,6 +8,7 @@ import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
 import art.arcane.volmlib.util.plugin.ComponentText;
 import art.arcane.volmlib.util.scheduling.FoliaScheduler;
 import art.arcane.volmlib.util.scheduling.SchedulerUtils;
+import art.arcane.volmlib.util.update.GitHubReleaseChecker;
 import com.volmit.shapedportals.command.CommandService;
 import com.volmit.shapedportals.config.ConfigHotReloadService;
 import com.volmit.shapedportals.config.ConfigRepository;
@@ -29,6 +30,7 @@ import com.volmit.shapedportals.portal.PortalStats;
 import com.volmit.shapedportals.presentation.ChatMenuStyle;
 import com.volmit.shapedportals.presentation.PresentationService;
 import com.volmit.shapedportals.util.SplashScreen;
+import com.volmit.shapedportals.update.UpdateNotifier;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -50,6 +52,7 @@ public final class ShapedPortals extends JavaPlugin {
     private PresentationService presentationService;
     private BukkitDebugDump debugDump;
     private MetricsService metricsService;
+    private UpdateNotifier updateNotifier;
     private ShapedPortalsIntegrationService integrationService;
     private BukkitLanguageSwitcher languageSwitcher;
     private final Set<String> pendingLanguageActivations = ConcurrentHashMap.newKeySet();
@@ -97,7 +100,7 @@ public final class ShapedPortals extends JavaPlugin {
                             ChatMenuStyle.theme(),
                             languageService.directorResolver(),
                             languageService.editorOptions(),
-                            (sender, change) -> ComponentText.markup(languageService.render(
+                            (sender, change) -> languageService.render(
                                     sender,
                                     ShapedMessages.CONFIG_SAVED,
                                     MessageArgs.builder()
@@ -105,7 +108,7 @@ public final class ShapedPortals extends JavaPlugin {
                                             .untrusted("old", compactChangeValue(change.before()))
                                             .untrusted("new", compactChangeValue(change.after()))
                                             .build()
-                            ))
+                            )
                     )
             );
             debugDump = BukkitDebugDump.create(this, new BukkitDebugDump.Options(
@@ -115,7 +118,7 @@ public final class ShapedPortals extends JavaPlugin {
                             "/shapedportals debug dump",
                             "/shapedportals debug",
                             ChatMenuStyle.theme(),
-                            languageService.directorResolver()
+                            languageService::render
                     )
             ));
             new CommandService(this).register();
@@ -129,6 +132,10 @@ public final class ShapedPortals extends JavaPlugin {
                     failure
             ));
             requestConfiguredLanguage();
+            updateNotifier = new UpdateNotifier(this, new GitHubReleaseChecker(new GitHubReleaseChecker.Options(
+                    "VolmitSoftware", "ShapedPortals", getDescription().getVersion(), getLogger())));
+            getServer().getPluginManager().registerEvents(updateNotifier, this);
+            updateNotifier.reconfigure();
             long startupMillis = (System.nanoTime() - startedNanos) / 1_000_000L;
             if (configService.runtime().splashScreen()) {
                 SplashScreen.print(this);
@@ -146,6 +153,9 @@ public final class ShapedPortals extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (updateNotifier != null) {
+            updateNotifier.close();
+        }
         pendingLanguageActivations.clear();
         HandlerList.unregisterAll(this);
         if (integrationService != null) {
@@ -207,6 +217,9 @@ public final class ShapedPortals extends JavaPlugin {
     }
 
     public void configurationInstalled() {
+        if (updateNotifier != null) {
+            updateNotifier.reconfigure();
+        }
         if (metricsService != null) {
             metricsService.reconfigure(configService.runtime().metricsEnabled());
         }

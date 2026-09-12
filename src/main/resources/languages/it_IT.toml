@@ -6,7 +6,7 @@
 # /shapedportals language server edit it_IT
 #
 # === Prefisso ===
-# {prefix}  il valore globale runtime.prefix. Rimuovi {prefix} da un singolo messaggio per nasconderlo solo lì
+# {prefix}  Nome formattato del plugin da runtime.prefix; il separatore è nel messaggio. Rimuovi {prefix}&r &7› &7 per nascondere entrambi.
 #
 # === Formattazione ===
 # Colori: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B e [RRGGBB]. MiniMessage resta disponibile per formati personalizzati.
@@ -44,20 +44,19 @@
 #   {path}  percorso rapporto locale
 #   {permission}  permesso richiesto
 #   {personal}  codice locale personale
-#   {plugin}  Nome del plugin
 #   {portal}  identificatore
 #   {portals}  numero gestito
-#   {prefix}  il valore globale runtime.prefix. Rimuovi {prefix} da un singolo messaggio per nasconderlo solo lì
+#   {prefix}  Nome formattato del plugin da runtime.prefix; il separatore è nel messaggio. Rimuovi {prefix}&r &7› &7 per nascondere entrambi.
 #   {reason}  motivo errore
 #   {rejected}  tentativi rifiutati
 #   {scheduler}  scheduler
 #   {seconds}  tempo di conferma in secondi
+#   {section}  Sezione dell’editor
 #   {setting}  nome impostazione
 #   {status}  indicatore selezione
 #   {target}  Giocatore di destinazione, entità o valore
 #   {type}  tipo
 #   {url}  URL pubblico
-#   {usage}  uso del comando
 #   {uuid}  UUID completo
 #   {value}  valore corrente, predefinito o grezzo
 #   {variables}  segnaposto validi
@@ -68,46 +67,51 @@
 #   {z}  coordinate ancora
 
 [runtime]
-prefix = "&d&lShapedPortals&r &8›&r "
-player_only = "{prefix}&cQuesto comando può essere usato solo da un giocatore.&r"
+prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
+player_only = "{prefix}&r &7› &7&cQuesto comando può essere usato solo da un giocatore.&r"
 
 [runtime.permission]
-denied = "{prefix}&cNon hai il permesso di farlo.&r"
+denied = "{prefix}&r &7› &7&cNon hai il permesso di farlo.&r"
 
 [runtime.hot_reload]
-success = "{prefix}&aLe modifiche alla configurazione e ai file di lingua sono state applicate.&r"
-failed = "{prefix}&cLe modifiche ai file sono state rifiutate; restano attive le ultime impostazioni valide.&r"
+success = "{prefix}&r &7› &7&7Le&7 modifiche alla configurazione e ai file di lingua sono state applicate.&r"
+failed = "{prefix}&r &7› &7&cLe modifiche ai file sono state rifiutate; restano attive le ultime impostazioni valide.&r"
+
+[runtime.update]
+available = "{prefix}&r &7› &7&e{new}&7 è disponibile (installato: &f{old}&7).&r\n&7Versione: &b{url}&r"
 
 [command.feedback]
-failed = "{prefix}&cImpossibile completare il comando. Consulta la console per i dettagli.&r"
+version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
+failed = "{prefix}&r &7› &7&cImpossibile completare il comando. Consulta la console per i dettagli.&r"
 
 [command.feedback.config]
-opened = "{prefix}&aÈ stato aperto l'editor completo della configurazione in gioco.&r"
-saved = "{prefix}&a{setting}&r &7è cambiato da &f{old}&r &7a &f{new}&r&7.&r"
-save_failed = "{prefix}&cImpossibile applicare &f{setting}&r&c: {reason}&r"
+opened = "{prefix}&r &7› &7&7È&7 stato aperto l'editor completo della configurazione in gioco.&r"
+saved = "{prefix}&r &7› &7&a{setting}&r &7è cambiato da &f{old}&r &7a &f{new}&r&7.&r"
+save_failed = "{prefix}&r &7› &7&cImpossibile applicare &f{setting}&r&c: {reason}&r"
 
 [command.feedback.debug]
-started = "{prefix}&7Raccolta dei dati diagnostici del server e di ShapedPortals…&r"
-busy = "{prefix}&eÈ già in corso la creazione di un rapporto diagnostico di ShapedPortals.&r"
-saved = "{prefix}&aIl rapporto diagnostico è stato salvato in &f{path}&r&a.&r"
-uploaded = "{prefix}&aRapporto diagnostico caricato:&r &b&n{url}&r"
+started = "{prefix}&r &7› &7&7Raccolta dei dati diagnostici del server e di {prefix}…&r"
+busy = "{prefix}&r &7› &7&eÈ già in corso la creazione di un rapporto diagnostico di {prefix}.&r"
+saved = "{prefix}&r &7› &7&7Il&7 rapporto diagnostico è stato salvato in &f{path}&r&7.&r"
+uploaded = "{prefix}&r &7› &7&7Rapporto&7 diagnostico caricato:&r &b&n{url}&r"
 link_hover = "&7Apri il rapporto pubblico su mclo.gs.&r"
-upload_failed = "{prefix}&eIl rapporto locale è stato salvato, ma il caricamento su mclo.gs non è riuscito. Consulta la console per i dettagli.&r"
-failed = "{prefix}&cImpossibile creare il rapporto diagnostico. Consulta la console per i dettagli.&r"
+upload_failed = "{prefix}&r &7› &7&eIl rapporto locale è stato salvato, ma il caricamento su mclo.gs non è riuscito. Consulta la console per i dettagli.&r"
+failed = "{prefix}&r &7› &7&cImpossibile creare il rapporto diagnostico. Consulta la console per i dettagli.&r"
 
 [command.status]
-header = "{prefix}&d&lStato di ShapedPortals&r"
-config = "{prefix}&7Creazione:&r {enabled} &8|&r &7Lingua:&r &f{language}&r &8|&r &7Ricaricamento automatico:&r {hot_reload}"
-portals = "{prefix}&7Portali gestiti:&r &f{portals}&r &8|&r &7Celle interne:&r &f{cells}&r"
-attempts = "{prefix}&7Tentativi:&r &f{attempts}&r &8|&r &7Creati:&r &a{created}&r &8|&r &7Rifiutati:&r &c{rejected}&r"
-compatibility = "{prefix}&7Artefatto:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Pianificatore:&r &f{scheduler}&r"
+header = "{prefix}&r &7› &7&d&lStato di {prefix}&r"
+config = "{prefix}&r &7› &7&7Creazione:&r {enabled} &8|&r &7Lingua:&r &f{language}&r &8|&r &7Ricaricamento automatico:&r {hot_reload}"
+portals = "{prefix}&r &7› &7&7Portali gestiti:&r &f{portals}&r &8|&r &7Celle interne:&r &f{cells}&r"
+attempts = "{prefix}&r &7› &7&7Tentativi:&r &f{attempts}&r &8|&r &7Creati:&r &a{created}&r &8|&r &7Rifiutati:&r &c{rejected}&r"
+compatibility = "{prefix}&r &7› &7&7Artefatto:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Pianificatore:&r &f{scheduler}&r"
 
 [command.description]
-root = "Guida e amministrazione di ShapedPortals"
+version = "Mostra la versione installata di {prefix}"
+root = "Guida e amministrazione di {prefix}"
 config = "Apri l'editor completo della configurazione in gioco"
-language = "Seleziona una lingua ShapedPortals disponibile"
-debug = "Strumenti diagnostici di ShapedPortals"
-debug_dump = "Crea un rapporto diagnostico completo di ShapedPortals"
+language = "Seleziona una lingua {prefix} disponibile"
+debug = "Strumenti diagnostici di {prefix}"
+debug_dump = "Crea un rapporto diagnostico completo di {prefix}"
 portals = "Elenca tutti i portali gestiti e la relativa scorciatoia di teletrasporto"
 teleport = "Teletrasportati in sicurezza accanto a un portale gestito o elenca i portali se non specificato"
 status = "Mostra le statistiche dei portali gestiti e dei tentativi"
@@ -119,16 +123,16 @@ portal = "UUID del portale, prefisso univoco o list"
 upload = "Carica il rapporto quando i caricamenti pubblici sono abilitati"
 
 [portal.notice]
-nether_created = "{prefix}&dÈ stato creato un portale sagomato con {blocks} blocchi interni.&r"
-end_created = "{prefix}&5End&r &dÈ stato creato un portale sagomato con {blocks} blocchi interni.&r"
-failed = "{prefix}&cQuesta cornice non può diventare un portale sagomato: &f{reason}&r&c.&r"
+nether_created = "{prefix}&r &7› &7&7È&7 stato creato un portale sagomato con &f{blocks}&7 blocchi interni.&r"
+end_created = "{prefix}&r &7› &7&7End&7&r &7È stato creato un portale sagomato con &f{blocks}&7 blocchi interni.&r"
+failed = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale sagomato: &f{reason}&r&c.&r"
 
 [portal.title]
 nether_created = "&5&lPortale del Nether creato&r"
 end_created = "&5&lPortale dell’End creato&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&cNon esiste uno spazio sicuro accanto a &f{portal}&r&c. &eFai nuovamente clic sullo stesso portale entro &f{seconds}&r&e secondi per teletrasportarti comunque al suo interno.&r"
+unsafe = "{prefix}&r &7› &7&cNon esiste uno spazio sicuro accanto a &f{portal}&r&c. &eFai nuovamente clic sullo stesso portale entro &f{seconds}&r&e secondi per teletrasportarti comunque al suo interno.&r"
 
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eLa cornice esistente usa &f{materials}&r&e, che non possono creare nuovi portali.&r"
@@ -137,28 +141,28 @@ entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7
 hover = "&7UUID:&r &f{uuid}&r\n&aFai clic per teletrasportarti a questo portale.&r"
 
 [portal.navigation.error]
-not_found = "{prefix}&cNessun portale gestito corrisponde a &f{portal}&r&c.&r"
-ambiguous = "{prefix}&cIl prefisso &f{portal}&r&c corrisponde a {matches} portali. Inserisci più caratteri dell'UUID.&r"
-removed = "{prefix}&cQuesto portale non è più registrato.&r"
-world_unavailable = "{prefix}&cIl mondo del portale &f{world}&r&c non è attualmente disponibile.&r"
-destination_unavailable = "{prefix}&cLa destinazione del portale è temporaneamente non disponibile.&r"
-inactive = "{prefix}&cQuesto portale non è più attivo. Il suo controllo di integrità è stato messo in coda.&r"
-no_safe_landing = "{prefix}&cNon esiste uno spazio sicuro accanto a questo portale.&r"
+not_found = "{prefix}&r &7› &7&cNessun portale gestito corrisponde a &f{portal}&r&c.&r"
+ambiguous = "{prefix}&r &7› &7&cIl prefisso &f{portal}&r&c corrisponde a {matches} portali. Inserisci più caratteri dell'UUID.&r"
+removed = "{prefix}&r &7› &7&cQuesto portale non è più registrato.&r"
+world_unavailable = "{prefix}&r &7› &7&cIl mondo del portale &f{world}&r&c non è attualmente disponibile.&r"
+destination_unavailable = "{prefix}&r &7› &7&cLa destinazione del portale è temporaneamente non disponibile.&r"
+inactive = "{prefix}&r &7› &7&cQuesto portale non è più attivo. Il suo controllo di integrità è stato messo in coda.&r"
+no_safe_landing = "{prefix}&r &7› &7&cNon esiste uno spazio sicuro accanto a questo portale.&r"
 
 [portal.navigation.teleport]
-preparing = "{prefix}&7Preparazione della destinazione per &f{portal}&r&7…&r"
-success = "{prefix}&aSei stato teletrasportato accanto a &f{portal}&r&a in &f{world}&r&a.&r"
-failed = "{prefix}&cIl teletrasporto del portale non è stato completato. Potrebbe essere stato annullato da un altro plugin.&r"
+preparing = "{prefix}&r &7› &7&7Preparazione della destinazione per &f{portal}&r&7…&r"
+success = "{prefix}&r &7› &7&7Sei&7 stato teletrasportato accanto a &f{portal}&r&7 in &f{world}&r&7.&r"
+failed = "{prefix}&r &7› &7&cIl teletrasporto del portale non è stato completato. Potrebbe essere stato annullato da un altro plugin.&r"
 
 [hud]
-title = "&d&lShapedPortals&r"
+title = "{prefix}"
 success = "&aOperazione riuscita&r"
 failure = "&cAzione non riuscita&r"
-info = "&dShapedPortals&r"
+info = "{prefix}"
 
 [gui.title]
-root = "&5Configurazione di ShapedPortals&r"
-category = "&5ShapedPortals&r &8›&r {category}"
+root = "&5Configurazione di {prefix}&r"
+category = "{prefix}&r &7› &7{category}"
 
 [gui.category]
 general = "&dGenerale&r"
@@ -183,15 +187,15 @@ language = "&8Fai clic per scegliere una lingua disponibile o digita un codice l
 category = "&8Fai clic per modificare tutte le impostazioni di questa categoria.&r"
 
 [gui.prompt]
-request = "{prefix}&eDigita un nuovo valore per &f{setting}&r&e nella chat.&r"
-list = "{prefix}&7Separa le voci dell'elenco con virgole. Digita &fnone&r&7 per un elenco vuoto.&r"
-cancel = "{prefix}&7Digita &fcancel&r&7 per interrompere. Questa richiesta scade tra 60 secondi.&r"
-cancelled = "{prefix}&eModifica della configurazione annullata.&r"
-timeout = "{prefix}&eLa modifica della configurazione è scaduta senza apportare modifiche.&r"
+request = "{prefix}&r &7› &7&eDigita un nuovo valore per &f{setting}&r&e nella chat.&r"
+list = "{prefix}&r &7› &7&7Separa le voci dell'elenco con virgole. Digita &fnone&r&7 per un elenco vuoto.&r"
+cancel = "{prefix}&r &7› &7&7Digita &fcancel&r&7 per interrompere. Questa richiesta scade tra 60 secondi.&r"
+cancelled = "{prefix}&r &7› &7&eModifica della configurazione annullata.&r"
+timeout = "{prefix}&r &7› &7&eLa modifica della configurazione è scaduta senza apportare modifiche.&r"
 
 [gui.language]
 type = "&7Digita un codice locale nella chat per crearlo o selezionarlo.&r"
-option = "{status} &f{locale}&r &8—&r &7{name}&r"
+option = "{status} &f{locale}&r &8›&r &7{name}&r"
 hover = "&7Fai clic per selezionare &f{locale}&r&7.&r"
 empty = "&eNon sono state trovate lingue disponibili; digita un codice locale per crearne una.&r"
 current = "&7Valore attuale:&r {value}"
@@ -199,6 +203,7 @@ variables = "&7Variabili / segnaposto correnti:&r &f{variables}&r"
 changed = "&f{old}&r &7è stato modificato in&r &f{new}&r"
 
 [gui.setting.general]
+update_notifications = "&dNotifiche aggiornamenti GitHub&r"
 enabled = "&dCreazione dei portali&r"
 language = "&dCodice locale attivo&r"
 require_create_permission = "&dRichiedi il permesso di creazione&r"
@@ -289,7 +294,6 @@ required = "Questo parametro è obbligatorio."
 type = "Questo parametro è di tipo {type}."
 
 [director.runtime]
-usage = "Utilizzo: {usage}"
 
 [director.runtime.error]
 conversion_failed = "Impossibile convertire \"{value}\" in {type} per {parameter}"
@@ -321,32 +325,33 @@ selected = "selezionato"
 all-volmit-plugins = "Tutti i plugin Volmit"
 
 [language.error]
-stopping = "La scelta della lingua non è disponibile durante l’arresto del plugin."
-editor-player-only = "Apri l’editor di lingua nel gioco."
-no-providers = "Non sono disponibili fornitori di lingue Volmit."
-numeric-page = "Inserisci un numero di pagina."
-personal-player-only = "Le preferenze della lingua del giocatore devono essere selezionate in gioco."
-personal-permission = "Non hai il permesso di selezionare la tua lingua."
-plugin-personal-permission = "Non hai il permesso di scegliere la tua lingua per {plugin}."
-plugin-server-permission = "Non hai il permesso di cambiare la lingua del server per {plugin}."
-server-locale-required = "Scegli un codice come en_US per la lingua predefinita del server."
-unavailable-for-all = "La lingua {locale} non è disponibile per tutti i plugin selezionati."
+stopping = "{prefix}&r &7› &7&cLa scelta della lingua non è disponibile durante l’arresto del plugin."
+editor-player-only = "{prefix}&r &7› &7&cApri l’editor di lingua nel gioco."
+no-providers = "{prefix}&r &7› &7&cNon sono disponibili fornitori di lingue Volmit."
+numeric-page = "{prefix}&r &7› &7&cInserisci un numero di pagina."
+personal-player-only = "{prefix}&r &7› &7&cLe preferenze della lingua del giocatore devono essere selezionate in gioco."
+personal-permission = "{prefix}&r &7› &7&cNon hai il permesso di selezionare la tua lingua."
+plugin-personal-permission = "{prefix}&r &7› &7&cNon hai il permesso di scegliere la tua lingua per {prefix}."
+plugin-server-permission = "{prefix}&r &7› &7&cNon hai il permesso di cambiare la lingua del server per {prefix}."
+server-locale-required = "{prefix}&r &7› &7&cScegli un codice come en_US per la lingua predefinita del server."
+unavailable-for-all = "{prefix}&r &7› &7&cLa lingua {locale} non è disponibile per tutti i plugin selezionati."
 
 [language.usage]
-editor = "Uso: /{command} language server edit [locale]"
-selection = "Uso: /{command} language self [locale|reset] or server [locale]"
-volmit-selection = "Uso: /volmit plugins languages [locale]"
+editor = "{prefix}&r &7› &7&7Uso: /{command} language server edit [locale]"
+selection = "{prefix}&r &7› &7&7Uso: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "{prefix}&r &7› &7&7Uso: /volmit plugins languages [locale]"
 
 [language.selection]
-preparing = "Preparazione della lingua {locale} per {target}..."
-save-failed = "{plugin}: impossibile salvare la lingua scelta; controlla la console del server."
-english-fallback = "{plugin}: {locale} non è disponibile; verrà usato l’inglese (en_US)."
-personal-selected = "{plugin}: la tua lingua è ora {locale}."
-server-selected = "{plugin}: la lingua del server ora è {locale}."
-server-default-selected = "{plugin}: la tua lingua segue ora la lingua predefinita del server."
+preparing = "{prefix}&r &7› &7&7Preparazione della lingua {locale} per {target}..."
+save-failed = "{prefix}&r &7› &7&cimpossibile salvare la lingua scelta; controlla la console del server."
+english-fallback = "{prefix}&r &7› &7&e{locale} non è disponibile; verrà usato l’inglese (en_US)."
+personal-selected = "{prefix}&r &7› &7&7la tua lingua è ora {locale}."
+server-selected = "{prefix}&r &7› &7&7la lingua del server ora è {locale}."
+server-default-selected = "{prefix}&r &7› &7&7la tua lingua segue ora la lingua predefinita del server."
 
 [language.editor]
-loading = "Caricamento dei messaggi in {locale}..."
+title = "{prefix} › {section}"
+loading = "{prefix}&r &7› &7&7Caricamento dei messaggi in {locale}..."
 
 [language.editor.section]
 languages = "Lingue"
@@ -355,16 +360,16 @@ search-title = "{locale} / Ricerca"
 group-title = "{locale} / {group}"
 
 [language.editor.prompt]
-search = "Cerca una chiave o il testo di un messaggio. Digita cancel per tornare indietro."
-value = "Digita un nuovo valore per {key} nella chat."
-current = "Valore attuale: {value}"
-variables = "Variabili: {variables}"
-guidance = "Usa \\n per andare a capo, \\\\ per una barra inversa, oppure digita cancel per tornare indietro."
+search = "{prefix}&r &7› &7&7Cerca una chiave o il testo di un messaggio. Digita cancel per tornare indietro."
+value = "{prefix}&r &7› &7&7Digita un nuovo valore per {key} nella chat."
+current = "{prefix}&r &7› &7&7Valore attuale: {value}"
+variables = "{prefix}&r &7› &7&7Variabili: {variables}"
+guidance = "{prefix}&r &7› &7&7Usa \\n per andare a capo, \\\\ per una barra inversa, oppure digita cancel per tornare indietro."
 
 [language.editor.input]
-expired = "Il tempo per inserire il testo nell’editor di lingua è scaduto."
-too-long = "Il testo può contenere al massimo {maximum} caratteri."
-unable-to-save = "Impossibile salvare: {reason}"
+expired = "{prefix}&r &7› &7&eIl tempo per inserire il testo nell’editor di lingua è scaduto."
+too-long = "{prefix}&r &7› &7&cIl testo può contenere al massimo {maximum} caratteri."
+unable-to-save = "{prefix}&r &7› &7&cImpossibile salvare: {reason}"
 
 [language.editor.navigation]
 back = "&eIndietro&r"
@@ -392,12 +397,12 @@ message-count = "&7{count} messaggi&r"
 open = "&8Clicca per aprire questa categoria.&r"
 
 [language.editor.error]
-no-permission = "Non hai il permesso di modificare le lingue di {plugin}."
-unable-to-edit = "Impossibile modificare: {reason}"
+no-permission = "{prefix}&r &7› &7&cNon hai il permesso di modificare le lingue di {prefix}."
+unable-to-edit = "{prefix}&r &7› &7&cImpossibile modificare: {reason}"
 
 [language.editor.saved]
-summary = "{locale} salvato. Le lingue selezionate restano invariate."
-change = "{key}: «{before}» è stato cambiato in «{after}»."
+summary = "{prefix}&r &7› &7&7{locale} salvato. Le lingue selezionate restano invariate."
+change = "{prefix}&r &7› &7&7{key}: «{before}» è stato cambiato in «{after}»."
 
 [language.editor.part]
 line = "Riga {line}"
@@ -407,25 +412,25 @@ none = "Nessuno"
 empty = "(vuoto)"
 
 [debug]
-preparing = "Preparazione del rapporto diagnostico di {plugin}..."
-saved = "Rapporto diagnostico di {plugin} salvato in {path}."
+preparing = "{prefix}&r &7› &7&7Preparazione del rapporto diagnostico di {prefix}..."
+saved = "{prefix}&r &7› &7&7Rapporto diagnostico di {prefix} salvato in {path}."
 
 [debug.error]
-missing-permission = "Permesso mancante: {permission}"
-already-preparing = "È già in preparazione un rapporto diagnostico per {plugin}."
-already-preparing-short = "È già in preparazione un rapporto diagnostico."
-schedule-failed = "Impossibile pianificare la creazione del rapporto diagnostico."
-provider-closed = "Il fornitore di dati diagnostici è chiuso."
-closed-before-capture = "Il fornitore di dati diagnostici è stato chiuso prima della raccolta dei dati del rapporto."
-writer-schedule-failed = "Impossibile pianificare la scrittura del rapporto diagnostico."
-capture-failed = "Impossibile raccogliere i dati del rapporto diagnostico. Controlla la console del server."
-closed-before-write = "Il fornitore di dati diagnostici è stato chiuso prima della scrittura del rapporto."
-write-failed = "Impossibile scrivere il rapporto diagnostico. Controlla la console del server."
+missing-permission = "{prefix}&r &7› &7&cPermesso mancante: {permission}"
+already-preparing = "{prefix}&r &7› &7&cÈ già in preparazione un rapporto diagnostico per {prefix}."
+already-preparing-short = "{prefix}&r &7› &7&cÈ già in preparazione un rapporto diagnostico."
+schedule-failed = "{prefix}&r &7› &7&cImpossibile pianificare la creazione del rapporto diagnostico."
+provider-closed = "{prefix}&r &7› &7&cIl fornitore di dati diagnostici è chiuso."
+closed-before-capture = "{prefix}&r &7› &7&cIl fornitore di dati diagnostici è stato chiuso prima della raccolta dei dati del rapporto."
+writer-schedule-failed = "{prefix}&r &7› &7&cImpossibile pianificare la scrittura del rapporto diagnostico."
+capture-failed = "{prefix}&r &7› &7&cImpossibile raccogliere i dati del rapporto diagnostico. Controlla la console del server."
+closed-before-write = "{prefix}&r &7› &7&cIl fornitore di dati diagnostici è stato chiuso prima della scrittura del rapporto."
+write-failed = "{prefix}&r &7› &7&cImpossibile scrivere il rapporto diagnostico. Controlla la console del server."
 
 [debug.upload]
-interrupted = "Il caricamento del rapporto diagnostico è stato interrotto. Il rapporto locale è stato salvato."
-failed = "Il caricamento del rapporto diagnostico non è riuscito. Il rapporto locale è stato salvato."
-completed = "Caricato come VolmitSoftware - {plugin} - v{version}."
+interrupted = "{prefix}&r &7› &7&7Il caricamento del rapporto diagnostico è stato interrotto. Il rapporto locale è stato salvato."
+failed = "{prefix}&r &7› &7&cIl caricamento del rapporto diagnostico non è riuscito. Il rapporto locale è stato salvato."
+completed = "{prefix}&r &7› &7&7Caricato come VolmitSoftware - {prefix} - v{version}."
 
 [debug.action]
 open = "Apri: {url}"

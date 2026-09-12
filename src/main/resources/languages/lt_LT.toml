@@ -6,7 +6,7 @@
 # /shapedportals language server edit lt_LT
 #
 # === Priešdėlis ===
-# {prefix}  visuotinė runtime.prefix reikšmė. Pašalinkite {prefix} iš atskiro pranešimo, kad jame jo nerodytų
+# {prefix}  Suformatuotas papildinio pavadinimas iš runtime.prefix; skirtukas yra pranešime. Pašalinkite {prefix}&r &7› &7, kad paslėptumėte abu.
 #
 # === Formatavimas ===
 # Spalvos: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B ir [RRGGBB]. Pasirinktiniam formatavimui galima naudoti MiniMessage.
@@ -44,20 +44,19 @@
 #   {path}  vietinio pranešimo kelias
 #   {permission}  reikalingas leidimas
 #   {personal}  asmeninė lokalė
-#   {plugin}  Įskiepio pavadinimas
 #   {portal}  identifikatorius
 #   {portals}  valdomų skaičius
-#   {prefix}  visuotinė runtime.prefix reikšmė. Pašalinkite {prefix} iš atskiro pranešimo, kad jame jo nerodytų
+#   {prefix}  Suformatuotas papildinio pavadinimas iš runtime.prefix; skirtukas yra pranešime. Pašalinkite {prefix}&r &7› &7, kad paslėptumėte abu.
 #   {reason}  klaidos priežastis
 #   {rejected}  atmesti bandymai
 #   {scheduler}  planavimo sistema
 #   {seconds}  patvirtinimo laikas sekundėmis
+#   {section}  Redaktoriaus skiltis
 #   {setting}  nuostatos vardas
 #   {status}  pasirinkimo žyma
 #   {target}  Tikslinis žaidėjas, subjektas arba vertė
 #   {type}  tipas
 #   {url}  viešas URL
-#   {usage}  komandos naudojimas
 #   {uuid}  visas UUID
 #   {value}  dabartinė, numatytoji arba neapdorota reikšmė
 #   {variables}  galimi vietos žymekliai
@@ -68,46 +67,51 @@
 #   {z}  inkaro koordinatės
 
 [runtime]
-prefix = "&d&lShapedPortals&r &8›&r "
-player_only = "{prefix}&cŠią komandą gali naudoti tik žaidėjas.&r"
+prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
+player_only = "{prefix}&r &7› &7&cŠią komandą gali naudoti tik žaidėjas.&r"
 
 [runtime.permission]
-denied = "{prefix}&cNeturite leidimo to daryti.&r"
+denied = "{prefix}&r &7› &7&cNeturite leidimo to daryti.&r"
 
 [runtime.hot_reload]
-success = "{prefix}&aKonfigūracijos ir kalbos failų pakeitimai pritaikyti.&r"
-failed = "{prefix}&cFailų pakeitimai atmesti; lieka aktyvūs paskutiniai tinkami nustatymai.&r"
+success = "{prefix}&r &7› &7&7Konfigūracijos&7 ir kalbos failų pakeitimai pritaikyti.&r"
+failed = "{prefix}&r &7› &7&cFailų pakeitimai atmesti; lieka aktyvūs paskutiniai tinkami nustatymai.&r"
+
+[runtime.update]
+available = "{prefix}&r &7› &7&7Pasiekiama {prefix} &e{new}&7 versija (įdiegta: &f{old}&7).&r\n&7Leidimas: &b{url}&r"
 
 [command.feedback]
-failed = "{prefix}&cKomandos įvykdyti nepavyko. Išsamesnę informaciją rasite konsolėje.&r"
+version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
+failed = "{prefix}&r &7› &7&cKomandos įvykdyti nepavyko. Išsamesnę informaciją rasite konsolėje.&r"
 
 [command.feedback.config]
-opened = "{prefix}&aAtidarytas visas žaidimo konfigūracijos redaktorius.&r"
-saved = "{prefix}&a{setting}&r &7pakeistas iš &f{old}&r &7į &f{new}&r&7.&r"
-save_failed = "{prefix}&cNepavyko pritaikyti &f{setting}&r&c: {reason}&r"
+opened = "{prefix}&r &7› &7&7Atidarytas&7 visas žaidimo konfigūracijos redaktorius.&r"
+saved = "{prefix}&r &7› &7&a{setting}&r &7pakeistas iš &f{old}&r &7į &f{new}&r&7.&r"
+save_failed = "{prefix}&r &7› &7&cNepavyko pritaikyti &f{setting}&r&c: {reason}&r"
 
 [command.feedback.debug]
-started = "{prefix}&7Renkama serverio ir ShapedPortals diagnostikos informacija…&r"
-busy = "{prefix}&eShapedPortals diagnostikos ataskaita jau kuriama.&r"
-saved = "{prefix}&aDiagnostikos ataskaita išsaugota faile &f{path}&r&a.&r"
-uploaded = "{prefix}&aDiagnostikos ataskaita įkelta:&r &b&n{url}&r"
+started = "{prefix}&r &7› &7&7Renkama serverio ir {prefix} diagnostikos informacija…&r"
+busy = "{prefix}&r &7› &7{prefix} diagnostikos ataskaita jau kuriama.&r"
+saved = "{prefix}&r &7› &7&7Diagnostikos&7 ataskaita išsaugota faile &f{path}&r&7.&r"
+uploaded = "{prefix}&r &7› &7&7Diagnostikos&7 ataskaita įkelta:&r &b&n{url}&r"
 link_hover = "&7Atidaryti viešą mclo.gs ataskaitą.&r"
-upload_failed = "{prefix}&eVietinė ataskaita išsaugota, bet įkelti į mclo.gs nepavyko. Išsamesnę informaciją rasite konsolėje.&r"
-failed = "{prefix}&cDiagnostikos ataskaitos sukurti nepavyko. Išsamesnę informaciją rasite konsolėje.&r"
+upload_failed = "{prefix}&r &7› &7&eVietinė ataskaita išsaugota, bet įkelti į mclo.gs nepavyko. Išsamesnę informaciją rasite konsolėje.&r"
+failed = "{prefix}&r &7› &7&cDiagnostikos ataskaitos sukurti nepavyko. Išsamesnę informaciją rasite konsolėje.&r"
 
 [command.status]
-header = "{prefix}&d&lShapedPortals būsena&r"
-config = "{prefix}&7Kūrimas:&r {enabled} &8|&r &7Kalba:&r &f{language}&r &8|&r &7Automatinis įkėlimas:&r {hot_reload}"
-portals = "{prefix}&7Valdomi portalai:&r &f{portals}&r &8|&r &7Vidiniai langeliai:&r &f{cells}&r"
-attempts = "{prefix}&7Bandymai:&r &f{attempts}&r &8|&r &7Sukurta:&r &a{created}&r &8|&r &7Atmesta:&r &c{rejected}&r"
-compatibility = "{prefix}&7Artefaktas:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Planuoklis:&r &f{scheduler}&r"
+header = "{prefix}&r &7› &7būsena&r"
+config = "{prefix}&r &7› &7&7Kūrimas:&r {enabled} &8|&r &7Kalba:&r &f{language}&r &8|&r &7Automatinis įkėlimas:&r {hot_reload}"
+portals = "{prefix}&r &7› &7&7Valdomi portalai:&r &f{portals}&r &8|&r &7Vidiniai langeliai:&r &f{cells}&r"
+attempts = "{prefix}&r &7› &7&7Bandymai:&r &f{attempts}&r &8|&r &7Sukurta:&r &a{created}&r &8|&r &7Atmesta:&r &c{rejected}&r"
+compatibility = "{prefix}&r &7› &7&7Artefaktas:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Planuoklis:&r &f{scheduler}&r"
 
 [command.description]
-root = "ShapedPortals pagalba ir administravimas"
+version = "Rodyti įdiegtą {prefix} versiją"
+root = "{prefix} pagalba ir administravimas"
 config = "Atidaryti visą žaidimo konfigūracijos redaktorių"
-language = "Pasirinkti prieinamą ShapedPortals kalbą"
-debug = "ShapedPortals diagnostikos įrankiai"
-debug_dump = "Sukurti išsamią ShapedPortals diagnostikos ataskaitą"
+language = "Pasirinkti prieinamą {prefix} kalbą"
+debug = "{prefix} diagnostikos įrankiai"
+debug_dump = "Sukurti išsamią {prefix} diagnostikos ataskaitą"
 portals = "Išvardyti visus valdomus portalus ir jų persikėlimo nuorodas"
 teleport = "Saugiai persikelti šalia valdomo portalo arba, jei nenurodytas, išvardyti portalus"
 status = "Rodyti valdomų portalų ir bandymų statistiką"
@@ -119,16 +123,16 @@ portal = "Portalo UUID, unikali pradžia arba list"
 upload = "Įkelti ataskaitą, kai viešas įkėlimas įjungtas"
 
 [portal.notice]
-nether_created = "{prefix}&dSukurtas formos portalas su {blocks} vidiniais blokais.&r"
-end_created = "{prefix}&5End&r &dSukurtas formos portalas su {blocks} vidiniais blokais.&r"
-failed = "{prefix}&cŠis rėmas negali tapti formos portalu: &f{reason}&r&c.&r"
+nether_created = "{prefix}&r &7› &7&7Sukurtas&7 formos portalas su &f{blocks}&7 vidiniais blokais.&r"
+end_created = "{prefix}&r &7› &7&7End&7&r &7Sukurtas formos portalas su &f{blocks}&7 vidiniais blokais.&r"
+failed = "{prefix}&r &7› &7&cŠis rėmas negali tapti formos portalu: &f{reason}&r&c.&r"
 
 [portal.title]
 nether_created = "&5&lSukurtas Nether portalas&r"
 end_created = "&5&lSukurtas End portalas&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&cŠalia &f{portal}&r&c nėra saugios vietos atsistoti. &ePer &f{seconds}&r&e sekundes dar kartą spustelėkite tą patį portalą, kad vis tiek persikeltumėte į jo vidų.&r"
+unsafe = "{prefix}&r &7› &7&cŠalia &f{portal}&r&c nėra saugios vietos atsistoti. &ePer &f{seconds}&r&e sekundes dar kartą spustelėkite tą patį portalą, kad vis tiek persikeltumėte į jo vidų.&r"
 
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eEsamas rėmas naudoja &f{materials}&r&e; iš šių medžiagų naujų portalų kurti nebegalima.&r"
@@ -137,28 +141,28 @@ entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7
 hover = "&7UUID:&r &f{uuid}&r\n&aSpustelėkite, kad persikeltumėte į šį portalą.&r"
 
 [portal.navigation.error]
-not_found = "{prefix}&cNė vienas valdomas portalas neatitinka &f{portal}&r&c.&r"
-ambiguous = "{prefix}&cPradžia &f{portal}&r&c atitinka {matches} portalus. Įveskite daugiau UUID simbolių.&r"
-removed = "{prefix}&cŠis portalas nebėra užregistruotas.&r"
-world_unavailable = "{prefix}&cPortalo pasaulis &f{world}&r&c šiuo metu nepasiekiamas.&r"
-destination_unavailable = "{prefix}&cPortalo paskirties vieta laikinai nepasiekiama.&r"
-inactive = "{prefix}&cŠis portalas nebėra aktyvus. Jo vientisumo patikra įtraukta į eilę.&r"
-no_safe_landing = "{prefix}&cŠalia šio portalo nėra saugios vietos stovėti.&r"
+not_found = "{prefix}&r &7› &7&cNė vienas valdomas portalas neatitinka &f{portal}&r&c.&r"
+ambiguous = "{prefix}&r &7› &7&cPradžia &f{portal}&r&c atitinka {matches} portalus. Įveskite daugiau UUID simbolių.&r"
+removed = "{prefix}&r &7› &7&cŠis portalas nebėra užregistruotas.&r"
+world_unavailable = "{prefix}&r &7› &7&cPortalo pasaulis &f{world}&r&c šiuo metu nepasiekiamas.&r"
+destination_unavailable = "{prefix}&r &7› &7&cPortalo paskirties vieta laikinai nepasiekiama.&r"
+inactive = "{prefix}&r &7› &7&cŠis portalas nebėra aktyvus. Jo vientisumo patikra įtraukta į eilę.&r"
+no_safe_landing = "{prefix}&r &7› &7&cŠalia šio portalo nėra saugios vietos stovėti.&r"
 
 [portal.navigation.teleport]
-preparing = "{prefix}&7Ruošiama &f{portal}&r&7 paskirties vieta…&r"
-success = "{prefix}&aPersikėlėte šalia &f{portal}&r&a pasaulyje &f{world}&r&a.&r"
-failed = "{prefix}&cPersikėlimas prie portalo nebuvo baigtas. Jį galėjo atšaukti kitas papildinys.&r"
+preparing = "{prefix}&r &7› &7&7Ruošiama &f{portal}&r&7 paskirties vieta…&r"
+success = "{prefix}&r &7› &7&7Persikėlėte&7 šalia &f{portal}&r&7 pasaulyje &f{world}&r&7.&r"
+failed = "{prefix}&r &7› &7&cPersikėlimas prie portalo nebuvo baigtas. Jį galėjo atšaukti kitas papildinys.&r"
 
 [hud]
-title = "&d&lShapedPortals&r"
+title = "{prefix}"
 success = "&aPavyko&r"
 failure = "&cVeiksmas nepavyko&r"
-info = "&dShapedPortals&r"
+info = "{prefix}"
 
 [gui.title]
-root = "&5ShapedPortals konfigūracija&r"
-category = "&5ShapedPortals&r &8›&r {category}"
+root = "{prefix} konfigūracija&r"
+category = "{prefix}&r &7› &7{category}"
 
 [gui.category]
 general = "&dBendrieji&r"
@@ -183,15 +187,15 @@ language = "&8Spustelėkite norėdami pasirinkti prieinamą kalbą arba įveskit
 category = "&8Spustelėkite norėdami redaguoti kiekvieną šios kategorijos nustatymą.&r"
 
 [gui.prompt]
-request = "{prefix}&ePokalbyje įveskite naują &f{setting}&r&e reikšmę.&r"
-list = "{prefix}&7Sąrašo elementus atskirkite kableliais. Jei norite tuščio sąrašo, įveskite &fnone&r&7.&r"
-cancel = "{prefix}&7Norėdami sustabdyti, įveskite &fcancel&r&7. Ši užklausa baigsis po 60 sekundžių.&r"
-cancelled = "{prefix}&eKonfigūracijos redagavimas atšauktas.&r"
-timeout = "{prefix}&eKonfigūracijos redagavimo laikas baigėsi nieko nepakeitus.&r"
+request = "{prefix}&r &7› &7&ePokalbyje įveskite naują &f{setting}&r&e reikšmę.&r"
+list = "{prefix}&r &7› &7&7Sąrašo elementus atskirkite kableliais. Jei norite tuščio sąrašo, įveskite &fnone&r&7.&r"
+cancel = "{prefix}&r &7› &7&7Norėdami sustabdyti, įveskite &fcancel&r&7. Ši užklausa baigsis po 60 sekundžių.&r"
+cancelled = "{prefix}&r &7› &7&eKonfigūracijos redagavimas atšauktas.&r"
+timeout = "{prefix}&r &7› &7&eKonfigūracijos redagavimo laikas baigėsi nieko nepakeitus.&r"
 
 [gui.language]
 type = "&7Pokalbyje įveskite lokalės pavadinimą, kad ją sukurtumėte arba pasirinktumėte.&r"
-option = "{status} &f{locale}&r &8—&r &7{name}&r"
+option = "{status} &f{locale}&r &8›&r &7{name}&r"
 hover = "&7Spustelėkite norėdami pasirinkti &f{locale}&r&7.&r"
 empty = "&ePrieinamų kalbų nerasta; įveskite lokalės pavadinimą, kad sukurtumėte naują.&r"
 current = "&7Dabartinė reikšmė:&r {value}"
@@ -199,6 +203,7 @@ variables = "&7Dabartiniai kintamieji / vietos žymekliai:&r &f{variables}&r"
 changed = "&f{old}&r &7pakeista į&r &f{new}&r"
 
 [gui.setting.general]
+update_notifications = "&dGitHub naujinimų pranešimai&r"
 enabled = "&dPortalų kūrimas&r"
 language = "&dAktyvi kalbos lokalė&r"
 require_create_permission = "&dReikalauti kūrimo leidimo&r"
@@ -289,7 +294,6 @@ required = "Šis parametras yra privalomas."
 type = "Šio parametro tipas yra {type}."
 
 [director.runtime]
-usage = "Naudojimas: {usage}"
 
 [director.runtime.error]
 conversion_failed = "Reikšmės \"{value}\" nepavyko konvertuoti į {type} parametrui {parameter}"
@@ -321,32 +325,33 @@ selected = "pasirinkta"
 all-volmit-plugins = "Visi Volmit papildiniai"
 
 [language.error]
-stopping = "Stabdant papildinį kalbos pasirinkimas nepasiekiamas."
-editor-player-only = "Atverti kalbos rengyklę žaidime."
-no-providers = "Nėra prieinamų Volmit kalbų teikėjų."
-numeric-page = "Įveskite puslapio numerį."
-personal-player-only = "Žaidžiant turi būti pasirinkti žaidėjų kalbos nustatymai."
-personal-permission = "Jūs neturite leidimo pasirinkti savo kalbą."
-plugin-personal-permission = "Neturite leidimo pasirinkti savo kalbos papildiniui {plugin}."
-plugin-server-permission = "Neturite leidimo keisti papildinio {plugin} serverio kalbos."
-server-locale-required = "Pasirinkite numatytosios serverio kalbos kodą, pavyzdžiui, en_US."
-unavailable-for-all = "Kalba {locale} prieinama ne visiems pasirinktiems papildiniams."
+stopping = "{prefix}&r &7› &7&cStabdant papildinį kalbos pasirinkimas nepasiekiamas."
+editor-player-only = "{prefix}&r &7› &7&cAtverti kalbos rengyklę žaidime."
+no-providers = "{prefix}&r &7› &7&cNėra prieinamų Volmit kalbų teikėjų."
+numeric-page = "{prefix}&r &7› &7&cĮveskite puslapio numerį."
+personal-player-only = "{prefix}&r &7› &7&cŽaidžiant turi būti pasirinkti žaidėjų kalbos nustatymai."
+personal-permission = "{prefix}&r &7› &7&cJūs neturite leidimo pasirinkti savo kalbą."
+plugin-personal-permission = "{prefix}&r &7› &7&cNeturite leidimo pasirinkti savo kalbos papildiniui {prefix}."
+plugin-server-permission = "{prefix}&r &7› &7&cNeturite leidimo keisti papildinio {prefix} serverio kalbos."
+server-locale-required = "{prefix}&r &7› &7&cPasirinkite numatytosios serverio kalbos kodą, pavyzdžiui, en_US."
+unavailable-for-all = "{prefix}&r &7› &7&cKalba {locale} prieinama ne visiems pasirinktiems papildiniams."
 
 [language.usage]
-editor = "Naudojimas: /{command} language server edit [locale]"
-selection = "Naudojimas: /{command} language self [locale|reset] or server [locale]"
-volmit-selection = "Naudojimas: /volmit plugins languages [locale]"
+editor = "{prefix}&r &7› &7&7Naudojimas: /{command} language server edit [locale]"
+selection = "{prefix}&r &7› &7&7Naudojimas: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "{prefix}&r &7› &7&7Naudojimas: /volmit plugins languages [locale]"
 
 [language.selection]
-preparing = "Ruošiama kalba {locale} papildiniui {target}..."
-save-failed = "{plugin}: nepavyko išsaugoti kalbos pasirinkimo; patikrinkite serverio konsolę."
-english-fallback = "{plugin}: {locale} neprieinama; naudojama anglų kalba (en_US)."
-personal-selected = "{plugin}: dabar jūsų kalba {locale}."
-server-selected = "{plugin}: serverio kalba yra dabar {locale}."
-server-default-selected = "{plugin}: jūsų kalba dabar atitinka numatytąją serverio kalbą."
+preparing = "{prefix}&r &7› &7&7Ruošiama kalba {locale} papildiniui {target}..."
+save-failed = "{prefix}&r &7› &7&cnepavyko išsaugoti kalbos pasirinkimo; patikrinkite serverio konsolę."
+english-fallback = "{prefix}&r &7› &7&e{locale} neprieinama; naudojama anglų kalba (en_US)."
+personal-selected = "{prefix}&r &7› &7&7dabar jūsų kalba {locale}."
+server-selected = "{prefix}&r &7› &7&7serverio kalba yra dabar {locale}."
+server-default-selected = "{prefix}&r &7› &7&7jūsų kalba dabar atitinka numatytąją serverio kalbą."
 
 [language.editor]
-loading = "Įkeliami kalbos {locale} pranešimai..."
+title = "{prefix} › {section}"
+loading = "{prefix}&r &7› &7&7Įkeliami kalbos {locale} pranešimai..."
 
 [language.editor.section]
 languages = "Kalbos"
@@ -355,16 +360,16 @@ search-title = "{locale} / Ieškoti"
 group-title = "{locale} / {group}"
 
 [language.editor.prompt]
-search = "Ieškokite pranešimo rakto arba teksto. Norėdami grįžti, įveskite cancel."
-value = "Pokalbyje įveskite naują rakto {key} reikšmę."
-current = "Dabartinė reikšmė: {value}"
-variables = "Kintamieji: {variables}"
-guidance = "Naudokite \\n naujai eilutei, \\\\ atvirkštiniam pasvirajam brūkšniui arba įveskite cancel, kad grįžtumėte."
+search = "{prefix}&r &7› &7&7Ieškokite pranešimo rakto arba teksto. Norėdami grįžti, įveskite cancel."
+value = "{prefix}&r &7› &7&7Pokalbyje įveskite naują rakto {key} reikšmę."
+current = "{prefix}&r &7› &7&7Dabartinė reikšmė: {value}"
+variables = "{prefix}&r &7› &7&7Kintamieji: {variables}"
+guidance = "{prefix}&r &7› &7&7Naudokite \\n naujai eilutei, \\\\ atvirkštiniam pasvirajam brūkšniui arba įveskite cancel, kad grįžtumėte."
 
 [language.editor.input]
-expired = "Baigėsi kalbos rengyklės įvesties laikas."
-too-long = "Įvestyje gali būti ne daugiau kaip {maximum} simbolių."
-unable-to-save = "Nepavyko išsaugoti: {reason}"
+expired = "{prefix}&r &7› &7&eBaigėsi kalbos rengyklės įvesties laikas."
+too-long = "{prefix}&r &7› &7&cĮvestyje gali būti ne daugiau kaip {maximum} simbolių."
+unable-to-save = "{prefix}&r &7› &7&cNepavyko išsaugoti: {reason}"
 
 [language.editor.navigation]
 back = "&eAtgal&r"
@@ -392,12 +397,12 @@ message-count = "&7{count} pranešimai&r"
 open = "&8Spustelėkite norėdami atverti šią kategoriją.&r"
 
 [language.editor.error]
-no-permission = "Neturite leidimo redaguoti papildinio {plugin} kalbų."
-unable-to-edit = "Nepavyko redaguoti: {reason}"
+no-permission = "{prefix}&r &7› &7&cNeturite leidimo redaguoti papildinio {prefix} kalbų."
+unable-to-edit = "{prefix}&r &7› &7&cNepavyko redaguoti: {reason}"
 
 [language.editor.saved]
-summary = "{locale} išsaugota. Kalbų pasirinkimai nepakeisti."
-change = "{key}: „{before}“ pakeista į „{after}“."
+summary = "{prefix}&r &7› &7&7{locale} išsaugota. Kalbų pasirinkimai nepakeisti."
+change = "{prefix}&r &7› &7&7{key}: „{before}“ pakeista į „{after}“."
 
 [language.editor.part]
 line = "Eilutė {line}"
@@ -407,25 +412,25 @@ none = "Nėra"
 empty = "(tuščia)"
 
 [debug.error]
-missing-permission = "Trūksta leidimo: {permission}"
-already-preparing = "Įskiepio {plugin} diagnostikos ataskaita jau rengiama."
-already-preparing-short = "Diagnostikos ataskaita jau rengiama."
-schedule-failed = "Nepavyko suplanuoti diagnostikos ataskaitos rengimo."
-provider-closed = "Diagnostikos duomenų teikėjas uždarytas."
-closed-before-capture = "Diagnostikos duomenų teikėjas buvo uždarytas prieš surenkant ataskaitos duomenis."
-writer-schedule-failed = "Nepavyko suplanuoti diagnostikos ataskaitos rašymo."
-capture-failed = "Nepavyko surinkti diagnostikos ataskaitos duomenų; patikrinkite serverio konsolę."
-closed-before-write = "Diagnostikos duomenų teikėjas buvo uždarytas prieš įrašant ataskaitą."
-write-failed = "Nepavyko įrašyti diagnostikos ataskaitos; patikrinkite serverio konsolę."
+missing-permission = "{prefix}&r &7› &7&cTrūksta leidimo: {permission}"
+already-preparing = "{prefix}&r &7› &7&cĮskiepio {prefix} diagnostikos ataskaita jau rengiama."
+already-preparing-short = "{prefix}&r &7› &7&cDiagnostikos ataskaita jau rengiama."
+schedule-failed = "{prefix}&r &7› &7&cNepavyko suplanuoti diagnostikos ataskaitos rengimo."
+provider-closed = "{prefix}&r &7› &7&cDiagnostikos duomenų teikėjas uždarytas."
+closed-before-capture = "{prefix}&r &7› &7&cDiagnostikos duomenų teikėjas buvo uždarytas prieš surenkant ataskaitos duomenis."
+writer-schedule-failed = "{prefix}&r &7› &7&cNepavyko suplanuoti diagnostikos ataskaitos rašymo."
+capture-failed = "{prefix}&r &7› &7&cNepavyko surinkti diagnostikos ataskaitos duomenų; patikrinkite serverio konsolę."
+closed-before-write = "{prefix}&r &7› &7&cDiagnostikos duomenų teikėjas buvo uždarytas prieš įrašant ataskaitą."
+write-failed = "{prefix}&r &7› &7&cNepavyko įrašyti diagnostikos ataskaitos; patikrinkite serverio konsolę."
 
 [debug]
-preparing = "Rengiama įskiepio {plugin} diagnostikos ataskaita..."
-saved = "Įskiepio {plugin} diagnostikos ataskaita išsaugota: {path}."
+preparing = "{prefix}&r &7› &7&7Rengiama įskiepio {prefix} diagnostikos ataskaita..."
+saved = "{prefix}&r &7› &7&7Įskiepio {prefix} diagnostikos ataskaita išsaugota: {path}."
 
 [debug.upload]
-interrupted = "Diagnostikos ataskaitos įkėlimas nutrauktas; vietinė ataskaita išsaugota."
-failed = "Nepavyko įkelti diagnostikos ataskaitos; vietinė ataskaita išsaugota."
-completed = "Įkelta pavadinimu VolmitSoftware - {plugin} - v{version}."
+interrupted = "{prefix}&r &7› &7&7Diagnostikos ataskaitos įkėlimas nutrauktas; vietinė ataskaita išsaugota."
+failed = "{prefix}&r &7› &7&cNepavyko įkelti diagnostikos ataskaitos; vietinė ataskaita išsaugota."
+completed = "{prefix}&r &7› &7&7Įkelta pavadinimu VolmitSoftware - {prefix} - v{version}."
 
 [debug.action]
 open = "Atidaryti: {url}"

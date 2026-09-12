@@ -3,23 +3,29 @@ package com.volmit.shapedportals.command;
 import art.arcane.volmlib.util.director.annotations.Director;
 import art.arcane.volmlib.util.director.annotations.Param;
 import art.arcane.volmlib.util.director.compat.DirectorEngineFactory;
-import art.arcane.volmlib.util.director.DirectorTextResolver;
 import art.arcane.volmlib.util.director.help.DirectorMiniMenu;
 import art.arcane.volmlib.util.localization.MessageCatalog;
 import art.arcane.volmlib.util.localization.MessageKey;
 import art.arcane.volmlib.util.localization.TextKey;
 import com.volmit.shapedportals.localization.ShapedMessages;
+import com.volmit.shapedportals.localization.LanguageService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CommandDescriptionCatalogTest {
+    @TempDir
+    Path directory;
+
     @Test
     void directorDescriptionsMatchCatalogDefinitions() {
         MessageCatalog catalog = ShapedMessages.catalog();
@@ -28,13 +34,13 @@ class CommandDescriptionCatalogTest {
     }
 
     @Test
-    void debugIsAGroupWithADumpCommand() {
+    void debugIsAGroupWithDumpAndVersionCommands() {
         assertThat(ShapedPortalsDebugCommands.class.getAnnotation(Director.class).name()).isEqualTo("debug");
         assertThat(Arrays.stream(ShapedPortalsDebugCommands.class.getDeclaredMethods())
                 .map(method -> method.getAnnotation(Director.class))
                 .filter(Objects::nonNull)
                 .map(Director::name))
-                .containsExactly("dump");
+                .containsExactlyInAnyOrder("dump", "version");
         assertThat(Arrays.stream(ShapedPortalsCommands.class.getDeclaredMethods())
                 .map(method -> method.getAnnotation(Director.class))
                 .filter(Objects::nonNull)
@@ -52,7 +58,7 @@ class CommandDescriptionCatalogTest {
         assertThat(page.node().getDescriptor().getName()).isEqualTo("debug");
         assertThat(page.entries())
                 .extracting(entry -> entry.getDescriptor().getName())
-                .containsExactly("dump");
+                .containsExactlyInAnyOrder("dump", "version");
     }
 
     @Test
@@ -62,7 +68,8 @@ class CommandDescriptionCatalogTest {
                 List.of()
         ).orElseThrow();
         String rendered = String.join("\n", DirectorMiniMenu.render(
-                page, DirectorMiniMenu.Theme.reactBlue(), DirectorTextResolver.ENGLISH));
+                page, DirectorMiniMenu.Theme.reactBlue(),
+                new LanguageService(directory.toFile(), Logger.getAnonymousLogger()).directorResolver()));
 
         assertThat(rendered).contains("<click:run_command:/shapedportals language>");
         assertThat(rendered).doesNotContain("<click:suggest_command:/shapedportals language ");
@@ -85,12 +92,16 @@ class CommandDescriptionCatalogTest {
     }
 
     @Test
-    void omitsRedundantManualReloadAndVersionCommands() {
+    void omitsManualReloadAndHidesTheRootVersionShortcut() {
         assertThat(Arrays.stream(ShapedPortalsCommands.class.getDeclaredMethods())
                 .map(method -> method.getAnnotation(Director.class))
                 .filter(Objects::nonNull)
+                .filter(command -> !command.hidden())
                 .map(Director::name))
                 .doesNotContain("reload", "version");
+        DirectorMiniMenu.DirectorHelpPage page = DirectorMiniMenu.resolveHelp(
+                DirectorEngineFactory.create(new ShapedPortalsCommands(null)), List.of()).orElseThrow();
+        assertThat(page.entries()).extracting(entry -> entry.getDescriptor().getName()).doesNotContain("version");
     }
 
     private void assertDescription(Director director, MessageCatalog catalog) {

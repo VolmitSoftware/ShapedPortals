@@ -1,10 +1,10 @@
 package com.volmit.shapedportals.localization;
 
 import art.arcane.volmlib.util.diagnostics.BukkitDebugMessages;
-import art.arcane.volmlib.util.director.DirectorTextResolver;
 import art.arcane.volmlib.util.localization.MessageArgs;
 import art.arcane.volmlib.util.localization.MessageKey;
 import art.arcane.volmlib.util.localization.TextKey;
+import art.arcane.volmlib.util.plugin.ComponentText;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -27,13 +27,17 @@ class DebugMessageLocalizationTest {
                 TextKey key = (TextKey) definition;
                 MessageArgs.Builder arguments = MessageArgs.builder();
                 for (String placeholder : key.placeholders()) {
-                    arguments.untrusted(placeholder, "sample-" + placeholder);
+                    arguments.untrusted(placeholder, placeholder.equals("plugin") ? "ShapedPortals" : "sample-" + placeholder);
                 }
                 MessageArgs values = arguments.build();
 
-                assertThat(service.directorResolver().resolve(key, values))
+                String rendered = ComponentText.markup(service.directorResolver().resolve(key, values)).plain();
+                assertThat(rendered)
                         .describedAs("shared debug message %s", key.id())
-                        .isEqualTo(DirectorTextResolver.ENGLISH.resolve(key, values));
+                        .doesNotContain("{prefix}", "{plugin}", "sample-plugin");
+                if (!key.id().startsWith("debug.action.")) {
+                    assertThat(rendered).startsWith("ShapedPortals › ");
+                }
             }
         } finally {
             service.close();
@@ -46,17 +50,17 @@ class DebugMessageLocalizationTest {
         try {
             Path languageFile = service.languageFile("en_US").toPath();
             Files.createDirectories(languageFile.getParent());
-            String edited = "[debug]\npreparing = \"Capturing {plugin} diagnostics\"\n";
+            String edited = "[debug]\npreparing = \"Capturing {prefix} diagnostics\"\n";
             Files.writeString(languageFile, edited);
 
             service.install(service.prepare("en_US"));
             service.install(service.prepare("en_US"));
 
-            assertThat(service.directorResolver().resolve(BukkitDebugMessages.PREPARING,
-                    MessageArgs.builder().untrusted("plugin", "ShapedPortals").build()))
+            assertThat(ComponentText.markup(service.directorResolver().resolve(BukkitDebugMessages.PREPARING,
+                    MessageArgs.builder().untrusted("plugin", "ShapedPortals").build())).plain())
                     .isEqualTo("Capturing ShapedPortals diagnostics");
-            assertThat(service.directorResolver().resolve(BukkitDebugMessages.PROVIDER_CLOSED))
-                    .isEqualTo("The debug provider is closed.");
+            assertThat(ComponentText.markup(service.directorResolver().resolve(BukkitDebugMessages.PROVIDER_CLOSED)).plain())
+                    .isEqualTo("ShapedPortals › The debug provider is closed.");
             assertThat(Files.readString(languageFile)).isEqualTo(edited);
         } finally {
             service.close();

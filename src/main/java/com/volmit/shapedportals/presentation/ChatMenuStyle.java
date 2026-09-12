@@ -1,12 +1,13 @@
 package com.volmit.shapedportals.presentation;
 
 import art.arcane.volmlib.util.director.help.DirectorMiniMenu;
+import art.arcane.volmlib.util.director.theme.DirectorThemes;
 import art.arcane.volmlib.util.plugin.ComponentText;
 
 public final class ChatMenuStyle {
     private static final DirectorMiniMenu.Theme THEME = new DirectorMiniMenu.Theme(
-            "#6f2dbd",
-            "#d16ba5",
+            DirectorThemes.SHAPEDPORTALS.getPrimaryHex(),
+            DirectorThemes.SHAPEDPORTALS.getSecondaryHex(),
             "#31104f",
             "#7d3cc8",
             "#dec8f5",

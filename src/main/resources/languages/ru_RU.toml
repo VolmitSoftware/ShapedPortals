@@ -6,7 +6,7 @@
 # /shapedportals language server edit ru_RU
 #
 # === Префикс ===
-# {prefix}  глобальное значение runtime.prefix. Удалите {prefix} из отдельного сообщения, чтобы скрыть его только там
+# {prefix}  Оформленное имя плагина из runtime.prefix; разделитель находится в сообщении. Удалите {prefix}&r &7› &7, чтобы скрыть оба элемента.
 #
 # === Форматирование ===
 # Цвета: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B и [RRGGBB]. Для своего оформления также доступен MiniMessage.
@@ -44,20 +44,19 @@
 #   {path}  путь локального отчёта
 #   {permission}  необходимое разрешение
 #   {personal}  личная локаль
-#   {plugin}  Название плагина
 #   {portal}  идентификатор
 #   {portals}  число управляемых
-#   {prefix}  глобальное значение runtime.prefix. Удалите {prefix} из отдельного сообщения, чтобы скрыть его только там
+#   {prefix}  Оформленное имя плагина из runtime.prefix; разделитель находится в сообщении. Удалите {prefix}&r &7› &7, чтобы скрыть оба элемента.
 #   {reason}  причина ошибки
 #   {rejected}  отклонённые попытки
 #   {scheduler}  планировщик
 #   {seconds}  время подтверждения в секундах
+#   {section}  Раздел редактора
 #   {setting}  название настройки
 #   {status}  метка выбора
 #   {target}  Целевой игрок, сущность или ценность
 #   {type}  тип
 #   {url}  публичный URL
-#   {usage}  использование команды
 #   {uuid}  полный UUID
 #   {value}  текущее, стандартное или исходное значение
 #   {variables}  допустимые заполнители
@@ -68,46 +67,51 @@
 #   {z}  координаты якоря
 
 [runtime]
-prefix = "&d&lShapedPortals&r &8›&r "
-player_only = "{prefix}&cЭту команду может использовать только игрок.&r"
+prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
+player_only = "{prefix}&r &7› &7&cЭту команду может использовать только игрок.&r"
 
 [runtime.permission]
-denied = "{prefix}&cУ вас нет разрешения на это действие.&r"
+denied = "{prefix}&r &7› &7&cУ вас нет разрешения на это действие.&r"
 
 [runtime.hot_reload]
-success = "{prefix}&aИзменения конфигурации и языковых файлов применены.&r"
-failed = "{prefix}&cИзменения файлов отклонены; последние корректные настройки остаются активными.&r"
+success = "{prefix}&r &7› &7&7Изменения&7 конфигурации и языковых файлов применены.&r"
+failed = "{prefix}&r &7› &7&cИзменения файлов отклонены; последние корректные настройки остаются активными.&r"
+
+[runtime.update]
+available = "{prefix}&r &7› &7&7Доступен {prefix} &e{new}&7 (установлен: &f{old}&7).&r\n&7Релиз: &b{url}&r"
 
 [command.feedback]
-failed = "{prefix}&cНе удалось выполнить команду. Подробности смотрите в консоли.&r"
+version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
+failed = "{prefix}&r &7› &7&cНе удалось выполнить команду. Подробности смотрите в консоли.&r"
 
 [command.feedback.config]
-opened = "{prefix}&aОткрыт полный внутриигровой редактор конфигурации.&r"
-saved = "{prefix}&a{setting}&r &7изменён с &f{old}&r &7на &f{new}&r&7.&r"
-save_failed = "{prefix}&cНе удалось применить &f{setting}&r&c: {reason}&r"
+opened = "{prefix}&r &7› &7&7Открыт&7 полный внутриигровой редактор конфигурации.&r"
+saved = "{prefix}&r &7› &7&a{setting}&r &7изменён с &f{old}&r &7на &f{new}&r&7.&r"
+save_failed = "{prefix}&r &7› &7&cНе удалось применить &f{setting}&r&c: {reason}&r"
 
 [command.feedback.debug]
-started = "{prefix}&7Сбор диагностических данных сервера и ShapedPortals…&r"
-busy = "{prefix}&eДиагностический отчёт ShapedPortals уже создаётся.&r"
-saved = "{prefix}&aДиагностический отчёт сохранён в &f{path}&r&a.&r"
-uploaded = "{prefix}&aДиагностический отчёт загружен:&r &b&n{url}&r"
+started = "{prefix}&r &7› &7&7Сбор диагностических данных сервера и {prefix}…&r"
+busy = "{prefix}&r &7› &7&eДиагностический отчёт {prefix} уже создаётся.&r"
+saved = "{prefix}&r &7› &7&7Диагностический&7 отчёт сохранён в &f{path}&r&7.&r"
+uploaded = "{prefix}&r &7› &7&7Диагностический&7 отчёт загружен:&r &b&n{url}&r"
 link_hover = "&7Открыть общедоступный отчёт mclo.gs.&r"
-upload_failed = "{prefix}&eЛокальный отчёт сохранён, но загрузка на mclo.gs не удалась. Подробности смотрите в консоли.&r"
-failed = "{prefix}&cНе удалось создать диагностический отчёт. Подробности смотрите в консоли.&r"
+upload_failed = "{prefix}&r &7› &7&eЛокальный отчёт сохранён, но загрузка на mclo.gs не удалась. Подробности смотрите в консоли.&r"
+failed = "{prefix}&r &7› &7&cНе удалось создать диагностический отчёт. Подробности смотрите в консоли.&r"
 
 [command.status]
-header = "{prefix}&d&lСостояние ShapedPortals&r"
-config = "{prefix}&7Создание:&r {enabled} &8|&r &7Язык:&r &f{language}&r &8|&r &7Горячая перезагрузка:&r {hot_reload}"
-portals = "{prefix}&7Управляемые порталы:&r &f{portals}&r &8|&r &7Внутренние блоки:&r &f{cells}&r"
-attempts = "{prefix}&7Попытки:&r &f{attempts}&r &8|&r &7Создано:&r &a{created}&r &8|&r &7Отклонено:&r &c{rejected}&r"
-compatibility = "{prefix}&7Артефакт:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Планировщик:&r &f{scheduler}&r"
+header = "{prefix}&r &7› &7&d&lСостояние {prefix}&r"
+config = "{prefix}&r &7› &7&7Создание:&r {enabled} &8|&r &7Язык:&r &f{language}&r &8|&r &7Горячая перезагрузка:&r {hot_reload}"
+portals = "{prefix}&r &7› &7&7Управляемые порталы:&r &f{portals}&r &8|&r &7Внутренние блоки:&r &f{cells}&r"
+attempts = "{prefix}&r &7› &7&7Попытки:&r &f{attempts}&r &8|&r &7Создано:&r &a{created}&r &8|&r &7Отклонено:&r &c{rejected}&r"
+compatibility = "{prefix}&r &7› &7&7Артефакт:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Планировщик:&r &f{scheduler}&r"
 
 [command.description]
-root = "Справка и администрирование ShapedPortals"
+version = "Показать установленную версию {prefix}"
+root = "Справка и администрирование {prefix}"
 config = "Открыть полный внутриигровой редактор конфигурации"
-language = "Выбрать доступный язык ShapedPortals"
-debug = "Инструменты диагностики ShapedPortals"
-debug_dump = "Создать подробный диагностический отчёт ShapedPortals"
+language = "Выбрать доступный язык {prefix}"
+debug = "Инструменты диагностики {prefix}"
+debug_dump = "Создать подробный диагностический отчёт {prefix}"
 portals = "Показать все управляемые порталы и команды телепортации к ним"
 teleport = "Безопасно телепортироваться рядом с управляемым порталом или показать список порталов, если он не указан"
 status = "Показать статистику управляемых порталов и попыток"
@@ -119,16 +123,16 @@ portal = "UUID портала, уникальный префикс или list"
 upload = "Загрузить отчёт, если включена публичная загрузка"
 
 [portal.notice]
-nether_created = "{prefix}&dСоздан фигурный портал с {blocks} внутренними блоками.&r"
-end_created = "{prefix}&5End&r &dСоздан фигурный портал с {blocks} внутренними блоками.&r"
-failed = "{prefix}&cЭта рамка не может стать фигурным порталом: &f{reason}&r&c.&r"
+nether_created = "{prefix}&r &7› &7&7Создан&7 фигурный портал с &f{blocks}&7 внутренними блоками.&r"
+end_created = "{prefix}&r &7› &7&7End&7&r &7Создан фигурный портал с &f{blocks}&7 внутренними блоками.&r"
+failed = "{prefix}&r &7› &7&cЭта рамка не может стать фигурным порталом: &f{reason}&r&c.&r"
 
 [portal.title]
 nether_created = "&5&lПортал в Нижний мир создан&r"
 end_created = "&5&lПортал в Край создан&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&cРядом с &f{portal}&r&c нет безопасного места. &eНажмите на тот же портал ещё раз в течение &f{seconds}&r&e секунд, чтобы всё равно телепортироваться внутрь него.&r"
+unsafe = "{prefix}&r &7› &7&cРядом с &f{portal}&r&c нет безопасного места. &eНажмите на тот же портал ещё раз в течение &f{seconds}&r&e секунд, чтобы всё равно телепортироваться внутрь него.&r"
 
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eСуществующая рамка использует &f{materials}&r&e; из этих материалов нельзя создавать новые порталы.&r"
@@ -137,28 +141,28 @@ entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7
 hover = "&7UUID:&r &f{uuid}&r\n&aНажмите, чтобы телепортироваться к этому порталу.&r"
 
 [portal.navigation.error]
-not_found = "{prefix}&cУправляемый портал &f{portal}&r&c не найден.&r"
-ambiguous = "{prefix}&cПрефиксу &f{portal}&r&c соответствуют {matches} порталов. Введите больше символов UUID.&r"
-removed = "{prefix}&cЭтот портал больше не зарегистрирован.&r"
-world_unavailable = "{prefix}&cМир портала &f{world}&r&c сейчас недоступен.&r"
-destination_unavailable = "{prefix}&cМесто назначения портала временно недоступно.&r"
-inactive = "{prefix}&cЭтот портал больше не активен. Проверка его целостности поставлена в очередь.&r"
-no_safe_landing = "{prefix}&cРядом с этим порталом нет безопасного места для телепортации.&r"
+not_found = "{prefix}&r &7› &7&cУправляемый портал &f{portal}&r&c не найден.&r"
+ambiguous = "{prefix}&r &7› &7&cПрефиксу &f{portal}&r&c соответствуют {matches} порталов. Введите больше символов UUID.&r"
+removed = "{prefix}&r &7› &7&cЭтот портал больше не зарегистрирован.&r"
+world_unavailable = "{prefix}&r &7› &7&cМир портала &f{world}&r&c сейчас недоступен.&r"
+destination_unavailable = "{prefix}&r &7› &7&cМесто назначения портала временно недоступно.&r"
+inactive = "{prefix}&r &7› &7&cЭтот портал больше не активен. Проверка его целостности поставлена в очередь.&r"
+no_safe_landing = "{prefix}&r &7› &7&cРядом с этим порталом нет безопасного места для телепортации.&r"
 
 [portal.navigation.teleport]
-preparing = "{prefix}&7Подготовка места назначения для &f{portal}&r&7…&r"
-success = "{prefix}&aВы телепортированы рядом с &f{portal}&r&a в мире &f{world}&r&a.&r"
-failed = "{prefix}&cТелепортация к порталу не завершена. Возможно, её отменил другой плагин.&r"
+preparing = "{prefix}&r &7› &7&7Подготовка места назначения для &f{portal}&r&7…&r"
+success = "{prefix}&r &7› &7&7Вы&7 телепортированы рядом с &f{portal}&r&7 в мире &f{world}&r&7.&r"
+failed = "{prefix}&r &7› &7&cТелепортация к порталу не завершена. Возможно, её отменил другой плагин.&r"
 
 [hud]
-title = "&d&lShapedPortals&r"
+title = "{prefix}"
 success = "&aУспешно&r"
 failure = "&cДействие не выполнено&r"
-info = "&dShapedPortals&r"
+info = "{prefix}"
 
 [gui.title]
-root = "&5Настройка ShapedPortals&r"
-category = "&5ShapedPortals&r &8›&r {category}"
+root = "&5Настройка {prefix}&r"
+category = "{prefix}&r &7› &7{category}"
 
 [gui.category]
 general = "&dОбщие&r"
@@ -183,15 +187,15 @@ language = "&8Нажмите, чтобы выбрать доступный яз�
 category = "&8Нажмите, чтобы изменить все параметры этой категории.&r"
 
 [gui.prompt]
-request = "{prefix}&eВведите в чат новое значение для &f{setting}&r&e.&r"
-list = "{prefix}&7Разделяйте элементы списка запятыми. Введите &fnone&r&7, чтобы очистить список.&r"
-cancel = "{prefix}&7Введите &fcancel&r&7 для отмены. Запрос истечёт через 60 секунд.&r"
-cancelled = "{prefix}&eИзменение конфигурации отменено.&r"
-timeout = "{prefix}&eВремя изменения конфигурации истекло, ничего не изменено.&r"
+request = "{prefix}&r &7› &7&eВведите в чат новое значение для &f{setting}&r&e.&r"
+list = "{prefix}&r &7› &7&7Разделяйте элементы списка запятыми. Введите &fnone&r&7, чтобы очистить список.&r"
+cancel = "{prefix}&r &7› &7&7Введите &fcancel&r&7 для отмены. Запрос истечёт через 60 секунд.&r"
+cancelled = "{prefix}&r &7› &7&eИзменение конфигурации отменено.&r"
+timeout = "{prefix}&r &7› &7&eВремя изменения конфигурации истекло, ничего не изменено.&r"
 
 [gui.language]
 type = "&7Введите название локали в чат, чтобы создать или выбрать её.&r"
-option = "{status} &f{locale}&r &8—&r &7{name}&r"
+option = "{status} &f{locale}&r &8›&r &7{name}&r"
 hover = "&7Нажмите, чтобы выбрать &f{locale}&r&7.&r"
 empty = "&eДоступные языки не найдены; введите название локали, чтобы создать её.&r"
 current = "&7Текущее значение:&r {value}"
@@ -199,6 +203,7 @@ variables = "&7Текущие переменные / заполнители:&r &
 changed = "&f{old}&r &7изменено на&r &f{new}&r"
 
 [gui.setting.general]
+update_notifications = "&dУведомления об обновлениях GitHub&r"
 enabled = "&dСоздание порталов&r"
 language = "&dАктивная языковая локаль&r"
 require_create_permission = "&dТребовать разрешение на создание&r"
@@ -289,7 +294,6 @@ required = "Этот параметр является обязательным.
 type = "Этот параметр имеет тип {type}."
 
 [director.runtime]
-usage = "Использование: {usage}"
 
 [director.runtime.error]
 conversion_failed = "Невозможно преобразовать \"{value}\" в {type} для {parameter}"
@@ -321,32 +325,33 @@ selected = "выбранный"
 all-volmit-plugins = "Все плагины Volmit"
 
 [language.error]
-stopping = "Выбор языка недоступен, пока плагин останавливается."
-editor-player-only = "Откройте редактор языка в игре."
-no-providers = "Нет доступных языковых провайдеров Volmit."
-numeric-page = "Введите номер страницы числом."
-personal-player-only = "Личный язык игрока нужно выбрать в игре."
-personal-permission = "У вас нет разрешения на выбор языка."
-plugin-personal-permission = "У вас нет разрешения выбирать свой язык для {plugin}."
-plugin-server-permission = "У вас нет разрешения менять язык сервера для {plugin}."
-server-locale-required = "Выберите код языка, например en_US, для языка сервера по умолчанию."
-unavailable-for-all = "Язык {locale} доступен не для всех выбранных плагинов."
+stopping = "{prefix}&r &7› &7&cВыбор языка недоступен, пока плагин останавливается."
+editor-player-only = "{prefix}&r &7› &7&cОткройте редактор языка в игре."
+no-providers = "{prefix}&r &7› &7&cНет доступных языковых провайдеров Volmit."
+numeric-page = "{prefix}&r &7› &7&cВведите номер страницы числом."
+personal-player-only = "{prefix}&r &7› &7&cЛичный язык игрока нужно выбрать в игре."
+personal-permission = "{prefix}&r &7› &7&cУ вас нет разрешения на выбор языка."
+plugin-personal-permission = "{prefix}&r &7› &7&cУ вас нет разрешения выбирать свой язык для {prefix}."
+plugin-server-permission = "{prefix}&r &7› &7&cУ вас нет разрешения менять язык сервера для {prefix}."
+server-locale-required = "{prefix}&r &7› &7&cВыберите код языка, например en_US, для языка сервера по умолчанию."
+unavailable-for-all = "{prefix}&r &7› &7&cЯзык {locale} доступен не для всех выбранных плагинов."
 
 [language.usage]
-editor = "Использование: /{command} language server edit [locale]"
-selection = "Использование: /{command} language self [locale|reset] or server [locale]"
-volmit-selection = "Использование: /volmit plugins languages [locale]"
+editor = "{prefix}&r &7› &7&7Использование: /{command} language server edit [locale]"
+selection = "{prefix}&r &7› &7&7Использование: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "{prefix}&r &7› &7&7Использование: /volmit plugins languages [locale]"
 
 [language.selection]
-preparing = "Подготовка языка {locale} для {target}..."
-save-failed = "{plugin}: не удалось сохранить выбор языка; проверьте консоль сервера."
-english-fallback = "{plugin}: {locale} недоступен; используется английский (en_US)."
-personal-selected = "{plugin}: Ваш язык сейчас {locale}."
-server-selected = "{plugin}: Язык сервера теперь {locale}."
-server-default-selected = "{plugin}: теперь ваш язык соответствует языку сервера по умолчанию."
+preparing = "{prefix}&r &7› &7&7Подготовка языка {locale} для {target}..."
+save-failed = "{prefix}&r &7› &7&cне удалось сохранить выбор языка; проверьте консоль сервера."
+english-fallback = "{prefix}&r &7› &7&e{locale} недоступен; используется английский (en_US)."
+personal-selected = "{prefix}&r &7› &7&7Ваш язык сейчас {locale}."
+server-selected = "{prefix}&r &7› &7&7Язык сервера теперь {locale}."
+server-default-selected = "{prefix}&r &7› &7&7теперь ваш язык соответствует языку сервера по умолчанию."
 
 [language.editor]
-loading = "Загрузка сообщений для {locale}..."
+title = "{prefix} › {section}"
+loading = "{prefix}&r &7› &7&7Загрузка сообщений для {locale}..."
 
 [language.editor.section]
 languages = "Языки"
@@ -355,16 +360,16 @@ search-title = "{locale} / Поиск"
 group-title = "{locale} / {group}"
 
 [language.editor.prompt]
-search = "Найдите ключ или текст сообщения. Введите cancel, чтобы вернуться."
-value = "Введите в чат новое значение для {key}."
-current = "Текущее значение: {value}"
-variables = "Переменные: {variables}"
-guidance = "Используйте \\n для новой строки, \\\\ для обратной косой черты или введите cancel, чтобы вернуться."
+search = "{prefix}&r &7› &7&7Найдите ключ или текст сообщения. Введите cancel, чтобы вернуться."
+value = "{prefix}&r &7› &7&7Введите в чат новое значение для {key}."
+current = "{prefix}&r &7› &7&7Текущее значение: {value}"
+variables = "{prefix}&r &7› &7&7Переменные: {variables}"
+guidance = "{prefix}&r &7› &7&7Используйте \\n для новой строки, \\\\ для обратной косой черты или введите cancel, чтобы вернуться."
 
 [language.editor.input]
-expired = "Время ввода в редакторе языка истекло."
-too-long = "Ввод должен содержать не более {maximum} символов."
-unable-to-save = "Не удалось сохранить: {reason}"
+expired = "{prefix}&r &7› &7&eВремя ввода в редакторе языка истекло."
+too-long = "{prefix}&r &7› &7&cВвод должен содержать не более {maximum} символов."
+unable-to-save = "{prefix}&r &7› &7&cНе удалось сохранить: {reason}"
 
 [language.editor.navigation]
 back = "&eНазад&r"
@@ -392,12 +397,12 @@ message-count = "&7{count} сообщения&r"
 open = "&8Нажмите, чтобы открыть эту категорию.&r"
 
 [language.editor.error]
-no-permission = "У вас нет разрешения редактировать языки {plugin}."
-unable-to-edit = "Не удалось отредактировать: {reason}"
+no-permission = "{prefix}&r &7› &7&cУ вас нет разрешения редактировать языки {prefix}."
+unable-to-edit = "{prefix}&r &7› &7&cНе удалось отредактировать: {reason}"
 
 [language.editor.saved]
-summary = "{locale} сохранён. Выбранные языки не изменились."
-change = "{key}: «{before}» заменено на «{after}»."
+summary = "{prefix}&r &7› &7&7{locale} сохранён. Выбранные языки не изменились."
+change = "{prefix}&r &7› &7&7{key}: «{before}» заменено на «{after}»."
 
 [language.editor.part]
 line = "Строка {line}"
@@ -407,25 +412,25 @@ none = "Нет"
 empty = "(пусто)"
 
 [debug.error]
-missing-permission = "Нет разрешения: {permission}"
-already-preparing = "Диагностический отчёт для {plugin} уже создаётся."
-already-preparing-short = "Диагностический отчёт уже создаётся."
-schedule-failed = "Не удалось запланировать создание диагностического отчёта."
-provider-closed = "Поставщик диагностических данных закрыт."
-closed-before-capture = "Поставщик диагностических данных закрылся до сбора данных отчёта."
-writer-schedule-failed = "Не удалось запланировать запись диагностического отчёта."
-capture-failed = "Не удалось собрать данные диагностического отчёта; проверьте консоль сервера."
-closed-before-write = "Поставщик диагностических данных закрылся до записи отчёта."
-write-failed = "Не удалось записать диагностический отчёт; проверьте консоль сервера."
+missing-permission = "{prefix}&r &7› &7&cНет разрешения: {permission}"
+already-preparing = "{prefix}&r &7› &7&cДиагностический отчёт для {prefix} уже создаётся."
+already-preparing-short = "{prefix}&r &7› &7&cДиагностический отчёт уже создаётся."
+schedule-failed = "{prefix}&r &7› &7&cНе удалось запланировать создание диагностического отчёта."
+provider-closed = "{prefix}&r &7› &7&cПоставщик диагностических данных закрыт."
+closed-before-capture = "{prefix}&r &7› &7&cПоставщик диагностических данных закрылся до сбора данных отчёта."
+writer-schedule-failed = "{prefix}&r &7› &7&cНе удалось запланировать запись диагностического отчёта."
+capture-failed = "{prefix}&r &7› &7&cНе удалось собрать данные диагностического отчёта; проверьте консоль сервера."
+closed-before-write = "{prefix}&r &7› &7&cПоставщик диагностических данных закрылся до записи отчёта."
+write-failed = "{prefix}&r &7› &7&cНе удалось записать диагностический отчёт; проверьте консоль сервера."
 
 [debug]
-preparing = "Подготовка диагностического отчёта {plugin}..."
-saved = "Диагностический отчёт {plugin} сохранён в {path}."
+preparing = "{prefix}&r &7› &7&7Подготовка диагностического отчёта {prefix}..."
+saved = "{prefix}&r &7› &7&7Диагностический отчёт {prefix} сохранён в {path}."
 
 [debug.upload]
-interrupted = "Загрузка диагностического отчёта прервана; локальный отчёт сохранён."
-failed = "Не удалось загрузить диагностический отчёт; локальный отчёт сохранён."
-completed = "Загружено под названием VolmitSoftware - {plugin} - v{version}."
+interrupted = "{prefix}&r &7› &7&7Загрузка диагностического отчёта прервана; локальный отчёт сохранён."
+failed = "{prefix}&r &7› &7&cНе удалось загрузить диагностический отчёт; локальный отчёт сохранён."
+completed = "{prefix}&r &7› &7&7Загружено под названием VolmitSoftware - {prefix} - v{version}."
 
 [debug.action]
 open = "Открыть: {url}"

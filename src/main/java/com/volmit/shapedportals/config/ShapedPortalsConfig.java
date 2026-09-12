@@ -37,6 +37,8 @@ public final class ShapedPortalsConfig {
         public boolean requireCreatePermission = true;
         @ConfigDoc(value = "Tell players why a recognized shaped portal was not created.", impact = "Incomplete, duplicate, and vanilla-handled attempts remain quiet.")
         public boolean failureFeedback = true;
+        @ConfigDoc(value = "Notify operators and players with shapedportals.update about newer GitHub releases on join.", impact = "Checks run asynchronously once per hour; disabling stops checks and notices. No updates are downloaded or installed.")
+        public boolean updateNotifications = true;
 
         private General copy() {
             General copy = new General();
@@ -44,6 +46,7 @@ public final class ShapedPortalsConfig {
             copy.language = language;
             copy.requireCreatePermission = requireCreatePermission;
             copy.failureFeedback = failureFeedback;
+            copy.updateNotifications = updateNotifications;
             return copy;
         }
     }

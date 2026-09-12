@@ -6,7 +6,7 @@
 # /shapedportals language server edit zh_TW
 #
 # === 前綴 ===
-# {prefix}  全域 runtime.prefix 值。從個別訊息中移除 {prefix}，即可只在該處隱藏前綴
+# {prefix}  runtime.prefix 中帶格式的外掛名稱；分隔符位於訊息中。刪除 {prefix}&r &7› &7 可隱藏兩者。
 #
 # === 格式 ===
 # 顏色：&0-&f、&k-&r、&#RRGGBB、&xRRGGBB、&x&R&R&G&G&B&B 和 [RRGGBB]。自訂格式仍可使用 MiniMessage。
@@ -44,20 +44,19 @@
 #   {path}  本機報告路徑
 #   {permission}  所需權限
 #   {personal}  個人地區設定
-#   {plugin}  插件名稱
 #   {portal}  識別碼
 #   {portals}  管理數量
-#   {prefix}  全域 runtime.prefix 值。從個別訊息中移除 {prefix}，即可只在該處隱藏前綴
+#   {prefix}  runtime.prefix 中帶格式的外掛名稱；分隔符位於訊息中。刪除 {prefix}&r &7› &7 可隱藏兩者。
 #   {reason}  失敗原因
 #   {rejected}  拒絕數
 #   {scheduler}  排程器
 #   {seconds}  確認時限（秒）
+#   {section}  編輯器區段
 #   {setting}  設定名稱
 #   {status}  選取標記
 #   {target}  目標播放器、 實體或值
 #   {type}  類型
 #   {url}  公開報告網址
-#   {usage}  指令用法
 #   {uuid}  完整 UUID
 #   {value}  目前值、預設值或原始值
 #   {variables}  可用佔位符
@@ -68,31 +67,36 @@
 #   {z}  錨點座標
 
 [command.description]
+version = "顯示已安裝的{prefix}版本"
 config = "打開完整的遊戲內配置編輯器"
-debug = "ShapedPortals診斷工具"
-debug_dump = "創建全面的ShapedPortals診斷報告"
-language = "選擇可用的 ShapedPortals 語言"
+debug = "{prefix}診斷工具"
+debug_dump = "創建全面的{prefix}診斷報告"
+language = "選擇可用的 {prefix} 語言"
 portals = "列出所有管理的傳送門及其傳送快捷方式"
-root = "ShapedPortals幫助與管理"
+root = "{prefix}幫助與管理"
 status = "顯示已管理傳送門和嘗試統計"
 teleport = "安全傳送到管理的傳送門旁或在省略時列出傳送門"
 
+[runtime.update]
+available = "{prefix}&r &7› &7&e{new}&7 已發布（已安裝：&f{old}&7）。&r\n&7發布頁面: &b{url}&r"
+
 [command.feedback]
-failed = "{prefix}&c命令無法完成。請查看控制台以獲取詳情。&r"
+version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
+failed = "{prefix}&r &7› &7&c命令無法完成。請查看控制台以獲取詳情。&r"
 
 [command.feedback.config]
-opened = "{prefix}&a已開啟完整的遊戲內設定編輯器。&r"
-save_failed = "{prefix}&c無法套用&f{setting}&r&c：{reason}&r"
-saved = "{prefix}&a{setting}&r &7已從 &f{old}&r &7變更為 &f{new}&r&7。&r"
+opened = "{prefix}&r &7› &7&7已開啟完整的遊戲內設定編輯器。&7&r"
+save_failed = "{prefix}&r &7› &7&c無法套用&f{setting}&r&c：{reason}&r"
+saved = "{prefix}&r &7› &7&a{setting}&r &7已從 &f{old}&r &7變更為 &f{new}&r&7。&r"
 
 [command.feedback.debug]
-busy = "{prefix}&eShapedPortals診斷報告已在建立中。&r"
-failed = "{prefix}&c無法建立診斷報告。詳情請參閱控制台。&r"
+busy = "{prefix}&r &7› &7{prefix}診斷報告已在建立中。&r"
+failed = "{prefix}&r &7› &7&c無法建立診斷報告。詳情請參閱控制台。&r"
 link_hover = "&7打開公開的mclo.gs報告。&r"
-saved = "{prefix}&a已將診斷報告儲存至&f{path}&r&a。&r"
-started = "{prefix}&7正在擷取伺服器和ShapedPortals診斷資訊…&r"
-upload_failed = "{prefix}&e本地報告已存，但mclo.gs上傳失敗。詳情請參閱控制台。&r"
-uploaded = "{prefix}&a已上傳診斷報告：&r&b&n{url}&r"
+saved = "{prefix}&r &7› &7&7已將診斷報告儲存至&7&f{path}&r&7。&r"
+started = "{prefix}&r &7› &7&7正在擷取伺服器和{prefix}診斷資訊…&r"
+upload_failed = "{prefix}&r &7› &7&e本地報告已存，但mclo.gs上傳失敗。詳情請參閱控制台。&r"
+uploaded = "{prefix}&r &7› &7&7已上傳診斷報告：&7&r&b&n{url}&r"
 
 [command.parameter]
 locale = "可用的語言地區"
@@ -101,11 +105,11 @@ portal = "傳送門UUID、唯一前綴或列表"
 upload = "啟用公開上傳時上傳報告"
 
 [command.status]
-attempts = "{prefix}&7嘗試次數:&r&f{attempts}&r&8|&r&7建立日期:&r&a{created}&r&8|&r&7拒絕:&r&c{rejected}&r"
-compatibility = "{prefix}&7工件:&r&fJava 17 / Bukkit 1.20.1+&r&8|&r&7排程者:&r&f{scheduler}&r"
-config = "{prefix}&7建立：&r{enabled}&8|&r&7語言：&r&f{language}&r&8|&r&7熱重載：&r{hot_reload}"
-header = "{prefix}&d&lShapedPortals執行狀態&r"
-portals = "{prefix}&7已管理傳送門：&r&f{portals}&r&8|&r&7內部方塊：&r&f{cells}&r"
+attempts = "{prefix}&r &7› &7&7嘗試次數:&r&f{attempts}&r&8|&r&7建立日期:&r&a{created}&r&8|&r&7拒絕:&r&c{rejected}&r"
+compatibility = "{prefix}&r &7› &7&7工件:&r&fJava 17 / Bukkit 1.20.1+&r&8|&r&7排程者:&r&f{scheduler}&r"
+config = "{prefix}&r &7› &7&7建立：&r{enabled}&8|&r&7語言：&r&f{language}&r&8|&r&7熱重載：&r{hot_reload}"
+header = "{prefix}&r &7› &7執行狀態&r"
+portals = "{prefix}&r &7› &7&7已管理傳送門：&r&f{portals}&r&8|&r&7內部方塊：&r&f{cells}&r"
 
 [director.help]
 category = "指令類別"
@@ -135,7 +139,6 @@ required = "此參數為必填項。"
 type = "此參數的類型為 {type}。"
 
 [director.runtime]
-usage = "用法: {usage}"
 
 [director.runtime.error]
 conversion_failed = "無法將 \"{value}\" 轉換為 {parameter} 所需的 {type}"
@@ -160,7 +163,7 @@ languages = "&d語言&r"
 [gui.language]
 empty = "&e未找到可用語言；輸入區域名稱以建立一個。&r"
 hover = "&7點擊以選擇&f{locale}&r&7。&r"
-option = "{status} &f{locale}&r &8—&r &7{name}&r"
+option = "{status} &f{locale}&r &8›&r &7{name}&r"
 type = "&7在聊天中輸入一個區域名稱以創建或選擇它。&r"
 current = "&7目前值：&r {value}"
 variables = "&7目前的變數 / 佔位符：&r &f{variables}&r"
@@ -179,11 +182,11 @@ back = "&e返回&r"
 close = "&c關閉&r"
 
 [gui.prompt]
-cancel = "{prefix}&7輸入&fcancel&r&7以停止。本提示會在 60 秒後失效。&r"
-cancelled = "{prefix}&e配置編輯已取消。&r"
-list = "{prefix}&7用逗號分隔列表條目。輸入&fnone&r&7表示列表為空。&r"
-request = "{prefix}&e在聊天中輸入&f{setting}&r&e的新數值。&r"
-timeout = "{prefix}&e配置編輯到期且未更改任何內容。&r"
+cancel = "{prefix}&r &7› &7&7輸入&fcancel&r&7以停止。本提示會在 60 秒後失效。&r"
+cancelled = "{prefix}&r &7› &7&e配置編輯已取消。&r"
+list = "{prefix}&r &7› &7&7用逗號分隔列表條目。輸入&fnone&r&7表示列表為空。&r"
+request = "{prefix}&r &7› &7&e在聊天中輸入&f{setting}&r&e的新數值。&r"
+timeout = "{prefix}&r &7› &7&e配置編輯到期且未更改任何內容。&r"
 
 [gui.setting.debug]
 upload_enabled = "&d上傳除錯報告至mclo.gs&r"
@@ -199,6 +202,7 @@ creation_sound_type = "&dNether 創建音效類型&r"
 creation_sound_volume = "&dNether 創建音效音量&r"
 
 [gui.setting.general]
+update_notifications = "&dGitHub 更新通知&r"
 enabled = "&d建立傳送門&r"
 failure_feedback = "&d傳送門失敗回饋&r"
 language = "&d活躍語言地區&r"
@@ -249,30 +253,30 @@ title_fade_out_ticks = "&d標題淡出刻度&r"
 title_stay_ticks = "&d標題停留刻度&r"
 
 [gui.title]
-category = "&5ShapedPortals&r&8›&r{category}"
-root = "&5ShapedPortals配置&r"
+category = "{prefix}&r&8›&r{category}"
+root = "{prefix}配置&r"
 
 [hud]
 failure = "&c操作失敗&r"
-info = "&dShapedPortals&r"
+info = "{prefix}"
 success = "&a成功&r"
-title = "&d&lShapedPortals&r"
+title = "{prefix}"
 
 [portal.title]
 nether_created = "&5&l已建立地獄傳送門&r"
 end_created = "&5&l已建立終界傳送門&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&c&f{portal}&r&c旁邊沒有安全的站立空間。&e若仍要傳送到門內，請在&f{seconds}&r&e秒內再次點擊同一個傳送門。&r"
+unsafe = "{prefix}&r &7› &7&c&f{portal}&r&c旁邊沒有安全的站立空間。&e若仍要傳送到門內，請在&f{seconds}&r&e秒內再次點擊同一個傳送門。&r"
 
 [portal.navigation.error]
-ambiguous = "{prefix}&c前綴&f{portal}&r&c匹配{matches}個傳送門。請輸入更多UUID.&r"
-destination_unavailable = "{prefix}&c該傳送門目的地暫時無法使用。&r"
-inactive = "{prefix}&c該傳送門已不再啟用。其完整性檢查已排入隊列。&r"
-no_safe_landing = "{prefix}&c在該傳送門旁沒有安全的站立空間。&r"
-not_found = "{prefix}&c沒有符合的管理傳送門&f{portal}&r&c.&r"
-removed = "{prefix}&c該傳送門已不再註冊.&r"
-world_unavailable = "{prefix}&c傳送門世界&f{world}&r&c目前無法使用.&r"
+ambiguous = "{prefix}&r &7› &7&c前綴&f{portal}&r&c匹配{matches}個傳送門。請輸入更多UUID.&r"
+destination_unavailable = "{prefix}&r &7› &7&c該傳送門目的地暫時無法使用。&r"
+inactive = "{prefix}&r &7› &7&c該傳送門已不再啟用。其完整性檢查已排入隊列。&r"
+no_safe_landing = "{prefix}&r &7› &7&c在該傳送門旁沒有安全的站立空間。&r"
+not_found = "{prefix}&r &7› &7&c沒有符合的管理傳送門&f{portal}&r&c.&r"
+removed = "{prefix}&r &7› &7&c該傳送門已不再註冊.&r"
+world_unavailable = "{prefix}&r &7› &7&c傳送門世界&f{world}&r&c目前無法使用.&r"
 
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &e現有框架使用 &f{materials}&r&e；這些材料無法再用於建立新傳送門。&r"
@@ -281,25 +285,25 @@ entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7
 hover = "&7UUID:&r&f{uuid}&r\n&a點擊以傳送至此傳送門。&r"
 
 [portal.navigation.teleport]
-failed = "{prefix}&c傳送門傳送未完成。可能已被其他插件取消。&r"
-preparing = "{prefix}&7正在準備目的地&f{portal}&r&7…&r"
-success = "{prefix}&a已傳送至&f{portal}&r&a旁的&f{world}&r&a。&r"
+failed = "{prefix}&r &7› &7&c傳送門傳送未完成。可能已被其他插件取消。&r"
+preparing = "{prefix}&r &7› &7&7正在準備目的地&f{portal}&r&7…&r"
+success = "{prefix}&r &7› &7&7已傳送至&7&f{portal}&r&7旁的&f{world}&r&7。&r"
 
 [portal.notice]
-nether_created = "{prefix}&d已建立一個內部由{blocks}方塊組成的成形傳送門.&r"
-end_created = "{prefix}&5End&r &d已建立一個內部由{blocks}方塊組成的成形傳送門.&r"
-failed = "{prefix}&c該框架無法成為成形傳送門:&f{reason}&r&c.&r"
+nether_created = "{prefix}&r &7› &7&7已建立一個內部由&7&f{blocks}&7方塊組成的成形傳送門.&r"
+end_created = "{prefix}&r &7› &7&7End&7&r &7已建立一個內部由&f{blocks}&7方塊組成的成形傳送門.&r"
+failed = "{prefix}&r &7› &7&c該框架無法成為成形傳送門:&f{reason}&r&c.&r"
 
 [runtime]
-player_only = "{prefix}&c此指令僅能由玩家使用。&r"
-prefix = "&d&lShapedPortals&r&8›&r "
+player_only = "{prefix}&r &7› &7&c此指令僅能由玩家使用。&r"
+prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
 
 [runtime.hot_reload]
-failed = "{prefix}&c文件更改被拒絕；最後一次已知的良好設定仍然有效。&r"
-success = "{prefix}&a已應用配置和語言文件更改。&r"
+failed = "{prefix}&r &7› &7&c文件更改被拒絕；最後一次已知的良好設定仍然有效。&r"
+success = "{prefix}&r &7› &7&7已應用配置和語言文件更改。&7&r"
 
 [runtime.permission]
-denied = "{prefix}&c您沒有權限執行此操作。&r"
+denied = "{prefix}&r &7› &7&c您沒有權限執行此操作。&r"
 
 [language.menu]
 your_language = "您的語言"
@@ -321,32 +325,33 @@ selected = "已選擇"
 all-volmit-plugins = "所有 Volmit 外掛"
 
 [language.error]
-stopping = "外掛停止期間無法選擇語言。"
-editor-player-only = "請在遊戲中開啟語言編輯器。"
-no-providers = "沒有可用的 Volmit 語言提供程式。"
-numeric-page = "請輸入數字頁碼。"
-personal-player-only = "玩家必須在遊戲中選擇個人語言。"
-personal-permission = "你沒有權限選擇個人語言。"
-plugin-personal-permission = "你沒有權限為 {plugin} 選擇個人語言。"
-plugin-server-permission = "你沒有權限變更 {plugin} 的伺服器語言。"
-server-locale-required = "請選擇 en_US 等語言代碼作為伺服器預設語言。"
-unavailable-for-all = "語言 {locale} 並非適用於所有選取的外掛。"
+stopping = "{prefix}&r &7› &7&c外掛停止期間無法選擇語言。"
+editor-player-only = "{prefix}&r &7› &7&c請在遊戲中開啟語言編輯器。"
+no-providers = "{prefix}&r &7› &7&c沒有可用的 Volmit 語言提供程式。"
+numeric-page = "{prefix}&r &7› &7&c請輸入數字頁碼。"
+personal-player-only = "{prefix}&r &7› &7&c玩家必須在遊戲中選擇個人語言。"
+personal-permission = "{prefix}&r &7› &7&c你沒有權限選擇個人語言。"
+plugin-personal-permission = "{prefix}&r &7› &7&c你沒有權限為 {prefix} 選擇個人語言。"
+plugin-server-permission = "{prefix}&r &7› &7&c你沒有權限變更 {prefix} 的伺服器語言。"
+server-locale-required = "{prefix}&r &7› &7&c請選擇 en_US 等語言代碼作為伺服器預設語言。"
+unavailable-for-all = "{prefix}&r &7› &7&c語言 {locale} 並非適用於所有選取的外掛。"
 
 [language.usage]
-editor = "用法: /{command} language server edit [locale]"
-selection = "用法: /{command} language self [locale|reset] or server [locale]"
-volmit-selection = "用法: /volmit plugins languages [locale]"
+editor = "{prefix}&r &7› &7&7用法: /{command} language server edit [locale]"
+selection = "{prefix}&r &7› &7&7用法: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "{prefix}&r &7› &7&7用法: /volmit plugins languages [locale]"
 
 [language.selection]
-preparing = "正在為 {target} 準備語言 {locale}..."
-save-failed = "{plugin}：無法儲存語言選擇；請檢查伺服器主控台。"
-english-fallback = "{plugin}：{locale} 無法使用；將使用英語（en_US）。"
-personal-selected = "{plugin}：你的語言現在是 {locale}。"
-server-selected = "{plugin}：伺服器語言現在是 {locale}。"
-server-default-selected = "{plugin}：你的語言現在跟隨伺服器預設語言。"
+preparing = "{prefix}&r &7› &7&7正在為 {target} 準備語言 {locale}..."
+save-failed = "{prefix}&r &7› &7&c{prefix}：無法儲存語言選擇；請檢查伺服器主控台。"
+english-fallback = "{prefix}&r &7› &7&e{prefix}：{locale} 無法使用；將使用英語（en_US）。"
+personal-selected = "{prefix}&r &7› &7&7{prefix}：你的語言現在是 {locale}。"
+server-selected = "{prefix}&r &7› &7&7{prefix}：伺服器語言現在是 {locale}。"
+server-default-selected = "{prefix}&r &7› &7&7{prefix}：你的語言現在跟隨伺服器預設語言。"
 
 [language.editor]
-loading = "正在載入 {locale} 的訊息..."
+title = "{prefix} › {section}"
+loading = "{prefix}&r &7› &7&7正在載入 {locale} 的訊息..."
 
 [language.editor.section]
 languages = "語言"
@@ -355,16 +360,16 @@ search-title = "{locale} / 搜尋"
 group-title = "{locale} / {group}"
 
 [language.editor.prompt]
-search = "搜尋訊息鍵或內容。輸入 cancel 返回。"
-value = "請在聊天中輸入 {key} 的新值。"
-current = "目前值： {value}"
-variables = "變數: {variables}"
-guidance = "使用 \\n 表示換行，\\\\ 表示反斜線，或輸入 cancel 返回。"
+search = "{prefix}&r &7› &7&7搜尋訊息鍵或內容。輸入 cancel 返回。"
+value = "{prefix}&r &7› &7&7請在聊天中輸入 {key} 的新值。"
+current = "{prefix}&r &7› &7&7目前值： {value}"
+variables = "{prefix}&r &7› &7&7變數: {variables}"
+guidance = "{prefix}&r &7› &7&7使用 \\n 表示換行，\\\\ 表示反斜線，或輸入 cancel 返回。"
 
 [language.editor.input]
-expired = "語言編輯器的輸入時間已到期。"
-too-long = "輸入最多可包含 {maximum} 個字元。"
-unable-to-save = "無法儲存：{reason}"
+expired = "{prefix}&r &7› &7&e語言編輯器的輸入時間已到期。"
+too-long = "{prefix}&r &7› &7&c輸入最多可包含 {maximum} 個字元。"
+unable-to-save = "{prefix}&r &7› &7&c無法儲存：{reason}"
 
 [language.editor.navigation]
 back = "&e返回&r"
@@ -392,12 +397,12 @@ message-count = "&7{count} 則訊息&r"
 open = "&8點擊開啟此類別。&r"
 
 [language.editor.error]
-no-permission = "你沒有權限編輯 {plugin} 的語言。"
-unable-to-edit = "無法編輯：{reason}"
+no-permission = "{prefix}&r &7› &7&c你沒有權限編輯 {prefix} 的語言。"
+unable-to-edit = "{prefix}&r &7› &7&c無法編輯：{reason}"
 
 [language.editor.saved]
-summary = "已儲存 {locale}。語言選擇保持不變。"
-change = "{key}：已將「{before}」改為「{after}」。"
+summary = "{prefix}&r &7› &7&7已儲存 {locale}。語言選擇保持不變。"
+change = "{prefix}&r &7› &7&7{key}：已將「{before}」改為「{after}」。"
 
 [language.editor.part]
 line = "第 {line} 行"
@@ -407,25 +412,25 @@ none = "無"
 empty = "(空)"
 
 [debug.error]
-missing-permission = "缺少權限：{permission}"
-already-preparing = "正在為 {plugin} 產生診斷報告。"
-already-preparing-short = "已有診斷報告正在產生。"
-schedule-failed = "無法排程診斷報告產生工作。"
-provider-closed = "診斷資料提供者已關閉。"
-closed-before-capture = "診斷資料提供者在收集報告資料前已關閉。"
-writer-schedule-failed = "無法排程診斷報告寫入工作。"
-capture-failed = "無法收集診斷報告資料，請檢查伺服器主控台。"
-closed-before-write = "診斷資料提供者在寫入報告前已關閉。"
-write-failed = "無法寫入診斷報告，請檢查伺服器主控台。"
+missing-permission = "{prefix}&r &7› &7&c缺少權限：{permission}"
+already-preparing = "{prefix}&r &7› &7&c正在為 {prefix} 產生診斷報告。"
+already-preparing-short = "{prefix}&r &7› &7&c已有診斷報告正在產生。"
+schedule-failed = "{prefix}&r &7› &7&c無法排程診斷報告產生工作。"
+provider-closed = "{prefix}&r &7› &7&c診斷資料提供者已關閉。"
+closed-before-capture = "{prefix}&r &7› &7&c診斷資料提供者在收集報告資料前已關閉。"
+writer-schedule-failed = "{prefix}&r &7› &7&c無法排程診斷報告寫入工作。"
+capture-failed = "{prefix}&r &7› &7&c無法收集診斷報告資料，請檢查伺服器主控台。"
+closed-before-write = "{prefix}&r &7› &7&c診斷資料提供者在寫入報告前已關閉。"
+write-failed = "{prefix}&r &7› &7&c無法寫入診斷報告，請檢查伺服器主控台。"
 
 [debug]
-preparing = "正在準備 {plugin} 診斷報告..."
-saved = "已將 {plugin} 診斷報告儲存至 {path}。"
+preparing = "{prefix}&r &7› &7&7正在準備 {prefix} 診斷報告..."
+saved = "{prefix}&r &7› &7&7已將 {prefix} 診斷報告儲存至 {path}。"
 
 [debug.upload]
-interrupted = "診斷報告上傳已中斷，本機報告已儲存。"
-failed = "診斷報告上傳失敗，本機報告已儲存。"
-completed = "已上傳為 VolmitSoftware - {plugin} - v{version}。"
+interrupted = "{prefix}&r &7› &7&7診斷報告上傳已中斷，本機報告已儲存。"
+failed = "{prefix}&r &7› &7&c診斷報告上傳失敗，本機報告已儲存。"
+completed = "{prefix}&r &7› &7&7已上傳為 VolmitSoftware - {prefix} - v{version}。"
 
 [debug.action]
 open = "開啟：{url}"

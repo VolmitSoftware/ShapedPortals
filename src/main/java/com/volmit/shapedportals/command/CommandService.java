@@ -226,8 +226,9 @@ public final class CommandService implements CommandExecutor, TabCompleter {
         @Override
         public void sendMessage(String message) {
             if (message != null && !message.isBlank()) {
-                ComponentMessenger.send(sender, ComponentText.markup(language.render(sender, ShapedMessages.PREFIX))
-                        .append(ComponentText.literal(message)));
+                ComponentMessenger.send(sender, language.render(sender, ShapedMessages.PREFIX)
+                        .append(ComponentText.markup("&r &7› "))
+                        .append(ComponentText.literal(message).colorIfAbsent("#aaaaaa")));
             }
         }
     }

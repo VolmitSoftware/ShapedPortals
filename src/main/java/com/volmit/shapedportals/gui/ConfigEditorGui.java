@@ -444,7 +444,7 @@ public final class ConfigEditorGui implements Listener {
     }
 
     private String plainName(Setting setting) {
-        return ComponentText.markup(language.render(setting.name())).plain();
+        return language.render(setting.name()).plain();
     }
 
     private String displayValue(String value) {
@@ -516,6 +516,10 @@ public final class ConfigEditorGui implements Listener {
                         Material.PAPER, SettingKind.BOOLEAN, 1D,
                         config -> Boolean.toString(config.general.failureFeedback),
                         (config, value) -> config.general.failureFeedback = parseBoolean(value)),
+                setting(Category.GENERAL, "general.updateNotifications", ShapedMessages.SETTING_GENERAL_UPDATE_NOTIFICATIONS,
+                        Material.BELL, SettingKind.BOOLEAN, 1D,
+                        config -> Boolean.toString(config.general.updateNotifications),
+                        (config, value) -> config.general.updateNotifications = parseBoolean(value)),
                 setting(Category.GENERAL, "metrics.enabled", ShapedMessages.SETTING_METRICS_ENABLED,
                         Material.FILLED_MAP, SettingKind.BOOLEAN, 1D,
                         config -> Boolean.toString(config.metrics.enabled),

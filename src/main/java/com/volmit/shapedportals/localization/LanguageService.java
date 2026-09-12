@@ -26,7 +26,10 @@ import art.arcane.volmlib.util.localization.TomlLanguageParser;
 import art.arcane.volmlib.util.localization.VolmitLocales;
 import art.arcane.volmlib.util.plugin.ComponentMessenger;
 import art.arcane.volmlib.util.plugin.ComponentText;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -120,11 +123,7 @@ public final class LanguageService {
         }
         ArrayList<LocaleOverlay> overlays = new ArrayList<>();
         if (file.isFile()) {
-            try {
-                overlays.add(createOverlay(requiredLocale, file.getPath(), loadEditableLanguage(file)));
-            } catch (IOException | RuntimeException exception) {
-                logger.log(Level.WARNING, "Using English for unreadable language file " + file, exception);
-            }
+            overlays.add(createOverlay(requiredLocale, file.getPath(), loadEditableLanguage(file)));
         }
         boolean selectionReady = file.isFile();
         PreparedLanguage prepared = createPrepared(requiredLocale, file, overlays, selectionReady);
@@ -150,8 +149,41 @@ public final class LanguageService {
         activeFile.set(prepared.file());
         PluginLanguageService activeSelections = selections;
         if (activeSelections != null) {
-            activeSelections.invalidate();
-            activeSelections.cache(prepared.locale(), prepared.snapshot());
+            activeSelections.cache(prepared.locale(), selectionSnapshot(prepared.locale(), prepared.snapshot()));
+        }
+    }
+
+    public synchronized boolean reloadSnapshot(File file, String content) {
+        if (!isLanguageFile(file)) {
+            return false;
+        }
+        String locale = canonicalLocale(file.getName().substring(0, file.getName().length() - ".toml".length()));
+        try {
+            PreparedLanguage prepared;
+            if (content == null) {
+                if (!Files.notExists(file.toPath(), LinkOption.NOFOLLOW_LINKS)) {
+                    throw new IOException("Language file could not be read: " + file);
+                }
+                prepared = new PreparedLanguage(locale, file,
+                        LocalizationSnapshot.create(LocalizationCandidate.english(CATALOG, ENGLISH_PLURALS)), false);
+            } else {
+                Map<String, String> values = parseStrictValues(content, locale, CATALOG.byId().keySet());
+                prepared = createPrepared(locale, file, List.of(createOverlay(locale, file.getPath(), values)), true);
+            }
+            refreshAvailableLocales();
+            if (file.getAbsoluteFile().equals(activeFile.get().getAbsoluteFile())) {
+                install(prepared);
+            } else {
+                PluginLanguageService activeSelections = selections;
+                if (activeSelections != null) {
+                    activeSelections.cache(locale, selectionSnapshot(locale, prepared.snapshot()));
+                }
+            }
+            return true;
+        } catch (IOException | RuntimeException exception) {
+            logger.log(Level.WARNING, "Could not reload ShapedPortals language " + file
+                    + "; keeping the last valid messages", exception);
+            return false;
         }
     }
 
@@ -221,46 +253,46 @@ public final class LanguageService {
         selfWriteListener = listener;
     }
 
-    public String render(TextKey key) {
+    public ComponentText render(TextKey key) {
         return render(key, MessageArgs.empty());
     }
 
-    public String render(TextKey key, MessageArgs arguments) {
+    public ComponentText render(TextKey key, MessageArgs arguments) {
         LocalizationSnapshot snapshot = selectedSnapshot(null);
         return render(snapshot, key, arguments, renderPrefix(snapshot));
     }
 
-    public String render(CommandSender sender, TextKey key) {
+    public ComponentText render(CommandSender sender, TextKey key) {
         return render(sender, key, MessageArgs.empty());
     }
 
-    public String render(CommandSender sender, TextKey key, MessageArgs arguments) {
+    public ComponentText render(CommandSender sender, TextKey key, MessageArgs arguments) {
         LocalizationSnapshot snapshot = selectedSnapshot(sender);
         return render(snapshot, key, arguments, renderPrefix(snapshot));
     }
 
-    public String renderWithoutPrefix(TextKey key, MessageArgs arguments) {
-        return render(selectedSnapshot(null), key, arguments, "");
+    public ComponentText renderWithoutPrefix(TextKey key, MessageArgs arguments) {
+        return renderWithoutPrefix(selectedSnapshot(null), key, arguments);
     }
 
-    public String renderWithoutPrefix(CommandSender sender, TextKey key, MessageArgs arguments) {
-        return render(selectedSnapshot(sender), key, arguments, "");
+    public ComponentText renderWithoutPrefix(CommandSender sender, TextKey key, MessageArgs arguments) {
+        return renderWithoutPrefix(selectedSnapshot(sender), key, arguments);
     }
 
-    public String renderPrefixed(TextKey key, MessageArgs arguments) {
+    public ComponentText renderPrefixed(TextKey key, MessageArgs arguments) {
         return render(key, arguments);
     }
 
-    public String renderPrefixed(CommandSender sender, TextKey key, MessageArgs arguments) {
+    public ComponentText renderPrefixed(CommandSender sender, TextKey key, MessageArgs arguments) {
         return render(sender, key, arguments);
     }
 
     public void send(CommandSender sender, TextKey key) {
-        ComponentMessenger.sendMarkup(sender, render(sender, key));
+        ComponentMessenger.send(sender, render(sender, key));
     }
 
     public void send(CommandSender sender, TextKey key, MessageArgs arguments) {
-        ComponentMessenger.sendMarkup(sender, render(sender, key, arguments));
+        ComponentMessenger.send(sender, render(sender, key, arguments));
     }
 
     public void sendPrefixed(CommandSender sender, TextKey key) {
@@ -268,27 +300,27 @@ public final class LanguageService {
     }
 
     public void sendPrefixed(CommandSender sender, TextKey key, MessageArgs arguments) {
-        ComponentMessenger.sendMarkup(sender, renderPrefixed(sender, key, arguments));
+        ComponentMessenger.send(sender, renderPrefixed(sender, key, arguments));
     }
 
     public String legacy(TextKey key) {
-        return ComponentText.markup(render(key)).legacy();
+        return render(key).legacy();
     }
 
     public String legacy(TextKey key, MessageArgs arguments) {
-        return ComponentText.markup(render(key, arguments)).legacy();
+        return render(key, arguments).legacy();
     }
 
     public String legacy(CommandSender sender, TextKey key) {
-        return ComponentText.markup(render(sender, key)).legacy();
+        return render(sender, key).legacy();
     }
 
     public String legacy(CommandSender sender, TextKey key, MessageArgs arguments) {
-        return ComponentText.markup(render(sender, key, arguments)).legacy();
+        return render(sender, key, arguments).legacy();
     }
 
     public DirectorTextResolver directorResolver() {
-        return this::renderWithoutPrefix;
+        return (key, arguments) -> render(key, arguments).miniMessage();
     }
 
     public File activeFile() {
@@ -302,6 +334,12 @@ public final class LanguageService {
 
     public File languageDirectory() {
         return languageDirectory;
+    }
+
+    public List<File> files() {
+        File[] installed = languageDirectory.listFiles(file -> isLanguageFile(file)
+                && Files.isRegularFile(file.toPath(), LinkOption.NOFOLLOW_LINKS));
+        return installed == null ? List.of() : List.of(installed);
     }
 
     public boolean isLanguageFile(File candidate) {
@@ -738,7 +776,8 @@ public final class LanguageService {
     private static List<String> englishHeader(String locale) {
         return LanguageFileHeader.render(new LanguageFileHeader.Options(
                 "ShapedPortals", locale,
-                List.of("runtime.prefix supplies {prefix}. Remove {prefix} from an individual message to hide it there."),
+                List.of("runtime.prefix supplies the styled plugin name for {prefix}. Chat templates add the gray › separator.",
+                        "Remove the leading {prefix}&r &7› &7 from a message to hide its name and separator."),
                 List.of("Colors and styles: &0-&f, &k-&r.", "RGB colors: &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B, [RRGGBB].", "MiniMessage supports custom formatting. Put a backslash before & or [ to display it literally."),
                 Map.ofEntries(
                         Map.entry("after", "Value after the change"),
@@ -771,7 +810,6 @@ public final class LanguageService {
                         Map.entry("path", "Local report path"),
                         Map.entry("permission", "Required permission"),
                         Map.entry("personal", "Personal locale when it differs from the server default"),
-                        Map.entry("plugin", "Plugin name"),
                         Map.entry("portal", "Portal identifier"),
                         Map.entry("portals", "Managed portal count"),
                         Map.entry("prefix", "Global runtime.prefix value; optional per message"),
@@ -779,12 +817,12 @@ public final class LanguageService {
                         Map.entry("rejected", "Rejected creation attempts"),
                         Map.entry("scheduler", "Scheduler implementation"),
                         Map.entry("seconds", "Confirmation window"),
+                        Map.entry("section", "Language editor section"),
                         Map.entry("setting", "Setting name"),
                         Map.entry("status", "Selection marker"),
                         Map.entry("target", "Language selection target"),
                         Map.entry("type", "Parameter type or portal type"),
                         Map.entry("url", "Public report URL"),
-                        Map.entry("usage", "Command usage"),
                         Map.entry("uuid", "Full portal UUID"),
                         Map.entry("value", "Current, default, or raw value"),
                         Map.entry("variables", "Placeholders valid for the selected message"),
@@ -815,10 +853,46 @@ public final class LanguageService {
                 : activeSelections.snapshot();
     }
 
-    private String render(LocalizationSnapshot snapshot, TextKey key, MessageArgs arguments, String prefix) {
-        MessageArgs resolvedArguments = argumentsWithPrefix(key, arguments, prefix);
-        String template = snapshot.resolve(key, resolvedArguments).template();
-        return interpolate(template, resolvedArguments);
+    private ComponentText render(LocalizationSnapshot snapshot, TextKey key, MessageArgs arguments, String prefix) {
+        TextKey definition = (TextKey) CATALOG.require(key.id());
+        MessageArgs resolvedArguments = argumentsWithPrefix(definition, arguments, prefix);
+        String template = snapshot.resolve(definition, resolvedArguments).template();
+        return renderTemplate(template, resolvedArguments);
+    }
+
+    private ComponentText renderWithoutPrefix(LocalizationSnapshot snapshot, TextKey key, MessageArgs arguments) {
+        TextKey definition = (TextKey) CATALOG.require(key.id());
+        MessageArgs resolvedArguments = argumentsWithPrefix(definition, arguments, renderPrefix(snapshot));
+        String template = snapshot.resolve(definition, resolvedArguments).template();
+        if (template.startsWith(ShapedMessages.CHAT_PREFIX)) {
+            template = template.substring(ShapedMessages.CHAT_PREFIX.length());
+        }
+        return renderTemplate(template, resolvedArguments);
+    }
+
+    private ComponentText renderTemplate(String template, MessageArgs arguments) {
+        MessageArgs.Builder replacements = MessageArgs.builder();
+        TagResolver.Builder tags = TagResolver.builder();
+        int index = 0;
+        for (MessageArgument argument : arguments.arguments().values()) {
+            String tag = "shaped_argument_" + index++;
+            replacements.trusted(argument.name(), "<" + tag + ">");
+            Component value;
+            if (argument.kind() == MessageArgumentKind.UNTRUSTED) {
+                String literal = String.valueOf(argument.value());
+                if (literal.indexOf('§') >= 0) {
+                    literal = ComponentText.section(literal).plain();
+                }
+                value = Component.text(literal);
+            } else if (argument.value() instanceof ComponentText component) {
+                value = MINI_MESSAGE.deserialize(component.miniMessage());
+            } else {
+                value = MINI_MESSAGE.deserialize(ComponentText.normalizeMarkup(String.valueOf(argument.value())));
+            }
+            tags.resolver(Placeholder.component(tag, value));
+        }
+        String rendered = interpolate(ComponentText.normalizeMarkup(template), replacements.build());
+        return ComponentText.component(MINI_MESSAGE.deserialize(rendered, tags.build()));
     }
 
     private String renderPrefix(LocalizationSnapshot snapshot) {
@@ -832,17 +906,28 @@ public final class LanguageService {
 
     private MessageArgs argumentsWithPrefix(TextKey key, MessageArgs arguments, String prefix) {
         MessageArgs resolved = arguments == null ? MessageArgs.empty() : arguments;
-        if (!key.placeholders().contains("prefix")) {
-            return resolved;
-        }
         if (resolved.names().contains("prefix")) {
             throw new IllegalArgumentException("The prefix message argument is managed by ShapedPortals");
         }
         MessageArgs.Builder builder = MessageArgs.builder();
         for (MessageArgument argument : resolved.arguments().values()) {
-            builder.add(argument);
+            if (key.id().equals("language.selection.preparing") && argument.name().equals("target")
+                    && String.valueOf(argument.value()).equalsIgnoreCase("ShapedPortals")) {
+                builder.trusted("target", prefix);
+            } else if (!argument.name().equals("plugin") || key.placeholders().contains("plugin")) {
+                builder.add(argument);
+            }
         }
-        builder.trusted("prefix", prefix);
+        if (key.placeholders().contains("prefix")) {
+            if (resolved.names().contains("plugin")
+                    && !String.valueOf(resolved.require("plugin").value()).equalsIgnoreCase("ShapedPortals")) {
+                builder.trusted("prefix", ComponentText.literal(String.valueOf(resolved.require("plugin").value())));
+            } else if (key.equals(ShapedMessages.VERSION)) {
+                builder.untrusted("prefix", ComponentText.markup(prefix).plain());
+            } else {
+                builder.trusted("prefix", prefix);
+            }
+        }
         return builder.build();
     }
 
@@ -932,12 +1017,16 @@ public final class LanguageService {
                 if (!(prefixValue instanceof TextValue prefixText)) {
                     throw new IllegalStateException("Language prefix is not text");
                 }
-                arguments.trusted(placeholder, prefixText.template());
+                if (definition.equals(ShapedMessages.VERSION)) {
+                    arguments.untrusted(placeholder, ComponentText.markup(prefixText.template()).plain());
+                } else {
+                    arguments.trusted(placeholder, prefixText.template());
+                }
             } else {
                 arguments.untrusted(placeholder, "[" + placeholder + "]");
             }
         }
-        return interpolate(template, arguments.build());
+        return renderTemplate(template, arguments.build()).miniMessage();
     }
 
     private String escapeUntrusted(String value) {

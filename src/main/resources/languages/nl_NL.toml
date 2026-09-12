@@ -6,7 +6,7 @@
 # /shapedportals language server edit nl_NL
 #
 # === Voorvoegsel ===
-# {prefix}  de globale waarde runtime.prefix. Verwijder {prefix} uit één bericht om het alleen daar te verbergen
+# {prefix}  Opgemaakte pluginnaam uit runtime.prefix; het scheidingsteken staat in het bericht. Verwijder {prefix}&r &7› &7 om beide te verbergen.
 #
 # === Opmaak ===
 # Kleuren: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B en [RRGGBB]. MiniMessage blijft beschikbaar voor eigen opmaak.
@@ -44,20 +44,19 @@
 #   {path}  lokaal rapportpad
 #   {permission}  vereiste machtiging
 #   {personal}  persoonlijke landinstelling
-#   {plugin}  Pluginnaam
 #   {portal}  aanduiding
 #   {portals}  beheerd aantal
-#   {prefix}  de globale waarde runtime.prefix. Verwijder {prefix} uit één bericht om het alleen daar te verbergen
+#   {prefix}  Opgemaakte pluginnaam uit runtime.prefix; het scheidingsteken staat in het bericht. Verwijder {prefix}&r &7› &7 om beide te verbergen.
 #   {reason}  foutreden
 #   {rejected}  afgewezen pogingen
 #   {scheduler}  planner
 #   {seconds}  bevestigingstijd in seconden
+#   {section}  Onderdeel van de editor
 #   {setting}  instellingsnaam
 #   {status}  selectiemarkering
 #   {target}  Doelspeler, entiteit of waarde
 #   {type}  type
 #   {url}  openbare URL
-#   {usage}  opdrachtgebruik
 #   {uuid}  volledige UUID
 #   {value}  huidige, standaard- of ruwe waarde
 #   {variables}  geldige tijdelijke aanduidingen
@@ -68,46 +67,51 @@
 #   {z}  ankercoördinaten
 
 [runtime]
-prefix = "&d&lShapedPortals&r &8›&r "
-player_only = "{prefix}&cDeze opdracht kan alleen door een speler worden gebruikt.&r"
+prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
+player_only = "{prefix}&r &7› &7&cDeze opdracht kan alleen door een speler worden gebruikt.&r"
 
 [runtime.permission]
-denied = "{prefix}&cJe hebt geen toestemming om dat te doen.&r"
+denied = "{prefix}&r &7› &7&cJe hebt geen toestemming om dat te doen.&r"
 
 [runtime.hot_reload]
-success = "{prefix}&aDe wijzigingen aan de configuratie en taalbestanden zijn toegepast.&r"
-failed = "{prefix}&cDe bestandswijzigingen zijn geweigerd; de laatst geldige instellingen blijven actief.&r"
+success = "{prefix}&r &7› &7&7De&7 wijzigingen aan de configuratie en taalbestanden zijn toegepast.&r"
+failed = "{prefix}&r &7› &7&cDe bestandswijzigingen zijn geweigerd; de laatst geldige instellingen blijven actief.&r"
+
+[runtime.update]
+available = "{prefix}&r &7› &7&e{new}&7 is beschikbaar (geïnstalleerd: &f{old}&7).&r\n&7Uitgave: &b{url}&r"
 
 [command.feedback]
-failed = "{prefix}&cDe opdracht kon niet worden uitgevoerd. Bekijk de console voor meer informatie.&r"
+version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
+failed = "{prefix}&r &7› &7&cDe opdracht kon niet worden uitgevoerd. Bekijk de console voor meer informatie.&r"
 
 [command.feedback.config]
-opened = "{prefix}&aDe volledige configuratie-editor in het spel is geopend.&r"
-saved = "{prefix}&a{setting}&r &7is gewijzigd van &f{old}&r &7naar &f{new}&r&7.&r"
-save_failed = "{prefix}&c&f{setting}&r&c kon niet worden toegepast: {reason}&r"
+opened = "{prefix}&r &7› &7&7De&7 volledige configuratie-editor in het spel is geopend.&r"
+saved = "{prefix}&r &7› &7&a{setting}&r &7is gewijzigd van &f{old}&r &7naar &f{new}&r&7.&r"
+save_failed = "{prefix}&r &7› &7&c&f{setting}&r&c kon niet worden toegepast: {reason}&r"
 
 [command.feedback.debug]
-started = "{prefix}&7Diagnostische gegevens van de server en ShapedPortals worden verzameld…&r"
-busy = "{prefix}&eEr wordt al een diagnostisch rapport voor ShapedPortals gemaakt.&r"
-saved = "{prefix}&aHet diagnostische rapport is opgeslagen in &f{path}&r&a.&r"
-uploaded = "{prefix}&aDiagnostisch rapport geüpload:&r &b&n{url}&r"
+started = "{prefix}&r &7› &7&7Diagnostische gegevens van de server en {prefix} worden verzameld…&r"
+busy = "{prefix}&r &7› &7&eEr wordt al een diagnostisch rapport voor {prefix} gemaakt.&r"
+saved = "{prefix}&r &7› &7&7Het&7 diagnostische rapport is opgeslagen in &f{path}&r&7.&r"
+uploaded = "{prefix}&r &7› &7&7Diagnostisch&7 rapport geüpload:&r &b&n{url}&r"
 link_hover = "&7Open het openbare rapport op mclo.gs.&r"
-upload_failed = "{prefix}&eHet lokale rapport is opgeslagen, maar uploaden naar mclo.gs is mislukt. Bekijk de console voor meer informatie.&r"
-failed = "{prefix}&cHet diagnostische rapport kon niet worden gemaakt. Bekijk de console voor meer informatie.&r"
+upload_failed = "{prefix}&r &7› &7&eHet lokale rapport is opgeslagen, maar uploaden naar mclo.gs is mislukt. Bekijk de console voor meer informatie.&r"
+failed = "{prefix}&r &7› &7&cHet diagnostische rapport kon niet worden gemaakt. Bekijk de console voor meer informatie.&r"
 
 [command.status]
-header = "{prefix}&d&lShapedPortals-status&r"
-config = "{prefix}&7Aanmaken:&r {enabled} &8|&r &7Taal:&r &f{language}&r &8|&r &7Automatisch herladen:&r {hot_reload}"
-portals = "{prefix}&7Beheerde portalen:&r &f{portals}&r &8|&r &7Binnencellen:&r &f{cells}&r"
-attempts = "{prefix}&7Pogingen:&r &f{attempts}&r &8|&r &7Aangemaakt:&r &a{created}&r &8|&r &7Geweigerd:&r &c{rejected}&r"
-compatibility = "{prefix}&7Artefact:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Planner:&r &f{scheduler}&r"
+header = "{prefix}&r &7› &7status&r"
+config = "{prefix}&r &7› &7&7Aanmaken:&r {enabled} &8|&r &7Taal:&r &f{language}&r &8|&r &7Automatisch herladen:&r {hot_reload}"
+portals = "{prefix}&r &7› &7&7Beheerde portalen:&r &f{portals}&r &8|&r &7Binnencellen:&r &f{cells}&r"
+attempts = "{prefix}&r &7› &7&7Pogingen:&r &f{attempts}&r &8|&r &7Aangemaakt:&r &a{created}&r &8|&r &7Geweigerd:&r &c{rejected}&r"
+compatibility = "{prefix}&r &7› &7&7Artefact:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Planner:&r &f{scheduler}&r"
 
 [command.description]
-root = "Hulp en beheer voor ShapedPortals"
+version = "Geïnstalleerde versie van {prefix} tonen"
+root = "Hulp en beheer voor {prefix}"
 config = "De volledige configuratie-editor in het spel openen"
-language = "Een beschikbare ShapedPortals-taal selecteren"
-debug = "Diagnosehulpmiddelen voor ShapedPortals"
-debug_dump = "Een uitgebreid diagnostisch rapport voor ShapedPortals maken"
+language = "Een beschikbare {prefix}-taal selecteren"
+debug = "Diagnosehulpmiddelen voor {prefix}"
+debug_dump = "Een uitgebreid diagnostisch rapport voor {prefix} maken"
 portals = "Alle beheerde portalen en hun teleportatiesnelkoppeling weergeven"
 teleport = "Veilig naast een beheerd portaal teleporteren of zonder invoer de portalen weergeven"
 status = "Statistieken van beheerde portalen en pogingen weergeven"
@@ -119,16 +123,16 @@ portal = "Portaal-UUID, uniek voorvoegsel of list"
 upload = "Het rapport uploaden wanneer openbare uploads zijn ingeschakeld"
 
 [portal.notice]
-nether_created = "{prefix}&dEen gevormd portaal met {blocks} binnenblokken is aangemaakt.&r"
-end_created = "{prefix}&5End&r &dEen gevormd portaal met {blocks} binnenblokken is aangemaakt.&r"
-failed = "{prefix}&cDit frame kan geen gevormd portaal worden: &f{reason}&r&c.&r"
+nether_created = "{prefix}&r &7› &7&7Een&7 gevormd portaal met &f{blocks}&7 binnenblokken is aangemaakt.&r"
+end_created = "{prefix}&r &7› &7&7End&7&r &7Een gevormd portaal met &f{blocks}&7 binnenblokken is aangemaakt.&r"
+failed = "{prefix}&r &7› &7&cDit frame kan geen gevormd portaal worden: &f{reason}&r&c.&r"
 
 [portal.title]
 nether_created = "&5&lNetherportaal gemaakt&r"
 end_created = "&5&lEndportaal gemaakt&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&cNaast &f{portal}&r&c is geen veilige plek om te staan. &eKlik binnen &f{seconds}&r&e seconden opnieuw op hetzelfde portaal om er toch in te teleporteren.&r"
+unsafe = "{prefix}&r &7› &7&cNaast &f{portal}&r&c is geen veilige plek om te staan. &eKlik binnen &f{seconds}&r&e seconden opnieuw op hetzelfde portaal om er toch in te teleporteren.&r"
 
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eHet bestaande frame gebruikt &f{materials}&r&e; daarmee kunnen geen nieuwe portalen worden gemaakt.&r"
@@ -137,28 +141,28 @@ entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7
 hover = "&7UUID:&r &f{uuid}&r\n&aKlik om naar dit portaal te teleporteren.&r"
 
 [portal.navigation.error]
-not_found = "{prefix}&cGeen beheerd portaal komt overeen met &f{portal}&r&c.&r"
-ambiguous = "{prefix}&cHet voorvoegsel &f{portal}&r&c komt overeen met {matches} portalen. Voer meer tekens van de UUID in.&r"
-removed = "{prefix}&cDit portaal is niet meer geregistreerd.&r"
-world_unavailable = "{prefix}&cDe portaalwereld &f{world}&r&c is momenteel niet beschikbaar.&r"
-destination_unavailable = "{prefix}&cDe bestemming van het portaal is tijdelijk niet beschikbaar.&r"
-inactive = "{prefix}&cDit portaal is niet meer actief. De integriteitscontrole is in de wachtrij geplaatst.&r"
-no_safe_landing = "{prefix}&cEr is geen veilige plek om naast dit portaal te staan.&r"
+not_found = "{prefix}&r &7› &7&cGeen beheerd portaal komt overeen met &f{portal}&r&c.&r"
+ambiguous = "{prefix}&r &7› &7&cHet voorvoegsel &f{portal}&r&c komt overeen met {matches} portalen. Voer meer tekens van de UUID in.&r"
+removed = "{prefix}&r &7› &7&cDit portaal is niet meer geregistreerd.&r"
+world_unavailable = "{prefix}&r &7› &7&cDe portaalwereld &f{world}&r&c is momenteel niet beschikbaar.&r"
+destination_unavailable = "{prefix}&r &7› &7&cDe bestemming van het portaal is tijdelijk niet beschikbaar.&r"
+inactive = "{prefix}&r &7› &7&cDit portaal is niet meer actief. De integriteitscontrole is in de wachtrij geplaatst.&r"
+no_safe_landing = "{prefix}&r &7› &7&cEr is geen veilige plek om naast dit portaal te staan.&r"
 
 [portal.navigation.teleport]
-preparing = "{prefix}&7Bestemming voor &f{portal}&r&7 wordt voorbereid…&r"
-success = "{prefix}&aJe bent naast &f{portal}&r&a in &f{world}&r&a geteleporteerd.&r"
-failed = "{prefix}&cDe portaalteleportatie is niet voltooid. Mogelijk is deze door een andere plug-in geannuleerd.&r"
+preparing = "{prefix}&r &7› &7&7Bestemming voor &f{portal}&r&7 wordt voorbereid…&r"
+success = "{prefix}&r &7› &7&7Je&7 bent naast &f{portal}&r&7 in &f{world}&r&7 geteleporteerd.&r"
+failed = "{prefix}&r &7› &7&cDe portaalteleportatie is niet voltooid. Mogelijk is deze door een andere plug-in geannuleerd.&r"
 
 [hud]
-title = "&d&lShapedPortals&r"
+title = "{prefix}"
 success = "&aGeslaagd&r"
 failure = "&cActie mislukt&r"
-info = "&dShapedPortals&r"
+info = "{prefix}"
 
 [gui.title]
-root = "&5ShapedPortals-configuratie&r"
-category = "&5ShapedPortals&r &8›&r {category}"
+root = "{prefix}-configuratie&r"
+category = "{prefix}&r &7› &7{category}"
 
 [gui.category]
 general = "&dAlgemeen&r"
@@ -183,15 +187,15 @@ language = "&8Klik om een beschikbare taal te kiezen of typ een landinstelling.&
 category = "&8Klik om elke instelling in deze categorie te bewerken.&r"
 
 [gui.prompt]
-request = "{prefix}&eTyp een nieuwe waarde voor &f{setting}&r&e in de chat.&r"
-list = "{prefix}&7Scheid lijstitems met komma's. Typ &fnone&r&7 voor een lege lijst.&r"
-cancel = "{prefix}&7Typ &fcancel&r&7 om te stoppen. Deze invoer verloopt na 60 seconden.&r"
-cancelled = "{prefix}&eConfiguratiebewerking geannuleerd.&r"
-timeout = "{prefix}&eDe configuratiebewerking is verlopen zonder iets te wijzigen.&r"
+request = "{prefix}&r &7› &7&eTyp een nieuwe waarde voor &f{setting}&r&e in de chat.&r"
+list = "{prefix}&r &7› &7&7Scheid lijstitems met komma's. Typ &fnone&r&7 voor een lege lijst.&r"
+cancel = "{prefix}&r &7› &7&7Typ &fcancel&r&7 om te stoppen. Deze invoer verloopt na 60 seconden.&r"
+cancelled = "{prefix}&r &7› &7&eConfiguratiebewerking geannuleerd.&r"
+timeout = "{prefix}&r &7› &7&eDe configuratiebewerking is verlopen zonder iets te wijzigen.&r"
 
 [gui.language]
 type = "&7Typ een landinstelling in de chat om deze aan te maken of te selecteren.&r"
-option = "{status} &f{locale}&r &8—&r &7{name}&r"
+option = "{status} &f{locale}&r &8›&r &7{name}&r"
 hover = "&7Klik om &f{locale}&r&7 te selecteren.&r"
 empty = "&eEr zijn geen beschikbare talen gevonden; typ een landinstelling om er een te maken.&r"
 current = "&7Huidige waarde:&r {value}"
@@ -199,6 +203,7 @@ variables = "&7Huidige variabelen / tijdelijke aanduidingen:&r &f{variables}&r"
 changed = "&f{old}&r &7is gewijzigd naar&r &f{new}&r"
 
 [gui.setting.general]
+update_notifications = "&dGitHub-updatemeldingen&r"
 enabled = "&dPortalen aanmaken&r"
 language = "&dActieve landinstelling&r"
 require_create_permission = "&dToestemming voor aanmaken vereisen&r"
@@ -289,7 +294,6 @@ required = "Deze parameter is verplicht."
 type = "Deze parameter is van het type {type}."
 
 [director.runtime]
-usage = "Gebruik: {usage}"
 
 [director.runtime.error]
 conversion_failed = "Kan \"{value}\" voor {parameter} niet naar {type} converteren"
@@ -321,32 +325,33 @@ selected = "geselecteerd"
 all-volmit-plugins = "Alle Volmit-plugins"
 
 [language.error]
-stopping = "Taalselectie is niet beschikbaar terwijl de plugin stopt."
-editor-player-only = "Open de taalbewerker in het spel."
-no-providers = "Er zijn geen Volmit-taalaanbieders beschikbaar."
-numeric-page = "Voer een paginanummer in."
-personal-player-only = "Spelertaalvoorkeuren moeten in het spel worden geselecteerd."
-personal-permission = "U hebt geen toestemming om uw taal te selecteren."
-plugin-personal-permission = "Je hebt geen toestemming om je taal voor {plugin} te kiezen."
-plugin-server-permission = "Je hebt geen toestemming om de servertaal voor {plugin} te wijzigen."
-server-locale-required = "Kies een taalcode zoals en_US voor de standaardtaal van de server."
-unavailable-for-all = "De taal {locale} is niet voor alle geselecteerde plugins beschikbaar."
+stopping = "{prefix}&r &7› &7&cTaalselectie is niet beschikbaar terwijl de plugin stopt."
+editor-player-only = "{prefix}&r &7› &7&cOpen de taalbewerker in het spel."
+no-providers = "{prefix}&r &7› &7&cEr zijn geen Volmit-taalaanbieders beschikbaar."
+numeric-page = "{prefix}&r &7› &7&cVoer een paginanummer in."
+personal-player-only = "{prefix}&r &7› &7&cSpelertaalvoorkeuren moeten in het spel worden geselecteerd."
+personal-permission = "{prefix}&r &7› &7&cU hebt geen toestemming om uw taal te selecteren."
+plugin-personal-permission = "{prefix}&r &7› &7&cJe hebt geen toestemming om je taal voor {prefix} te kiezen."
+plugin-server-permission = "{prefix}&r &7› &7&cJe hebt geen toestemming om de servertaal voor {prefix} te wijzigen."
+server-locale-required = "{prefix}&r &7› &7&cKies een taalcode zoals en_US voor de standaardtaal van de server."
+unavailable-for-all = "{prefix}&r &7› &7&cDe taal {locale} is niet voor alle geselecteerde plugins beschikbaar."
 
 [language.usage]
-editor = "Gebruik: /{command} language server edit [locale]"
-selection = "Gebruik: /{command} language self [locale|reset] or server [locale]"
-volmit-selection = "Gebruik: /volmit plugins languages [locale]"
+editor = "{prefix}&r &7› &7&7Gebruik: /{command} language server edit [locale]"
+selection = "{prefix}&r &7› &7&7Gebruik: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "{prefix}&r &7› &7&7Gebruik: /volmit plugins languages [locale]"
 
 [language.selection]
-preparing = "Taal {locale} wordt voorbereid voor {target}..."
-save-failed = "{plugin}: de taalkeuze kon niet worden opgeslagen; controleer de serverconsole."
-english-fallback = "{plugin}: {locale} is niet beschikbaar; Engels (en_US) wordt gebruikt."
-personal-selected = "{plugin}: uw taal is nu {locale}."
-server-selected = "{plugin}: servertaal is nu {locale}."
-server-default-selected = "{plugin}: je taal volgt nu de standaardtaal van de server."
+preparing = "{prefix}&r &7› &7&7Taal {locale} wordt voorbereid voor {target}..."
+save-failed = "{prefix}&r &7› &7&cde taalkeuze kon niet worden opgeslagen; controleer de serverconsole."
+english-fallback = "{prefix}&r &7› &7&e{locale} is niet beschikbaar; Engels (en_US) wordt gebruikt."
+personal-selected = "{prefix}&r &7› &7&7uw taal is nu {locale}."
+server-selected = "{prefix}&r &7› &7&7servertaal is nu {locale}."
+server-default-selected = "{prefix}&r &7› &7&7je taal volgt nu de standaardtaal van de server."
 
 [language.editor]
-loading = "Berichten voor {locale} laden..."
+title = "{prefix} › {section}"
+loading = "{prefix}&r &7› &7&7Berichten voor {locale} laden..."
 
 [language.editor.section]
 languages = "Talen"
@@ -355,16 +360,16 @@ search-title = "{locale} / Zoeken"
 group-title = "{locale} / {group}"
 
 [language.editor.prompt]
-search = "Zoek op berichtsleutel of tekst. Typ cancel om terug te gaan."
-value = "Typ in de chat een nieuwe waarde voor {key}."
-current = "Huidige waarde: {value}"
-variables = "Variabelen: {variables}"
-guidance = "Gebruik \\n voor een nieuwe regel, \\\\ voor een backslash, of typ cancel om terug te gaan."
+search = "{prefix}&r &7› &7&7Zoek op berichtsleutel of tekst. Typ cancel om terug te gaan."
+value = "{prefix}&r &7› &7&7Typ in de chat een nieuwe waarde voor {key}."
+current = "{prefix}&r &7› &7&7Huidige waarde: {value}"
+variables = "{prefix}&r &7› &7&7Variabelen: {variables}"
+guidance = "{prefix}&r &7› &7&7Gebruik \\n voor een nieuwe regel, \\\\ voor een backslash, of typ cancel om terug te gaan."
 
 [language.editor.input]
-expired = "De invoer voor de taalbewerker is verlopen."
-too-long = "De invoer mag maximaal {maximum} tekens bevatten."
-unable-to-save = "Opslaan mislukt: {reason}"
+expired = "{prefix}&r &7› &7&eDe invoer voor de taalbewerker is verlopen."
+too-long = "{prefix}&r &7› &7&cDe invoer mag maximaal {maximum} tekens bevatten."
+unable-to-save = "{prefix}&r &7› &7&cOpslaan mislukt: {reason}"
 
 [language.editor.navigation]
 back = "&eTerug&r"
@@ -392,12 +397,12 @@ message-count = "&7{count} berichten&r"
 open = "&8Klik om deze categorie te openen.&r"
 
 [language.editor.error]
-no-permission = "Je hebt geen toestemming om de talen van {plugin} te bewerken."
-unable-to-edit = "Bewerken mislukt: {reason}"
+no-permission = "{prefix}&r &7› &7&cJe hebt geen toestemming om de talen van {prefix} te bewerken."
+unable-to-edit = "{prefix}&r &7› &7&cBewerken mislukt: {reason}"
 
 [language.editor.saved]
-summary = "{locale} opgeslagen. De taalkeuzes blijven ongewijzigd."
-change = "{key}: “{before}” is gewijzigd in “{after}”."
+summary = "{prefix}&r &7› &7&7{locale} opgeslagen. De taalkeuzes blijven ongewijzigd."
+change = "{prefix}&r &7› &7&7{key}: “{before}” is gewijzigd in “{after}”."
 
 [language.editor.part]
 line = "Regel {line}"
@@ -407,25 +412,25 @@ none = "Geen"
 empty = "(leeg)"
 
 [debug]
-preparing = "Diagnoserapport voor {plugin} wordt voorbereid..."
-saved = "Diagnoserapport voor {plugin} opgeslagen in {path}."
+preparing = "{prefix}&r &7› &7&7Diagnoserapport voor {prefix} wordt voorbereid..."
+saved = "{prefix}&r &7› &7&7Diagnoserapport voor {prefix} opgeslagen in {path}."
 
 [debug.error]
-missing-permission = "Ontbrekende machtiging: {permission}"
-already-preparing = "Er wordt al een diagnoserapport voor {plugin} voorbereid."
-already-preparing-short = "Er wordt al een diagnoserapport voorbereid."
-schedule-failed = "Het maken van het diagnoserapport kon niet worden ingepland."
-provider-closed = "De diagnoseprovider is gesloten."
-closed-before-capture = "De diagnoseprovider is gesloten voordat de rapportgegevens waren verzameld."
-writer-schedule-failed = "Het schrijven van het diagnoserapport kon niet worden ingepland."
-capture-failed = "De gegevens voor het diagnoserapport konden niet worden verzameld. Controleer de serverconsole."
-closed-before-write = "De diagnoseprovider is gesloten voordat het rapport was geschreven."
-write-failed = "Het diagnoserapport kon niet worden geschreven. Controleer de serverconsole."
+missing-permission = "{prefix}&r &7› &7&cOntbrekende machtiging: {permission}"
+already-preparing = "{prefix}&r &7› &7&cEr wordt al een diagnoserapport voor {prefix} voorbereid."
+already-preparing-short = "{prefix}&r &7› &7&cEr wordt al een diagnoserapport voorbereid."
+schedule-failed = "{prefix}&r &7› &7&cHet maken van het diagnoserapport kon niet worden ingepland."
+provider-closed = "{prefix}&r &7› &7&cDe diagnoseprovider is gesloten."
+closed-before-capture = "{prefix}&r &7› &7&cDe diagnoseprovider is gesloten voordat de rapportgegevens waren verzameld."
+writer-schedule-failed = "{prefix}&r &7› &7&cHet schrijven van het diagnoserapport kon niet worden ingepland."
+capture-failed = "{prefix}&r &7› &7&cDe gegevens voor het diagnoserapport konden niet worden verzameld. Controleer de serverconsole."
+closed-before-write = "{prefix}&r &7› &7&cDe diagnoseprovider is gesloten voordat het rapport was geschreven."
+write-failed = "{prefix}&r &7› &7&cHet diagnoserapport kon niet worden geschreven. Controleer de serverconsole."
 
 [debug.upload]
-interrupted = "Het uploaden van het diagnoserapport is onderbroken. Het lokale rapport is opgeslagen."
-failed = "Het uploaden van het diagnoserapport is mislukt. Het lokale rapport is opgeslagen."
-completed = "Geüpload als VolmitSoftware - {plugin} - v{version}."
+interrupted = "{prefix}&r &7› &7&7Het uploaden van het diagnoserapport is onderbroken. Het lokale rapport is opgeslagen."
+failed = "{prefix}&r &7› &7&cHet uploaden van het diagnoserapport is mislukt. Het lokale rapport is opgeslagen."
+completed = "{prefix}&r &7› &7&7Geüpload als VolmitSoftware - {prefix} - v{version}."
 
 [debug.action]
 open = "Openen: {url}"

@@ -14,6 +14,9 @@ commands:
     usage: /shapedportals
 
 permissions:
+  shapedportals.update:
+    description: Receives newer GitHub release notifications on join
+    default: op
   shapedportals.create:
     description: Allows igniting shaped portals
     default: true

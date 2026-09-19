@@ -48,7 +48,7 @@ class LanguageServiceTest {
 
         assertThat(prepared.file().toPath()).isEqualTo(file);
         assertThat(file).isRegularFile();
-        assertThat(service.remoteCatalogReference()).contains("main");
+        assertThat(service.remoteCatalogReference()).contains("ebde960aa4fd53e56f66f6c34b6659d1e2843410");
         assertThat(service.hasRemoteCatalogLocale("fr_FR")).isTrue();
         assertThat(service.hasRemoteCatalogLocale("en_US")).isFalse();
         assertThat(toml)

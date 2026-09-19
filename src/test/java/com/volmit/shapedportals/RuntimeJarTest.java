@@ -40,6 +40,16 @@ final class RuntimeJarTest {
     }
 
     @Test
+    void packagedPortalServicesLoadWithoutWormholes() throws Exception {
+        assertThat(loader.loadClass(PLUGIN_PACKAGE + "integration.WormholesIntegration").getDeclaredMethods())
+                .isNotEmpty();
+        assertThat(loader.loadClass(PLUGIN_PACKAGE + "portal.PortalService").getDeclaredMethods())
+                .isNotEmpty();
+        assertThat(loader.loadClass(PLUGIN_PACKAGE + "portal.PortalIntegrityService").getDeclaredMethods())
+                .isNotEmpty();
+    }
+
+    @Test
     void packagedConfigCreatesAndReloadsToml() throws Exception {
         Class<?> repositoryType = loader.loadClass(PLUGIN_PACKAGE + "config.ConfigRepository");
         Object repository = repositoryType.getConstructor(File.class).newInstance(temporaryDirectory.toFile());

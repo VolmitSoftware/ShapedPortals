@@ -30,7 +30,7 @@ apply plugin: 'art.arcane.volmit-packaging'
 tasks.named('slimJar').get()
 
 group = 'com.volmit'
-version = '2.0.1'
+version = '2.0.2'
 
 String mainClass = 'com.volmit.shapedportals.ShapedPortals'
 String apiVersion = '1.20'
@@ -115,6 +115,8 @@ configurations {
 
 dependencies {
     compileOnly('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
+    compileOnly(files(providers.gradleProperty('wormholesApiJar')
+            .orElse('../WormholesPlugin/build/libs/Wormholes-2.0.6-26.2-api.jar')))
     implementation(volmLibCoordinate) {
         changing = true
         transitive = false
@@ -126,6 +128,10 @@ dependencies {
     slimApi('net.kyori:adventure-text-minimessage:4.26.1')
     slimApi('net.kyori:adventure-text-serializer-legacy:4.26.1')
     slimApi('net.kyori:adventure-text-serializer-plain:4.26.1')
+    // VolmLib's ComponentMessenger Spigot path pins JSONOptions by data version; without this the
+    // shaded jar carries a dangling reference and the thin step refuses it.
+    slimApi('net.kyori:adventure-text-serializer-gson:4.26.1')
+    slimApi('net.kyori:adventure-text-serializer-json:4.26.1')
 
     currentPaperCompatibility('io.papermc.paper:paper-api:26.1.2.build.74-stable')
     currentSpigotCompatibility('org.spigotmc:spigot-api:26.2-R0.1-SNAPSHOT')
@@ -133,7 +139,7 @@ dependencies {
     testImplementation(platform('org.junit:junit-bom:5.13.4'))
     testImplementation('org.junit.jupiter:junit-jupiter')
     testImplementation('org.assertj:assertj-core:3.27.4')
-    testImplementation('org.mockito:mockito-core:5.20.0')
+    testImplementation('org.mockito:mockito-core:5.23.0')
     testImplementation('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
     testRuntimeOnly('org.junit.platform:junit-platform-launcher')
 }

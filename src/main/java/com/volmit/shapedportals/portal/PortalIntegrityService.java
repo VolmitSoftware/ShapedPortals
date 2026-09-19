@@ -5,6 +5,7 @@ import art.arcane.volmlib.util.scheduling.SchedulerUtils;
 import com.volmit.shapedportals.ShapedPortals;
 import com.volmit.shapedportals.config.ConfigService;
 import com.volmit.shapedportals.config.RuntimeConfig;
+import com.volmit.shapedportals.integration.WormholesIntegration;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -108,6 +109,13 @@ public final class PortalIntegrityService {
         }
         World world = Bukkit.getWorld(record.worldId());
         if (world == null || !allChunksLoadedAndOwned(world, record)) {
+            return;
+        }
+        if (WormholesIntegration.owns(world, record.interior())) {
+            if (WormholesIntegration.submit(world, record.interior(), record.axis(), null)
+                    == WormholesIntegration.Result.ACCEPTED) {
+                registry.unregister(record.id());
+            }
             return;
         }
 

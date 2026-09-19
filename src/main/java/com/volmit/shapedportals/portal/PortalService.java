@@ -13,6 +13,7 @@ import com.volmit.shapedportals.geometry.PortalShapeScanner;
 import com.volmit.shapedportals.geometry.ShapeFailure;
 import com.volmit.shapedportals.geometry.ShapeScanResult;
 import com.volmit.shapedportals.localization.ShapedMessages;
+import com.volmit.shapedportals.integration.WormholesIntegration;
 import com.volmit.shapedportals.portal.PortalStats.RejectionReason;
 import com.volmit.shapedportals.presentation.FeedbackTone;
 import com.volmit.shapedportals.presentation.PresentationService;
@@ -160,6 +161,18 @@ public final class PortalService {
         List<BlockPosition> interior = absolutePositions(ignition, shape.axis(), shape.interior());
         List<BlockPosition> frame = absolutePositions(ignition, shape.axis(), shape.frame());
         World world = ignition.getWorld();
+        WormholesIntegration.Result ownership = WormholesIntegration.submit(world, interior, shape.axis(), eventCreator(creator));
+        if (ownership == WormholesIntegration.Result.ACCEPTED) {
+            created(location, creator, interior.size(), config);
+            return;
+        }
+        if (ownership == WormholesIntegration.Result.REJECTED) {
+            stats.rejected(RejectionReason.EVENT_CANCELLED);
+            if (creator instanceof Player player) {
+                fail(player, "Wormholes rejected portal creation");
+            }
+            return;
+        }
         BlockData portalData = PortalType.NETHER.createBlockData(shape.axis());
         List<BlockState> originals = new ArrayList<>(interior.size());
         List<BlockState> proposed = new ArrayList<>(interior.size());
@@ -230,13 +243,17 @@ public final class PortalService {
         }
 
         registry.requestSave();
+        created(location, creator, interior.size(), config);
+    }
+
+    private void created(Location location, Entity creator, int blocks, RuntimeConfig config) {
         stats.created();
         if (config.creationSound()) {
-            world.playSound(location, config.creationSoundType(), SoundCategory.BLOCKS,
+            location.getWorld().playSound(location, config.creationSoundType(), SoundCategory.BLOCKS,
                     config.creationSoundVolume(), config.creationSoundPitch());
         }
         if (creator instanceof Player player) {
-            MessageArgs arguments = MessageArgs.builder().trusted("blocks", interior.size()).build();
+            MessageArgs arguments = MessageArgs.builder().trusted("blocks", blocks).build();
             presentation.portalCreated(player, PortalType.NETHER, arguments);
         }
     }

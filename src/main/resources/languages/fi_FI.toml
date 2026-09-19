@@ -1,98 +1,168 @@
-# ShapedPortals-kieli: fi_FI
-# Tämä tiedosto ladataan vain, jos se puuttuu; muokkaa tiedostoa languages/fi_FI.toml suoraan.
-# Paikallisia muutoksia ei korvata automaattisesti; puuttuvat kohdat käyttävät englantia.
+# ShapedPortals — fi_FI
+#
+# === Tiedoston muokkaus ===
+# plugins/ShapedPortals/languages/fi_FI.toml
+# Voit muokata tätä tiedostoa suoraan. Paikalliset muutokset säilyvät; puuttuvat tai virheelliset kohdat käyttävät sisäänrakennettua englantia.
+# /shapedportals language server edit fi_FI
+#
+# === Etuliite ===
+# {prefix}  Muotoiltu lisäosan nimi arvosta runtime.prefix; erotin on viestissä. Poista {prefix}&r &7› &7 piilottaaksesi nimen ja erottimen.
+#
+# === Muotoilu ===
 # Värit: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B ja [RRGGBB]. MiniMessage toimii myös omissa muotoiluissa.
-# Paikkamerkit ovat viestikohtaisia. Säilytä vain viestissä jo olevat paikkamerkit täsmälleen ennallaan.
-# Komennot: {argument}=odottamaton argumentti; {command}=komentopolku; {key}=parametriavain; {parameter}=parametrin nimi; {type}=tyyppi; {usage}=komennon käyttö.
-# Suoritus: {attempts}=luontiyritykset; {created}=luotujen määrä tai luontiaika; {rejected}=hylätyt yritykset; {enabled}=luonnin tila; {hot_reload}=pikalatauksen tila; {scheduler}=ajastin.
-# Portaalit: {portal}=tunniste; {portals}=hallittujen määrä; {id}=lyhyt ID; {uuid}=täysi UUID; {world}=maailma; {axis}=akseli; {x}/{y}/{z}=ankkurin koordinaatit; {blocks}=portaalisolut; {cells}=kaikki solut; {creator}=luoja; {materials}=tallennetut kehysmateriaalit.
-# Luettelot: {matches}=vastaavat portaalit; {seconds}=vahvistusaika sekunteina.
-# Asetukset: {category}=luokka; {setting}=asetuksen nimi; {status}=valintamerkki; {value}=nykyinen, oletus- tai raaka-arvo; {language}=aktiivinen kieli; {locale}=kielitunnus; {name}=kielen koko nimi.
-# Kielieditori: {variables}=sallitut paikkamerkit; {old}=edellinen arvo; {new}=uusi arvo.
-# Muut: {duration}=millisekunnit; {reason}=virheen syy.
-# Etuliite: {prefix}=yleinen runtime.prefix-arvo. Poista {prefix} yksittäisestä viestistä piilottaaksesi sen siinä.
 # Näytä & tai [ kirjaimellisesti lisäämällä eteen kenoviiva.
+#
+# === Muuttujat ===
+# Säilytä muuttujien nimet ja käytä vain kunkin viestin omia muuttujia.
+#   {after}  Arvo muutoksen jälkeen
+#   {argument}  odottamaton argumentti
+#   {attempts}  luontiyritykset
+#   {axis}  akseli
+#   {before}  Arvo ennen muutosta
+#   {blocks}  portaalisolut
+#   {category}  luokka
+#   {cells}  kaikki solut
+#   {command}  komentopolku
+#   {count}  Täsmäytysten lukumäärä
+#   {created}  luotujen määrä tai luontiaika
+#   {creator}  luoja
+#   {enabled}  luonnin tila
+#   {group}  Lupa tai pelaajaryhmä
+#   {hot_reload}  pikalatauksen tila
+#   {id}  lyhyt ID
+#   {key}  parametriavain
+#   {language}  aktiivinen kieli
+#   {line}  Lähderivi tai viivanumero
+#   {locale}  kielitunnus
+#   {matches}  vastaavat portaalit
+#   {materials}  tallennetut kehysmateriaalit
+#   {maximum}  Suurin sallittu arvo
+#   {name}  kielen koko nimi
+#   {new}  uusi arvo
+#   {old}  edellinen arvo
+#   {parameter}  parametrin nimi
+#   {path}  paikallisen raportin polku
+#   {permission}  vaadittu käyttöoikeus
+#   {personal}  henkilökohtainen kielitunnus
+#   {portal}  tunniste
+#   {portals}  hallittujen määrä
+#   {prefix}  Muotoiltu lisäosan nimi arvosta runtime.prefix; erotin on viestissä. Poista {prefix}&r &7› &7 piilottaaksesi nimen ja erottimen.
+#   {reason}  virheen syy
+#   {rejected}  hylätyt yritykset
+#   {scheduler}  ajastin
+#   {seconds}  vahvistusaika sekunteina
+#   {section}  Muokkaimen osio
+#   {setting}  asetuksen nimi
+#   {status}  valintamerkki
+#   {target}  Kohdepelaaja, yhteisö tai arvo
+#   {type}  tyyppi
+#   {url}  julkinen URL
+#   {uuid}  täysi UUID
+#   {value}  nykyinen, oletus- tai raaka-arvo
+#   {variables}  sallitut paikkamerkit
+#   {version}  lisäosan versio
+#   {world}  maailma
+#   {x}  ankkurin koordinaatit
+#   {y}  ankkurin koordinaatit
+#   {z}  ankkurin koordinaatit
 
 [runtime]
-prefix = "&d&lShapedPortals&r &8›&r "
-player_only = "{prefix}&cVain pelaaja voi käyttää tätä komentoa.&r"
+prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
+player_only = "{prefix}&r &7› &7&cVain pelaaja voi käyttää tätä komentoa.&r"
 
 [runtime.permission]
-denied = "{prefix}&cSinulla ei ole oikeutta tehdä sitä.&r"
+denied = "{prefix}&r &7› &7&cSinulla ei ole oikeutta tehdä sitä.&r"
 
 [runtime.hot_reload]
-success = "{prefix}&aAsetusten ja kielitiedostojen muutokset otettiin käyttöön.&r"
-failed = "{prefix}&cTiedostomuutokset hylättiin; viimeksi toimineet asetukset pysyvät käytössä.&r"
+success = "{prefix}&r &7› &7&7Asetusten&7 ja kielitiedostojen muutokset otettiin käyttöön.&r"
+failed = "{prefix}&r &7› &7&cTiedostomuutokset hylättiin; viimeksi toimineet asetukset pysyvät käytössä.&r"
 
-[command.feedback.reload]
-success = "{prefix}&aLadattiin uudelleen &f{duration}&r&a ms:ssa.&r &7Kieli:&r &f{locale}&r"
-failed = "{prefix}&cUudelleenlataus epäonnistui {duration} ms:n jälkeen.&r &7Viimeksi toimineet asetukset pysyvät käytössä; katso koko virhe konsolista.&r"
-
-[command.feedback.config]
-opened = "{prefix}&aKattava pelinsisäinen asetuseditori avattiin.&r"
-saved = "{prefix}&aAsetus &f{setting}&r&a tallennettiin ja otettiin käyttöön.&r"
-save_failed = "{prefix}&cAsetusta &f{setting}&r&c ei voitu ottaa käyttöön: {reason}&r"
+[runtime.update]
+available = "{prefix}&r &7› &7&e{new}&7 on saatavilla (asennettu: &f{old}&7).&r\n&7Julkaisu: &b{url}&r"
 
 [command.feedback]
-failed = "{prefix}&cKomentoa ei voitu suorittaa. Katso lisätiedot konsolista.&r"
+version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
+failed = "{prefix}&r &7› &7&cKomentoa ei voitu suorittaa. Katso lisätiedot konsolista.&r"
+
+[command.feedback.config]
+opened = "{prefix}&r &7› &7&7Kattava&7 pelinsisäinen asetuseditori avattiin.&r"
+saved = "{prefix}&r &7› &7&a{setting}&r &7muutettiin arvosta &f{old}&r &7arvoon &f{new}&r&7.&r"
+save_failed = "{prefix}&r &7› &7&cAsetusta &f{setting}&r&c ei voitu ottaa käyttöön: {reason}&r"
+
+[command.feedback.debug]
+started = "{prefix}&r &7› &7&7Kerätään palvelimen ja {prefix}in diagnostiikkatietoja…&r"
+busy = "{prefix}&r &7› &7{prefix}in diagnostiikkaraporttia luodaan jo.&r"
+saved = "{prefix}&r &7› &7&7Diagnostiikkaraportti&7 tallennettiin tiedostoon &f{path}&r&7.&r"
+uploaded = "{prefix}&r &7› &7&7Diagnostiikkaraportti&7 lähetettiin:&r &b&n{url}&r"
+link_hover = "&7Avaa julkinen mclo.gs-raportti.&r"
+upload_failed = "{prefix}&r &7› &7&ePaikallinen raportti tallennettiin, mutta lähetys mclo.gs-palveluun epäonnistui. Katso lisätiedot konsolista.&r"
+failed = "{prefix}&r &7› &7&cDiagnostiikkaraporttia ei voitu luoda. Katso lisätiedot konsolista.&r"
 
 [command.status]
-header = "{prefix}&d&lShapedPortalsin tila&r"
-config = "{prefix}&7Luonti:&r {enabled} &8|&r &7Kieli:&r &f{language}&r &8|&r &7Automaattinen lataus:&r {hot_reload}"
-portals = "{prefix}&7Hallinnoidut portaalit:&r &f{portals}&r &8|&r &7Sisäsolut:&r &f{cells}&r"
-attempts = "{prefix}&7Yritykset:&r &f{attempts}&r &8|&r &7Luotu:&r &a{created}&r &8|&r &7Hylätty:&r &c{rejected}&r"
-compatibility = "{prefix}&7Artefakti:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Ajastin:&r &f{scheduler}&r"
+header = "{prefix}&r &7› &7in tila&r"
+config = "{prefix}&r &7› &7&7Luonti:&r {enabled} &8|&r &7Kieli:&r &f{language}&r &8|&r &7Automaattinen lataus:&r {hot_reload}"
+portals = "{prefix}&r &7› &7&7Hallinnoidut portaalit:&r &f{portals}&r &8|&r &7Sisäsolut:&r &f{cells}&r"
+attempts = "{prefix}&r &7› &7&7Yritykset:&r &f{attempts}&r &8|&r &7Luotu:&r &a{created}&r &8|&r &7Hylätty:&r &c{rejected}&r"
+compatibility = "{prefix}&r &7› &7&7Artefakti:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Ajastin:&r &f{scheduler}&r"
 
 [command.description]
-root = "ShapedPortalsin ohje ja hallinta"
+version = "Näytä asennettu {prefix}-versio"
+root = "{prefix}in ohje ja hallinta"
 config = "Avaa kattava pelinsisäinen asetuseditori"
-language = "Valitse oma kielesi tai palvelimen oletuskieli"
-debugdump = "Luo diagnostiikkaraportti ja lähetä se halutessasi"
+language = "Valitse käytettävissä oleva {prefix}-kieli"
+debug = "{prefix}in diagnostiikkatyökalut"
+debug_dump = "Luo kattava {prefix}-diagnostiikkaraportti"
 portals = "Luettele kaikki hallinnoidut portaalit ja niiden teleporttipikavalinnat"
 teleport = "Teleporttaa turvallisesti hallinnoidun portaalin viereen tai luettele portaalit, jos tunnus puuttuu"
 status = "Näytä hallinnoitujen portaalien ja yritysten tilastot"
 
 [command.parameter]
-debugdump_upload = "Lähetä raportti mclo.gs-palveluun"
+locale = "Käytettävissä olevan kielen tunnus"
 page = "Portaaliluettelon sivu numerosta yksi alkaen"
 portal = "Portaalin UUID, yksilöllinen alku tai list"
+upload = "Lähetä raportti, kun julkiset lähetykset ovat käytössä"
 
 [portal.notice]
-created = "{prefix}&dMuotoiltu portaali luotiin käyttäen {blocks} sisälohkoa.&r"
-failed = "{prefix}&cTuosta kehyksestä ei voi tehdä muotoiltua portaalia: &f{reason}&r&c.&r"
+nether_created = "{prefix}&r &7› &7&7Muotoiltu&7 portaali luotiin käyttäen &f{blocks}&7 sisälohkoa.&r"
+end_created = "{prefix}&r &7› &7&7End&7&r &7Muotoiltu portaali luotiin käyttäen &f{blocks}&7 sisälohkoa.&r"
+failed = "{prefix}&r &7› &7&cTuosta kehyksestä ei voi tehdä muotoiltua portaalia: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether-portaali luotu&r"
+end_created = "&5&lEnd-portaali luotu&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&cPortaalin &f{portal}&r&c vieressä ei ole turvallista seisomapaikkaa. &eNapsauta samaa portaalia uudelleen &f{seconds}&r&e sekunnin kuluessa teleportataksesi siihen silti.&r"
+unsafe = "{prefix}&r &7› &7&cPortaalin &f{portal}&r&c vieressä ei ole turvallista seisomapaikkaa. &eNapsauta samaa portaalia uudelleen &f{seconds}&r&e sekunnin kuluessa teleportataksesi siihen silti.&r"
 
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eNykyinen kehys käyttää materiaaleja &f{materials}&r&e, joilla ei voi luoda uusia portaaleja.&r"
 empty = "&eHallinnoituja muotoiltuja portaaleja ei ole rekisteröity.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Sijainti:&r &f{x}, {y}, {z}&r &8•&r &7Akseli:&r &f{axis}&r &8•&r &7Solut:&r &f{blocks}&r\n&8  └&r &7Luoja:&r &f{creator}&r &8•&r &7Luotu:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Sijainti:&r &f{x}, {y}, {z}&r &8•&r &7Akseli:&r &f{axis}&r &8•&r &7Solut:&r &f{blocks}&r\n&8  └&r &7Luoja:&r &f{creator}&r &8•&r &7Luotu:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aNapsauta teleportataksesi tälle portaalille.&r"
 
 [portal.navigation.error]
-not_found = "{prefix}&cMikään hallinnoitu portaali ei vastaa tunnusta &f{portal}&r&c.&r"
-ambiguous = "{prefix}&cAlku &f{portal}&r&c vastaa {matches} portaalia. Anna UUID:stä useampi merkki.&r"
-removed = "{prefix}&cTätä portaalia ei ole enää rekisteröity.&r"
-world_unavailable = "{prefix}&cPortaalin maailma &f{world}&r&c ei ole tällä hetkellä käytettävissä.&r"
-destination_unavailable = "{prefix}&cPortaalin kohde ei ole tilapäisesti käytettävissä.&r"
-inactive = "{prefix}&cTämä portaali ei ole enää aktiivinen. Sen eheystarkistus on asetettu jonoon.&r"
-no_safe_landing = "{prefix}&cTämän portaalin vieressä ei ole turvallista seisomapaikkaa.&r"
+not_found = "{prefix}&r &7› &7&cMikään hallinnoitu portaali ei vastaa tunnusta &f{portal}&r&c.&r"
+ambiguous = "{prefix}&r &7› &7&cAlku &f{portal}&r&c vastaa {matches} portaalia. Anna UUID:stä useampi merkki.&r"
+removed = "{prefix}&r &7› &7&cTätä portaalia ei ole enää rekisteröity.&r"
+world_unavailable = "{prefix}&r &7› &7&cPortaalin maailma &f{world}&r&c ei ole tällä hetkellä käytettävissä.&r"
+destination_unavailable = "{prefix}&r &7› &7&cPortaalin kohde ei ole tilapäisesti käytettävissä.&r"
+inactive = "{prefix}&r &7› &7&cTämä portaali ei ole enää aktiivinen. Sen eheystarkistus on asetettu jonoon.&r"
+no_safe_landing = "{prefix}&r &7› &7&cTämän portaalin vieressä ei ole turvallista seisomapaikkaa.&r"
 
 [portal.navigation.teleport]
-preparing = "{prefix}&7Valmistellaan kohdetta portaalille &f{portal}&r&7…&r"
-success = "{prefix}&aSinut teleportattiin portaalin &f{portal}&r&a viereen maailmassa &f{world}&r&a.&r"
-failed = "{prefix}&cPortaaliin teleporttaus ei valmistunut. Toinen lisäosa saattoi peruuttaa sen.&r"
+preparing = "{prefix}&r &7› &7&7Valmistellaan kohdetta portaalille &f{portal}&r&7…&r"
+success = "{prefix}&r &7› &7&7Sinut&7 teleportattiin portaalin &f{portal}&r&7 viereen maailmassa &f{world}&r&7.&r"
+failed = "{prefix}&r &7› &7&cPortaaliin teleporttaus ei valmistunut. Toinen lisäosa saattoi peruuttaa sen.&r"
 
 [hud]
-title = "&d&lShapedPortals&r"
+title = "{prefix}"
 success = "&aOnnistui&r"
 failure = "&cToiminto epäonnistui&r"
-info = "&dShapedPortals&r"
+info = "{prefix}"
 
 [gui.title]
-root = "&5ShapedPortalsin asetukset&r"
-category = "&5ShapedPortals&r &8›&r {category}"
+root = "{prefix}in asetukset&r"
+category = "{prefix}&r &7› &7{category}"
 
 [gui.category]
 general = "&dYleiset&r"
@@ -102,12 +172,10 @@ hot_reload = "&dAutomaattinen lataus&r"
 integrity = "&dEheys&r"
 presentation = "&dEsitys&r"
 debug = "&dDiagnostiikka&r"
-
 languages = "&dKielet&r"
 
 [gui.navigation]
 back = "&eTakaisin&r"
-reload = "&bLataa tiedostot uudelleen&r"
 close = "&cSulje&r"
 
 [gui.lore]
@@ -115,23 +183,27 @@ state = "&7Nykyinen:&r {value}"
 toggle = "&8Napsauta vaihtaaksesi.&r"
 number = "&8Vasen +1, oikea -1, vaihto ×10, pudota kirjoittaaksesi.&r"
 text = "&8Napsauta kirjoittaaksesi uuden arvon chattiin.&r"
-language = "&8Valitse oma kielesi tai palvelimen oletuskieli&r"
+language = "&8Napsauta valitaksesi käytettävissä olevan kielen tai kirjoita kielitunnus.&r"
 category = "&8Napsauta muokataksesi tämän luokan kaikkia asetuksia.&r"
 
 [gui.prompt]
-request = "{prefix}&eKirjoita asetuksen &f{setting}&r&e uusi arvo chattiin.&r"
-list = "{prefix}&7Erota luettelon kohdat pilkuilla. Kirjoita &fnone&r&7, jos haluat tyhjän luettelon.&r"
-cancel = "{prefix}&7Kirjoita &fcancel&r&7 lopettaaksesi. Kehote vanhenee 60 sekunnissa.&r"
-cancelled = "{prefix}&eAsetusten muokkaus peruutettiin.&r"
-timeout = "{prefix}&eAsetusten muokkaus vanheni muuttamatta mitään.&r"
+request = "{prefix}&r &7› &7&eKirjoita asetuksen &f{setting}&r&e uusi arvo chattiin.&r"
+list = "{prefix}&r &7› &7&7Erota luettelon kohdat pilkuilla. Kirjoita &fnone&r&7, jos haluat tyhjän luettelon.&r"
+cancel = "{prefix}&r &7› &7&7Kirjoita &fcancel&r&7 lopettaaksesi. Kehote vanhenee 60 sekunnissa.&r"
+cancelled = "{prefix}&r &7› &7&eAsetusten muokkaus peruutettiin.&r"
+timeout = "{prefix}&r &7› &7&eAsetusten muokkaus vanheni muuttamatta mitään.&r"
 
 [gui.language]
-option = "{status} &f{locale}&r &8—&r &7{name}&r"
+type = "&7Kirjoita kielitunnus chattiin luodaksesi tai valitaksesi sen.&r"
+option = "{status} &f{locale}&r &8›&r &7{name}&r"
+hover = "&7Napsauta valitaksesi kielen &f{locale}&r&7.&r"
+empty = "&eKäytettävissä olevia kieliä ei löytynyt; kirjoita kielitunnus luodaksesi sellaisen.&r"
 current = "&7Nykyinen arvo:&r {value}"
 variables = "&7Nykyiset muuttujat / paikkamerkit:&r &f{variables}&r"
 changed = "&f{old}&r &7muutettiin arvoon&r &f{new}&r"
 
 [gui.setting.general]
+update_notifications = "&dGitHub-päivitysilmoitukset&r"
 enabled = "&dPortaalien luonti&r"
 language = "&dAktiivinen kielitunnus&r"
 require_create_permission = "&dVaadi luontioikeus&r"
@@ -141,22 +213,32 @@ failure_feedback = "&dPortaalivirheiden palaute&r"
 enabled = "&dAnonyymit bStats-mittarit&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dSisälohkojen vähimmäismäärä&r"
-maximum_interior_blocks = "&dSisälohkojen enimmäismäärä&r"
-maximum_width = "&dEnimmäisleveys&r"
-maximum_height = "&dEnimmäiskorkeus&r"
-frame_materials = "&dKehysmateriaalit&r"
-interior_materials = "&dSisämateriaalit&r"
+minimum_interior_blocks = "&dNether Sisälohkojen vähimmäismäärä&r"
+maximum_interior_blocks = "&dNether Sisälohkojen enimmäismäärä&r"
+maximum_width = "&dNether Enimmäisleveys&r"
+maximum_height = "&dNether Enimmäiskorkeus&r"
+frame_materials = "&dNether Kehysmateriaalit&r"
+interior_materials = "&dNether Sisämateriaalit&r"
 ignition_causes = "&dSyttymissyyt&r"
 allowed_worlds = "&dSallitut maailmat&r"
 denied_worlds = "&dEstetyt maailmat&r"
 deduplication_millis = "&dKaksoiskappaleiden esto millisekunteina&r"
+end_portal_creation = "&dEnd Portaalien luonti&r"
+end_minimum_interior_blocks = "&dEnd Sisälohkojen vähimmäismäärä&r"
+end_maximum_interior_blocks = "&dEnd Sisälohkojen enimmäismäärä&r"
+end_maximum_width = "&dEnd Enimmäisleveys&r"
+end_maximum_length = "&dEnd Enimmäisleveys&r"
+end_interior_materials = "&dEnd Sisämateriaalit&r"
 
 [gui.setting.effects]
-creation_sound = "&dLuontiääni&r"
-creation_sound_type = "&dLuontiäänen tyyppi&r"
-creation_sound_volume = "&dLuontiäänen voimakkuus&r"
-creation_sound_pitch = "&dLuontiäänen korkeus&r"
+creation_sound = "&dNether Luontiääni&r"
+creation_sound_type = "&dNether Luontiäänen tyyppi&r"
+creation_sound_volume = "&dNether Luontiäänen voimakkuus&r"
+creation_sound_pitch = "&dNether Luontiäänen korkeus&r"
+end_creation_sound = "&dEnd Luontiääni&r"
+end_creation_sound_type = "&dEnd Luontiäänen tyyppi&r"
+end_creation_sound_volume = "&dEnd Luontiäänen voimakkuus&r"
+end_creation_sound_pitch = "&dEnd Luontiäänen korkeus&r"
 
 [gui.setting.hot_reload]
 enabled = "&dAutomaattinen lataus&r"
@@ -174,6 +256,8 @@ splash_screen = "&dKäynnistyksen aloitusnäkymä&r"
 command_sounds = "&dKomentojen äänet&r"
 command_overlays = "&dKomentojen peittokuvat&r"
 portal_notices = "&dPortaali-ilmoitusten kanavat&r"
+nether_creation_notices = "&dNether Portaali-ilmoitusten kanavat&r"
+end_creation_notices = "&dEnd Portaali-ilmoitusten kanavat&r"
 overlay_duration_ticks = "&dPeittokuvan kesto tickeinä&r"
 title_fade_in_ticks = "&dOtsikon häivytys sisään tickeinä&r"
 title_stay_ticks = "&dOtsikon näyttöaika tickeinä&r"
@@ -209,6 +293,8 @@ optional = "Tämä parametri on valinnainen."
 required = "Tämä parametri on pakollinen."
 type = "Tämän parametrin tyyppi on {type}."
 
+[director.runtime]
+
 [director.runtime.error]
 conversion_failed = "Arvoa \"{value}\" ei voi muuntaa tyypiksi {type} parametrille {parameter}"
 default_parse_failed = "Parametrin {parameter} oletusarvoa ei voi jäsentää"
@@ -219,5 +305,135 @@ unexpected_argument = "Odottamaton argumentti \"{argument}\". Valinnaiset parame
 unclosed_group = "Sulkeva \"]\" puuttuu parametrilta {key}"
 unknown_parameter = "Tuntematon parametriavain: {key}"
 
-[director.runtime]
-usage = "Käyttö: {usage}"
+[language.menu]
+your_language = "Oma kielesi"
+reset_your_language = "Palauta oma kielesi"
+server_default = "Palvelimen oletuskieli"
+edit_messages = "Muokkaa kieliviestejä"
+use_server_default = "Käytä palvelimen oletuskieltä"
+current = "Nykyinen: {locale}"
+current_with_personal = "Nykyinen: {locale} (Omasi: {personal})"
+your_description = "Vaihda vain näkemäsi viestit."
+reset_description = "Käytä palvelimen oletuskieltä."
+server_description = "Vaihda palvelimen oletuskieli."
+edit_description = "Avaa kielikohtainen viestieditori."
+select_description = "Napsauta valitaksesi tämän kielen."
+remove_personal_description = "Poista henkilökohtainen kielivalintasi."
+no_controls = "Sinulla ei ole käytettävissä kieliasetuksia."
+command = "Komento: {command}"
+selected = "valittu"
+all-volmit-plugins = "Kaikki Volmit-lisäosat"
+
+[language.error]
+stopping = "{prefix}&r &7› &7&cKielivalintaa ei ole saatavilla, kun plugin pysähtyy."
+editor-player-only = "{prefix}&r &7› &7&cAvaa kielieditori pelissä."
+no-providers = "{prefix}&r &7› &7&cYhtään Volmit-kielipalvelua ei ole saatavilla."
+numeric-page = "{prefix}&r &7› &7&cAnna sivunumero numerona."
+personal-player-only = "{prefix}&r &7› &7&cPelaajan kieliasetukset on valittava pelissä."
+personal-permission = "{prefix}&r &7› &7&cSinulla ei ole lupaa valita kieltäsi."
+plugin-personal-permission = "{prefix}&r &7› &7&cSinulla ei ole oikeutta valita kieltäsi lisäosalle {prefix}."
+plugin-server-permission = "{prefix}&r &7› &7&cSinulla ei ole oikeutta muuttaa lisäosan {prefix} palvelinkieltä."
+server-locale-required = "{prefix}&r &7› &7&cValitse palvelimen oletuskieleksi kielikoodi, kuten en_US."
+unavailable-for-all = "{prefix}&r &7› &7&cKieli {locale} ei ole saatavilla kaikille valituille lisäosille."
+
+[language.usage]
+editor = "{prefix}&r &7› &7&7Käyttö: /{command} language server edit [locale]"
+selection = "{prefix}&r &7› &7&7Käyttö: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "{prefix}&r &7› &7&7Käyttö: /volmit plugins languages [locale]"
+
+[language.selection]
+preparing = "{prefix}&r &7› &7&7Valmistellaan kieltä {locale} kohteelle {target}..."
+save-failed = "{prefix}&r &7› &7&ckielivalintaa ei voitu tallentaa; tarkista palvelinkonsoli."
+english-fallback = "{prefix}&r &7› &7&e{locale} ei ole saatavilla; käytetään englantia (en_US)."
+personal-selected = "{prefix}&r &7› &7&7kieli on nyt {locale}."
+server-selected = "{prefix}&r &7› &7&7palvelinkieli on nyt {locale}."
+server-default-selected = "{prefix}&r &7› &7&7kielesi noudattaa nyt palvelimen oletuskieltä."
+
+[language.editor]
+title = "{prefix} › {section}"
+loading = "{prefix}&r &7› &7&7Ladataan kielen {locale} viestejä..."
+
+[language.editor.section]
+languages = "Kielet"
+search = "Etsi"
+search-title = "{locale} / Etsi"
+group-title = "{locale} / {group}"
+
+[language.editor.prompt]
+search = "{prefix}&r &7› &7&7Hae viestin avainta tai tekstiä. Palaa kirjoittamalla cancel."
+value = "{prefix}&r &7› &7&7Kirjoita avaimen {key} uusi arvo chattiin."
+current = "{prefix}&r &7› &7&7Nykyinen arvo: {value}"
+variables = "{prefix}&r &7› &7&7Muuttujat: {variables}"
+guidance = "{prefix}&r &7› &7&7Käytä \\n rivinvaihtoon ja \\\\ kenoviivaan tai palaa kirjoittamalla cancel."
+
+[language.editor.input]
+expired = "{prefix}&r &7› &7&eKielieditorin syöttöaika päättyi."
+too-long = "{prefix}&r &7› &7&cSyöte saa sisältää enintään {maximum} merkkiä."
+unable-to-save = "{prefix}&r &7› &7&cTallennus epäonnistui: {reason}"
+
+[language.editor.navigation]
+back = "&eTakaisin&r"
+close = "&cSulje&r"
+previous-page = "&eEdellinen sivu&r"
+next-page = "&eSeuraava sivu&r"
+
+[language.editor.search]
+messages = "Hae viestejä"
+messages-lore = "Napsauta hakeaksesi kaikista viesteistä."
+clear = "Tyhjennä haku"
+
+[language.editor.message]
+current-value = "&7Nykyinen arvo:&r"
+variables = "&8{variables}&r"
+edit-plural = "&7Muokkaa monikkomuotoa napsauttamalla.&r"
+edit-lines = "&7Muokkaa yksittäisiä rivejä napsauttamalla.&r"
+edit-chat = "&7Muokkaa chatissa napsauttamalla.&r"
+
+[language.editor.locale]
+open = "&8Avaa tämä kieli napsauttamalla.&r"
+
+[language.editor.category]
+message-count = "&7{count} viestiä&r"
+open = "&8Avaa tämä luokka napsauttamalla.&r"
+
+[language.editor.error]
+no-permission = "{prefix}&r &7› &7&cSinulla ei ole oikeutta muokata lisäosan {prefix} kieliä."
+unable-to-edit = "{prefix}&r &7› &7&cMuokkaus epäonnistui: {reason}"
+
+[language.editor.saved]
+summary = "{prefix}&r &7› &7&7{locale} tallennettu. Kielivalinnat säilyvät ennallaan."
+change = "{prefix}&r &7› &7&7{key}: ”{before}” muutettiin arvoon ”{after}”."
+
+[language.editor.part]
+line = "Rivi {line}"
+
+[language.editor.value]
+none = "Ei ole"
+empty = "(tyhjä)"
+
+[debug]
+preparing = "{prefix}&r &7› &7&7Valmistellaan lisäosan {prefix} vianmääritysraporttia..."
+saved = "{prefix}&r &7› &7&7Lisäosan {prefix} vianmääritysraportti tallennettiin polkuun {path}."
+
+[debug.error]
+missing-permission = "{prefix}&r &7› &7&cPuuttuva käyttöoikeus: {permission}"
+already-preparing = "{prefix}&r &7› &7&cLisäosan {prefix} vianmääritysraporttia valmistellaan jo."
+already-preparing-short = "{prefix}&r &7› &7&cVianmääritysraporttia valmistellaan jo."
+schedule-failed = "{prefix}&r &7› &7&cVianmääritysraportin luontia ei voitu ajastaa."
+provider-closed = "{prefix}&r &7› &7&cVianmääritystietojen tarjoaja on suljettu."
+closed-before-capture = "{prefix}&r &7› &7&cVianmääritystietojen tarjoaja suljettiin ennen raportin tietojen keräämistä."
+writer-schedule-failed = "{prefix}&r &7› &7&cVianmääritysraportin kirjoittamista ei voitu ajastaa."
+capture-failed = "{prefix}&r &7› &7&cVianmääritysraportin tietoja ei voitu kerätä. Tarkista palvelimen konsoli."
+closed-before-write = "{prefix}&r &7› &7&cVianmääritystietojen tarjoaja suljettiin ennen raportin kirjoittamista."
+write-failed = "{prefix}&r &7› &7&cVianmääritysraporttia ei voitu kirjoittaa. Tarkista palvelimen konsoli."
+
+[debug.upload]
+interrupted = "{prefix}&r &7› &7&7Vianmääritysraportin lähetys keskeytyi. Paikallinen raportti on tallennettu."
+failed = "{prefix}&r &7› &7&cVianmääritysraportin lähetys epäonnistui. Paikallinen raportti on tallennettu."
+completed = "{prefix}&r &7› &7&7Lähetetty nimellä VolmitSoftware - {prefix} - v{version}."
+
+[debug.action]
+open = "Avaa: {url}"
+open-description = "Avaa lähetetty vianmääritysraportti."
+copy-path = "Kopioi paikallinen polku"
+copy-path-description = "Kopioi paikallisen raportin polku."

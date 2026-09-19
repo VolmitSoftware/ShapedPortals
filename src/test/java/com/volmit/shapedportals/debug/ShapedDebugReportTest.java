@@ -46,7 +46,7 @@ final class ShapedDebugReportTest {
                 "private-player-name"
         );
         ShapedDebugSnapshot snapshot = new ShapedDebugSnapshot(
-                Set.of(portal.worldId()),
+                "Folia region",
                 "en_US",
                 List.of("en_US"),
                 "ready",
@@ -62,6 +62,7 @@ final class ShapedDebugReportTest {
                         PortalStats.RejectionReason.OPEN_FRAME, 4L,
                         PortalStats.RejectionReason.EVENT_CANCELLED, 2L
                 )),
+                Set.of(portal.worldId()),
                 directory
         );
 
@@ -81,11 +82,13 @@ final class ShapedDebugReportTest {
                 .contains("Portal registry details")
                 .contains("Records in loaded worlds: 1")
                 .contains("Records in unavailable worlds: 0")
-                .contains("00000000-0000-0000-0000-000000000001 | schema=1 | axis=X | interior=1 | frame=1")
+                .contains("00000000-0000-0000-0000-000000000001 | schema=1 | axis=X | type=NETHER | interior=1 | frame=1")
                 .contains("debug.uploadEnabled: true")
                 .contains("metrics.enabled: true")
                 .contains("portal.allowedWorlds count: 1")
                 .contains("portal.deniedWorlds count: 1")
+                .contains("portal.endPortalCreation: true")
+                .contains("effects.endCreationSoundType: minecraft:block.end_portal.spawn")
                 .contains("bStats integration: initialized")
                 .contains("React metric provider: registered")
                 .contains("portals.json: size=")

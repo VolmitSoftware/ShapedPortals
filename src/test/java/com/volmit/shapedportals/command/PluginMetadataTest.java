@@ -22,6 +22,7 @@ class PluginMetadataTest {
         }
 
         assertThat(metadata.getString("permissions.shapedportals.portals.default")).isEqualTo("op");
+        assertThat(metadata.getString("permissions.shapedportals.update.default")).isEqualTo("op");
         assertThat(metadata.getString("permissions.shapedportals.teleport.default")).isEqualTo("op");
         assertThat(metadata.getString("permissions.shapedportals.teleport.unsafe.default")).isEqualTo("op");
         assertThat(metadata.getBoolean("permissions.shapedportals.create.default")).isTrue();

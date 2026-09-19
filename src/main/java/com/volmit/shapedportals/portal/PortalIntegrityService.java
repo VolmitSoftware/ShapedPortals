@@ -11,7 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Orientable;
+import org.bukkit.block.data.type.EndPortalFrame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,28 +116,30 @@ public final class PortalIntegrityService {
             return;
         }
 
+        PortalType type = authoritative.type();
         for (BlockPosition position : authoritative.interior()) {
             Block block = position.block(world);
-            if (block.getType() == Material.NETHER_PORTAL) {
-                if (!(block.getBlockData() instanceof Orientable orientable)
-                        || orientable.getAxis() != authoritative.axis().bukkitAxis()) {
+            if (block.getType() == type.interiorMaterial()) {
+                if (!type.matches(block.getBlockData(), authoritative.axis())) {
                     deactivate(world, authoritative);
                     return;
                 }
                 continue;
             }
-            if (!config.interiorMaterials().contains(block.getType())) {
+            Set<Material> replaceable = type == PortalType.END
+                    ? config.endInteriorMaterials()
+                    : config.interiorMaterials();
+            if (!replaceable.contains(block.getType())) {
                 deactivate(world, authoritative);
                 return;
             }
         }
 
-        BlockData portalData = Material.NETHER_PORTAL.createBlockData();
-        ((Orientable) portalData).setAxis(authoritative.axis().bukkitAxis());
+        BlockData portalData = type.createBlockData(authoritative.axis());
         try {
             for (BlockPosition position : authoritative.interior()) {
                 Block block = position.block(world);
-                if (block.getType() != Material.NETHER_PORTAL) {
+                if (block.getType() != type.interiorMaterial()) {
                     block.setBlockData(portalData.clone(), false);
                 }
             }
@@ -149,8 +151,9 @@ public final class PortalIntegrityService {
     private PortalRecord synchronizeFrameMaterialSnapshot(World world, PortalRecord record) {
         ArrayList<Material> snapshot = new ArrayList<>(record.frame().size());
         for (BlockPosition position : record.frame()) {
-            Material material = position.block(world).getType();
-            if (!isFrameBoundaryMaterial(material)) {
+            Block block = position.block(world);
+            Material material = block.getType();
+            if (!isFrameBoundary(record, block)) {
                 deactivate(world, record);
                 return null;
             }
@@ -169,11 +172,18 @@ public final class PortalIntegrityService {
                 && material != Material.NETHER_PORTAL;
     }
 
+    private boolean isFrameBoundary(PortalRecord record, Block block) {
+        if (record.type() == PortalType.END) {
+            return block.getBlockData() instanceof EndPortalFrame frame && frame.hasEye();
+        }
+        return isFrameBoundaryMaterial(block.getType());
+    }
+
     private void deactivate(World world, PortalRecord record) {
         try {
             for (BlockPosition position : record.interior()) {
                 Block block = position.block(world);
-                if (block.getType() == Material.NETHER_PORTAL) {
+                if (block.getType() == record.type().interiorMaterial()) {
                     block.setType(Material.AIR, false);
                 }
             }

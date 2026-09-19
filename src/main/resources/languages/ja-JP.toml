@@ -1,50 +1,115 @@
-# ShapedPortals の言語: ja-JP
-# このファイルは存在しない場合にのみダウンロードされます。languages/ja-JP.toml を直接編集してください。
-# ローカルの変更は自動的に上書きされません。未指定の項目は英語で補完されます。
+# ShapedPortals — ja-JP
+#
+# === ファイルの編集 ===
+# plugins/ShapedPortals/languages/ja-JP.toml
+# このファイルを直接編集できます。ローカルの変更は保持され、不足または無効な項目には内蔵の英語を使用します。
+# /shapedportals language server edit ja-JP
+#
+# === 接頭辞 ===
+# {prefix}  runtime.prefix の書式付きプラグイン名。区切り文字は各メッセージにあります。両方を非表示にするには {prefix}&r &7› &7 を削除します。
+#
+# === 書式 ===
 # 色: &0-&f、&k-&r、&#RRGGBB、&xRRGGBB、&x&R&R&G&G&B&B、[RRGGBB]。独自書式には MiniMessage も使用できます。
-# プレースホルダーはメッセージごとに固有です。各メッセージに元からあるものだけを残し、名前を変更しないでください。
-# コマンド: {argument}=予期しない引数; {command}=コマンド経路; {key}=パラメーターキー; {parameter}=パラメーター名; {type}=型; {usage}=使用法。
-# 実行状態: {attempts}=作成試行数; {created}=作成数または作成日時; {rejected}=拒否数; {enabled}=作成状態; {hot_reload}=ホットリロード状態; {scheduler}=スケジューラー。
-# ポータル: {portal}=識別子; {portals}=管理数; {id}=短縮 ID; {uuid}=完全な UUID; {world}=ワールド; {axis}=軸; {x}/{y}/{z}=アンカー座標; {blocks}=ポータルセル数; {cells}=全管理セル数; {creator}=作成者; {materials}=記録されたフレーム素材。
-# 一覧: {matches}=一致するポータル数; {seconds}=確認期限（秒）。
-# 設定: {category}=カテゴリ; {setting}=設定名; {status}=選択記号; {value}=現在値、既定値、または入力値; {language}=使用中の言語; {locale}=ロケール; {name}=言語の正式名。
-# 言語エディター: {variables}=使用可能なプレースホルダー; {old}=変更前の値; {new}=変更後の値。
-# その他: {duration}=経過ミリ秒; {reason}=失敗理由.
-# 接頭辞: {prefix}=グローバルな runtime.prefix の値です。個別のメッセージから {prefix} を削除すると、その場所だけ非表示になります。
 # & または [ の前にバックスラッシュを付けると、その文字をそのまま表示できます。
+#
+# === 変数 ===
+# 変数名を変更せず、各メッセージに元からある変数だけを使用してください。
+#   {after}  変更後の値
+#   {argument}  予期しない引数
+#   {attempts}  作成試行数
+#   {axis}  軸
+#   {before}  変更前の値
+#   {blocks}  ポータルセル数
+#   {category}  カテゴリ
+#   {cells}  全管理セル数
+#   {command}  コマンド経路
+#   {count}  マッチングエントリー件数
+#   {created}  作成数または作成日時
+#   {creator}  作成者
+#   {enabled}  作成状態
+#   {group}  許可またはプレイヤーグループ
+#   {hot_reload}  ホットリロード状態
+#   {id}  短縮 ID
+#   {key}  パラメーターキー
+#   {language}  使用中の言語
+#   {line}  ラインまたはライン番号
+#   {locale}  ロケール
+#   {matches}  一致するポータル数
+#   {materials}  記録されたフレーム素材
+#   {maximum}  最大許容値
+#   {name}  言語の正式名
+#   {new}  変更後の値
+#   {old}  変更前の値
+#   {parameter}  パラメーター名
+#   {path}  ローカル報告書のパス
+#   {permission}  必要な権限
+#   {personal}  個人設定のロケール
+#   {portal}  識別子
+#   {portals}  管理数
+#   {prefix}  runtime.prefix の書式付きプラグイン名。区切り文字は各メッセージにあります。両方を非表示にするには {prefix}&r &7› &7 を削除します。
+#   {reason}  失敗理由
+#   {rejected}  拒否数
+#   {scheduler}  スケジューラー
+#   {seconds}  確認期限（秒）
+#   {section}  エディターのセクション
+#   {setting}  設定名
+#   {status}  選択記号
+#   {target}  ターゲットプレーヤー、エンティティティティ、または値
+#   {type}  型
+#   {url}  公開 URL
+#   {uuid}  完全な UUID
+#   {value}  現在値、既定値、または入力値
+#   {variables}  使用可能なプレースホルダー
+#   {version}  プラグインのバージョン
+#   {world}  ワールド
+#   {x}  アンカー座標
+#   {y}  アンカー座標
+#   {z}  アンカー座標
 
 [command.description]
+version = "インストール済みの{prefix}のバージョンを表示"
 config = "完全なゲーム内設定エディターを開く"
-debugdump = "診断レポートを作成し、必要に応じてアップロードする"
-language = "自分の言語またはサーバーの既定言語を選択"
+debug = "{prefix}診断ツール"
+debug_dump = "包括的な{prefix}診断レポートを作成"
+language = "利用可能な {prefix} 言語を選択"
 portals = "すべての管理ポータルとそのテレポートショートカットを一覧表示"
-root = "ShapedPortalsヘルプと管理"
+root = "{prefix}ヘルプと管理"
 status = "管理されたポータルと試行統計を表示"
 teleport = "管理ポータルの近くに安全にテレポートするか、省略した場合はポータルを一覧表示"
 
-[command.feedback.config]
-opened = "{prefix}&aゲーム内の完全な設定エディターを開きました。&r"
-save_failed = "{prefix}&c&f{setting}&r&cを適用できませんでした:{reason}&r"
-saved = "{prefix}&a&f{setting}&r&aを保存して適用しました。&r"
+[runtime.update]
+available = "{prefix}&r &7› &7&e{new}&7 が利用可能です（インストール済み: &f{old}&7）。&r\n&7リリース: &b{url}&r"
 
 [command.feedback]
-failed = "{prefix}&cコマンドを完了できませんでした。詳細はコンソールを参照してください。&r"
+version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
+failed = "{prefix}&r &7› &7&cコマンドを完了できませんでした。詳細はコンソールを参照してください。&r"
 
-[command.feedback.reload]
-failed = "{prefix}&c{duration}ミリ秒後の再読み込みに失敗しました。&r&7最後に確認された正常な設定は依然として有効です；完全なコンソールエラーを参照してください。&r"
-success = "{prefix}&a&f{duration}&r&aミリ秒で再読み込みされました。&r&7ロケール:&r&f{locale}&r"
+[command.feedback.config]
+opened = "{prefix}&r &7› &7&7ゲーム内の完全な設定エディターを開きました。&7&r"
+save_failed = "{prefix}&r &7› &7&c&f{setting}&r&cを適用できませんでした:{reason}&r"
+saved = "{prefix}&r &7› &7&a{setting}&r &7を&f{old}&r &7から&f{new}&r &7に変更しました。&r"
+
+[command.feedback.debug]
+busy = "{prefix}&r &7› &7{prefix}診断レポートはすでに作成中です。&r"
+failed = "{prefix}&r &7› &7&c診断レポートを作成できませんでした。詳細はコンソールを確認してください。&r"
+link_hover = "&7公開mclo.gsレポートを開きます。&r"
+saved = "{prefix}&r &7› &7&7診断レポートを&7&f{path}&r&7に保存しました。&r"
+started = "{prefix}&r &7› &7&7サーバーと{prefix}の診断をキャプチャしています…&r"
+upload_failed = "{prefix}&r &7› &7&eローカルレポートは保存されましたが、mclo.gsのアップロードに失敗しました。詳細はコンソールを確認してください。&r"
+uploaded = "{prefix}&r &7› &7&7診断レポートをアップロードしました:&7&r&b&n{url}&r"
 
 [command.parameter]
-debugdump_upload = "レポートを mclo.gs にアップロードする"
+locale = "利用可能な言語ロケール"
 page = "1始まりのポータル一覧ページ"
 portal = "ポータルUUID、ユニーク接頭辞、または一覧"
+upload = "公開アップロードが有効な場合にレポートをアップロード"
 
 [command.status]
-attempts = "{prefix}&7試行回数:&r&f{attempts}&r&8|&r&7作成日:&r&a{created}&r&8|&r&7拒否:&r&c{rejected}&r"
-compatibility = "{prefix}&7成果物:&r&fJava 17 / Bukkit 1.20.1+&r&8|&r&7スケジューラ:&r&f{scheduler}&r"
-config = "{prefix}&7作成:&r{enabled}&8|&r&7言語:&r&f{language}&r&8|&r&7ホットリロード:&r{hot_reload}"
-header = "{prefix}&d&lShapedPortals実行時&r"
-portals = "{prefix}&7管理されたポータル:&r&f{portals}&r&8|&r&7インテリアセル:&r&f{cells}&r"
+attempts = "{prefix}&r &7› &7&7試行回数:&r&f{attempts}&r&8|&r&7作成日:&r&a{created}&r&8|&r&7拒否:&r&c{rejected}&r"
+compatibility = "{prefix}&r &7› &7&7成果物:&r&fJava 17 / Bukkit 1.20.1+&r&8|&r&7スケジューラ:&r&f{scheduler}&r"
+config = "{prefix}&r &7› &7&7作成:&r{enabled}&8|&r&7言語:&r&f{language}&r&8|&r&7ホットリロード:&r{hot_reload}"
+header = "{prefix}&r &7› &7実行時&r"
+portals = "{prefix}&r &7› &7&7管理されたポータル:&r&f{portals}&r&8|&r&7インテリアセル:&r&f{cells}&r"
 
 [director.help]
 category = "コマンド分類"
@@ -73,6 +138,8 @@ optional = "このパラメータは任意です。"
 required = "このパラメータは必須です。"
 type = "このパラメータの型は {type} です。"
 
+[director.runtime]
+
 [director.runtime.error]
 conversion_failed = "\"{value}\" を {parameter} 用の {type} に変換できません"
 default_parse_failed = "パラメーター {parameter} のデフォルト値を解析できません"
@@ -82,9 +149,6 @@ missing_argument = "引数 \"{parameter}\" ({type}) が必要です"
 unclosed_group = "パラメータ {key} の閉じかっこ \"]\" がありません"
 unexpected_argument = "予期しない引数 \"{argument}\"。オプションのパラメーターはキー付きで指定してください。例: seed=123"
 unknown_parameter = "不明なパラメーターキー: {key}"
-
-[director.runtime]
-usage = "使用法: {usage}"
 
 [gui.category]
 debug = "&d診断&r"
@@ -97,42 +161,48 @@ presentation = "&dプレゼンテーション&r"
 languages = "&d言語&r"
 
 [gui.language]
-option = "{status} &f{locale}&r &8—&r &7{name}&r"
+empty = "&e利用可能な言語が見つかりませんでした。ロケール名を入力して作成してください。&r"
+hover = "&7クリックして&f{locale}&r&7を選択します。&r"
+option = "{status} &f{locale}&r &8›&r &7{name}&r"
+type = "&7チャットにロケール名を入力して作成または選択します。&r"
 current = "&7現在の値:&r {value}"
 variables = "&7現在の変数 / プレースホルダー:&r &f{variables}&r"
 changed = "&f{old}&r &7を&r &f{new}&r &7に変更しました&r"
 
 [gui.lore]
 category = "&8このカテゴリのすべての設定を編集するにはクリックしてください。&r"
-language = "&8自分の言語またはサーバーの既定言語を選択&r"
+language = "&8利用可能な言語を選択するか、ロケールを入力するにはクリックしてください。&r"
 number = "&8左 +1、右 -1、Shift ×10、タイプにドロップ.&r"
 state = "&7現在:&r{value}"
 text = "&8チャットで新しい値を入力するにはクリックしてください。&r"
 toggle = "&8切り替えるにはクリック.&r"
 
-
 [gui.navigation]
 back = "&e戻る&r"
 close = "&c閉じる&r"
-reload = "&bファイルをリロード&r"
 
 [gui.prompt]
-cancel = "{prefix}&7停止するには&fcancel&r&7と入力してください。このプロンプトは60秒で期限切れになります。&r"
-cancelled = "{prefix}&e設定の編集をキャンセルしました。&r"
-list = "{prefix}&7リストの項目をカンマで区切ってください。空のリストには&fnone&r&7と入力してください。&r"
-request = "{prefix}&eチャットで&f{setting}&r&eの新しい値を入力してください。&r"
-timeout = "{prefix}&e設定編集は何も変更せずに期限切れになりました。&r"
+cancel = "{prefix}&r &7› &7&7停止するには&fcancel&r&7と入力してください。このプロンプトは60秒で期限切れになります。&r"
+cancelled = "{prefix}&r &7› &7&e設定の編集をキャンセルしました。&r"
+list = "{prefix}&r &7› &7&7リストの項目をカンマで区切ってください。空のリストには&fnone&r&7と入力してください。&r"
+request = "{prefix}&r &7› &7&eチャットで&f{setting}&r&eの新しい値を入力してください。&r"
+timeout = "{prefix}&r &7› &7&e設定編集は何も変更せずに期限切れになりました。&r"
 
 [gui.setting.debug]
 upload_enabled = "&dデバッグレポートをアップロードmclo.gs&r"
 
 [gui.setting.effects]
-creation_sound = "&d作成音&r"
-creation_sound_pitch = "&d作成音のピッチ&r"
-creation_sound_type = "&d作成音の種類&r"
-creation_sound_volume = "&d作成音の音量&r"
+creation_sound = "&dNether 作成音&r"
+creation_sound_pitch = "&dNether 作成音のピッチ&r"
+end_creation_sound = "&dEnd 作成音&r"
+end_creation_sound_type = "&dEnd 作成音の種類&r"
+end_creation_sound_volume = "&dEnd 作成音の音量&r"
+end_creation_sound_pitch = "&dEnd 作成音のピッチ&r"
+creation_sound_type = "&dNether 作成音の種類&r"
+creation_sound_volume = "&dNether 作成音の音量&r"
 
 [gui.setting.general]
+update_notifications = "&dGitHubの更新通知&r"
 enabled = "&dポータル作成&r"
 failure_feedback = "&dポータル失敗のフィードバック&r"
 language = "&dアクティブな言語ロケール&r"
@@ -155,69 +225,215 @@ maximum_checks_per_cycle = "&dサイクルごとの最大チェック数&r"
 [gui.setting.portal]
 allowed_worlds = "&d許可された世界&r"
 deduplication_millis = "&d二重処理防止ミリ秒&r"
+end_portal_creation = "&dEnd ポータル作成&r"
+end_minimum_interior_blocks = "&dEnd 最小内部ブロック数&r"
+end_maximum_interior_blocks = "&dEnd 最大内部ブロック数&r"
+end_maximum_width = "&dEnd 最大幅&r"
+end_maximum_length = "&dEnd 最大幅&r"
+end_interior_materials = "&dEnd インテリア素材&r"
 denied_worlds = "&d禁止された世界&r"
-frame_materials = "&dフレーム材質&r"
+frame_materials = "&dNether フレーム材質&r"
 ignition_causes = "&d点火原因&r"
-interior_materials = "&dインテリア素材&r"
-maximum_height = "&d最大高さ&r"
-maximum_interior_blocks = "&d最大内部ブロック数&r"
-maximum_width = "&d最大幅&r"
-minimum_interior_blocks = "&d最小内部ブロック数&r"
+interior_materials = "&dNether インテリア素材&r"
+maximum_height = "&dNether 最大高さ&r"
+maximum_interior_blocks = "&dNether 最大内部ブロック数&r"
+maximum_width = "&dNether 最大幅&r"
+minimum_interior_blocks = "&dNether 最小内部ブロック数&r"
 
 [gui.setting.presentation]
 command_overlays = "&dコマンドオーバーレイ&r"
 command_sounds = "&dコマンド音&r"
 overlay_duration_ticks = "&dオーバーレイの持続ティック数&r"
 portal_notices = "&dポータル通知チャンネル&r"
+nether_creation_notices = "&dNether ポータル通知チャンネル&r"
+end_creation_notices = "&dEnd ポータル通知チャンネル&r"
 splash_screen = "&d起動スプラッシュ画面&r"
 title_fade_in_ticks = "&dタイトルのフェードインティック&r"
 title_fade_out_ticks = "&dタイトルのフェードアウトティック&r"
 title_stay_ticks = "&dタイトルの表示ティック&r"
 
 [gui.title]
-category = "&5ShapedPortals&r&8›&r{category}"
-root = "&5ShapedPortals設定&r"
+category = "{prefix}&r&8›&r{category}"
+root = "{prefix}設定&r"
 
 [hud]
 failure = "&c操作に失敗しました&r"
-info = "&dShapedPortals&r"
+info = "{prefix}"
 success = "&a成功&r"
-title = "&d&lShapedPortals&r"
+title = "{prefix}"
+
+[portal.title]
+nether_created = "&5&lネザーポータルを作成しました&r"
+end_created = "&5&lエンドポータルを作成しました&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&c&f{portal}&r&cの隣に安全な足場がありません。 &e&f{seconds}&r&e秒以内に同じポータルをもう一度クリックすると、ポータル内へ強制的にテレポートします。&r"
+unsafe = "{prefix}&r &7› &7&c&f{portal}&r&cの隣に安全な足場がありません。 &e&f{seconds}&r&e秒以内に同じポータルをもう一度クリックすると、ポータル内へ強制的にテレポートします。&r"
 
 [portal.navigation.error]
-ambiguous = "{prefix}&c接頭辞&f{portal}&r&cは{matches}ポータルと一致します。UUIDのさらに詳細を入力してください。&r"
-destination_unavailable = "{prefix}&cポータル宛先は一時的に利用できません。&r"
-inactive = "{prefix}&cTポータルは現在はアクティブではありません。その整合性チェックはキューに入れられています。&r"
-no_safe_landing = "{prefix}&cNそのポータルの隣には安全な立場は存在しません。&r"
-not_found = "{prefix}&c管理されたポータルは見つかりません&f{portal}&r&c.&r"
-removed = "{prefix}&cそのポータルはもはや登録されていません。&r"
-world_unavailable = "{prefix}&cポータルワールド&f{world}&r&cは現在利用できません。&r"
+ambiguous = "{prefix}&r &7› &7&c接頭辞&f{portal}&r&cは{matches}ポータルと一致します。UUIDのさらに詳細を入力してください。&r"
+destination_unavailable = "{prefix}&r &7› &7&cポータル宛先は一時的に利用できません。&r"
+inactive = "{prefix}&r &7› &7&cTポータルは現在はアクティブではありません。その整合性チェックはキューに入れられています。&r"
+no_safe_landing = "{prefix}&r &7› &7&cNそのポータルの隣には安全な立場は存在しません。&r"
+not_found = "{prefix}&r &7› &7&c管理されたポータルは見つかりません&f{portal}&r&c.&r"
+removed = "{prefix}&r &7› &7&cそのポータルはもはや登録されていません。&r"
+world_unavailable = "{prefix}&r &7› &7&cポータルワールド&f{world}&r&cは現在利用できません。&r"
 
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &e既存のフレームは &f{materials}&r&e を使用しています。この素材では新しいポータルを作成できません。&r"
 empty = "&e管理された形状のポータルは登録されていません。&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7場所:&r &f{x}, {y}, {z}&r &8•&r &7軸:&r &f{axis}&r &8•&r &7セル:&r &f{blocks}&r\n&8  └&r &7作成者:&r &f{creator}&r &8•&r &7作成日時:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7場所:&r &f{x}, {y}, {z}&r &8•&r &7軸:&r &f{axis}&r &8•&r &7セル:&r &f{blocks}&r\n&8  └&r &7作成者:&r &f{creator}&r &8•&r &7作成日時:&r &f{created}&r"
 hover = "&7UUID:&r&f{uuid}&r\n&aこのポータルにテレポートするにはクリックしてください。&r"
 
 [portal.navigation.teleport]
-failed = "{prefix}&cポータルへのテレポートを完了できませんでした。別のプラグインによってキャンセルされた可能性があります。&r"
-preparing = "{prefix}&7&f{portal}&r&7の修復先...&r"
-success = "{prefix}&a&f{world}&r&aにある&f{portal}&r&aのそばへテレポートしました。&r"
+failed = "{prefix}&r &7› &7&cポータルへのテレポートを完了できませんでした。別のプラグインによってキャンセルされた可能性があります。&r"
+preparing = "{prefix}&r &7› &7&7&f{portal}&r&7の修復先...&r"
+success = "{prefix}&r &7› &7&7&f{world}&r&7にある&f{portal}&r&7のそばへテレポートしました。&r"
 
 [portal.notice]
-created = "{prefix}&d{blocks}内部ブロックで形作られたポータルを作成しました.&r"
-failed = "{prefix}&cそのフレームは形作られたポータルにはなりません:&f{reason}&r&c.&r"
-
-[runtime.hot_reload]
-failed = "{prefix}&cファイルの変更は拒否されました；最後に確認された正常な設定が有効のままです。&r"
-success = "{prefix}&a構成および言語ファイルの変更が適用されました。&r"
-
-[runtime.permission]
-denied = "{prefix}&cそれを行う権限がありません。&r"
+nether_created = "{prefix}&r &7› &7&7&f{blocks}&7内部ブロックで形作られたポータルを作成しました.&r"
+end_created = "{prefix}&r &7› &7&7End&7&r &7&f{blocks}&7内部ブロックで形作られたポータルを作成しました.&r"
+failed = "{prefix}&r &7› &7&cそのフレームは形作られたポータルにはなりません:&f{reason}&r&c.&r"
 
 [runtime]
-player_only = "{prefix}&cこのコマンドはプレイヤーのみ使用できます。&r"
-prefix = "&d&lShapedPortals&r&8›&r "
+player_only = "{prefix}&r &7› &7&cこのコマンドはプレイヤーのみ使用できます。&r"
+prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
+
+[runtime.hot_reload]
+failed = "{prefix}&r &7› &7&cファイルの変更は拒否されました；最後に確認された正常な設定が有効のままです。&r"
+success = "{prefix}&r &7› &7&7構成および言語ファイルの変更が適用されました。&7&r"
+
+[runtime.permission]
+denied = "{prefix}&r &7› &7&cそれを行う権限がありません。&r"
+
+[language.menu]
+your_language = "あなたの言語"
+reset_your_language = "自分の言語をリセット"
+server_default = "サーバーのデフォルト"
+edit_messages = "言語メッセージを編集"
+use_server_default = "サーバーのデフォルトを使用"
+current = "現在: {locale}"
+current_with_personal = "現在: {locale} (あなた: {personal})"
+your_description = "表示されるメッセージだけを変更します。"
+reset_description = "サーバーのデフォルト言語を使用します。"
+server_description = "サーバーのデフォルト言語を変更します。"
+edit_description = "言語ごとのメッセージエディターを開きます。"
+select_description = "クリックしてこの言語を選択します。"
+remove_personal_description = "個人の言語選択を削除します。"
+no_controls = "利用できる言語設定はありません。"
+command = "コマンド: {command}"
+selected = "選択済み"
+all-volmit-plugins = "すべてのVolmitプラグイン"
+
+[language.error]
+stopping = "{prefix}&r &7› &7&cプラグインを停止している間は言語を選択できません。"
+editor-player-only = "{prefix}&r &7› &7&cゲーム内で言語エディターを開いてください。"
+no-providers = "{prefix}&r &7› &7&c利用できるVolmit言語プロバイダーがありません。"
+numeric-page = "{prefix}&r &7› &7&cページ番号を数字で入力してください。"
+personal-player-only = "{prefix}&r &7› &7&cプレイヤーの個人言語はゲーム内で選択してください。"
+personal-permission = "{prefix}&r &7› &7&c個人言語を選択する権限がありません。"
+plugin-personal-permission = "{prefix}&r &7› &7&c{prefix}の個人言語を選択する権限がありません。"
+plugin-server-permission = "{prefix}&r &7› &7&c{prefix}のサーバー言語を変更する権限がありません。"
+server-locale-required = "{prefix}&r &7› &7&cサーバーの既定の言語としてen_USなどの言語コードを選択してください。"
+unavailable-for-all = "{prefix}&r &7› &7&c選択したすべてのプラグインで言語{locale}を利用できるわけではありません。"
+
+[language.usage]
+editor = "{prefix}&r &7› &7&7使い方: /{command} language server edit [locale]"
+selection = "{prefix}&r &7› &7&7使い方: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "{prefix}&r &7› &7&7使い方: /volmit plugins languages [locale]"
+
+[language.selection]
+preparing = "{prefix}&r &7› &7&7{target}の言語{locale}を準備しています..."
+save-failed = "{prefix}&r &7› &7&c言語の選択を保存できませんでした。サーバーコンソールを確認してください。"
+english-fallback = "{prefix}&r &7› &7&e{locale}は利用できないため、英語（en_US）を使用します。"
+personal-selected = "{prefix}&r &7› &7&7個人言語を{locale}に変更しました。"
+server-selected = "{prefix}&r &7› &7&7サーバー言語を{locale}に変更しました。"
+server-default-selected = "{prefix}&r &7› &7&7個人言語はサーバーの既定の言語に従うようになりました。"
+
+[language.editor]
+title = "{prefix} › {section}"
+loading = "{prefix}&r &7› &7&7{locale}のメッセージを読み込んでいます..."
+
+[language.editor.section]
+languages = "言語"
+search = "検索"
+search-title = "{locale} / 検索"
+group-title = "{locale} / {group}"
+
+[language.editor.prompt]
+search = "{prefix}&r &7› &7&7メッセージキーまたは本文を検索してください。cancelと入力すると戻ります。"
+value = "{prefix}&r &7› &7&7{key}の新しい値をチャットに入力してください。"
+current = "{prefix}&r &7› &7&7現在の値: {value}"
+variables = "{prefix}&r &7› &7&7変数: {variables}"
+guidance = "{prefix}&r &7› &7&7改行には\\n、バックスラッシュには\\\\を使ってください。cancelと入力すると戻ります。"
+
+[language.editor.input]
+expired = "{prefix}&r &7› &7&e言語エディターの入力時間が切れました。"
+too-long = "{prefix}&r &7› &7&c入力は{maximum}文字以内にしてください。"
+unable-to-save = "{prefix}&r &7› &7&c保存できませんでした: {reason}"
+
+[language.editor.navigation]
+back = "&e戻る&r"
+close = "&c閉じる&r"
+previous-page = "&e前のページ&r"
+next-page = "&e次のページ&r"
+
+[language.editor.search]
+messages = "メッセージを検索"
+messages-lore = "クリックしてすべてのメッセージを検索します。"
+clear = "検索をクリア"
+
+[language.editor.message]
+current-value = "&7現在の値:&r"
+variables = "&8{variables}&r"
+edit-plural = "&7クリックして複数形を編集します。&r"
+edit-lines = "&7クリックして各行を編集します。&r"
+edit-chat = "&7クリックしてチャットで編集します。&r"
+
+[language.editor.locale]
+open = "&8クリックしてこの言語を開きます。&r"
+
+[language.editor.category]
+message-count = "&7{count}件のメッセージ&r"
+open = "&8クリックしてこのグループを開きます。&r"
+
+[language.editor.error]
+no-permission = "{prefix}&r &7› &7&c{prefix}の言語を編集する権限がありません。"
+unable-to-edit = "{prefix}&r &7› &7&c編集できませんでした: {reason}"
+
+[language.editor.saved]
+summary = "{prefix}&r &7› &7&7{locale}を保存しました。言語の選択は変更されていません。"
+change = "{prefix}&r &7› &7&7{key}: 「{before}」を「{after}」に変更しました。"
+
+[language.editor.part]
+line = "行{line}"
+
+[language.editor.value]
+none = "なし"
+empty = "(空)"
+
+[debug.error]
+missing-permission = "{prefix}&r &7› &7&c権限がありません: {permission}"
+already-preparing = "{prefix}&r &7› &7&c{prefix} の診断レポートはすでに作成中です。"
+already-preparing-short = "{prefix}&r &7› &7&c診断レポートはすでに作成中です。"
+schedule-failed = "{prefix}&r &7› &7&c診断レポートの作成をスケジュールできません。"
+provider-closed = "{prefix}&r &7› &7&c診断プロバイダーは終了しています。"
+closed-before-capture = "{prefix}&r &7› &7&cレポートのデータを収集する前に診断プロバイダーが終了しました。"
+writer-schedule-failed = "{prefix}&r &7› &7&c診断レポートの書き込みをスケジュールできません。"
+capture-failed = "{prefix}&r &7› &7&c診断レポートのデータを収集できません。サーバーコンソールを確認してください。"
+closed-before-write = "{prefix}&r &7› &7&cレポートを書き込む前に診断プロバイダーが終了しました。"
+write-failed = "{prefix}&r &7› &7&c診断レポートを書き込めません。サーバーコンソールを確認してください。"
+
+[debug]
+preparing = "{prefix}&r &7› &7&7{prefix} の診断レポートを作成しています..."
+saved = "{prefix}&r &7› &7&7{prefix} の診断レポートを {path} に保存しました。"
+
+[debug.upload]
+interrupted = "{prefix}&r &7› &7&7診断レポートのアップロードが中断されました。ローカルのレポートは保存されています。"
+failed = "{prefix}&r &7› &7&c診断レポートのアップロードに失敗しました。ローカルのレポートは保存されています。"
+completed = "{prefix}&r &7› &7&7VolmitSoftware - {prefix} - v{version} としてアップロードしました。"
+
+[debug.action]
+open = "開く: {url}"
+open-description = "アップロードした診断レポートを開きます。"
+copy-path = "ローカルパスをコピー"
+copy-path-description = "ローカルのレポートのパスをコピーします。"

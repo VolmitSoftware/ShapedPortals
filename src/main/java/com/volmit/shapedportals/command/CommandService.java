@@ -1,7 +1,5 @@
 package com.volmit.shapedportals.command;
 
-import art.arcane.volmlib.util.localization.LanguageAudience;
-
 import art.arcane.volmlib.util.director.DirectorEngineOptions;
 import art.arcane.volmlib.util.director.compat.DirectorEngineFactory;
 import art.arcane.volmlib.util.director.context.DirectorContextRegistry;
@@ -10,6 +8,7 @@ import art.arcane.volmlib.util.director.runtime.DirectorExecutionResult;
 import art.arcane.volmlib.util.director.runtime.DirectorInvocation;
 import art.arcane.volmlib.util.director.runtime.DirectorRuntimeEngine;
 import art.arcane.volmlib.util.director.runtime.DirectorSender;
+import art.arcane.volmlib.util.localization.LanguageAudience;
 import art.arcane.volmlib.util.plugin.ComponentMessenger;
 import art.arcane.volmlib.util.plugin.ComponentText;
 import com.volmit.shapedportals.ShapedPortals;
@@ -29,6 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.logging.Level;
 
 public final class CommandService implements CommandExecutor, TabCompleter {
@@ -61,23 +61,22 @@ public final class CommandService implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length > 0 && "language".equalsIgnoreCase(args[0])) {
-            plugin.getLanguageSwitcher().command(sender, Arrays.copyOfRange(args, 1, args.length));
-            return true;
-        }
-        return LanguageAudience.call(sender instanceof Player player ? player.getUniqueId() : null,
-                () -> executeOwned(sender, command, label, args));
-    }
-
-    private boolean executeOwned(CommandSender sender, Command command, String label, String[] args) {
         if (!command.getName().equalsIgnoreCase(ROOT_COMMAND)) {
             return false;
         }
+        UUID audience = sender instanceof Player player ? player.getUniqueId() : null;
+        return LanguageAudience.call(audience, () -> executeCommand(sender, label, args));
+    }
+
+    private boolean executeCommand(CommandSender sender, String label, String[] args) {
         if (!sender.hasPermission("shapedportals.command") && requiresCommandPermission(args)) {
             plugin.getPresentationService().command(sender, ShapedMessages.NO_PERMISSION, FeedbackTone.FAILURE);
             return true;
         }
         try {
+            if (args.length > 0 && args[0].equalsIgnoreCase("language")) {
+                return executeLanguageCommand(sender, Arrays.copyOfRange(args, 1, args.length));
+            }
             if (sendHelp(sender, args)) {
                 return true;
             }
@@ -95,13 +94,14 @@ public final class CommandService implements CommandExecutor, TabCompleter {
         return true;
     }
 
+    private boolean executeLanguageCommand(CommandSender sender, String[] arguments) {
+        return plugin.getLanguageSwitcher().command(sender, arguments);
+    }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (!command.getName().equalsIgnoreCase(ROOT_COMMAND)) {
             return List.of();
-        }
-        if (args.length > 1 && "language".equalsIgnoreCase(args[0])) {
-            return plugin.getLanguageSwitcher().complete(sender, Arrays.copyOfRange(args, 1, args.length));
         }
         if (!mayTabComplete(sender, args)) {
             List<String> suggestions = new ArrayList<>(2);
@@ -111,13 +111,21 @@ public final class CommandService implements CommandExecutor, TabCompleter {
                         && sender.hasPermission("shapedportals.language.self")) {
                     suggestions.add("language");
                 }
-                if ("debugdump".startsWith(prefix) && sender.hasPermission("shapedportals.debugdump")) {
-                    suggestions.add("debugdump");
+                if ("debug".startsWith(prefix) && sender.hasPermission("shapedportals.debug")) {
+                    suggestions.add("debug");
                 }
             }
             return List.copyOf(suggestions);
         }
+        UUID audience = sender instanceof Player player ? player.getUniqueId() : null;
+        return LanguageAudience.call(audience, () -> complete(sender, alias, args));
+    }
+
+    private List<String> complete(CommandSender sender, String alias, String[] args) {
         try {
+            if (args.length > 0 && args[0].equalsIgnoreCase("language")) {
+                return plugin.getLanguageSwitcher().complete(sender, Arrays.copyOfRange(args, 1, args.length));
+            }
             return director.tabComplete(new DirectorInvocation(
                     new BukkitDirectorSender(sender, plugin.getLanguageService()), alias, Arrays.asList(args))
             );
@@ -176,7 +184,7 @@ public final class CommandService implements CommandExecutor, TabCompleter {
         String subcommand = args[0];
         return !subcommand.equalsIgnoreCase("config")
                 && !subcommand.equalsIgnoreCase("language")
-                && !subcommand.equalsIgnoreCase("debugdump")
+                && !subcommand.equalsIgnoreCase("debug")
                 && !subcommand.equalsIgnoreCase("portals")
                 && !subcommand.equalsIgnoreCase("teleport")
                 && !subcommand.equalsIgnoreCase("tp");
@@ -187,9 +195,6 @@ public final class CommandService implements CommandExecutor, TabCompleter {
             return sender.hasPermission("shapedportals.command");
         }
         String subcommand = args[0];
-        if (subcommand.equalsIgnoreCase("debugdump")) {
-            return sender.hasPermission("shapedportals.debugdump");
-        }
         if (subcommand.equalsIgnoreCase("portals")) {
             return sender.hasPermission("shapedportals.portals");
         }
@@ -232,8 +237,9 @@ public final class CommandService implements CommandExecutor, TabCompleter {
         @Override
         public void sendMessage(String message) {
             if (message != null && !message.isBlank()) {
-                ComponentMessenger.send(sender, ComponentText.markup(language.render(ShapedMessages.PREFIX))
-                        .append(ComponentText.literal(message)));
+                ComponentMessenger.send(sender, language.render(sender, ShapedMessages.PREFIX)
+                        .append(ComponentText.markup("&r &7› "))
+                        .append(ComponentText.literal(message).colorIfAbsent("#aaaaaa")));
             }
         }
     }

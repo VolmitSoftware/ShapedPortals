@@ -133,6 +133,7 @@ dependencies {
     testImplementation(platform('org.junit:junit-bom:5.13.4'))
     testImplementation('org.junit.jupiter:junit-jupiter')
     testImplementation('org.assertj:assertj-core:3.27.4')
+    testImplementation('org.mockito:mockito-core:5.20.0')
     testImplementation('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
     testRuntimeOnly('org.junit.platform:junit-platform-launcher')
 }
@@ -354,7 +355,7 @@ publishing {
             artifact(tasks.named('sourcesJar'))
             pom {
                 name = 'ShapedPortals'
-                description = 'Arbitrary-shape Nether portals for Spigot, Paper, and Folia.'
+                description = 'Arbitrary-shape Nether and End portals for Spigot, Paper, and Folia.'
                 url = 'https://github.com/VolmitSoftware/ShapedPortals'
             }
         }

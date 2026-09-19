@@ -23,19 +23,26 @@ class ConfigRepositoryTest {
         ShapedPortalsConfig edited = initial.source().copy();
         edited.portal.maximumInteriorBlocks = 512;
         edited.metrics.enabled = false;
+        edited.general.updateNotifications = false;
         repository.save(edited);
         ConfigRepository.PreparedConfig reloaded = repository.load();
 
         assertThat(reloaded.runtime().scanLimits().maximumInteriorBlocks()).isEqualTo(512);
         assertThat(reloaded.runtime().metricsEnabled()).isFalse();
+        assertThat(initial.runtime().updateNotifications()).isTrue();
+        assertThat(reloaded.runtime().updateNotifications()).isFalse();
         assertThat(Files.readString(temporaryDirectory.resolve("config.toml")))
                 .contains("maximumInteriorBlocks = 512")
                 .contains("notifyOperators = true")
+                .contains("updateNotifications = false")
                 .contains("[metrics]")
                 .contains("enabled = false")
                 .contains("[presentation]")
                 .contains("commandOverlays = [\"ACTION_BAR\"]")
-                .contains("creationSoundType = \"minecraft:block.end_portal.spawn\"");
+                .contains("creationSoundType = \"minecraft:block.portal.trigger\"")
+                .contains("endCreationSoundType = \"minecraft:block.end_portal.spawn\"")
+                .contains("endPortalCreation = true")
+                .contains("endMaximumInteriorBlocks = 256");
     }
 
     @Test

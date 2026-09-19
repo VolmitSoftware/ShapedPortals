@@ -11,7 +11,6 @@ import art.arcane.volmlib.util.hud.HudSlot;
 import art.arcane.volmlib.util.hud.HudTitleClaim;
 import art.arcane.volmlib.util.hud.HudTitleService;
 import art.arcane.volmlib.util.localization.MessageArgs;
-import art.arcane.volmlib.util.localization.LanguageAudience;
 import art.arcane.volmlib.util.localization.TextKey;
 import art.arcane.volmlib.util.plugin.ComponentMessenger;
 import art.arcane.volmlib.util.plugin.ComponentText;
@@ -22,6 +21,7 @@ import com.volmit.shapedportals.config.PresentationChannel;
 import com.volmit.shapedportals.config.RuntimeConfig;
 import com.volmit.shapedportals.localization.LanguageService;
 import com.volmit.shapedportals.localization.ShapedMessages;
+import com.volmit.shapedportals.portal.PortalType;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.NamespacedKey;
@@ -89,6 +89,20 @@ public final class PresentationService implements Listener {
         display(player, PORTAL_PURPOSE, config.portalNotices(), key, arguments, tone, false);
     }
 
+    public void portalCreated(Player player, PortalType type, MessageArgs arguments) {
+        RuntimeConfig config = configService.runtime();
+        Set<PresentationChannel> channels = type == PortalType.END
+                ? config.endCreationNotices()
+                : config.netherCreationNotices();
+        TextKey message = type == PortalType.END
+                ? ShapedMessages.PORTAL_END_CREATED
+                : ShapedMessages.PORTAL_NETHER_CREATED;
+        TextKey title = type == PortalType.END
+                ? ShapedMessages.PORTAL_END_TITLE
+                : ShapedMessages.PORTAL_NETHER_TITLE;
+        display(player, PORTAL_PURPOSE, channels, message, arguments, FeedbackTone.SUCCESS, false, title);
+    }
+
     public void hotReload(Player player, boolean success) {
         TextKey key = success ? ShapedMessages.HOT_RELOAD_SUCCESS : ShapedMessages.HOT_RELOAD_FAILED;
         FeedbackTone tone = success ? FeedbackTone.SUCCESS : FeedbackTone.FAILURE;
@@ -121,10 +135,23 @@ public final class PresentationService implements Listener {
             FeedbackTone tone,
             boolean sound
     ) {
-        String markup = LanguageAudience.call(player.getUniqueId(), () -> language.renderWithoutPrefix(key, arguments));
-        String chatMarkup = LanguageAudience.call(player.getUniqueId(), () -> language.renderPrefixed(key, arguments));
+        display(player, purpose, channels, key, arguments, tone, sound, ShapedMessages.HUD_TITLE);
+    }
+
+    private void display(
+            Player player,
+            String purpose,
+            Set<PresentationChannel> channels,
+            TextKey key,
+            MessageArgs arguments,
+            FeedbackTone tone,
+            boolean sound,
+            TextKey title
+    ) {
+        ComponentText markup = language.renderWithoutPrefix(player, key, arguments);
+        ComponentText chatMarkup = language.renderPrefixed(player, key, arguments);
         Set<PresentationChannel> selected = Set.copyOf(channels);
-        Runnable delivery = () -> displayOwned(player, purpose, selected, markup, chatMarkup, tone, sound);
+        Runnable delivery = () -> displayOwned(player, purpose, selected, markup, chatMarkup, tone, sound, title);
         Runnable retired = () -> retire(player.getUniqueId(), purpose);
         if (!FoliaScheduler.runEntity(plugin, player, delivery, 0L, retired)) {
             plugin.getLogger().warning("Could not schedule ShapedPortals feedback for " + player.getName());
@@ -135,14 +162,15 @@ public final class PresentationService implements Listener {
             Player player,
             String purpose,
             Set<PresentationChannel> channels,
-            String markup,
-            String chatMarkup,
+            ComponentText markup,
+            ComponentText chatMarkup,
             FeedbackTone tone,
-            boolean sound
+            boolean sound,
+            TextKey title
     ) {
         RuntimeConfig config = configService.runtime();
         if (channels.contains(PresentationChannel.CHAT)) {
-            ComponentMessenger.sendMarkup(player, chatMarkup);
+            ComponentMessenger.send(player, chatMarkup);
         }
         if (channels.contains(PresentationChannel.ACTION_BAR)) {
             actionBar.publish(player, new HudSegment(
@@ -150,11 +178,11 @@ public final class PresentationService implements Listener {
                     HudPriority.NOTICE,
                     config.overlayDurationTicks() * 50L,
                     List.of(HudSlot.RIGHT, HudSlot.LEFT),
-                    ComponentText.markup(markup).legacy()
+                    markup.legacy()
             ));
         }
         if (channels.contains(PresentationChannel.TITLE)) {
-            showTitle(player, purpose, markup, config);
+            showTitle(player, purpose, markup, title, config);
         }
         if (channels.contains(PresentationChannel.BOSS_BAR)) {
             showBossBar(player, purpose, markup, tone, config.overlayDurationTicks());
@@ -164,7 +192,7 @@ public final class PresentationService implements Listener {
         }
     }
 
-    private void showTitle(Player player, String purpose, String markup, RuntimeConfig config) {
+    private void showTitle(Player player, String purpose, ComponentText markup, TextKey title, RuntimeConfig config) {
         String key = generationKey(player.getUniqueId(), purpose);
         HudTitleClaim previous = titleClaims.remove(key);
         if (previous != null) {
@@ -178,9 +206,9 @@ public final class PresentationService implements Listener {
             return;
         }
         titleClaims.put(key, claim);
-        ComponentMessenger.showTitleMarkup(
+        ComponentMessenger.showTitle(
                 player,
-                language.render(ShapedMessages.HUD_TITLE),
+                language.render(player, title),
                 markup,
                 ticks(config.titleFadeInTicks()),
                 ticks(config.titleStayTicks()),
@@ -194,14 +222,14 @@ public final class PresentationService implements Listener {
                 () -> retireTitle(key, claim));
     }
 
-    private void showBossBar(Player player, String purpose, String markup, FeedbackTone tone, long durationTicks) {
+    private void showBossBar(Player player, String purpose, ComponentText markup, FeedbackTone tone, long durationTicks) {
         String key = generationKey(player.getUniqueId(), purpose);
         long generation = generations.incrementAndGet();
         bossBarGenerations.put(key, generation);
         bossBars.show(
                 player,
                 purpose,
-                ComponentText.markup(markup).legacy(),
+                markup.legacy(),
                 1D,
                 barColor(tone),
                 BarStyle.SOLID,

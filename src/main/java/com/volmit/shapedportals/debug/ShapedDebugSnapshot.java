@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.UUID;
 
 record ShapedDebugSnapshot(
-        Set<UUID> loadedWorldIds,
+        String scheduler,
         String activeLocale,
         List<String> availableLocales,
         String languageCatalogState,
@@ -27,12 +27,14 @@ record ShapedDebugSnapshot(
         int interiorCells,
         List<PortalRecord> portalRecords,
         PortalStats.Snapshot portalStats,
+        Set<UUID> loadedWorldIds,
         Path dataDirectory
 ) {
     ShapedDebugSnapshot {
         loadedWorldIds = Set.copyOf(loadedWorldIds);
         availableLocales = List.copyOf(availableLocales);
         portalRecords = List.copyOf(portalRecords);
+        dataDirectory = dataDirectory.toAbsolutePath().normalize();
     }
 
     record ConfigState(
@@ -63,10 +65,20 @@ record ShapedDebugSnapshot(
             setting(settings, "portal.allowedWorlds count", config.portal.allowedWorlds.size());
             setting(settings, "portal.deniedWorlds count", config.portal.deniedWorlds.size());
             setting(settings, "portal.deduplicationMillis", config.portal.deduplicationMillis);
+            setting(settings, "portal.endPortalCreation", config.portal.endPortalCreation);
+            setting(settings, "portal.endMinimumInteriorBlocks", config.portal.endMinimumInteriorBlocks);
+            setting(settings, "portal.endMaximumInteriorBlocks", config.portal.endMaximumInteriorBlocks);
+            setting(settings, "portal.endMaximumWidth", config.portal.endMaximumWidth);
+            setting(settings, "portal.endMaximumLength", config.portal.endMaximumLength);
+            setting(settings, "portal.endInteriorMaterials", join(config.portal.endInteriorMaterials));
             setting(settings, "effects.creationSound", config.effects.creationSound);
             setting(settings, "effects.creationSoundType", config.effects.creationSoundType);
             setting(settings, "effects.creationSoundVolume", config.effects.creationSoundVolume);
             setting(settings, "effects.creationSoundPitch", config.effects.creationSoundPitch);
+            setting(settings, "effects.endCreationSound", config.effects.endCreationSound);
+            setting(settings, "effects.endCreationSoundType", config.effects.endCreationSoundType);
+            setting(settings, "effects.endCreationSoundVolume", config.effects.endCreationSoundVolume);
+            setting(settings, "effects.endCreationSoundPitch", config.effects.endCreationSoundPitch);
             setting(settings, "hotReload.enabled", config.hotReload.enabled);
             setting(settings, "hotReload.pollIntervalMillis", config.hotReload.pollIntervalMillis);
             setting(settings, "hotReload.cooldownMillis", config.hotReload.cooldownMillis);
@@ -78,6 +90,8 @@ record ShapedDebugSnapshot(
             setting(settings, "presentation.commandSounds", config.presentation.commandSounds);
             setting(settings, "presentation.commandOverlays", join(config.presentation.commandOverlays));
             setting(settings, "presentation.portalNotices", join(config.presentation.portalNotices));
+            setting(settings, "presentation.netherCreationNotices", join(config.presentation.netherCreationNotices));
+            setting(settings, "presentation.endCreationNotices", join(config.presentation.endCreationNotices));
             setting(settings, "presentation.overlayDurationTicks", config.presentation.overlayDurationTicks);
             setting(settings, "presentation.titleFadeInTicks", config.presentation.titleFadeInTicks);
             setting(settings, "presentation.titleStayTicks", config.presentation.titleStayTicks);

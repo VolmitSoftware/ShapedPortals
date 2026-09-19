@@ -1,6 +1,8 @@
 package com.volmit.shapedportals.localization;
 
+import art.arcane.volmlib.util.localization.LanguageAudience;
 import art.arcane.volmlib.util.localization.MessageArgs;
+import art.arcane.volmlib.util.localization.PluginLanguageService;
 import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
 import art.arcane.volmlib.util.localization.VolmitLocales;
 import art.arcane.volmlib.util.plugin.ComponentText;
@@ -15,6 +17,8 @@ import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,24 +48,24 @@ class LanguageServiceTest {
 
         assertThat(prepared.file().toPath()).isEqualTo(file);
         assertThat(file).isRegularFile();
-        assertThat(service.remoteCatalogReference()).contains("ebde960aa4fd53e56f66f6c34b6659d1e2843410");
+        assertThat(service.remoteCatalogReference()).contains("main");
         assertThat(service.hasRemoteCatalogLocale("fr_FR")).isTrue();
         assertThat(service.hasRemoteCatalogLocale("en_US")).isFalse();
         assertThat(toml)
-                .contains("an editable language file")
-                .contains("never automatically replaces local changes")
-                .contains("Colors: &0-&f")
+                .contains("=== File editing ===")
+                .contains("Local changes are preserved")
+                .contains("Colors and styles: &0-&f")
                 .contains("[runtime]")
-                .contains("[command.feedback.reload]")
+                .contains("[language.menu]")
                 .contains("[portal.navigation.error]")
                 .contains("[hud]")
                 .contains("[gui.title]")
-                .contains("[director.runtime]")
-                .contains("{prefix}=the global runtime.prefix value")
+                .contains("[director.runtime.error]")
+                .contains("{prefix}  Global runtime.prefix value")
                 .contains("&cYou do not have permission")
-                .contains("&d&lShapedPortals")
+                .contains(ShapedMessages.PREFIX.english())
                 .doesNotContain("<red>")
-                .doesNotContain("<gradient:");
+                .contains("<gradient:");
         assertThat(headerPlaceholders(toml)).containsExactlyInAnyOrderElementsOf(catalogPlaceholders());
     }
 
@@ -76,6 +80,21 @@ class LanguageServiceTest {
     }
 
     @Test
+    void downloadedLanguageCanUseEnglishForKeysAddedAfterItsTranslation() throws IOException {
+        LanguageService service = service();
+
+        service.validateDownloadedContent("es_ES", "[runtime]\nprefix = \"&6Portales &8> \"\n");
+    }
+
+    @Test
+    void emptyAndInvalidDownloadedEntriesUseEnglish() throws IOException {
+        LanguageService service = service();
+        service.validateDownloadedContent("es_ES", "");
+        service.validateDownloadedContent("es_ES", "[runtime]\nprefix = 42\n");
+        service.validateDownloadedContent("es_ES", "[portal.notice]\nfailed = \"{wrong}\"\n");
+    }
+
+    @Test
     void preservesAnExistingLanguageFileAcrossPrepareAndRestart() throws IOException {
         LanguageService service = service();
         Path file = service.languageFile("en_US").toPath();
@@ -87,8 +106,37 @@ class LanguageServiceTest {
         LanguageService restarted = service();
         restarted.install(restarted.prepare("en_US"));
 
-        assertThat(service.render(ShapedMessages.PREFIX)).contains("Local");
-        assertThat(restarted.render(ShapedMessages.PREFIX)).contains("Local");
+        assertThat(service.render(ShapedMessages.PREFIX).plain()).contains("Local");
+        assertThat(restarted.render(ShapedMessages.PREFIX).plain()).contains("Local");
+        assertThat(Files.readString(file)).isEqualTo(content);
+    }
+
+    @Test
+    void acceptsAnExistingPortalListEntryWithoutTheOptionalPortalType() throws IOException {
+        LanguageService service = service();
+        Path file = service.languageFile("en_US").toPath();
+        Files.createDirectories(file.getParent());
+        String content = """
+                [portal.navigation.list]
+                entry = "&d{id}&r &8›&r &f{world}&r\\n&8  ├&r &7Location:&r &f{x}, {y}, {z}&r &8•&r &7Axis:&r &f{axis}&r &8•&r &7Cells:&r &f{blocks}&r\\n&8  └&r &7Creator:&r &f{creator}&r &8•&r &7Created:&r &f{created}&r"
+                """;
+        Files.writeString(file, content, StandardCharsets.UTF_8);
+
+        service.install(service.prepare("en_US"));
+        ComponentText rendered = service.render(ShapedMessages.PORTAL_LIST_ENTRY, MessageArgs.builder()
+                .untrusted("id", "portal")
+                .untrusted("world", "world")
+                .untrusted("type", "NETHER")
+                .untrusted("x", "1")
+                .untrusted("y", "64")
+                .untrusted("z", "2")
+                .untrusted("axis", "X")
+                .untrusted("blocks", "6")
+                .untrusted("creator", "operator")
+                .untrusted("created", "2026-09-03 10:44:19")
+                .build());
+
+        assertThat(rendered.plain()).contains("portal", "world", "operator").doesNotContain("NETHER");
         assertThat(Files.readString(file)).isEqualTo(content);
     }
 
@@ -103,9 +151,9 @@ class LanguageServiceTest {
         service.install(prepared);
 
         assertThat(prepared.selectionReady()).isTrue();
-        assertThat(service.render(ShapedMessages.PREFIX)).contains("Portails");
-        assertThat(service.render(ShapedMessages.NO_PERMISSION))
-                .startsWith(service.render(ShapedMessages.PREFIX))
+        assertThat(service.render(ShapedMessages.PREFIX).plain()).contains("Portails");
+        assertThat(service.render(ShapedMessages.NO_PERMISSION).plain())
+                .startsWith("Portails >  › ")
                 .contains("You do not have permission");
     }
 
@@ -126,7 +174,7 @@ class LanguageServiceTest {
 
         service.install(service.prepare("en_US"));
 
-        assertThat(service.render(ShapedMessages.PREFIX)).contains("Current");
+        assertThat(service.render(ShapedMessages.PREFIX).plain()).contains("Current");
         assertThat(Files.readString(file)).isEqualTo(content);
     }
 
@@ -138,13 +186,42 @@ class LanguageServiceTest {
         byte[] invalid = "[runtime]\nprefix = 42\n".getBytes(StandardCharsets.UTF_8);
         Files.write(file, invalid);
 
-        assertThatThrownBy(() -> service.prepare("fr_FR")).isInstanceOf(IOException.class);
-        LanguageService.PreparedLanguage fallback = service.englishFallback("fr_FR");
+        LanguageService.PreparedLanguage fallback = service.prepare("fr_FR");
+        assertThat(fallback.selectionReady()).isTrue();
         service.install(fallback);
 
-        assertThat(service.render(ShapedMessages.PREFIX)).isEqualTo(ShapedMessages.PREFIX.english());
+        assertThat(service.render(ShapedMessages.PREFIX).plain()).isEqualTo("ShapedPortals");
         assertThat(service.activeFile()).isEqualTo(service.languageFile("fr_FR"));
         assertThat(Files.readAllBytes(file)).containsExactly(invalid);
+    }
+
+    @Test
+    void malformedDefaultReloadRetainsMessagesAndStartupCanUseBuiltInEnglish() throws IOException {
+        LanguageService service = service();
+        try {
+            service.install(service.prepare("en_US"));
+            Path file = service.activeFile().toPath();
+            Files.writeString(file, "[runtime]\nprefix = 'WORKING'\n");
+            service.install(service.prepare("en_US"));
+            String invalid = "[runtime\n";
+            Files.writeString(file, invalid);
+
+            assertThatThrownBy(() -> service.prepare("en_US")).isInstanceOf(IOException.class);
+            assertThat(service.render(ShapedMessages.PREFIX).plain()).isEqualTo("WORKING");
+            assertThat(Files.readString(file)).isEqualTo(invalid);
+
+            LanguageService restarted = service();
+            try {
+                assertThatThrownBy(() -> restarted.prepare("en_US")).isInstanceOf(IOException.class);
+                restarted.install(restarted.englishFallback("en_US"));
+                assertThat(restarted.render(ShapedMessages.PREFIX).plain()).isEqualTo("ShapedPortals");
+                assertThat(Files.readString(file)).isEqualTo(invalid);
+            } finally {
+                restarted.close();
+            }
+        } finally {
+            service.close();
+        }
     }
 
     @Test
@@ -156,10 +233,9 @@ class LanguageServiceTest {
                 StandardCharsets.UTF_8);
         service.install(service.prepare("en_US"));
 
-        String rendered = service.render(ShapedMessages.PORTAL_FAILED, MessageArgs.builder()
+        ComponentText message = service.render(ShapedMessages.PORTAL_FAILED, MessageArgs.builder()
                 .untrusted("reason", "&4[12ABef]<red>unsafe</red>")
                 .build());
-        ComponentText message = ComponentText.markup(rendered);
 
         assertThat(message.plain()).isEqualTo("Failure &eLiteral &4[12ABef]<red>unsafe</red>");
         assertThat(message.legacy()).contains("\u00a7cFailure");
@@ -233,16 +309,16 @@ class LanguageServiceTest {
     }
 
     @Test
-    void rejectsInvalidMarkupAndPreservesTheFile() throws IOException {
+    void invalidMarkupFallsBackWithoutDiscardingValidMessages() throws IOException {
         LanguageService service = service();
         Path file = service.languageFile("en_US").toPath();
         Files.createDirectories(file.getParent());
-        String content = "[command.feedback.reload]\nsuccess = \"<green><bold>Broken {duration} {locale}</green>\"\n";
+        String content = "[command.status]\nheader = \"<green><bold>Broken</green>\"\n";
         Files.writeString(file, content, StandardCharsets.UTF_8);
 
-        assertThatThrownBy(() -> service.prepare("en_US"))
-                .isInstanceOf(IOException.class)
-                .hasMessageContaining("invalid message markup");
+        service.install(service.prepare("en_US"));
+        assertThat(service.render(ShapedMessages.STATUS_HEADER).plain())
+                .isEqualTo("ShapedPortals › Runtime");
         assertThat(Files.readString(file)).isEqualTo(content);
     }
 
@@ -266,12 +342,12 @@ class LanguageServiceTest {
 
         assertThat(updated.selectionReady()).isTrue();
         assertThat(editedFile)
-                .startsWith("# ShapedPortals language: en_US")
+                .startsWith("# ShapedPortals — en_US")
                 .contains("[runtime.permission]\ndenied = \"&cEdited permission message&r\"")
                 .contains("[unknown]\nenabled = true")
                 .doesNotContain("  denied =");
         assertThat(edited.effectiveValue()).isEqualTo("&cEdited permission message&r");
-        assertThat(edited.previewValue()).isEqualTo("&cEdited permission message&r");
+        assertThat(ComponentText.markup(edited.previewValue()).legacy()).isEqualTo("§cEdited permission message");
         assertThat(edited.placeholders()).isEmpty();
         assertThat(selfWrite.get()).isEqualTo(editedFile);
 
@@ -281,6 +357,52 @@ class LanguageServiceTest {
                 .isInstanceOf(IOException.class)
                 .hasMessageContaining("invalid message markup");
         assertThat(Files.readString(file)).isEqualTo(safe);
+    }
+
+    @Test
+    void supportsPersistentPlayerLanguagesAndASeparateServerDefault() throws Exception {
+        LanguageService service = service();
+        LanguageService.PreparedLanguage english = service.prepare("en_US");
+        Path pirate = service.languageFile("pirate").toPath();
+        Files.createDirectories(pirate.getParent());
+        String pirateContent = "[runtime]\nprefix = \"&6Pirate &8> \"\n";
+        Files.writeString(pirate, pirateContent, StandardCharsets.UTF_8);
+        service.prepare("pirate");
+        service.install(english);
+        AtomicReference<String> defaultLocale = new AtomicReference<>("en_US");
+        PluginLanguageService selections = service.initializeSelections(defaultLocale::get, (locale, snapshot) -> {
+            defaultLocale.set(locale);
+            service.install(new LanguageService.PreparedLanguage(
+                    locale,
+                    service.languageFile(locale),
+                    snapshot,
+                    true
+            ));
+        });
+        UUID playerId = UUID.randomUUID();
+
+        try {
+            selections.selectPlayer(playerId, "pirate").get(5L, TimeUnit.SECONDS);
+
+            assertThat(service.render(ShapedMessages.PREFIX).plain()).doesNotContain("Pirate");
+            assertThat(LanguageAudience.call(playerId, () -> service.render(ShapedMessages.PREFIX).plain()))
+                    .contains("Pirate");
+            assertThat(LanguageAudience.call(playerId, () -> service.render(ShapedMessages.NO_PERMISSION).plain()))
+                    .contains("Pirate", "You do not have permission");
+            assertThat(Files.readString(temporaryDirectory.resolve("languages/language-preferences.properties")))
+                    .contains(playerId + "=pirate");
+            assertThat(Files.readString(pirate)).isEqualTo(pirateContent);
+
+            selections.selectDefault("pirate").get(5L, TimeUnit.SECONDS);
+
+            assertThat(defaultLocale.get()).isEqualTo("pirate");
+            assertThat(service.render(ShapedMessages.PREFIX).plain()).contains("Pirate");
+
+            selections.clearPlayer(playerId).get(5L, TimeUnit.SECONDS);
+            assertThat(selections.playerLocale(playerId)).isEmpty();
+        } finally {
+            service.close();
+        }
     }
 
     @Test

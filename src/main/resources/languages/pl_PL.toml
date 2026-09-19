@@ -1,98 +1,168 @@
-# Język ShapedPortals: pl_PL
-# Ten plik jest pobierany tylko wtedy, gdy go brakuje; edytuj bezpośrednio languages/pl_PL.toml.
-# Lokalne zmiany nigdy nie są automatycznie zastępowane; brakujące wpisy używają angielskiego.
+# ShapedPortals — pl_PL
+#
+# === Edycja pliku ===
+# plugins/ShapedPortals/languages/pl_PL.toml
+# Ten plik można edytować bezpośrednio. Lokalne zmiany są zachowywane; brakujące lub nieprawidłowe wpisy korzystają z wbudowanego angielskiego tekstu.
+# /shapedportals language server edit pl_PL
+#
+# === Prefiks ===
+# {prefix}  Sformatowana nazwa wtyczki z runtime.prefix; separator znajduje się w wiadomości. Usuń {prefix}&r &7› &7, aby ukryć oba elementy.
+#
+# === Formatowanie ===
 # Kolory: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B i [RRGGBB]. MiniMessage pozostaje dostępny dla własnego formatowania.
-# Symbole zastępcze są przypisane do konkretnych wiadomości. Zachowaj tylko już obecne symbole i nigdy nie zmieniaj ich nazw.
-# Polecenia: {argument}=nieoczekiwany argument; {command}=ścieżka polecenia; {key}=klucz parametru; {parameter}=nazwa parametru; {type}=typ; {usage}=użycie polecenia.
-# Działanie: {attempts}=próby utworzenia; {created}=liczba utworzonych lub czas utworzenia; {rejected}=odrzucone próby; {enabled}=stan tworzenia; {hot_reload}=stan przeładowania; {scheduler}=planista.
-# Portale: {portal}=identyfikator; {portals}=liczba zarządzanych; {id}=krótkie ID; {uuid}=pełny UUID; {world}=świat; {axis}=oś; {x}/{y}/{z}=współrzędne kotwicy; {blocks}=komórki portalu; {cells}=wszystkie komórki; {creator}=twórca; {materials}=zapisane materiały ramy.
-# Listy: {matches}=pasujące portale; {seconds}=czas na potwierdzenie w sekundach.
-# Konfiguracja: {category}=kategoria; {setting}=nazwa ustawienia; {status}=znacznik wyboru; {value}=wartość bieżąca, domyślna lub surowa; {language}=aktywny język; {locale}=ustawienia regionalne; {name}=pełna nazwa języka.
-# Edytor języka: {variables}=dozwolone symbole zastępcze; {old}=poprzednia wartość; {new}=nowa wartość.
-# Inne: {duration}=milisekundy; {reason}=powód błędu.
-# Prefiks: {prefix}=globalna wartość runtime.prefix. Usuń {prefix} z pojedynczej wiadomości, aby ukryć go tylko tam.
 # Dodaj ukośnik odwrotny przed & lub [, aby wyświetlić znak dosłownie.
+#
+# === Zmienne ===
+# Zachowaj nazwy zmiennych i używaj tylko tych, które występują w danej wiadomości.
+#   {after}  Wartość po zmianie
+#   {argument}  nieoczekiwany argument
+#   {attempts}  próby utworzenia
+#   {axis}  oś
+#   {before}  Wartość przed zmianą
+#   {blocks}  komórki portalu
+#   {category}  kategoria
+#   {cells}  wszystkie komórki
+#   {command}  ścieżka polecenia
+#   {count}  Liczba pasujących wpisów
+#   {created}  liczba utworzonych lub czas utworzenia
+#   {creator}  twórca
+#   {enabled}  stan tworzenia
+#   {group}  Zezwolenie lub grupa graczy
+#   {hot_reload}  stan przeładowania
+#   {id}  krótkie ID
+#   {key}  klucz parametru
+#   {language}  aktywny język
+#   {line}  Numer linii źródłowej lub linii
+#   {locale}  ustawienia regionalne
+#   {matches}  pasujące portale
+#   {materials}  zapisane materiały ramy
+#   {maximum}  Maksymalna dopuszczalna wartość
+#   {name}  pełna nazwa języka
+#   {new}  nowa wartość
+#   {old}  poprzednia wartość
+#   {parameter}  nazwa parametru
+#   {path}  lokalna ścieżka raportu
+#   {permission}  wymagane uprawnienie
+#   {personal}  osobiste ustawienie regionalne
+#   {portal}  identyfikator
+#   {portals}  liczba zarządzanych
+#   {prefix}  Sformatowana nazwa wtyczki z runtime.prefix; separator znajduje się w wiadomości. Usuń {prefix}&r &7› &7, aby ukryć oba elementy.
+#   {reason}  powód błędu
+#   {rejected}  odrzucone próby
+#   {scheduler}  planista
+#   {seconds}  czas na potwierdzenie w sekundach
+#   {section}  Sekcja edytora
+#   {setting}  nazwa ustawienia
+#   {status}  znacznik wyboru
+#   {target}  Gracz docelowy, podmiot lub wartość
+#   {type}  typ
+#   {url}  publiczny URL
+#   {uuid}  pełny UUID
+#   {value}  wartość bieżąca, domyślna lub surowa
+#   {variables}  dozwolone symbole zastępcze
+#   {version}  wersja wtyczki
+#   {world}  świat
+#   {x}  współrzędne kotwicy
+#   {y}  współrzędne kotwicy
+#   {z}  współrzędne kotwicy
 
 [runtime]
-prefix = "&d&lShapedPortals&r &8›&r "
-player_only = "{prefix}&cTej komendy może użyć tylko gracz.&r"
+prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
+player_only = "{prefix}&r &7› &7&cTej komendy może użyć tylko gracz.&r"
 
 [runtime.permission]
-denied = "{prefix}&cNie masz uprawnień, aby to zrobić.&r"
+denied = "{prefix}&r &7› &7&cNie masz uprawnień, aby to zrobić.&r"
 
 [runtime.hot_reload]
-success = "{prefix}&aZastosowano zmiany konfiguracji i plików językowych.&r"
-failed = "{prefix}&cZmiany plików zostały odrzucone; ostatnie prawidłowe ustawienia pozostają aktywne.&r"
+success = "{prefix}&r &7› &7&7Zastosowano&7 zmiany konfiguracji i plików językowych.&r"
+failed = "{prefix}&r &7› &7&cZmiany plików zostały odrzucone; ostatnie prawidłowe ustawienia pozostają aktywne.&r"
 
-[command.feedback.reload]
-success = "{prefix}&aPonownie wczytano w &f{duration}&r&a ms.&r &7Język:&r &f{locale}&r"
-failed = "{prefix}&cPonowne wczytanie nie powiodło się po {duration} ms.&r &7Ostatnie prawidłowe ustawienia pozostają aktywne; pełny błąd znajdziesz w konsoli.&r"
-
-[command.feedback.config]
-opened = "{prefix}&aOtwarto pełny edytor konfiguracji w grze.&r"
-saved = "{prefix}&aZapisano i zastosowano ustawienie &f{setting}&r&a.&r"
-save_failed = "{prefix}&cNie udało się zastosować ustawienia &f{setting}&r&c: {reason}&r"
+[runtime.update]
+available = "{prefix}&r &7› &7&e{new}&7 jest dostępny (zainstalowano: &f{old}&7).&r\n&7Wydanie: &b{url}&r"
 
 [command.feedback]
-failed = "{prefix}&cNie udało się wykonać komendy. Szczegóły znajdziesz w konsoli.&r"
+version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
+failed = "{prefix}&r &7› &7&cNie udało się wykonać komendy. Szczegóły znajdziesz w konsoli.&r"
+
+[command.feedback.config]
+opened = "{prefix}&r &7› &7&7Otwarto&7 pełny edytor konfiguracji w grze.&r"
+saved = "{prefix}&r &7› &7&a{setting}&r &7zmieniono z &f{old}&r &7na &f{new}&r&7.&r"
+save_failed = "{prefix}&r &7› &7&cNie udało się zastosować ustawienia &f{setting}&r&c: {reason}&r"
+
+[command.feedback.debug]
+started = "{prefix}&r &7› &7&7Zbieranie danych diagnostycznych serwera i {prefix}…&r"
+busy = "{prefix}&r &7› &7&eRaport diagnostyczny {prefix} jest już tworzony.&r"
+saved = "{prefix}&r &7› &7&7Raport&7 diagnostyczny zapisano w &f{path}&r&7.&r"
+uploaded = "{prefix}&r &7› &7&7Przesłano&7 raport diagnostyczny:&r &b&n{url}&r"
+link_hover = "&7Otwórz publiczny raport mclo.gs.&r"
+upload_failed = "{prefix}&r &7› &7&eRaport lokalny został zapisany, ale przesyłanie do mclo.gs nie powiodło się. Szczegóły znajdziesz w konsoli.&r"
+failed = "{prefix}&r &7› &7&cNie udało się utworzyć raportu diagnostycznego. Szczegóły znajdziesz w konsoli.&r"
 
 [command.status]
-header = "{prefix}&d&lStan ShapedPortals&r"
-config = "{prefix}&7Tworzenie:&r {enabled} &8|&r &7Język:&r &f{language}&r &8|&r &7Automatyczne wczytywanie:&r {hot_reload}"
-portals = "{prefix}&7Zarządzane portale:&r &f{portals}&r &8|&r &7Komórki wewnętrzne:&r &f{cells}&r"
-attempts = "{prefix}&7Próby:&r &f{attempts}&r &8|&r &7Utworzone:&r &a{created}&r &8|&r &7Odrzucone:&r &c{rejected}&r"
-compatibility = "{prefix}&7Artefakt:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Harmonogram:&r &f{scheduler}&r"
+header = "{prefix}&r &7› &7&d&lStan {prefix}&r"
+config = "{prefix}&r &7› &7&7Tworzenie:&r {enabled} &8|&r &7Język:&r &f{language}&r &8|&r &7Automatyczne wczytywanie:&r {hot_reload}"
+portals = "{prefix}&r &7› &7&7Zarządzane portale:&r &f{portals}&r &8|&r &7Komórki wewnętrzne:&r &f{cells}&r"
+attempts = "{prefix}&r &7› &7&7Próby:&r &f{attempts}&r &8|&r &7Utworzone:&r &a{created}&r &8|&r &7Odrzucone:&r &c{rejected}&r"
+compatibility = "{prefix}&r &7› &7&7Artefakt:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Harmonogram:&r &f{scheduler}&r"
 
 [command.description]
-root = "Pomoc i administracja ShapedPortals"
+version = "Wyświetl zainstalowaną wersję {prefix}"
+root = "Pomoc i administracja {prefix}"
 config = "Otwórz pełny edytor konfiguracji w grze"
-language = "Wybierz swój język lub domyślny język serwera"
-debugdump = "Utwórz raport diagnostyczny i opcjonalnie go prześlij"
+language = "Wybierz dostępny język {prefix}"
+debug = "Narzędzia diagnostyczne {prefix}"
+debug_dump = "Utwórz pełny raport diagnostyczny {prefix}"
 portals = "Wyświetl wszystkie zarządzane portale i ich skróty teleportacji"
 teleport = "Bezpiecznie teleportuj się obok zarządzanego portalu lub wyświetl portale, jeśli go nie podano"
 status = "Pokaż statystyki zarządzanych portali i prób"
 
 [command.parameter]
-debugdump_upload = "Prześlij raport do mclo.gs"
+locale = "Dostępne ustawienia regionalne języka"
 page = "Strona listy portali, liczona od jednego"
 portal = "UUID portalu, unikalny prefiks lub list"
+upload = "Prześlij raport, gdy publiczne przesyłanie jest włączone"
 
 [portal.notice]
-created = "{prefix}&dUtworzono portal o dowolnym kształcie z {blocks} blokami wewnętrznymi.&r"
-failed = "{prefix}&cTa rama nie może stać się portalem o dowolnym kształcie: &f{reason}&r&c.&r"
+nether_created = "{prefix}&r &7› &7&7Utworzono&7 portal o dowolnym kształcie z &f{blocks}&7 blokami wewnętrznymi.&r"
+end_created = "{prefix}&r &7› &7&7End&7&r &7Utworzono portal o dowolnym kształcie z &f{blocks}&7 blokami wewnętrznymi.&r"
+failed = "{prefix}&r &7› &7&cTa rama nie może stać się portalem o dowolnym kształcie: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lUtworzono portal do Netheru&r"
+end_created = "&5&lUtworzono portal do Endu&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&cObok &f{portal}&r&c nie ma bezpiecznego miejsca do stania. &eKliknij ten sam portal ponownie w ciągu &f{seconds}&r&e sekund, aby mimo to teleportować się do jego wnętrza.&r"
+unsafe = "{prefix}&r &7› &7&cObok &f{portal}&r&c nie ma bezpiecznego miejsca do stania. &eKliknij ten sam portal ponownie w ciągu &f{seconds}&r&e sekund, aby mimo to teleportować się do jego wnętrza.&r"
 
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eIstniejąca rama używa &f{materials}&r&e; z tych materiałów nie można tworzyć nowych portali.&r"
 empty = "&eNie zarejestrowano żadnych zarządzanych portali o dowolnym kształcie.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Położenie:&r &f{x}, {y}, {z}&r &8•&r &7Oś:&r &f{axis}&r &8•&r &7Komórki:&r &f{blocks}&r\n&8  └&r &7Twórca:&r &f{creator}&r &8•&r &7Utworzono:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Położenie:&r &f{x}, {y}, {z}&r &8•&r &7Oś:&r &f{axis}&r &8•&r &7Komórki:&r &f{blocks}&r\n&8  └&r &7Twórca:&r &f{creator}&r &8•&r &7Utworzono:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aKliknij, aby teleportować się do tego portalu.&r"
 
 [portal.navigation.error]
-not_found = "{prefix}&cŻaden zarządzany portal nie pasuje do &f{portal}&r&c.&r"
-ambiguous = "{prefix}&cPrefiks &f{portal}&r&c pasuje do {matches} portali. Wpisz więcej znaków UUID.&r"
-removed = "{prefix}&cTen portal nie jest już zarejestrowany.&r"
-world_unavailable = "{prefix}&cŚwiat portalu &f{world}&r&c jest obecnie niedostępny.&r"
-destination_unavailable = "{prefix}&cMiejsce docelowe portalu jest tymczasowo niedostępne.&r"
-inactive = "{prefix}&cTen portal nie jest już aktywny. Jego kontrola integralności została dodana do kolejki.&r"
-no_safe_landing = "{prefix}&cObok tego portalu nie ma bezpiecznego miejsca do stania.&r"
+not_found = "{prefix}&r &7› &7&cŻaden zarządzany portal nie pasuje do &f{portal}&r&c.&r"
+ambiguous = "{prefix}&r &7› &7&cPrefiks &f{portal}&r&c pasuje do {matches} portali. Wpisz więcej znaków UUID.&r"
+removed = "{prefix}&r &7› &7&cTen portal nie jest już zarejestrowany.&r"
+world_unavailable = "{prefix}&r &7› &7&cŚwiat portalu &f{world}&r&c jest obecnie niedostępny.&r"
+destination_unavailable = "{prefix}&r &7› &7&cMiejsce docelowe portalu jest tymczasowo niedostępne.&r"
+inactive = "{prefix}&r &7› &7&cTen portal nie jest już aktywny. Jego kontrola integralności została dodana do kolejki.&r"
+no_safe_landing = "{prefix}&r &7› &7&cObok tego portalu nie ma bezpiecznego miejsca do stania.&r"
 
 [portal.navigation.teleport]
-preparing = "{prefix}&7Przygotowywanie miejsca docelowego dla &f{portal}&r&7…&r"
-success = "{prefix}&aTeleportowano obok &f{portal}&r&a w świecie &f{world}&r&a.&r"
-failed = "{prefix}&cTeleportacja do portalu nie została ukończona. Mogła zostać anulowana przez inną wtyczkę.&r"
+preparing = "{prefix}&r &7› &7&7Przygotowywanie miejsca docelowego dla &f{portal}&r&7…&r"
+success = "{prefix}&r &7› &7&7Teleportowano&7 obok &f{portal}&r&7 w świecie &f{world}&r&7.&r"
+failed = "{prefix}&r &7› &7&cTeleportacja do portalu nie została ukończona. Mogła zostać anulowana przez inną wtyczkę.&r"
 
 [hud]
-title = "&d&lShapedPortals&r"
+title = "{prefix}"
 success = "&aPowodzenie&r"
 failure = "&cAkcja nie powiodła się&r"
-info = "&dShapedPortals&r"
+info = "{prefix}"
 
 [gui.title]
-root = "&5Konfiguracja ShapedPortals&r"
-category = "&5ShapedPortals&r &8›&r {category}"
+root = "&5Konfiguracja {prefix}&r"
+category = "{prefix}&r &7› &7{category}"
 
 [gui.category]
 general = "&dOgólne&r"
@@ -102,12 +172,10 @@ hot_reload = "&dAutomatyczne wczytywanie&r"
 integrity = "&dIntegralność&r"
 presentation = "&dPrezentacja&r"
 debug = "&dDiagnostyka&r"
-
 languages = "&dJęzyki&r"
 
 [gui.navigation]
 back = "&eWstecz&r"
-reload = "&bWczytaj pliki ponownie&r"
 close = "&cZamknij&r"
 
 [gui.lore]
@@ -115,23 +183,27 @@ state = "&7Obecna wartość:&r {value}"
 toggle = "&8Kliknij, aby przełączyć.&r"
 number = "&8Lewy +1, prawy -1, Shift ×10, upuść, aby wpisać.&r"
 text = "&8Kliknij, aby wpisać nową wartość na czacie.&r"
-language = "&8Wybierz swój język lub domyślny język serwera&r"
+language = "&8Kliknij, aby wybrać dostępny język, lub wpisz ustawienia regionalne.&r"
 category = "&8Kliknij, aby edytować wszystkie ustawienia w tej kategorii.&r"
 
 [gui.prompt]
-request = "{prefix}&eWpisz na czacie nową wartość ustawienia &f{setting}&r&e.&r"
-list = "{prefix}&7Oddziel elementy listy przecinkami. Wpisz &fnone&r&7, aby utworzyć pustą listę.&r"
-cancel = "{prefix}&7Wpisz &fcancel&r&7, aby zatrzymać. To zapytanie wygaśnie po 60 sekundach.&r"
-cancelled = "{prefix}&eAnulowano edycję konfiguracji.&r"
-timeout = "{prefix}&eEdycja konfiguracji wygasła bez wprowadzenia zmian.&r"
+request = "{prefix}&r &7› &7&eWpisz na czacie nową wartość ustawienia &f{setting}&r&e.&r"
+list = "{prefix}&r &7› &7&7Oddziel elementy listy przecinkami. Wpisz &fnone&r&7, aby utworzyć pustą listę.&r"
+cancel = "{prefix}&r &7› &7&7Wpisz &fcancel&r&7, aby zatrzymać. To zapytanie wygaśnie po 60 sekundach.&r"
+cancelled = "{prefix}&r &7› &7&eAnulowano edycję konfiguracji.&r"
+timeout = "{prefix}&r &7› &7&eEdycja konfiguracji wygasła bez wprowadzenia zmian.&r"
 
 [gui.language]
-option = "{status} &f{locale}&r &8—&r &7{name}&r"
+type = "&7Wpisz ustawienia regionalne na czacie, aby je utworzyć lub wybrać.&r"
+option = "{status} &f{locale}&r &8›&r &7{name}&r"
+hover = "&7Kliknij, aby wybrać &f{locale}&r&7.&r"
+empty = "&eNie znaleziono dostępnych języków; wpisz ustawienia regionalne, aby utworzyć nowy.&r"
 current = "&7Bieżąca wartość:&r {value}"
 variables = "&7Bieżące zmienne / symbole zastępcze:&r &f{variables}&r"
 changed = "&f{old}&r &7zmieniono na&r &f{new}&r"
 
 [gui.setting.general]
+update_notifications = "&dPowiadomienia o aktualizacjach GitHub&r"
 enabled = "&dTworzenie portali&r"
 language = "&dAktywne ustawienia regionalne&r"
 require_create_permission = "&dWymagaj uprawnienia do tworzenia&r"
@@ -141,22 +213,32 @@ failure_feedback = "&dInformacje zwrotne o błędach portalu&r"
 enabled = "&dAnonimowe statystyki bStats&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dMinimalna liczba bloków wewnętrznych&r"
-maximum_interior_blocks = "&dMaksymalna liczba bloków wewnętrznych&r"
-maximum_width = "&dMaksymalna szerokość&r"
-maximum_height = "&dMaksymalna wysokość&r"
-frame_materials = "&dMateriały ramy&r"
-interior_materials = "&dMateriały wewnętrzne&r"
+minimum_interior_blocks = "&dNether Minimalna liczba bloków wewnętrznych&r"
+maximum_interior_blocks = "&dNether Maksymalna liczba bloków wewnętrznych&r"
+maximum_width = "&dNether Maksymalna szerokość&r"
+maximum_height = "&dNether Maksymalna wysokość&r"
+frame_materials = "&dNether Materiały ramy&r"
+interior_materials = "&dNether Materiały wewnętrzne&r"
 ignition_causes = "&dPrzyczyny zapłonu&r"
 allowed_worlds = "&dDozwolone światy&r"
 denied_worlds = "&dZabronione światy&r"
 deduplication_millis = "&dUsuwanie duplikatów w milisekundach&r"
+end_portal_creation = "&dEnd Tworzenie portali&r"
+end_minimum_interior_blocks = "&dEnd Minimalna liczba bloków wewnętrznych&r"
+end_maximum_interior_blocks = "&dEnd Maksymalna liczba bloków wewnętrznych&r"
+end_maximum_width = "&dEnd Maksymalna szerokość&r"
+end_maximum_length = "&dEnd Maksymalna szerokość&r"
+end_interior_materials = "&dEnd Materiały wewnętrzne&r"
 
 [gui.setting.effects]
-creation_sound = "&dDźwięk tworzenia&r"
-creation_sound_type = "&dTyp dźwięku tworzenia&r"
-creation_sound_volume = "&dGłośność dźwięku tworzenia&r"
-creation_sound_pitch = "&dWysokość dźwięku tworzenia&r"
+creation_sound = "&dNether Dźwięk tworzenia&r"
+creation_sound_type = "&dNether Typ dźwięku tworzenia&r"
+creation_sound_volume = "&dNether Głośność dźwięku tworzenia&r"
+creation_sound_pitch = "&dNether Wysokość dźwięku tworzenia&r"
+end_creation_sound = "&dEnd Dźwięk tworzenia&r"
+end_creation_sound_type = "&dEnd Typ dźwięku tworzenia&r"
+end_creation_sound_volume = "&dEnd Głośność dźwięku tworzenia&r"
+end_creation_sound_pitch = "&dEnd Wysokość dźwięku tworzenia&r"
 
 [gui.setting.hot_reload]
 enabled = "&dAutomatyczne wczytywanie&r"
@@ -174,6 +256,8 @@ splash_screen = "&dEkran startowy&r"
 command_sounds = "&dDźwięki komend&r"
 command_overlays = "&dNakładki komend&r"
 portal_notices = "&dKanały powiadomień portalu&r"
+nether_creation_notices = "&dNether Kanały powiadomień portalu&r"
+end_creation_notices = "&dEnd Kanały powiadomień portalu&r"
 overlay_duration_ticks = "&dCzas nakładki w tickach&r"
 title_fade_in_ticks = "&dPojawianie się tytułu w tickach&r"
 title_stay_ticks = "&dCzas wyświetlania tytułu w tickach&r"
@@ -209,6 +293,8 @@ optional = "Ten parametr jest opcjonalny."
 required = "Ten parametr jest wymagany."
 type = "Ten parametr jest typu {type}."
 
+[director.runtime]
+
 [director.runtime.error]
 conversion_failed = "Nie można przekonwertować \"{value}\" na {type} dla {parameter}"
 default_parse_failed = "Nie można odczytać wartości domyślnej parametru {parameter}"
@@ -219,5 +305,135 @@ unexpected_argument = "Nieoczekiwany argument \"{argument}\". Parametry opcjonal
 unclosed_group = "Brak zamykającego \"]\" dla parametru {key}"
 unknown_parameter = "Nieznany klucz parametru: {key}"
 
-[director.runtime]
-usage = "Użycie: {usage}"
+[language.menu]
+your_language = "Twój język"
+reset_your_language = "Zresetuj swój język"
+server_default = "Domyślny język serwera"
+edit_messages = "Edytuj komunikaty językowe"
+use_server_default = "Użyj domyślnego języka serwera"
+current = "Bieżący: {locale}"
+current_with_personal = "Bieżący: {locale} (Twój: {personal})"
+your_description = "Zmień tylko komunikaty, które widzisz."
+reset_description = "Użyj domyślnego języka serwera."
+server_description = "Zmień domyślny język serwera."
+edit_description = "Otwórz edytor komunikatów dla każdego języka."
+select_description = "Kliknij, aby wybrać ten język."
+remove_personal_description = "Usuń swój osobisty wybór języka."
+no_controls = "Nie masz dostępu do ustawień języka."
+command = "Polecenie: {command}"
+selected = "wybrany"
+all-volmit-plugins = "Wszystkie wtyczki Volmit"
+
+[language.error]
+stopping = "{prefix}&r &7› &7&cWybór języka jest niedostępny podczas zatrzymywania wtyczki."
+editor-player-only = "{prefix}&r &7› &7&cOtwórz edytor języka w grze."
+no-providers = "{prefix}&r &7› &7&cBrak dostępnych dostawców języków Volmit."
+numeric-page = "{prefix}&r &7› &7&cPodaj numer strony."
+personal-player-only = "{prefix}&r &7› &7&cPreferencje językowe gracza muszą być wybrane w grze."
+personal-permission = "{prefix}&r &7› &7&cNie masz pozwolenia na wybranie języka."
+plugin-personal-permission = "{prefix}&r &7› &7&cNie masz uprawnienia do wyboru swojego języka we wtyczce {prefix}."
+plugin-server-permission = "{prefix}&r &7› &7&cNie masz uprawnienia do zmiany języka serwera we wtyczce {prefix}."
+server-locale-required = "{prefix}&r &7› &7&cWybierz kod języka, np. en_US, jako domyślny język serwera."
+unavailable-for-all = "{prefix}&r &7› &7&cJęzyk {locale} nie jest dostępny we wszystkich wybranych wtyczkach."
+
+[language.usage]
+editor = "{prefix}&r &7› &7&7Użycie: /{command} language server edit [locale]"
+selection = "{prefix}&r &7› &7&7Użycie: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "{prefix}&r &7› &7&7Użycie: /volmit plugins languages [locale]"
+
+[language.selection]
+preparing = "{prefix}&r &7› &7&7Przygotowywanie języka {locale} dla {target}..."
+save-failed = "{prefix}&r &7› &7&cnie udało się zapisać wyboru języka; sprawdź konsolę serwera."
+english-fallback = "{prefix}&r &7› &7&e{locale} jest niedostępny; używany będzie angielski (en_US)."
+personal-selected = "{prefix}&r &7› &7&7Twój język jest teraz {locale}."
+server-selected = "{prefix}&r &7› &7&7język serwera jest teraz {locale}."
+server-default-selected = "{prefix}&r &7› &7&7twój język jest teraz zgodny z domyślnym językiem serwera."
+
+[language.editor]
+title = "{prefix} › {section}"
+loading = "{prefix}&r &7› &7&7Wczytywanie wiadomości w języku {locale}..."
+
+[language.editor.section]
+languages = "Języki"
+search = "Szukaj"
+search-title = "{locale} / Szukaj"
+group-title = "{locale} / {group}"
+
+[language.editor.prompt]
+search = "{prefix}&r &7› &7&7Wyszukaj klucz lub tekst wiadomości. Wpisz cancel, aby wrócić."
+value = "{prefix}&r &7› &7&7Wpisz na czacie nową wartość dla {key}."
+current = "{prefix}&r &7› &7&7Bieżąca wartość: {value}"
+variables = "{prefix}&r &7› &7&7Zmienne: {variables}"
+guidance = "{prefix}&r &7› &7&7Użyj \\n dla nowej linii, \\\\ dla odwrotnego ukośnika lub wpisz cancel, aby wrócić."
+
+[language.editor.input]
+expired = "{prefix}&r &7› &7&eCzas na wpisanie tekstu w edytorze języka minął."
+too-long = "{prefix}&r &7› &7&cWpisany tekst może mieć najwyżej {maximum} znaków."
+unable-to-save = "{prefix}&r &7› &7&cNie udało się zapisać: {reason}"
+
+[language.editor.navigation]
+back = "&eWstecz&r"
+close = "&cZamknij&r"
+previous-page = "&ePoprzednia strona&r"
+next-page = "&eNastępna strona&r"
+
+[language.editor.search]
+messages = "Wyszukaj wiadomości"
+messages-lore = "Kliknij, aby przeszukać wszystkie wiadomości."
+clear = "Wyczyść wyszukiwanie"
+
+[language.editor.message]
+current-value = "&7Bieżąca wartość:&r"
+variables = "&8{variables}&r"
+edit-plural = "&7Kliknij, aby edytować formę liczby mnogiej.&r"
+edit-lines = "&7Kliknij, aby edytować poszczególne linie.&r"
+edit-chat = "&7Kliknij, aby edytować na czacie.&r"
+
+[language.editor.locale]
+open = "&8Kliknij, aby otworzyć ten język.&r"
+
+[language.editor.category]
+message-count = "&7{count} wiadomości&r"
+open = "&8Kliknij, aby otworzyć tę kategorię.&r"
+
+[language.editor.error]
+no-permission = "{prefix}&r &7› &7&cNie masz uprawnienia do edycji języków wtyczki {prefix}."
+unable-to-edit = "{prefix}&r &7› &7&cNie udało się edytować: {reason}"
+
+[language.editor.saved]
+summary = "{prefix}&r &7› &7&7Zapisano {locale}. Wybory języka pozostały bez zmian."
+change = "{prefix}&r &7› &7&7{key}: „{before}” zmieniono na „{after}”."
+
+[language.editor.part]
+line = "Linia {line}"
+
+[language.editor.value]
+none = "Brak"
+empty = "(pusty)"
+
+[debug]
+preparing = "{prefix}&r &7› &7&7Przygotowywanie raportu diagnostycznego dla {prefix}..."
+saved = "{prefix}&r &7› &7&7Zapisano raport diagnostyczny dla {prefix} w {path}."
+
+[debug.error]
+missing-permission = "{prefix}&r &7› &7&cBrak uprawnienia: {permission}"
+already-preparing = "{prefix}&r &7› &7&cRaport diagnostyczny dla {prefix} jest już przygotowywany."
+already-preparing-short = "{prefix}&r &7› &7&cRaport diagnostyczny jest już przygotowywany."
+schedule-failed = "{prefix}&r &7› &7&cNie można zaplanować utworzenia raportu diagnostycznego."
+provider-closed = "{prefix}&r &7› &7&cDostawca danych diagnostycznych został zamknięty."
+closed-before-capture = "{prefix}&r &7› &7&cDostawca danych diagnostycznych został zamknięty przed zebraniem danych do raportu."
+writer-schedule-failed = "{prefix}&r &7› &7&cNie można zaplanować zapisania raportu diagnostycznego."
+capture-failed = "{prefix}&r &7› &7&cNie można zebrać danych do raportu diagnostycznego. Sprawdź konsolę serwera."
+closed-before-write = "{prefix}&r &7› &7&cDostawca danych diagnostycznych został zamknięty przed zapisaniem raportu."
+write-failed = "{prefix}&r &7› &7&cNie można zapisać raportu diagnostycznego. Sprawdź konsolę serwera."
+
+[debug.upload]
+interrupted = "{prefix}&r &7› &7&7Przesyłanie raportu diagnostycznego zostało przerwane. Raport lokalny został zapisany."
+failed = "{prefix}&r &7› &7&cPrzesyłanie raportu diagnostycznego nie powiodło się. Raport lokalny został zapisany."
+completed = "{prefix}&r &7› &7&7Przesłano jako VolmitSoftware - {prefix} - v{version}."
+
+[debug.action]
+open = "Otwórz: {url}"
+open-description = "Otwórz przesłany raport diagnostyczny."
+copy-path = "Kopiuj lokalną ścieżkę"
+copy-path-description = "Skopiuj ścieżkę raportu lokalnego."

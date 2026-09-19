@@ -2,8 +2,10 @@ package com.volmit.shapedportals.portal;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.EndPortalFrame;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -51,6 +53,12 @@ public final class PortalEventListener implements Listener {
     public void onPlace(BlockPlaceEvent event) {
         Block block = event.getBlockPlaced();
         dirty(block);
+        if (event.canBuild()
+                && block.getBlockData() instanceof EndPortalFrame frame
+                && frame.hasEye()) {
+            portalService.attemptEnd(block, event.getPlayer());
+            return;
+        }
         if (block.getType() == Material.FIRE || block.getType() == Material.SOUL_FIRE) {
             portalService.attempt(block, event.getPlayer(), "PLACED_FIRE");
         }

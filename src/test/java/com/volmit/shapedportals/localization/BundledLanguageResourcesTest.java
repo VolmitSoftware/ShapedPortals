@@ -2,6 +2,7 @@ package com.volmit.shapedportals.localization;
 
 import art.arcane.volmlib.util.localization.MessageCatalog;
 import art.arcane.volmlib.util.localization.MessageKey;
+import art.arcane.volmlib.util.localization.BukkitLanguageMessages;
 import art.arcane.volmlib.util.localization.TextKey;
 import art.arcane.volmlib.util.localization.TextValue;
 import art.arcane.volmlib.util.localization.TomlLanguageParser;
@@ -72,7 +73,7 @@ class BundledLanguageResourcesTest {
                     .containsExactlyInAnyOrderElementsOf(expectedPlaceholders);
             assertThat(content)
                     .describedAs("sectioned TOML in %s", resource)
-                    .contains("[runtime]", "[command.feedback.reload]", "[portal.navigation.list]")
+                    .contains("[runtime]", "[language.menu]", "[portal.navigation.list]")
                     .doesNotContain("[messages]");
             assertThat(messages.get("portal.navigation.list.hover"))
                     .describedAs("two-line portal hover in %s", resource)
@@ -84,6 +85,15 @@ class BundledLanguageResourcesTest {
             assertThat(messages.keySet())
                     .describedAs("catalog coverage in %s", resource)
                     .containsExactlyInAnyOrderElementsOf(catalog.ids());
+            for (MessageKey key : BukkitLanguageMessages.keys()) {
+                TextKey textKey = (TextKey) key;
+                if (!hasTranslatableText(textKey)) {
+                    continue;
+                }
+                assertThat(messages.get(key.id()))
+                        .describedAs("translated shared language menu key %s in %s", key.id(), resource)
+                        .isNotEqualTo(textKey.english());
+            }
 
             int changed = 0;
             int ampersandFormatted = 0;
@@ -97,7 +107,8 @@ class BundledLanguageResourcesTest {
                 if (template.contains("\uFFFD")) {
                     invalid.add(key.id() + " contains a replacement character");
                 }
-                if (MINI_MESSAGE_FORMATTING.matcher(template).find()) {
+                if (!key.equals(ShapedMessages.PREFIX) && !key.equals(ShapedMessages.VERSION)
+                        && MINI_MESSAGE_FORMATTING.matcher(template).find()) {
                     invalid.add(key.id() + " uses MiniMessage formatting instead of classic ampersand codes");
                 }
                 if (AMPERSAND_FORMATTING.matcher(template).find()) {
@@ -128,5 +139,11 @@ class BundledLanguageResourcesTest {
             placeholders.add(matcher.group(1));
         }
         return Set.copyOf(placeholders);
+    }
+
+    private boolean hasTranslatableText(TextKey key) {
+        String text = PLACEHOLDER.matcher(key.english()).replaceAll("");
+        text = AMPERSAND_FORMATTING.matcher(text).replaceAll("");
+        return text.codePoints().anyMatch(Character::isLetter);
     }
 }

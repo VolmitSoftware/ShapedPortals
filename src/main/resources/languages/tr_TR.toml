@@ -1,98 +1,168 @@
-# ShapedPortals dili: tr_TR
-# Bu dosya yalnızca eksikse indirilir; languages/tr_TR.toml dosyasını doğrudan düzenleyin.
-# Yerel değişiklikler otomatik olarak değiştirilmez; eksik değerler İngilizceyi kullanır.
+# ShapedPortals — tr_TR
+#
+# === Dosyayı düzenleme ===
+# plugins/ShapedPortals/languages/tr_TR.toml
+# Bu dosyayı doğrudan düzenleyebilirsiniz. Yerel değişiklikler korunur; eksik veya geçersiz girdiler yerleşik İngilizce metni kullanır.
+# /shapedportals language server edit tr_TR
+#
+# === Önek ===
+# {prefix}  runtime.prefix içindeki biçimlendirilmiş eklenti adı; ayırıcı mesajın içindedir. İkisini de gizlemek için {prefix}&r &7› &7 bölümünü kaldırın.
+#
+# === Biçimlendirme ===
 # Renkler: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B ve [RRGGBB]. Özel biçimlendirme için MiniMessage da kullanılabilir.
-# Yer tutucular iletiye özeldir. Yalnızca iletide zaten bulunan yer tutucuları koruyun ve adlarını değiştirmeyin.
-# Komutlar: {argument}=beklenmeyen argüman; {command}=komut yolu; {key}=parametre anahtarı; {parameter}=parametre adı; {type}=tür; {usage}=komut kullanımı.
-# Çalışma: {attempts}=oluşturma denemeleri; {created}=oluşturulan sayı veya zaman; {rejected}=reddedilen denemeler; {enabled}=oluşturma durumu; {hot_reload}=yeniden yükleme durumu; {scheduler}=zamanlayıcı.
-# Portallar: {portal}=tanımlayıcı; {portals}=yönetilen sayı; {id}=kısa ID; {uuid}=tam UUID; {world}=dünya; {axis}=eksen; {x}/{y}/{z}=çapa koordinatları; {blocks}=portal hücreleri; {cells}=tüm hücreler; {creator}=oluşturan; {materials}=kaydedilmiş çerçeve malzemeleri.
-# Listeler: {matches}=eşleşen portallar; {seconds}=saniye cinsinden onay süresi.
-# Yapılandırma: {category}=kategori; {setting}=ayar adı; {status}=seçim işareti; {value}=geçerli, varsayılan veya ham değer; {language}=etkin dil; {locale}=yerel ayar; {name}=dilin tam adı.
-# Dil düzenleyici: {variables}=geçerli yer tutucular; {old}=önceki değer; {new}=yeni değer.
-# Diğer: {duration}=milisaniye; {reason}=hata nedeni.
-# Önek: {prefix}=genel runtime.prefix değeri. Yalnızca belirli bir iletide gizlemek için o iletiden {prefix} öğesini kaldırın.
 # & veya [ karakterini olduğu gibi göstermek için önüne ters eğik çizgi koyun.
+#
+# === Değişkenler ===
+# Değişken adlarını değiştirmeyin ve yalnızca ilgili iletinin değişkenlerini kullanın.
+#   {after}  Değişim sonrası Değer
+#   {argument}  beklenmeyen argüman
+#   {attempts}  oluşturma denemeleri
+#   {axis}  eksen
+#   {before}  Değişim öncesinde değer
+#   {blocks}  portal hücreleri
+#   {category}  kategori
+#   {cells}  tüm hücreler
+#   {command}  komut yolu
+#   {count}  eşleşen giriş sayısı sayısı
+#   {created}  oluşturulan sayı veya zaman
+#   {creator}  oluşturan
+#   {enabled}  oluşturma durumu
+#   {group}  İzin veya oyuncu grubu
+#   {hot_reload}  yeniden yükleme durumu
+#   {id}  kısa ID
+#   {key}  parametre anahtarı
+#   {language}  etkin dil
+#   {line}  Source line or line number
+#   {locale}  yerel ayar
+#   {matches}  eşleşen portallar
+#   {materials}  kaydedilmiş çerçeve malzemeleri
+#   {maximum}  Maksimum izin verilen değer
+#   {name}  dilin tam adı
+#   {new}  yeni değer
+#   {old}  önceki değer
+#   {parameter}  parametre adı
+#   {path}  yerel rapor yolu
+#   {permission}  gerekli izin
+#   {personal}  kişisel yerel ayar
+#   {portal}  tanımlayıcı
+#   {portals}  yönetilen sayı
+#   {prefix}  runtime.prefix içindeki biçimlendirilmiş eklenti adı; ayırıcı mesajın içindedir. İkisini de gizlemek için {prefix}&r &7› &7 bölümünü kaldırın.
+#   {reason}  hata nedeni
+#   {rejected}  reddedilen denemeler
+#   {scheduler}  zamanlayıcı
+#   {seconds}  saniye cinsinden onay süresi
+#   {section}  Düzenleyici bölümü
+#   {setting}  ayar adı
+#   {status}  seçim işareti
+#   {target}  Hedef oyuncu, varlık veya değer
+#   {type}  tür
+#   {url}  genel URL
+#   {uuid}  tam UUID
+#   {value}  geçerli, varsayılan veya ham değer
+#   {variables}  geçerli yer tutucular
+#   {version}  eklenti sürümü
+#   {world}  dünya
+#   {x}  çapa koordinatları
+#   {y}  çapa koordinatları
+#   {z}  çapa koordinatları
 
 [runtime]
-prefix = "&d&lShapedPortals&r &8›&r "
-player_only = "{prefix}&cBu komut yalnızca bir oyuncu tarafından kullanılabilir.&r"
+prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
+player_only = "{prefix}&r &7› &7&cBu komut yalnızca bir oyuncu tarafından kullanılabilir.&r"
 
 [runtime.permission]
-denied = "{prefix}&cBunu yapmak için izniniz yok.&r"
+denied = "{prefix}&r &7› &7&cBunu yapmak için izniniz yok.&r"
 
 [runtime.hot_reload]
-success = "{prefix}&aYapılandırma ve dil dosyası değişiklikleri uygulandı.&r"
-failed = "{prefix}&cDosya değişiklikleri reddedildi; son geçerli ayarlar etkin kalmaya devam ediyor.&r"
+success = "{prefix}&r &7› &7&7Yapılandırma&7 ve dil dosyası değişiklikleri uygulandı.&r"
+failed = "{prefix}&r &7› &7&cDosya değişiklikleri reddedildi; son geçerli ayarlar etkin kalmaya devam ediyor.&r"
 
-[command.feedback.reload]
-success = "{prefix}&a&f{duration}&r&a ms içinde yeniden yüklendi.&r &7Dil:&r &f{locale}&r"
-failed = "{prefix}&cYeniden yükleme {duration} ms sonra başarısız oldu.&r &7Son geçerli ayarlar hâlâ etkin; ayrıntılı hata için konsola bakın.&r"
-
-[command.feedback.config]
-opened = "{prefix}&aEksiksiz oyun içi yapılandırma düzenleyicisi açıldı.&r"
-saved = "{prefix}&a&f{setting}&r&a kaydedildi ve uygulandı.&r"
-save_failed = "{prefix}&c&f{setting}&r&c uygulanamadı: {reason}&r"
+[runtime.update]
+available = "{prefix}&r &7› &7&e{new}&7 kullanılabilir (yüklü: &f{old}&7).&r\n&7Sürüm: &b{url}&r"
 
 [command.feedback]
-failed = "{prefix}&cKomut tamamlanamadı. Ayrıntılar için konsola bakın.&r"
+version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
+failed = "{prefix}&r &7› &7&cKomut tamamlanamadı. Ayrıntılar için konsola bakın.&r"
+
+[command.feedback.config]
+opened = "{prefix}&r &7› &7&7Eksiksiz&7 oyun içi yapılandırma düzenleyicisi açıldı.&r"
+saved = "{prefix}&r &7› &7&a{setting}&r &7değeri &f{old}&r &7yerine &f{new}&r &7olarak değiştirildi.&r"
+save_failed = "{prefix}&r &7› &7&c&f{setting}&r&c uygulanamadı: {reason}&r"
+
+[command.feedback.debug]
+started = "{prefix}&r &7› &7&7Sunucu ve {prefix} tanı bilgileri toplanıyor…&r"
+busy = "{prefix}&r &7› &7&eBir {prefix} tanı raporu zaten oluşturuluyor.&r"
+saved = "{prefix}&r &7› &7&7Tanı&7 raporu &f{path}&r&7 konumuna kaydedildi.&r"
+uploaded = "{prefix}&r &7› &7&7Tanı&7 raporu yüklendi:&r &b&n{url}&r"
+link_hover = "&7Herkese açık mclo.gs raporunu açın.&r"
+upload_failed = "{prefix}&r &7› &7&eYerel rapor kaydedildi ancak mclo.gs yüklemesi başarısız oldu. Ayrıntılar için konsola bakın.&r"
+failed = "{prefix}&r &7› &7&cTanı raporu oluşturulamadı. Ayrıntılar için konsola bakın.&r"
 
 [command.status]
-header = "{prefix}&d&lShapedPortals çalışma durumu&r"
-config = "{prefix}&7Oluşturma:&r {enabled} &8|&r &7Dil:&r &f{language}&r &8|&r &7Canlı yeniden yükleme:&r {hot_reload}"
-portals = "{prefix}&7Yönetilen portallar:&r &f{portals}&r &8|&r &7İç bloklar:&r &f{cells}&r"
-attempts = "{prefix}&7Denemeler:&r &f{attempts}&r &8|&r &7Oluşturulan:&r &a{created}&r &8|&r &7Reddedilen:&r &c{rejected}&r"
-compatibility = "{prefix}&7Derleme:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Zamanlayıcı:&r &f{scheduler}&r"
+header = "{prefix}&r &7› &7çalışma durumu&r"
+config = "{prefix}&r &7› &7&7Oluşturma:&r {enabled} &8|&r &7Dil:&r &f{language}&r &8|&r &7Canlı yeniden yükleme:&r {hot_reload}"
+portals = "{prefix}&r &7› &7&7Yönetilen portallar:&r &f{portals}&r &8|&r &7İç bloklar:&r &f{cells}&r"
+attempts = "{prefix}&r &7› &7&7Denemeler:&r &f{attempts}&r &8|&r &7Oluşturulan:&r &a{created}&r &8|&r &7Reddedilen:&r &c{rejected}&r"
+compatibility = "{prefix}&r &7› &7&7Derleme:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Zamanlayıcı:&r &f{scheduler}&r"
 
 [command.description]
-root = "ShapedPortals yardım ve yönetimi"
+version = "Yüklü {prefix} sürümünü göster"
+root = "{prefix} yardım ve yönetimi"
 config = "Eksiksiz oyun içi yapılandırma düzenleyicisini aç"
-language = "Kendi dilinizi veya sunucunun varsayılan dilini seçin"
-debugdump = "Tanılama raporu oluştur ve isteğe bağlı olarak yükle"
+language = "Kullanılabilir bir {prefix} dili seç"
+debug = "{prefix} tanı araçları"
+debug_dump = "Kapsamlı bir {prefix} tanı raporu oluştur"
 portals = "Yönetilen tüm portalları ve ışınlanma kısayollarını listele"
 teleport = "Yönetilen bir portalın yanına güvenle ışınlan veya belirtilmezse portalları listele"
 status = "Yönetilen portal ve deneme istatistiklerini göster"
 
 [command.parameter]
-debugdump_upload = "Raporu mclo.gs üzerine yükle"
+locale = "Kullanılabilir dil yerel ayarı"
 page = "Birden başlayan portal listesi sayfası"
 portal = "Portal UUID değeri, benzersiz önek veya list"
+upload = "Herkese açık yüklemeler etkinse raporu yükle"
 
 [portal.notice]
-created = "{prefix}&d{blocks} iç bloğa sahip şekilli bir portal oluşturuldu.&r"
-failed = "{prefix}&cBu çerçeve şekilli bir portala dönüşemez: &f{reason}&r&c.&r"
+nether_created = "{prefix}&r &7› &7&7&f{blocks}&7 iç bloğa sahip şekilli bir portal oluşturuldu.&r"
+end_created = "{prefix}&r &7› &7&7End&7&r &7&f{blocks}&7 iç bloğa sahip şekilli bir portal oluşturuldu.&r"
+failed = "{prefix}&r &7› &7&cBu çerçeve şekilli bir portala dönüşemez: &f{reason}&r&c.&r"
+
+[portal.title]
+nether_created = "&5&lNether Portalı Oluşturuldu&r"
+end_created = "&5&lEnd Portalı Oluşturuldu&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&c&f{portal}&r&c yanında güvenli bir durma alanı yok. &eYine de içine ışınlanmak için &f{seconds}&r&e saniye içinde aynı portala tekrar tıklayın.&r"
+unsafe = "{prefix}&r &7› &7&c&f{portal}&r&c yanında güvenli bir durma alanı yok. &eYine de içine ışınlanmak için &f{seconds}&r&e saniye içinde aynı portala tekrar tıklayın.&r"
 
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eMevcut çerçeve &f{materials}&r&e kullanıyor; bu malzemelerle yeni portal oluşturulamaz.&r"
 empty = "&eKayıtlı yönetilen şekilli portal yok.&r"
-entry = "&d{id}&r &8›&r &f{world}&r\n&8  ├&r &7Konum:&r &f{x}, {y}, {z}&r &8•&r &7Eksen:&r &f{axis}&r &8•&r &7Hücreler:&r &f{blocks}&r\n&8  └&r &7Oluşturan:&r &f{creator}&r &8•&r &7Oluşturuldu:&r &f{created}&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Konum:&r &f{x}, {y}, {z}&r &8•&r &7Eksen:&r &f{axis}&r &8•&r &7Hücreler:&r &f{blocks}&r\n&8  └&r &7Oluşturan:&r &f{creator}&r &8•&r &7Oluşturuldu:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aBu portala ışınlanmak için tıklayın.&r"
 
 [portal.navigation.error]
-not_found = "{prefix}&c&f{portal}&r&c ile eşleşen yönetilen bir portal yok.&r"
-ambiguous = "{prefix}&c&f{portal}&r&c öneki {matches} portalla eşleşiyor. UUID değerinin daha fazlasını girin.&r"
-removed = "{prefix}&cBu portal artık kayıtlı değil.&r"
-world_unavailable = "{prefix}&c&f{world}&r&c portal dünyası şu anda kullanılamıyor.&r"
-destination_unavailable = "{prefix}&cPortal hedefi geçici olarak kullanılamıyor.&r"
-inactive = "{prefix}&cBu portal artık etkin değil. Bütünlük denetimi sıraya alındı.&r"
-no_safe_landing = "{prefix}&cBu portalın yanında güvenli bir durma alanı yok.&r"
+not_found = "{prefix}&r &7› &7&c&f{portal}&r&c ile eşleşen yönetilen bir portal yok.&r"
+ambiguous = "{prefix}&r &7› &7&c&f{portal}&r&c öneki {matches} portalla eşleşiyor. UUID değerinin daha fazlasını girin.&r"
+removed = "{prefix}&r &7› &7&cBu portal artık kayıtlı değil.&r"
+world_unavailable = "{prefix}&r &7› &7&c&f{world}&r&c portal dünyası şu anda kullanılamıyor.&r"
+destination_unavailable = "{prefix}&r &7› &7&cPortal hedefi geçici olarak kullanılamıyor.&r"
+inactive = "{prefix}&r &7› &7&cBu portal artık etkin değil. Bütünlük denetimi sıraya alındı.&r"
+no_safe_landing = "{prefix}&r &7› &7&cBu portalın yanında güvenli bir durma alanı yok.&r"
 
 [portal.navigation.teleport]
-preparing = "{prefix}&7&f{portal}&r&7 için hedef hazırlanıyor…&r"
-success = "{prefix}&a&f{world}&r&a dünyasındaki &f{portal}&r&a portalının yanına ışınlandınız.&r"
-failed = "{prefix}&cPortal ışınlanması tamamlanmadı. Başka bir eklenti tarafından iptal edilmiş olabilir.&r"
+preparing = "{prefix}&r &7› &7&7&f{portal}&r&7 için hedef hazırlanıyor…&r"
+success = "{prefix}&r &7› &7&7&f{world}&r&7 dünyasındaki &f{portal}&r&7 portalının yanına ışınlandınız.&r"
+failed = "{prefix}&r &7› &7&cPortal ışınlanması tamamlanmadı. Başka bir eklenti tarafından iptal edilmiş olabilir.&r"
 
 [hud]
-title = "&d&lShapedPortals&r"
+title = "{prefix}"
 success = "&aBaşarılı&r"
 failure = "&cİşlem başarısız&r"
-info = "&dShapedPortals&r"
+info = "{prefix}"
 
 [gui.title]
-root = "&5ShapedPortals Yapılandırması&r"
-category = "&5ShapedPortals&r &8›&r {category}"
+root = "{prefix} Yapılandırması&r"
+category = "{prefix}&r &7› &7{category}"
 
 [gui.category]
 general = "&dGenel&r"
@@ -102,12 +172,10 @@ hot_reload = "&dCanlı Yeniden Yükleme&r"
 integrity = "&dBütünlük&r"
 presentation = "&dSunum&r"
 debug = "&dTanılama&r"
-
 languages = "&dDiller&r"
 
 [gui.navigation]
 back = "&eGeri&r"
-reload = "&bDosyaları yeniden yükle&r"
 close = "&cKapat&r"
 
 [gui.lore]
@@ -115,23 +183,27 @@ state = "&7Geçerli:&r {value}"
 toggle = "&8Değiştirmek için tıklayın.&r"
 number = "&8Sol +1, sağ -1, shift ×10, yazmak için bırakma tuşu.&r"
 text = "&8Sohbette yeni bir değer yazmak için tıklayın.&r"
-language = "&8Kendi dilinizi veya sunucunun varsayılan dilini seçin&r"
+language = "&8Kullanılabilir bir dil seçmek veya yerel ayar yazmak için tıklayın.&r"
 category = "&8Bu kategorideki her ayarı düzenlemek için tıklayın.&r"
 
 [gui.prompt]
-request = "{prefix}&eSohbette &f{setting}&r&e için yeni bir değer yazın.&r"
-list = "{prefix}&7Liste girdilerini virgülle ayırın. Boş bir liste için &fnone&r&7 yazın.&r"
-cancel = "{prefix}&7Durdurmak için &fcancel&r&7 yazın. Bu istem 60 saniye içinde sona erer.&r"
-cancelled = "{prefix}&eYapılandırma düzenlemesi iptal edildi.&r"
-timeout = "{prefix}&eYapılandırma düzenlemesinin süresi hiçbir şey değişmeden doldu.&r"
+request = "{prefix}&r &7› &7&eSohbette &f{setting}&r&e için yeni bir değer yazın.&r"
+list = "{prefix}&r &7› &7&7Liste girdilerini virgülle ayırın. Boş bir liste için &fnone&r&7 yazın.&r"
+cancel = "{prefix}&r &7› &7&7Durdurmak için &fcancel&r&7 yazın. Bu istem 60 saniye içinde sona erer.&r"
+cancelled = "{prefix}&r &7› &7&eYapılandırma düzenlemesi iptal edildi.&r"
+timeout = "{prefix}&r &7› &7&eYapılandırma düzenlemesinin süresi hiçbir şey değişmeden doldu.&r"
 
 [gui.language]
-option = "{status} &f{locale}&r &8—&r &7{name}&r"
+type = "&7Bir dil ayarı oluşturmak veya seçmek için sohbete adını yazın.&r"
+option = "{status} &f{locale}&r &8›&r &7{name}&r"
+hover = "&7&f{locale}&r&7 seçmek için tıklayın.&r"
+empty = "&eKullanılabilir dil bulunamadı; oluşturmak için bir yerel ayar adı yazın.&r"
 current = "&7Geçerli değer:&r {value}"
 variables = "&7Geçerli değişkenler / yer tutucular:&r &f{variables}&r"
 changed = "&f{old}&r &7değerinden&r &f{new}&r &7değerine değiştirildi&r"
 
 [gui.setting.general]
+update_notifications = "&dGitHub güncelleme bildirimleri&r"
 enabled = "&dPortal oluşturma&r"
 language = "&dEtkin dil yerel ayarı&r"
 require_create_permission = "&dOluşturma izni gerektir&r"
@@ -141,22 +213,32 @@ failure_feedback = "&dPortal hatası geri bildirimi&r"
 enabled = "&dAnonim bStats istatistikleri&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dEn az iç blok&r"
-maximum_interior_blocks = "&dEn fazla iç blok&r"
-maximum_width = "&dEn fazla genişlik&r"
-maximum_height = "&dEn fazla yükseklik&r"
-frame_materials = "&dÇerçeve malzemeleri&r"
-interior_materials = "&dİç alan malzemeleri&r"
+minimum_interior_blocks = "&dNether En az iç blok&r"
+maximum_interior_blocks = "&dNether En fazla iç blok&r"
+maximum_width = "&dNether En fazla genişlik&r"
+maximum_height = "&dNether En fazla yükseklik&r"
+frame_materials = "&dNether Çerçeve malzemeleri&r"
+interior_materials = "&dNether İç alan malzemeleri&r"
 ignition_causes = "&dAteşleme nedenleri&r"
 allowed_worlds = "&dİzin verilen dünyalar&r"
 denied_worlds = "&dReddedilen dünyalar&r"
 deduplication_millis = "&dTekilleştirme milisaniyesi&r"
+end_portal_creation = "&dEnd Portal oluşturma&r"
+end_minimum_interior_blocks = "&dEnd En az iç blok&r"
+end_maximum_interior_blocks = "&dEnd En fazla iç blok&r"
+end_maximum_width = "&dEnd En fazla genişlik&r"
+end_maximum_length = "&dEnd En fazla genişlik&r"
+end_interior_materials = "&dEnd İç alan malzemeleri&r"
 
 [gui.setting.effects]
-creation_sound = "&dOluşturma sesi&r"
-creation_sound_type = "&dOluşturma sesi türü&r"
-creation_sound_volume = "&dOluşturma sesi seviyesi&r"
-creation_sound_pitch = "&dOluşturma sesi perdesi&r"
+creation_sound = "&dNether Oluşturma sesi&r"
+creation_sound_type = "&dNether Oluşturma sesi türü&r"
+creation_sound_volume = "&dNether Oluşturma sesi seviyesi&r"
+creation_sound_pitch = "&dNether Oluşturma sesi perdesi&r"
+end_creation_sound = "&dEnd Oluşturma sesi&r"
+end_creation_sound_type = "&dEnd Oluşturma sesi türü&r"
+end_creation_sound_volume = "&dEnd Oluşturma sesi seviyesi&r"
+end_creation_sound_pitch = "&dEnd Oluşturma sesi perdesi&r"
 
 [gui.setting.hot_reload]
 enabled = "&dCanlı yeniden yükleme&r"
@@ -174,6 +256,8 @@ splash_screen = "&dBaşlangıç karşılama ekranı&r"
 command_sounds = "&dKomut sesleri&r"
 command_overlays = "&dKomut katmanları&r"
 portal_notices = "&dPortal bildirim kanalları&r"
+nether_creation_notices = "&dNether Portal bildirim kanalları&r"
+end_creation_notices = "&dEnd Portal bildirim kanalları&r"
 overlay_duration_ticks = "&dKatman süresi (tik)&r"
 title_fade_in_ticks = "&dBaşlık belirme süresi (tik)&r"
 title_stay_ticks = "&dBaşlık kalma süresi (tik)&r"
@@ -209,6 +293,8 @@ optional = "Bu parametre isteğe bağlıdır."
 required = "Bu parametre zorunludur."
 type = "Bu parametrenin türü {type}."
 
+[director.runtime]
+
 [director.runtime.error]
 conversion_failed = "\"{value}\", {parameter} için {type} türüne dönüştürülemiyor"
 default_parse_failed = "{parameter} parametresinin varsayılan değeri ayrıştırılamıyor"
@@ -219,5 +305,135 @@ unexpected_argument = "Beklenmeyen bağımsız değişken \"{argument}\". İste�
 unclosed_group = "{key} parametresi için kapanış \"]\" karakteri eksik"
 unknown_parameter = "Bilinmeyen parametre anahtarı: {key}"
 
-[director.runtime]
-usage = "Kullanım: {usage}"
+[language.menu]
+your_language = "Diliniz"
+reset_your_language = "Dil seçiminizi sıfırla"
+server_default = "Sunucu varsayılanı"
+edit_messages = "Dil mesajlarını düzenle"
+use_server_default = "Sunucu varsayılanını kullan"
+current = "Geçerli: {locale}"
+current_with_personal = "Geçerli: {locale} (Sizin: {personal})"
+your_description = "Yalnızca gördüğünüz mesajları değiştirin."
+reset_description = "Sunucunun varsayılan dilini kullanın."
+server_description = "Sunucunun varsayılan dilini değiştirin."
+edit_description = "Her dil için mesaj düzenleyicisini açın."
+select_description = "Bu dili seçmek için tıklayın."
+remove_personal_description = "Kişisel dil seçiminizi kaldırın."
+no_controls = "Kullanabileceğiniz dil ayarı yok."
+command = "Komut: {command}"
+selected = "Seçili"
+all-volmit-plugins = "Tüm Volmit eklentileri"
+
+[language.error]
+stopping = "{prefix}&r &7› &7&cDil seçimi, eklenti durdurulduğunda kullanılamaz."
+editor-player-only = "{prefix}&r &7› &7&cOyundaki dil editörü açın."
+no-providers = "{prefix}&r &7› &7&cKullanılabilir Volmit dil sağlayıcısı yok."
+numeric-page = "{prefix}&r &7› &7&cSayfa numarasını rakamla girin."
+personal-player-only = "{prefix}&r &7› &7&cOyuncu dili tercihleri oyunda seçilmelidir."
+personal-permission = "{prefix}&r &7› &7&cDilinizi seçmek için izniniz yok."
+plugin-personal-permission = "{prefix}&r &7› &7&c{prefix} için kendi dilinizi seçme izniniz yok."
+plugin-server-permission = "{prefix}&r &7› &7&c{prefix} için sunucu dilini değiştirme izniniz yok."
+server-locale-required = "{prefix}&r &7› &7&cSunucunun varsayılan dili için en_US gibi bir dil kodu seçin."
+unavailable-for-all = "{prefix}&r &7› &7&c{locale} dili, seçilen eklentilerin tümünde kullanılamıyor."
+
+[language.usage]
+editor = "{prefix}&r &7› &7&7Kullanım: /{command} language server edit [locale]"
+selection = "{prefix}&r &7› &7&7Kullanım: /{command} language self [locale|reset] or server [locale]"
+volmit-selection = "{prefix}&r &7› &7&7Kullanım: /volmit plugins languages [locale]"
+
+[language.selection]
+preparing = "{prefix}&r &7› &7&7{target} için {locale} dili hazırlanıyor..."
+save-failed = "{prefix}&r &7› &7&cdil seçimi kaydedilemedi; sunucu konsolunu kontrol edin."
+english-fallback = "{prefix}&r &7› &7&e{locale} kullanılamıyor; İngilizce (en_US) kullanılıyor."
+personal-selected = "{prefix}&r &7› &7&7Diliniz şimdi {locale}."
+server-selected = "{prefix}&r &7› &7&7sunucu dili şimdi {locale}."
+server-default-selected = "{prefix}&r &7› &7&7diliniz artık sunucunun varsayılan dilini kullanıyor."
+
+[language.editor]
+title = "{prefix} › {section}"
+loading = "{prefix}&r &7› &7&7{locale} mesajları yükleniyor..."
+
+[language.editor.section]
+languages = "Diller"
+search = "Arama"
+search-title = "{locale} / Arama"
+group-title = "{locale} / {group}"
+
+[language.editor.prompt]
+search = "{prefix}&r &7› &7&7Mesaj anahtarı veya metni arayın. Geri dönmek için cancel yazın."
+value = "{prefix}&r &7› &7&7Sohbete {key} için yeni bir değer yazın."
+current = "{prefix}&r &7› &7&7Geçerli değer: {value}"
+variables = "{prefix}&r &7› &7&7Değişkenler: {variables}"
+guidance = "{prefix}&r &7› &7&7Yeni satır için \\n, ters eğik çizgi için \\\\ kullanın veya geri dönmek için cancel yazın."
+
+[language.editor.input]
+expired = "{prefix}&r &7› &7&eDil düzenleyicisinin giriş süresi doldu."
+too-long = "{prefix}&r &7› &7&cGirdi en fazla {maximum} karakter içerebilir."
+unable-to-save = "{prefix}&r &7› &7&cKaydedilemedi: {reason}"
+
+[language.editor.navigation]
+back = "&eGeri&r"
+close = "&cKapat&r"
+previous-page = "&eÖnceki Sayfa&r"
+next-page = "&eSonraki sayfa&r"
+
+[language.editor.search]
+messages = "Mesajları ara"
+messages-lore = "Tüm mesajları aramak için tıklayın."
+clear = "Aramayı temizle"
+
+[language.editor.message]
+current-value = "&7Mevcut Değer:&r"
+variables = "&8{variables}&r"
+edit-plural = "&7Bir çoğul biçimini düzenlemek için tıklayın.&r"
+edit-lines = "&7Satırları ayrı ayrı düzenlemek için tıklayın.&r"
+edit-chat = "&7Sohbette düzenlemek için tıklayın.&r"
+
+[language.editor.locale]
+open = "&8Bu dili açmak için tıklayın.&r"
+
+[language.editor.category]
+message-count = "&7{count} mesaj&r"
+open = "&8Bu kategoriyi açmak için tıklayın.&r"
+
+[language.editor.error]
+no-permission = "{prefix}&r &7› &7&c{prefix} dillerini düzenleme izniniz yok."
+unable-to-edit = "{prefix}&r &7› &7&cDüzenlenemedi: {reason}"
+
+[language.editor.saved]
+summary = "{prefix}&r &7› &7&7{locale} kaydedildi. Dil seçimleri değişmedi."
+change = "{prefix}&r &7› &7&7{key}: “{before}” değeri “{after}” olarak değiştirildi."
+
+[language.editor.part]
+line = "Satır {line}"
+
+[language.editor.value]
+none = "Yok"
+empty = "(boş)"
+
+[debug.error]
+missing-permission = "{prefix}&r &7› &7&cEksik izin: {permission}"
+already-preparing = "{prefix}&r &7› &7&c{prefix} için bir tanılama raporu zaten hazırlanıyor."
+already-preparing-short = "{prefix}&r &7› &7&cBir tanılama raporu zaten hazırlanıyor."
+schedule-failed = "{prefix}&r &7› &7&cTanılama raporunun hazırlanması zamanlanamadı."
+provider-closed = "{prefix}&r &7› &7&cTanılama sağlayıcısı kapalı."
+closed-before-capture = "{prefix}&r &7› &7&cRapor verileri toplanmadan önce tanılama sağlayıcısı kapandı."
+writer-schedule-failed = "{prefix}&r &7› &7&cTanılama raporunun yazılması zamanlanamadı."
+capture-failed = "{prefix}&r &7› &7&cTanılama raporu verileri toplanamadı; sunucu konsolunu kontrol edin."
+closed-before-write = "{prefix}&r &7› &7&cRapor yazılmadan önce tanılama sağlayıcısı kapandı."
+write-failed = "{prefix}&r &7› &7&cTanılama raporu yazılamadı; sunucu konsolunu kontrol edin."
+
+[debug]
+preparing = "{prefix}&r &7› &7&7{prefix} tanılama raporu hazırlanıyor..."
+saved = "{prefix}&r &7› &7&7{prefix} tanılama raporu {path} yoluna kaydedildi."
+
+[debug.upload]
+interrupted = "{prefix}&r &7› &7&7Tanılama raporu yüklemesi kesildi; yerel rapor kaydedildi."
+failed = "{prefix}&r &7› &7&cTanılama raporu yüklenemedi; yerel rapor kaydedildi."
+completed = "{prefix}&r &7› &7&7VolmitSoftware - {prefix} - v{version} adıyla yüklendi."
+
+[debug.action]
+open = "Aç: {url}"
+open-description = "Yüklenen tanılama raporunu açın."
+copy-path = "Yerel yolu kopyala"
+copy-path-description = "Yerel raporun yolunu kopyalayın."

@@ -1,9 +1,7 @@
 package com.volmit.shapedportals.gui;
 
-import art.arcane.volmlib.util.director.help.DirectorMiniMenu;
-import art.arcane.volmlib.util.localization.MessageArgs;
 import art.arcane.volmlib.util.localization.LanguageAudience;
-import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
+import art.arcane.volmlib.util.localization.MessageArgs;
 import art.arcane.volmlib.util.localization.TextKey;
 import art.arcane.volmlib.util.plugin.ComponentText;
 import art.arcane.volmlib.util.scheduling.FoliaScheduler;
@@ -12,7 +10,6 @@ import com.volmit.shapedportals.config.ConfigService;
 import com.volmit.shapedportals.config.ShapedPortalsConfig;
 import com.volmit.shapedportals.localization.LanguageService;
 import com.volmit.shapedportals.localization.ShapedMessages;
-import com.volmit.shapedportals.presentation.ChatMenuStyle;
 import com.volmit.shapedportals.presentation.FeedbackTone;
 import com.volmit.shapedportals.presentation.PresentationService;
 import org.bukkit.Bukkit;
@@ -53,7 +50,6 @@ import java.util.stream.Collectors;
 public final class ConfigEditorGui implements Listener {
     private static final int SIZE = 54;
     private static final int BACK_SLOT = 45;
-    private static final int RELOAD_SLOT = 49;
     private static final int CLOSE_SLOT = 53;
     private static final int[] CATEGORY_SLOTS = {19, 21, 23, 25, 28, 30, 32, 34};
     private static final long PROMPT_TICKS = 20L * 60L;
@@ -65,7 +61,6 @@ public final class ConfigEditorGui implements Listener {
     private final PresentationService presentation;
     private final List<Setting> settings;
     private final Map<UUID, PromptSession> prompts = new ConcurrentHashMap<>();
-    private final Map<UUID, Long> languageSelections = new ConcurrentHashMap<>();
     private final AtomicLong promptIds = new AtomicLong();
     private final ExecutorService writer;
 
@@ -93,16 +88,11 @@ public final class ConfigEditorGui implements Listener {
 
     public void shutdown() {
         prompts.clear();
-        languageSelections.clear();
         writer.shutdownNow();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onClick(InventoryClickEvent event) {
-        LanguageAudience.run(event.getWhoClicked().getUniqueId(), () -> onClickOwned(event));
-    }
-
-    private void onClickOwned(InventoryClickEvent event) {
         if (!(event.getView().getTopInventory().getHolder() instanceof EditorHolder holder)) {
             return;
         }
@@ -117,20 +107,20 @@ public final class ConfigEditorGui implements Listener {
             return;
         }
 
+        LanguageAudience.run(player.getUniqueId(), () -> handleClick(player, holder, event));
+    }
+
+    private void handleClick(Player player, EditorHolder holder, InventoryClickEvent event) {
         int slot = event.getRawSlot();
         if (slot == CLOSE_SLOT) {
             player.closeInventory();
-            return;
-        }
-        if (slot == RELOAD_SLOT) {
-            reload(player, holder.category());
             return;
         }
         if (holder.category() == null) {
             Category category = categoryAt(slot);
             if (category != null) {
                 if (category == Category.LANGUAGES) {
-                    plugin.getLanguageSwitcher().openEditor(player);
+                    plugin.getLanguageSwitcher().openEditor(player, this::openRootOwned);
                 } else {
                     openCategoryOwned(player, category);
                 }
@@ -174,7 +164,6 @@ public final class ConfigEditorGui implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         UUID playerId = event.getPlayer().getUniqueId();
         prompts.remove(playerId);
-        languageSelections.remove(playerId);
     }
 
     private void openRootOwned(Player player) {
@@ -221,7 +210,6 @@ public final class ConfigEditorGui implements Listener {
         if (back) {
             inventory.setItem(BACK_SLOT, item(Material.ARROW, language.legacy(ShapedMessages.GUI_BACK), List.of()));
         }
-        inventory.setItem(RELOAD_SLOT, item(Material.CLOCK, language.legacy(ShapedMessages.GUI_RELOAD), List.of()));
         inventory.setItem(CLOSE_SLOT, item(Material.BARRIER, language.legacy(ShapedMessages.GUI_CLOSE), List.of()));
     }
 
@@ -235,7 +223,7 @@ public final class ConfigEditorGui implements Listener {
             saveMutation(player, category, setting, candidate -> {
                 boolean current = Boolean.parseBoolean(setting.reader().apply(candidate));
                 setting.writer().write(candidate, Boolean.toString(!current));
-            }, false, null);
+            });
             return;
         }
         if (setting.kind().numeric() && !isPromptClick(event.getClick())) {
@@ -245,7 +233,7 @@ public final class ConfigEditorGui implements Listener {
             saveMutation(player, category, setting, candidate -> {
                 String current = setting.reader().apply(candidate);
                 setting.writer().write(candidate, adjust(setting, current, adjustment));
-            }, false, null);
+            });
             return;
         }
         beginPrompt(player, category, setting);
@@ -294,26 +282,16 @@ public final class ConfigEditorGui implements Listener {
     }
 
     private void save(Player player, Category category, Setting setting, String input) {
-        boolean languageChange = setting.path().equals("general.language");
-        saveMutation(player, category, setting, config -> setting.writer().write(config, input), languageChange,
-                languageChange ? input : null);
+        saveMutation(player, category, setting, config -> setting.writer().write(config, input));
     }
 
     private void saveMutation(
             Player player,
             Category category,
             Setting setting,
-            Consumer<ShapedPortalsConfig> mutation,
-            boolean languageChange,
-            String attemptedLanguage
+            Consumer<ShapedPortalsConfig> mutation
     ) {
-        long languageSelection = languageChange ? promptIds.incrementAndGet() : 0L;
-        if (languageChange) {
-            languageSelections.put(player.getUniqueId(), languageSelection);
-        }
-        SaveOperation operation = new SaveOperation(
-                player, category, setting, mutation, languageChange, languageSelection,
-                attemptedLanguage);
+        SaveOperation operation = new SaveOperation(player, category, setting, mutation);
         submitSave(operation);
     }
 
@@ -326,43 +304,22 @@ public final class ConfigEditorGui implements Listener {
     }
 
     private void saveOffThread(SaveOperation operation) {
-        if (!isCurrentSelection(operation)) {
-            return;
-        }
         try {
-            LanguageService.PreparedLanguage preparedLanguage = null;
-            if (operation.languageChange()) {
-                ShapedPortalsConfig candidate = configService.editableCopy();
-                operation.mutation().accept(candidate);
-                preparedLanguage = plugin.getLanguageService().prepare(candidate.general.language);
-                if (!preparedLanguage.selectionReady()) {
-                    requestLanguageDownload(operation, preparedLanguage.locale());
-                    return;
-                }
-            }
-            applyPreparedSave(operation, preparedLanguage);
+            String previousValue = operation.setting().reader().apply(configService.editableCopy());
+            plugin.applyConfigurationEdit(operation.mutation(), null);
+            String appliedValue = operation.setting().reader().apply(configService.editableCopy());
+            scheduleResult(operation.player(), () -> {
+                MessageArgs arguments = MessageArgs.builder()
+                        .untrusted("setting", plainName(operation.setting()))
+                        .untrusted("old", displayValue(previousValue))
+                        .untrusted("new", displayValue(appliedValue))
+                        .build();
+                sendConfigResult(operation.player(), ShapedMessages.CONFIG_SAVED, arguments);
+                openDestination(operation);
+            });
         } catch (IOException | RuntimeException exception) {
             saveFailed(operation, exception);
         }
-    }
-
-    private boolean applyPreparedSave(
-            SaveOperation operation,
-            LanguageService.PreparedLanguage preparedLanguage
-    ) throws IOException {
-        if (!isCurrentSelection(operation)) {
-            return false;
-        }
-        plugin.applyConfigurationEdit(operation.mutation(), preparedLanguage);
-        clearSelection(operation);
-        scheduleResult(operation.player(), () -> {
-            MessageArgs arguments = MessageArgs.builder()
-                    .untrusted("setting", plainName(operation.setting()))
-                    .build();
-            showConfigResult(operation.player(), ShapedMessages.CONFIG_SAVED, arguments);
-            openCategoryOwned(operation.player(), operation.category());
-        });
-        return true;
     }
 
     private void saveFailed(SaveOperation operation, Exception exception) {
@@ -371,125 +328,16 @@ public final class ConfigEditorGui implements Listener {
         scheduleFailure(operation, reason(exception));
     }
 
-    private void requestLanguageDownload(SaveOperation operation, String locale) {
-        RemoteLanguageCatalog.RequestState state = language.requestRemote(
-                locale,
-                result -> languageDownloadCompleted(operation, result)
-        );
-        if (state == RemoteLanguageCatalog.RequestState.SCHEDULED
-                || state == RemoteLanguageCatalog.RequestState.IN_FLIGHT) {
-            return;
-        }
-        if (state == RemoteLanguageCatalog.RequestState.CURRENT) {
-            submitLanguageActivation(operation, locale, false);
-            return;
-        }
-        scheduleFailure(operation, languageRequestFailure(state));
-    }
-
-    private void languageDownloadCompleted(
-            SaveOperation operation,
-            RemoteLanguageCatalog.DownloadResult result
-    ) {
-        if (!isCurrentSelection(operation)) {
-            return;
-        }
-        if (result.successful()) {
-            submitLanguageActivation(operation, result.locale(), true);
-            return;
-        }
-        Throwable failure = result.failure();
-        String detail = failure == null || failure.getMessage() == null || failure.getMessage().isBlank()
-                ? "unknown download failure"
-                : failure.getMessage();
-        String failureMessage = detail.startsWith("Unable to fetch language file ")
-                ? detail
-                : "Unable to fetch language file " + result.locale() + " from " + result.source() + ": " + detail;
-        plugin.getLogger().warning(failureMessage + "; the configured language was not changed");
-        scheduleFailure(operation, "the language download or verification failed; the previous language remains active");
-    }
-
-    private void submitLanguageActivation(SaveOperation operation, String locale, boolean downloaded) {
-        try {
-            writer.execute(() -> activateLanguageOffThread(operation, locale, downloaded));
-        } catch (RejectedExecutionException exception) {
-            scheduleFailure(operation, "the editor is shutting down");
-        }
-    }
-
-    private void activateLanguageOffThread(SaveOperation operation, String locale, boolean downloaded) {
-        if (!isCurrentSelection(operation)) {
-            return;
-        }
-        try {
-            LanguageService.PreparedLanguage preparedLanguage = language.prepare(locale);
-            if (!preparedLanguage.selectionReady()) {
-                scheduleFailure(operation, "the downloaded language file is not available");
-                return;
-            }
-            if (applyPreparedSave(operation, preparedLanguage) && downloaded) {
-                plugin.getLogger().info("Activated ShapedPortals language " + preparedLanguage.locale()
-                        + " after download.");
-            }
-        } catch (IOException | RuntimeException exception) {
-            saveFailed(operation, exception);
-        }
-    }
-
-    private String languageRequestFailure(RemoteLanguageCatalog.RequestState state) {
-        return switch (state) {
-            case COOLDOWN -> "the language download is cooling down after a recent failure";
-            case UNSUPPORTED -> "the language is not available from the configured repository";
-            case CLOSED -> "the language downloader is unavailable";
-            default -> "the language download could not be started";
-        };
-    }
-
-    private void reload(Player player, Category category) {
-        try {
-            writer.execute(() -> {
-                long startedNanos = System.nanoTime();
-                boolean success = plugin.reloadAll(true);
-                long duration = (System.nanoTime() - startedNanos) / 1_000_000L;
-                scheduleResult(player, () -> {
-                    if (success) {
-                        presentation.command(player, ShapedMessages.RELOAD_SUCCESS, MessageArgs.builder()
-                                .trusted("duration", duration)
-                                .untrusted("locale", configService.runtime().language())
-                                .build(), FeedbackTone.SUCCESS);
-                    } else {
-                        presentation.command(player, ShapedMessages.RELOAD_FAILED, MessageArgs.builder()
-                                .trusted("duration", duration)
-                                .build(), FeedbackTone.FAILURE);
-                    }
-                    if (category == null) {
-                        openRootOwned(player);
-                    } else {
-                        openCategoryOwned(player, category);
-                    }
-                });
-            });
-        } catch (RejectedExecutionException exception) {
-            presentation.command(player, ShapedMessages.COMMAND_FAILED, FeedbackTone.FAILURE);
-        }
-    }
-
     private void scheduleResult(Player player, Runnable result) {
         FoliaScheduler.runEntity(plugin, player, result, 0L,
                 () -> prompts.remove(player.getUniqueId()));
     }
 
     private void scheduleFailure(SaveOperation operation, String failure) {
-        if (!isCurrentSelection(operation)) {
-            return;
-        }
-        clearSelection(operation);
-        String settingName = failureSettingName(
-                operation.languageChange(), operation.attemptedLanguage(), plainName(operation.setting()));
         scheduleResult(operation.player(), () -> saveFailedOwned(
                 operation.player(),
                 operation.category(),
-                settingName,
+                plainName(operation.setting()),
                 failure
         ));
     }
@@ -513,47 +361,16 @@ public final class ConfigEditorGui implements Listener {
                 .untrusted("setting", settingName)
                 .untrusted("reason", reason)
                 .build();
-        showConfigResult(player, ShapedMessages.CONFIG_SAVE_FAILED, arguments);
+        sendConfigResult(player, ShapedMessages.CONFIG_SAVE_FAILED, arguments);
         openCategoryOwned(player, category);
     }
 
-    private void showConfigResult(Player player, TextKey message, MessageArgs arguments) {
-        String entry = ChatMenuStyle.entry(ComponentText.markup(
-                language.renderWithoutPrefix(message, arguments))).miniMessage();
-        DirectorMiniMenu.ContentMenu menu = configResultMenu(entry);
-        DirectorMiniMenu.deliverContent(player, menu, ChatMenuStyle.theme(), language.directorResolver());
+    private void sendConfigResult(Player player, TextKey message, MessageArgs arguments) {
+        language.sendPrefixed(player, message, arguments);
     }
 
-    static DirectorMiniMenu.ContentMenu configResultMenu(String entry) {
-        return new DirectorMiniMenu.ContentMenu(
-                "/shapedportals config",
-                "/shapedportals config",
-                List.of(entry),
-                "",
-                1,
-                1
-        );
-    }
-
-    static String failureSettingName(boolean languageChange, String attemptedLanguage, String settingName) {
-        if (languageChange && attemptedLanguage != null && !attemptedLanguage.isBlank()) {
-            return attemptedLanguage.trim();
-        }
-        return settingName;
-    }
-
-    private boolean isCurrentSelection(SaveOperation operation) {
-        if (!operation.languageChange()) {
-            return true;
-        }
-        Long current = languageSelections.get(operation.player().getUniqueId());
-        return current != null && current == operation.languageSelection();
-    }
-
-    private void clearSelection(SaveOperation operation) {
-        if (operation.languageChange()) {
-            languageSelections.remove(operation.player().getUniqueId(), operation.languageSelection());
-        }
+    private void openDestination(SaveOperation operation) {
+        openCategoryOwned(operation.player(), operation.category());
     }
 
     private ItemStack settingItem(Setting setting, ShapedPortalsConfig config) {
@@ -627,7 +444,7 @@ public final class ConfigEditorGui implements Listener {
     }
 
     private String plainName(Setting setting) {
-        return ComponentText.markup(language.render(setting.name())).plain();
+        return language.render(setting.name()).plain();
     }
 
     private String displayValue(String value) {
@@ -655,7 +472,6 @@ public final class ConfigEditorGui implements Listener {
                         && setting.kind() == SettingKind.LOCALE);
     }
 
-
     static int inventorySize() {
         return SIZE;
     }
@@ -670,7 +486,7 @@ public final class ConfigEditorGui implements Listener {
     }
 
     static Set<Integer> navigationSlots() {
-        return Set.of(BACK_SLOT, RELOAD_SLOT, CLOSE_SLOT);
+        return Set.of(BACK_SLOT, CLOSE_SLOT);
     }
 
     static int maximumCategorySize() {
@@ -700,6 +516,10 @@ public final class ConfigEditorGui implements Listener {
                         Material.PAPER, SettingKind.BOOLEAN, 1D,
                         config -> Boolean.toString(config.general.failureFeedback),
                         (config, value) -> config.general.failureFeedback = parseBoolean(value)),
+                setting(Category.GENERAL, "general.updateNotifications", ShapedMessages.SETTING_GENERAL_UPDATE_NOTIFICATIONS,
+                        Material.BELL, SettingKind.BOOLEAN, 1D,
+                        config -> Boolean.toString(config.general.updateNotifications),
+                        (config, value) -> config.general.updateNotifications = parseBoolean(value)),
                 setting(Category.GENERAL, "metrics.enabled", ShapedMessages.SETTING_METRICS_ENABLED,
                         Material.FILLED_MAP, SettingKind.BOOLEAN, 1D,
                         config -> Boolean.toString(config.metrics.enabled),
@@ -745,6 +565,30 @@ public final class ConfigEditorGui implements Listener {
                         Material.REPEATER, SettingKind.LONG, 100D,
                         config -> Long.toString(config.portal.deduplicationMillis),
                         (config, value) -> config.portal.deduplicationMillis = Long.parseLong(value.trim())),
+                setting(Category.PORTAL, "portal.endPortalCreation", ShapedMessages.SETTING_PORTAL_END_ENABLED,
+                        Material.END_PORTAL_FRAME, SettingKind.BOOLEAN, 1D,
+                        config -> Boolean.toString(config.portal.endPortalCreation),
+                        (config, value) -> config.portal.endPortalCreation = parseBoolean(value)),
+                setting(Category.PORTAL, "portal.endMinimumInteriorBlocks", ShapedMessages.SETTING_PORTAL_END_MINIMUM,
+                        Material.ENDER_EYE, SettingKind.INTEGER, 1D,
+                        config -> Integer.toString(config.portal.endMinimumInteriorBlocks),
+                        (config, value) -> config.portal.endMinimumInteriorBlocks = Integer.parseInt(value.trim())),
+                setting(Category.PORTAL, "portal.endMaximumInteriorBlocks", ShapedMessages.SETTING_PORTAL_END_MAXIMUM,
+                        Material.END_STONE, SettingKind.INTEGER, 1D,
+                        config -> Integer.toString(config.portal.endMaximumInteriorBlocks),
+                        (config, value) -> config.portal.endMaximumInteriorBlocks = Integer.parseInt(value.trim())),
+                setting(Category.PORTAL, "portal.endMaximumWidth", ShapedMessages.SETTING_PORTAL_END_WIDTH,
+                        Material.END_ROD, SettingKind.INTEGER, 1D,
+                        config -> Integer.toString(config.portal.endMaximumWidth),
+                        (config, value) -> config.portal.endMaximumWidth = Integer.parseInt(value.trim())),
+                setting(Category.PORTAL, "portal.endMaximumLength", ShapedMessages.SETTING_PORTAL_END_LENGTH,
+                        Material.PURPUR_PILLAR, SettingKind.INTEGER, 1D,
+                        config -> Integer.toString(config.portal.endMaximumLength),
+                        (config, value) -> config.portal.endMaximumLength = Integer.parseInt(value.trim())),
+                setting(Category.PORTAL, "portal.endInteriorMaterials", ShapedMessages.SETTING_PORTAL_END_INTERIORS,
+                        Material.END_STONE_BRICKS, SettingKind.LIST, 1D,
+                        config -> join(config.portal.endInteriorMaterials),
+                        (config, value) -> config.portal.endInteriorMaterials = parseList(value)),
 
                 setting(Category.EFFECTS, "effects.creationSound", ShapedMessages.SETTING_EFFECTS_SOUND,
                         Material.NOTE_BLOCK, SettingKind.BOOLEAN, 1D,
@@ -762,6 +606,22 @@ public final class ConfigEditorGui implements Listener {
                         Material.AMETHYST_SHARD, SettingKind.FLOAT, 0.1D,
                         config -> Float.toString(config.effects.creationSoundPitch),
                         (config, value) -> config.effects.creationSoundPitch = Float.parseFloat(value.trim())),
+                setting(Category.EFFECTS, "effects.endCreationSound", ShapedMessages.SETTING_EFFECTS_END_SOUND,
+                        Material.END_PORTAL_FRAME, SettingKind.BOOLEAN, 1D,
+                        config -> Boolean.toString(config.effects.endCreationSound),
+                        (config, value) -> config.effects.endCreationSound = parseBoolean(value)),
+                setting(Category.EFFECTS, "effects.endCreationSoundType", ShapedMessages.SETTING_EFFECTS_END_SOUND_TYPE,
+                        Material.ENDER_EYE, SettingKind.TEXT, 1D,
+                        config -> config.effects.endCreationSoundType,
+                        (config, value) -> config.effects.endCreationSoundType = value.trim()),
+                setting(Category.EFFECTS, "effects.endCreationSoundVolume", ShapedMessages.SETTING_EFFECTS_END_VOLUME,
+                        Material.DRAGON_HEAD, SettingKind.FLOAT, 0.1D,
+                        config -> Float.toString(config.effects.endCreationSoundVolume),
+                        (config, value) -> config.effects.endCreationSoundVolume = Float.parseFloat(value.trim())),
+                setting(Category.EFFECTS, "effects.endCreationSoundPitch", ShapedMessages.SETTING_EFFECTS_END_PITCH,
+                        Material.DRAGON_BREATH, SettingKind.FLOAT, 0.1D,
+                        config -> Float.toString(config.effects.endCreationSoundPitch),
+                        (config, value) -> config.effects.endCreationSoundPitch = Float.parseFloat(value.trim())),
 
                 setting(Category.HOT_RELOAD, "hotReload.enabled", ShapedMessages.SETTING_HOT_RELOAD_ENABLED,
                         Material.COMPARATOR, SettingKind.BOOLEAN, 1D,
@@ -809,6 +669,14 @@ public final class ConfigEditorGui implements Listener {
                         Material.ENDER_EYE, SettingKind.LIST, 1D,
                         config -> join(config.presentation.portalNotices),
                         (config, value) -> config.presentation.portalNotices = parseList(value)),
+                setting(Category.PRESENTATION, "presentation.netherCreationNotices", ShapedMessages.SETTING_PRESENTATION_NETHER_CREATION,
+                        Material.OBSIDIAN, SettingKind.LIST, 1D,
+                        config -> join(config.presentation.netherCreationNotices),
+                        (config, value) -> config.presentation.netherCreationNotices = parseList(value)),
+                setting(Category.PRESENTATION, "presentation.endCreationNotices", ShapedMessages.SETTING_PRESENTATION_END_CREATION,
+                        Material.END_PORTAL_FRAME, SettingKind.LIST, 1D,
+                        config -> join(config.presentation.endCreationNotices),
+                        (config, value) -> config.presentation.endCreationNotices = parseList(value)),
                 setting(Category.PRESENTATION, "presentation.overlayDurationTicks", ShapedMessages.SETTING_PRESENTATION_DURATION,
                         Material.CLOCK, SettingKind.LONG, 10D,
                         config -> Long.toString(config.presentation.overlayDurationTicks),
@@ -940,27 +808,24 @@ public final class ConfigEditorGui implements Listener {
             Player player,
             Category category,
             Setting setting,
-            Consumer<ShapedPortalsConfig> mutation,
-            boolean languageChange,
-            long languageSelection,
-            String attemptedLanguage
+            Consumer<ShapedPortalsConfig> mutation
     ) {
     }
 
     private static final class EditorHolder implements InventoryHolder {
-        private final Category category;
+        private final EditorState state;
         private Inventory inventory;
 
-        private EditorHolder(Category category) {
-            this.category = category;
+        private EditorHolder(EditorState state) {
+            this.state = state;
         }
 
         private static EditorHolder root() {
-            return new EditorHolder(null);
+            return new EditorHolder(new EditorState(null));
         }
 
         private static EditorHolder category(Category category) {
-            return new EditorHolder(category);
+            return new EditorHolder(new EditorState(category));
         }
 
         @Override
@@ -969,11 +834,14 @@ public final class ConfigEditorGui implements Listener {
         }
 
         private Category category() {
-            return category;
+            return state.category();
         }
 
         private void setInventory(Inventory inventory) {
             this.inventory = inventory;
         }
+    }
+
+    private record EditorState(Category category) {
     }
 }

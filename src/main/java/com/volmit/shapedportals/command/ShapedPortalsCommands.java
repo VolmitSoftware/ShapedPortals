@@ -18,12 +18,19 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
-@Director(name = "shapedportals", aliases = {"shapedportal", "sp"}, description = "ShapedPortals help and administration", descriptionKey = "command.description.root")
+@Director(name = "shapedportals", aliases = {"shapedportal", "sp"}, description = "{prefix} help and administration", descriptionKey = "command.description.root")
 public final class ShapedPortalsCommands {
     private final ShapedPortals plugin;
+    private ShapedPortalsDebugCommands debug;
 
     public ShapedPortalsCommands(ShapedPortals plugin) {
         this.plugin = plugin;
+        debug = new ShapedPortalsDebugCommands(plugin);
+    }
+
+    @Director(name = "version", hidden = true, sync = true, description = "Show the installed {prefix} version", descriptionKey = "command.description.version")
+    public void version(@Param(name = "sender", contextual = true) CommandSender sender) {
+        debug.version(sender);
     }
 
     @Director(name = "config", sync = true, description = "Open the complete in-game configuration editor", descriptionKey = "command.description.config")
@@ -40,17 +47,9 @@ public final class ShapedPortalsCommands {
         plugin.getPresentationService().command(player, ShapedMessages.COMMAND_CONFIG_OPENED, FeedbackTone.SUCCESS);
     }
 
-    @Director(name = "language", sync = true, description = "Choose your language or the server default", descriptionKey = "command.description.language")
+    @Director(name = "language", sync = true, description = "Select an available {prefix} language", descriptionKey = "command.description.language")
     public void language(@Param(name = "sender", contextual = true) CommandSender sender) {
         plugin.getLanguageSwitcher().open(sender);
-    }
-
-    @Director(name = "debugdump", sync = true, description = "Create and optionally upload a diagnostic report", descriptionKey = "command.description.debugdump")
-    public void debugdump(
-            @Param(name = "upload", defaultValue = "true", description = "Upload the report to mclo.gs", descriptionKey = "command.parameter.debugdump_upload") boolean upload,
-            @Param(name = "sender", contextual = true) CommandSender sender
-    ) {
-        plugin.debugDump().request(sender, upload);
     }
 
     @Director(name = "portals", sync = true, description = "List every managed portal and its teleport shortcut", descriptionKey = "command.description.portals")
@@ -96,30 +95,31 @@ public final class ShapedPortalsCommands {
         RuntimeConfig config = plugin.getConfigService().runtime();
         PortalStats.Snapshot stats = plugin.getPortalStats().snapshot();
         ArrayList<String> entries = new ArrayList<>();
-        entries.add(statusEntry(language, ShapedMessages.STATUS_CONFIG, MessageArgs.builder()
+        entries.add(statusEntry(sender, language, ShapedMessages.STATUS_CONFIG, MessageArgs.builder()
                 .trusted("enabled", state(config.enabled()))
                 .untrusted("language", config.language())
                 .trusted("hot_reload", state(config.hotReloadEnabled()))
                 .build()));
-        entries.add(statusEntry(language, ShapedMessages.STATUS_PORTALS, MessageArgs.builder()
+        entries.add(statusEntry(sender, language, ShapedMessages.STATUS_PORTALS, MessageArgs.builder()
                 .trusted("portals", plugin.getPortalRegistry().portalCount())
                 .trusted("cells", plugin.getPortalRegistry().interiorCellCount())
                 .build()));
-        entries.add(statusEntry(language, ShapedMessages.STATUS_ATTEMPTS, MessageArgs.builder()
+        entries.add(statusEntry(sender, language, ShapedMessages.STATUS_ATTEMPTS, MessageArgs.builder()
                 .trusted("attempts", stats.attempts())
                 .trusted("created", stats.created())
                 .trusted("rejected", stats.rejected())
                 .build()));
-        entries.add(statusEntry(language, ShapedMessages.STATUS_COMPATIBILITY, MessageArgs.builder()
+        entries.add(statusEntry(sender, language, ShapedMessages.STATUS_COMPATIBILITY, MessageArgs.builder()
                 .untrusted("scheduler", plugin.schedulerName())
                 .build()));
-        String title = ComponentText.markup(language.renderWithoutPrefix(
+        String title = language.render(sender,
                 ShapedMessages.STATUS_HEADER,
                 MessageArgs.empty()
-        )).plain();
+        ).plain();
         DirectorMiniMenu.ContentMenu menu = new DirectorMiniMenu.ContentMenu(
                 title,
                 "/shapedportals status",
+                "/shapedportals",
                 entries,
                 "",
                 1,
@@ -132,8 +132,8 @@ public final class ShapedPortalsCommands {
         return enabled ? "&aenabled&r" : "&cdisabled&r";
     }
 
-    private String statusEntry(LanguageService language, TextKey key, MessageArgs arguments) {
-        ComponentText content = ComponentText.markup(language.renderWithoutPrefix(key, arguments));
+    private String statusEntry(CommandSender sender, LanguageService language, TextKey key, MessageArgs arguments) {
+        ComponentText content = language.renderWithoutPrefix(sender, key, arguments);
         return ChatMenuStyle.entry(content).miniMessage();
     }
 }

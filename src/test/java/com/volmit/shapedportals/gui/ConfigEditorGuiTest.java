@@ -1,7 +1,7 @@
 package com.volmit.shapedportals.gui;
 
-import art.arcane.volmlib.util.director.help.DirectorMiniMenu;
 import com.volmit.shapedportals.config.ShapedPortalsConfig;
+import com.volmit.shapedportals.localization.ShapedMessages;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
@@ -26,15 +26,12 @@ class ConfigEditorGuiTest {
     @Test
     void languageSettingUsesTheLocalePicker() {
         assertThat(ConfigEditorGui.languageUsesPicker()).isTrue();
-        assertThat(ConfigEditorGui.failureSettingName(true, " nl_NL ", "Active language locale"))
-                .isEqualTo("nl_NL");
-        assertThat(ConfigEditorGui.failureSettingName(false, null, "Debug uploads"))
-                .isEqualTo("Debug uploads");
     }
 
     @Test
     void usesAFullChest() {
         assertThat(ConfigEditorGui.inventorySize()).isEqualTo(54);
+        assertThat(ConfigEditorGui.inventorySize() % 9).isZero();
     }
 
     @Test
@@ -51,6 +48,7 @@ class ConfigEditorGuiTest {
                         34, "LANGUAGES"
                 ));
         assertThat(ConfigEditorGui.navigationSlots())
+                .containsExactlyInAnyOrder(45, 53)
                 .doesNotContainAnyElementsOf(ConfigEditorGui.rootCategorySlots().keySet());
     }
 
@@ -60,9 +58,9 @@ class ConfigEditorGuiTest {
     }
 
     @Test
-    void configSaveResultsUseTheDirectorMenuFrame() {
-        assertThat(ConfigEditorGui.configResultMenu("saved").page())
-                .isEqualTo(new DirectorMiniMenu.ContentPage(1, 1, 0, 1, 1));
+    void configSaveResultsDescribeThePreviousAndAppliedValues() {
+        assertThat(ShapedMessages.CONFIG_SAVED.placeholders())
+                .containsExactlyInAnyOrder("prefix", "setting", "old", "new");
     }
 
 }

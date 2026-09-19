@@ -6,7 +6,6 @@ import art.arcane.volmlib.util.director.exceptions.DirectorParsingException;
 import com.volmit.shapedportals.ShapedPortals;
 import org.bukkit.plugin.java.JavaPlugin;
 
-
 public final class ShapedPortalsCommandHandlers {
     private ShapedPortalsCommandHandlers() {
     }

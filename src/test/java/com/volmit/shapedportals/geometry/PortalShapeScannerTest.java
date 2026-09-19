@@ -88,6 +88,28 @@ class PortalShapeScannerTest {
         assertThat(scan(tall, boundary(tall), 1, 8, 8, 2).failure()).isEqualTo(ShapeFailure.TOO_TALL);
     }
 
+    @Test
+    void supportsHorizontalEndPortalPlanes() {
+        Set<GridPoint> interior = Set.of(
+                new GridPoint(0, 0),
+                new GridPoint(1, 0),
+                new GridPoint(0, 1),
+                new GridPoint(1, 1)
+        );
+        PortalShapeScanner.ScanLimits limits = new PortalShapeScanner.ScanLimits(1, 16, 8, 8);
+
+        ShapeScanResult result = PortalShapeScanner.scan(PortalAxis.Y, point -> {
+            if (interior.contains(point)) {
+                return PortalCell.INTERIOR;
+            }
+            return boundary(interior).contains(point) ? PortalCell.FRAME : PortalCell.BLOCKED;
+        }, limits);
+
+        assertThat(result.valid()).isTrue();
+        assertThat(result.shape().axis()).isEqualTo(PortalAxis.Y);
+        assertThat(result.shape().interior()).containsExactlyInAnyOrderElementsOf(interior);
+    }
+
     private ShapeScanResult scan(Set<GridPoint> interior, Set<GridPoint> frame, int minimum, int maximum) {
         return scan(interior, frame, minimum, maximum, 16, 16);
     }

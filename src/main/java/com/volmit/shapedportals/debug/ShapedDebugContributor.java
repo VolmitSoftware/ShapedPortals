@@ -9,10 +9,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-public final class ShapedDebugSource implements DebugDumpContributor {
+public final class ShapedDebugContributor implements DebugDumpContributor {
     private final ShapedPortals plugin;
 
-    public ShapedDebugSource(ShapedPortals plugin) {
+    public ShapedDebugContributor(ShapedPortals plugin) {
         this.plugin = Objects.requireNonNull(plugin, "plugin");
     }
 
@@ -22,14 +22,15 @@ public final class ShapedDebugSource implements DebugDumpContributor {
         for (World world : plugin.getServer().getWorlds()) {
             loadedWorldIds.add(world.getUID());
         }
-        String locale = plugin.getConfigService().runtime().language();
         ShapedDebugSnapshot snapshot = new ShapedDebugSnapshot(
-                loadedWorldIds,
-                locale,
+                plugin.schedulerName(),
+                plugin.getConfigService().runtime().language(),
                 plugin.getLanguageService().availableLocales(),
-                languageCatalogState(),
+                plugin.getLanguageService().remoteCatalogFailure()
+                        .map(failure -> "unavailable (" + failure.getClass().getSimpleName() + ")")
+                        .orElse("ready"),
                 plugin.getLanguageService().remoteCatalogReference().orElse("unavailable"),
-                plugin.getLanguageService().hasRemoteCatalogLocale(locale),
+                plugin.getLanguageService().hasRemoteCatalogLocale(plugin.getConfigService().runtime().language()),
                 ShapedDebugSnapshot.ConfigState.capture(plugin.getConfigService().editableCopy()),
                 plugin.getMetricsService() != null && plugin.getMetricsService().initialized(),
                 plugin.getIntegrationService() != null && plugin.getIntegrationService().registered(),
@@ -37,14 +38,9 @@ public final class ShapedDebugSource implements DebugDumpContributor {
                 plugin.getPortalRegistry().interiorCellCount(),
                 plugin.getPortalRegistry().allRecords(),
                 plugin.getPortalStats().snapshot(),
-                plugin.getDataFolder().toPath().toAbsolutePath().normalize()
+                loadedWorldIds,
+                plugin.getDataFolder().toPath()
         );
         return () -> ShapedDebugReport.create(snapshot);
-    }
-
-    private String languageCatalogState() {
-        return plugin.getLanguageService().remoteCatalogFailure()
-                .map(failure -> "unavailable (" + failure.getClass().getSimpleName() + ")")
-                .orElse("ready");
     }
 }

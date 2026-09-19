@@ -1,20 +1,25 @@
 package com.volmit.shapedportals;
 
-import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
+import art.arcane.volmlib.util.diagnostics.BukkitDebugDump;
 import art.arcane.volmlib.util.localization.BukkitLanguageSwitcher;
+import art.arcane.volmlib.util.localization.LocalizationSnapshot;
+import art.arcane.volmlib.util.localization.MessageArgs;
+import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
+import art.arcane.volmlib.util.plugin.ComponentText;
 import art.arcane.volmlib.util.scheduling.FoliaScheduler;
 import art.arcane.volmlib.util.scheduling.SchedulerUtils;
+import art.arcane.volmlib.util.update.GitHubReleaseChecker;
 import com.volmit.shapedportals.command.CommandService;
 import com.volmit.shapedportals.config.ConfigHotReloadService;
 import com.volmit.shapedportals.config.ConfigRepository;
 import com.volmit.shapedportals.config.ConfigService;
 import com.volmit.shapedportals.config.ShapedPortalsConfig;
-import art.arcane.volmlib.util.diagnostics.BukkitDebugDump;
-import com.volmit.shapedportals.debug.ShapedDebugSource;
+import com.volmit.shapedportals.debug.ShapedDebugContributor;
 import com.volmit.shapedportals.gui.ConfigEditorGui;
 import com.volmit.shapedportals.integration.ShapedPortalsIntegrationMetrics;
 import com.volmit.shapedportals.integration.ShapedPortalsIntegrationService;
 import com.volmit.shapedportals.localization.LanguageService;
+import com.volmit.shapedportals.localization.ShapedMessages;
 import com.volmit.shapedportals.metrics.MetricsService;
 import com.volmit.shapedportals.portal.PortalEventListener;
 import com.volmit.shapedportals.portal.PortalIntegrityService;
@@ -25,6 +30,7 @@ import com.volmit.shapedportals.portal.PortalStats;
 import com.volmit.shapedportals.presentation.ChatMenuStyle;
 import com.volmit.shapedportals.presentation.PresentationService;
 import com.volmit.shapedportals.util.SplashScreen;
+import com.volmit.shapedportals.update.UpdateNotifier;
 import io.github.slimjar.app.builder.SpigotApplicationBuilder;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,7 +44,6 @@ import java.util.logging.Level;
 public final class ShapedPortals extends JavaPlugin {
     private ConfigService configService;
     private LanguageService languageService;
-    private BukkitLanguageSwitcher languageSwitcher;
     private ConfigHotReloadService hotReloadService;
     private PortalRegistry portalRegistry;
     private PortalStats portalStats;
@@ -48,7 +53,9 @@ public final class ShapedPortals extends JavaPlugin {
     private PresentationService presentationService;
     private BukkitDebugDump debugDump;
     private MetricsService metricsService;
+    private UpdateNotifier updateNotifier;
     private ShapedPortalsIntegrationService integrationService;
+    private BukkitLanguageSwitcher languageSwitcher;
     private final Set<String> pendingLanguageActivations = ConcurrentHashMap.newKeySet();
 
     public ShapedPortals() {
@@ -64,10 +71,10 @@ public final class ShapedPortals extends JavaPlugin {
             configService = new ConfigService(getDataFolder());
             languageService = new LanguageService(getDataFolder(), getLogger());
             installInitialConfiguration();
-            languageSwitcher = BukkitLanguageSwitcher.register(this, languageService.enableLanguages(this),
-                    new BukkitLanguageSwitcher.Options("sp", "shapedportals.config",
-                            ChatMenuStyle.theme(), languageService.directorResolver(),
-                            languageService.editorOptions(this)));
+            languageService.initializeSelections(
+                    () -> configService.runtime().language(),
+                    this::selectDefaultLanguage
+            );
             metricsService = new MetricsService(this);
             metricsService.reconfigure(configService.runtime().metricsEnabled());
             presentationService = new PresentationService(this, configService, languageService);
@@ -91,8 +98,36 @@ public final class ShapedPortals extends JavaPlugin {
 
             configEditor = new ConfigEditorGui(this, configService, languageService, presentationService);
             getServer().getPluginManager().registerEvents(configEditor, this);
+            languageSwitcher = BukkitLanguageSwitcher.register(
+                    this,
+                    languageService.selections(),
+                    new BukkitLanguageSwitcher.Options(
+                            "shapedportals",
+                            "shapedportals.config",
+                            ChatMenuStyle.theme(),
+                            languageService.directorResolver(),
+                            languageService.editorOptions(),
+                            (sender, change) -> languageService.render(
+                                    sender,
+                                    ShapedMessages.CONFIG_SAVED,
+                                    MessageArgs.builder()
+                                            .untrusted("setting", change.key())
+                                            .untrusted("old", compactChangeValue(change.before()))
+                                            .untrusted("new", compactChangeValue(change.after()))
+                                            .build()
+                            )
+                    )
+            );
             debugDump = BukkitDebugDump.create(this, new BukkitDebugDump.Options(
-                    () -> configService.runtime().debugUploadEnabled(), new ShapedDebugSource(this)));
+                    () -> configService.runtime().debugUploadEnabled(),
+                    new ShapedDebugContributor(this),
+                    new BukkitDebugDump.Presentation(
+                            "/shapedportals debug dump",
+                            "/shapedportals debug",
+                            ChatMenuStyle.theme(),
+                            languageService::render
+                    )
+            ));
             new CommandService(this).register();
 
             integrityService.start();
@@ -104,16 +139,20 @@ public final class ShapedPortals extends JavaPlugin {
                     failure
             ));
             requestConfiguredLanguage();
+            updateNotifier = new UpdateNotifier(this, new GitHubReleaseChecker(new GitHubReleaseChecker.Options(
+                    "VolmitSoftware", "ShapedPortals", getDescription().getVersion(), getLogger())));
+            getServer().getPluginManager().registerEvents(updateNotifier, this);
+            updateNotifier.reconfigure();
             long startupMillis = (System.nanoTime() - startedNanos) / 1_000_000L;
             if (configService.runtime().splashScreen()) {
-                SplashScreen.print(this, true, startupMillis);
+                SplashScreen.print(this);
             }
             getLogger().info("ShapedPortals ready in " + startupMillis + " ms with " + schedulerName()
                     + " scheduling and " + portalRegistry.portalCount() + " managed portals.");
         } catch (Throwable exception) {
             getLogger().log(Level.SEVERE, "ShapedPortals could not enable safely", exception);
             if (configService != null && configService.runtime().splashScreen()) {
-                SplashScreen.print(this, false, (System.nanoTime() - startedNanos) / 1_000_000L);
+                SplashScreen.print(this);
             }
             getServer().getPluginManager().disablePlugin(this);
         }
@@ -121,10 +160,10 @@ public final class ShapedPortals extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        pendingLanguageActivations.clear();
-        if (languageSwitcher != null) {
-            languageSwitcher.close();
+        if (updateNotifier != null) {
+            updateNotifier.close();
         }
+        pendingLanguageActivations.clear();
         HandlerList.unregisterAll(this);
         if (integrationService != null) {
             integrationService.unregister();
@@ -132,8 +171,8 @@ public final class ShapedPortals extends JavaPlugin {
         if (hotReloadService != null) {
             hotReloadService.close();
         }
-        if (languageService != null) {
-            languageService.close();
+        if (languageSwitcher != null) {
+            languageSwitcher.close();
         }
         if (integrityService != null) {
             integrityService.stop();
@@ -143,10 +182,12 @@ public final class ShapedPortals extends JavaPlugin {
         }
         if (debugDump != null) {
             debugDump.close();
-            debugDump = null;
         }
         if (presentationService != null) {
             presentationService.shutdown();
+        }
+        if (languageService != null) {
+            languageService.close();
         }
         if (metricsService != null) {
             metricsService.close();
@@ -183,6 +224,9 @@ public final class ShapedPortals extends JavaPlugin {
     }
 
     public void configurationInstalled() {
+        if (updateNotifier != null) {
+            updateNotifier.reconfigure();
+        }
         if (metricsService != null) {
             metricsService.reconfigure(configService.runtime().metricsEnabled());
         }
@@ -210,10 +254,6 @@ public final class ShapedPortals extends JavaPlugin {
 
     public String schedulerName() {
         return FoliaScheduler.isFoliaThreading(getServer()) ? "Folia region" : "Bukkit main-thread";
-    }
-
-    public BukkitLanguageSwitcher getLanguageSwitcher() {
-        return languageSwitcher;
     }
 
     public ConfigService getConfigService() {
@@ -244,8 +284,12 @@ public final class ShapedPortals extends JavaPlugin {
         return presentationService;
     }
 
-    public BukkitDebugDump debugDump() {
+    public BukkitDebugDump getDebugDump() {
         return debugDump;
+    }
+
+    public BukkitLanguageSwitcher getLanguageSwitcher() {
+        return languageSwitcher;
     }
 
     public MetricsService getMetricsService() {
@@ -270,6 +314,19 @@ public final class ShapedPortals extends JavaPlugin {
                     exception
             );
             languageService.install(languageService.englishFallback(preparedConfig.runtime().language()));
+        }
+    }
+
+    private synchronized void selectDefaultLanguage(String locale, LocalizationSnapshot prepared) throws IOException {
+        configService.update(config -> config.general.language = locale);
+        languageService.install(new LanguageService.PreparedLanguage(
+                locale,
+                languageService.languageFile(locale),
+                prepared,
+                true
+        ));
+        if (hotReloadService != null) {
+            hotReloadService.requestReconfigure();
         }
     }
 
@@ -348,6 +405,10 @@ public final class ShapedPortals extends JavaPlugin {
                 ? detail
                 : "Unable to fetch language file " + result.locale() + " from " + result.source() + ": " + detail;
         return failureMessage + "; " + outcome;
+    }
+
+    private static String compactChangeValue(String value) {
+        return value.length() <= 120 ? value : value.substring(0, 117) + "…";
     }
 
 }

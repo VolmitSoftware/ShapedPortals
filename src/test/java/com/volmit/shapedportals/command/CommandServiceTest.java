@@ -15,6 +15,8 @@ final class CommandServiceTest {
                 .containsExactly("tp", "portal=list");
         assertThat(CommandService.normalizeOptionalArguments(List.of("portals", "2")))
                 .containsExactly("portals", "page=2");
+        assertThat(CommandService.normalizeOptionalArguments(List.of("language", "self")))
+                .containsExactly("language", "self");
     }
 
     @Test

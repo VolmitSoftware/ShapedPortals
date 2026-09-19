@@ -21,9 +21,10 @@ final class ShapedDebugReport {
     }
 
     static String create(ShapedDebugSnapshot snapshot) {
-        StringBuilder report = new StringBuilder(8192);
-        section(report, "ShapedPortals");
+        StringBuilder report = new StringBuilder(12_288);
+        section(report, "ShapedPortals services");
         value(report, "Java bytecode target", 17);
+        value(report, "Scheduler", snapshot.scheduler());
         value(report, "Active locale", snapshot.activeLocale());
         value(report, "Available locales", String.join(", ", snapshot.availableLocales()));
         value(report, "Language catalog", snapshot.languageCatalogState());
@@ -49,19 +50,15 @@ final class ShapedDebugReport {
         value(report, "bStats setting", snapshot.config().metricsEnabled() ? "enabled" : "disabled");
         value(report, "bStats integration", snapshot.metricsInitialized() ? "initialized" : "not initialized");
         value(report, "React metric provider", snapshot.reactIntegrationRegistered() ? "registered" : "not registered");
-
         appendPortals(report, snapshot);
-        appendConfig(report, snapshot);
-        section(report, "ShapedPortals files");
-        report.append(DebugDumpReport.describeFiles(snapshot.dataDirectory(), List.of(
-                Path.of("portals.json"), Path.of("languages", snapshot.activeLocale() + ".toml")
-        )));
+        appendConfig(report, snapshot.config());
+        appendFiles(report, snapshot);
         return report.toString();
     }
 
-    private static void appendConfig(StringBuilder report, ShapedDebugSnapshot snapshot) {
-        section(report, "Effective configuration");
-        for (Map.Entry<String, String> setting : snapshot.config().settings().entrySet()) {
+    private static void appendConfig(StringBuilder report, ShapedDebugSnapshot.ConfigState config) {
+        section(report, "Effective ShapedPortals configuration");
+        for (Map.Entry<String, String> setting : config.settings().entrySet()) {
             value(report, setting.getKey(), setting.getValue());
         }
     }
@@ -80,6 +77,7 @@ final class ShapedDebugReport {
         long newest = Long.MIN_VALUE;
         int axisX = 0;
         int axisZ = 0;
+        int axisY = 0;
         int loadedWorldRecords = 0;
         int unavailableWorldRecords = 0;
         Set<UUID> worlds = new HashSet<>();
@@ -95,15 +93,16 @@ final class ShapedDebugReport {
             chunks += portal.chunks().size();
             oldest = Math.min(oldest, portal.createdAtEpochMillis());
             newest = Math.max(newest, portal.createdAtEpochMillis());
-            if (portal.axis().name().equals("X")) {
-                axisX++;
-            } else {
-                axisZ++;
+            switch (portal.axis()) {
+                case X -> axisX++;
+                case Z -> axisZ++;
+                case Y -> axisY++;
             }
         }
         value(report, "Records", portals.size());
         value(report, "Axis X", axisX);
         value(report, "Axis Z", axisZ);
+        value(report, "Axis Y (End)", axisY);
         value(report, "Worlds represented", worlds.size());
         value(report, "Records in loaded worlds", loadedWorldRecords);
         value(report, "Records in unavailable worlds", unavailableWorldRecords);
@@ -120,12 +119,23 @@ final class ShapedDebugReport {
             report.append("- ").append(portal.id())
                     .append(" | schema=").append(portal.schemaVersion())
                     .append(" | axis=").append(portal.axis().name())
+                    .append(" | type=").append(portal.type().name())
                     .append(" | interior=").append(portal.interior().size())
                     .append(" | frame=").append(portal.frame().size())
                     .append(" | chunks=").append(portal.chunks().size())
                     .append(" | created=").append(Instant.ofEpochMilli(portal.createdAtEpochMillis()))
                     .append('\n');
         }
+    }
+
+    private static void appendFiles(StringBuilder report, ShapedDebugSnapshot snapshot) {
+        section(report, "ShapedPortals files");
+        report.append(DebugDumpReport.describeFiles(snapshot.dataDirectory(), List.of(
+                Path.of("config.toml"),
+                Path.of("portals.json"),
+                Path.of("languages", snapshot.activeLocale() + ".toml"),
+                Path.of("languages", "language-preferences.properties")
+        )));
     }
 
     private static void section(StringBuilder report, String name) {
@@ -136,13 +146,12 @@ final class ShapedDebugReport {
     }
 
     private static void value(StringBuilder report, String name, Object value) {
-        report.append(sanitize(name)).append(": ").append(sanitize(Objects.toString(value, "unavailable"))).append('\n');
+        report.append(sanitize(name)).append(": ")
+                .append(sanitize(Objects.toString(value, "unavailable"))).append('\n');
     }
 
     private static String decimal(double value) {
-        return value < 0D || !Double.isFinite(value)
-                ? "unavailable"
-                : String.format(Locale.ROOT, "%.3f", value);
+        return value < 0D || !Double.isFinite(value) ? "unavailable" : String.format(Locale.ROOT, "%.3f", value);
     }
 
     private static String sanitize(String value) {

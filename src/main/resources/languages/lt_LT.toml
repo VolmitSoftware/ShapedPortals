@@ -103,7 +103,7 @@ header = "{prefix}&r &7› &7būsena&r"
 config = "{prefix}&r &7› &7&7Kūrimas:&r {enabled} &8|&r &7Kalba:&r &f{language}&r &8|&r &7Automatinis įkėlimas:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Valdomi portalai:&r &f{portals}&r &8|&r &7Vidiniai langeliai:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Bandymai:&r &f{attempts}&r &8|&r &7Sukurta:&r &a{created}&r &8|&r &7Atmesta:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Artefaktas:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Planuoklis:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Artefaktas:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Planuoklis:&r &f{scheduler}&r"
 
 [command.description]
 version = "Rodyti įdiegtą {prefix} versiją"
@@ -125,7 +125,23 @@ upload = "Įkelti ataskaitą, kai viešas įkėlimas įjungtas"
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7Sukurtas&7 formos portalas su &f{blocks}&7 vidiniais blokais.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7Sukurtas formos portalas su &f{blocks}&7 vidiniais blokais.&r"
-failed = "{prefix}&r &7› &7&cŠis rėmas negali tapti formos portalu: &f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: forma kerta atskirai valdomus Folia regionus.&r"
+too_large = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: vidaus blokų skaičius viršija nustatytą ribą.&r"
+too_wide = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: vidaus plotis viršija nustatytą ribą.&r"
+too_tall = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: vidaus aukštis viršija nustatytą ribą.&r"
+too_small = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: vidus mažesnis už nustatytą minimumą.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: rėmas tinkamas pagal abi ašis.&r"
+start_blocked = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: uždegimo vietos bloko nebegalima pakeisti.&r"
+open_frame = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: rėmas neuždaras arba viduje yra užblokuota vieta.&r"
+region_unavailable = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: atsakingas regionas buvo nepasiekiamas.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: Wormholes atmetė portalo kūrimą.&r"
+event_cancelled = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: kitas papildinys atšaukė kūrimą.&r"
+block_denied = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: kitas papildinys neleido vieno ar kelių portalo blokų.&r"
+frame_changed = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: kuriant pasikeitė rėmas.&r"
+overlapping_portal = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: forma persidengia su esamu valdomu portalu.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cIš šio rėmo negalima sukurti pasirinktinės formos portalo: nepavyko pakeisti pasaulio.&r"
 
 [portal.title]
 nether_created = "&5&lSukurtas Nether portalas&r"

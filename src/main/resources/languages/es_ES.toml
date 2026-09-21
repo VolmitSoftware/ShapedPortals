@@ -103,7 +103,7 @@ header = "{prefix}&r &7› &7&d&lEstado de {prefix}&r"
 config = "{prefix}&r &7› &7&7Creación:&r {enabled} &8|&r &7Idioma:&r &f{language}&r &8|&r &7Recarga automática:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Portales administrados:&r &f{portals}&r &8|&r &7Celdas interiores:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Intentos:&r &f{attempts}&r &8|&r &7Creados:&r &a{created}&r &8|&r &7Rechazados:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Artefacto:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Planificador:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Artefacto:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Planificador:&r &f{scheduler}&r"
 
 [command.description]
 version = "Mostrar la versión instalada de {prefix}"
@@ -125,7 +125,23 @@ upload = "Subir el informe cuando las cargas públicas estén habilitadas"
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7Se&7 creó un portal con forma y &f{blocks}&7 bloques interiores.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7Se creó un portal con forma y &f{blocks}&7 bloques interiores.&r"
-failed = "{prefix}&r &7› &7&cEse marco no puede convertirse en un portal con forma: &f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: la forma abarca regiones de Folia gestionadas de forma independiente.&r"
+too_large = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: el interior supera el límite de bloques configurado.&r"
+too_wide = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: el interior supera el límite de anchura configurado.&r"
+too_tall = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: el interior supera el límite de altura configurado.&r"
+too_small = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: el interior es menor que el mínimo configurado.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: el marco es válido en ambos ejes.&r"
+start_blocked = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: el bloque de encendido ya no se puede reemplazar.&r"
+open_frame = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: el marco está abierto o contiene una celda interior obstruida.&r"
+region_unavailable = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: la región responsable no estaba disponible.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: Wormholes rechazó la creación del portal.&r"
+event_cancelled = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: otro plugin canceló la creación.&r"
+block_denied = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: otro plugin denegó uno o varios bloques del portal.&r"
+frame_changed = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: el marco cambió durante la creación.&r"
+overlapping_portal = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: la forma se solapa con un portal gestionado existente.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cEste marco no puede convertirse en un portal con forma personalizada: no se pudo modificar el mundo.&r"
 
 [portal.title]
 nether_created = "&5&lPortal del Nether creado&r"

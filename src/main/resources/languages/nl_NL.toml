@@ -103,7 +103,7 @@ header = "{prefix}&r &7› &7status&r"
 config = "{prefix}&r &7› &7&7Aanmaken:&r {enabled} &8|&r &7Taal:&r &f{language}&r &8|&r &7Automatisch herladen:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Beheerde portalen:&r &f{portals}&r &8|&r &7Binnencellen:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Pogingen:&r &f{attempts}&r &8|&r &7Aangemaakt:&r &a{created}&r &8|&r &7Geweigerd:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Artefact:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Planner:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Artefact:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Planner:&r &f{scheduler}&r"
 
 [command.description]
 version = "Geïnstalleerde versie van {prefix} tonen"
@@ -125,7 +125,23 @@ upload = "Het rapport uploaden wanneer openbare uploads zijn ingeschakeld"
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7Een&7 gevormd portaal met &f{blocks}&7 binnenblokken is aangemaakt.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7Een gevormd portaal met &f{blocks}&7 binnenblokken is aangemaakt.&r"
-failed = "{prefix}&r &7› &7&cDit frame kan geen gevormd portaal worden: &f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: de vorm loopt door meerdere afzonderlijk beheerde Folia-regio’s.&r"
+too_large = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: het aantal blokken in de binnenruimte overschrijdt de ingestelde limiet.&r"
+too_wide = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: de binnenruimte overschrijdt de ingestelde breedtelimiet.&r"
+too_tall = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: de binnenruimte overschrijdt de ingestelde hoogtelimiet.&r"
+too_small = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: de binnenruimte is kleiner dan het ingestelde minimum.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: het frame is geldig op beide assen.&r"
+start_blocked = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: het blok op het ontstekingspunt kan niet meer worden vervangen.&r"
+open_frame = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: het frame is open of bevat een geblokkeerde binnenste cel.&r"
+region_unavailable = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: de verantwoordelijke regio was niet beschikbaar.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: Wormholes heeft het maken van het portaal geweigerd.&r"
+event_cancelled = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: een andere plugin heeft het maken geannuleerd.&r"
+block_denied = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: een andere plugin heeft een of meer portaalblokken geweigerd.&r"
+frame_changed = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: het frame is tijdens het maken veranderd.&r"
+overlapping_portal = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: de vorm overlapt een bestaand beheerd portaal.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: het wijzigen van de wereld is mislukt.&r"
 
 [portal.title]
 nether_created = "&5&lNetherportaal gemaakt&r"

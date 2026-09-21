@@ -40,13 +40,27 @@ public final class ShapedMessages {
     public static final TextKey STATUS_CONFIG = prefixed("command.status.config", "&7Creation:&r {enabled} &8|&r &7Language:&r &f{language}&r &8|&r &7Hot reload:&r {hot_reload}");
     public static final TextKey STATUS_PORTALS = prefixed("command.status.portals", "&7Managed portals:&r &f{portals}&r &8|&r &7Interior cells:&r &f{cells}&r");
     public static final TextKey STATUS_ATTEMPTS = prefixed("command.status.attempts", "&7Attempts:&r &f{attempts}&r &8|&r &7Created:&r &a{created}&r &8|&r &7Rejected:&r &c{rejected}&r");
-    public static final TextKey STATUS_COMPATIBILITY = prefixed("command.status.compatibility", "&7Artifact:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Scheduler:&r &f{scheduler}&r");
+    public static final TextKey STATUS_COMPATIBILITY = prefixed("command.status.compatibility", "&7Artifact:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Scheduler:&r &f{scheduler}&r");
 
     public static final TextKey PORTAL_NETHER_CREATED = prefixed("portal.notice.nether_created", "&aCreated&7 a shaped Nether portal with &f{blocks}&7 interior blocks.&r");
     public static final TextKey PORTAL_END_CREATED = prefixed("portal.notice.end_created", "&aCreated&7 a shaped End portal with &f{blocks}&7 interior blocks.&r");
     public static final TextKey PORTAL_NETHER_TITLE = TextKey.of("portal.title.nether_created", "&5&lNether Portal Created&r");
     public static final TextKey PORTAL_END_TITLE = TextKey.of("portal.title.end_created", "&5&lEnd Portal Created&r");
-    public static final TextKey PORTAL_FAILED = prefixed("portal.notice.failed", "&cThat frame cannot become a shaped portal: &f{reason}&r&c.&r");
+    public static final TextKey PORTAL_FAILED_CROSS_REGION = prefixed("portal.failure.cross_region", "&cThat frame cannot become a shaped portal: &fthe shape crosses independently owned Folia regions&r&c.&r");
+    public static final TextKey PORTAL_FAILED_TOO_LARGE = prefixed("portal.failure.too_large", "&cThat frame cannot become a shaped portal: &fthe interior exceeds the configured block limit&r&c.&r");
+    public static final TextKey PORTAL_FAILED_TOO_WIDE = prefixed("portal.failure.too_wide", "&cThat frame cannot become a shaped portal: &fthe interior exceeds the configured width limit&r&c.&r");
+    public static final TextKey PORTAL_FAILED_TOO_TALL = prefixed("portal.failure.too_tall", "&cThat frame cannot become a shaped portal: &fthe interior exceeds the configured height limit&r&c.&r");
+    public static final TextKey PORTAL_FAILED_TOO_SMALL = prefixed("portal.failure.too_small", "&cThat frame cannot become a shaped portal: &fthe interior is smaller than the configured minimum&r&c.&r");
+    public static final TextKey PORTAL_FAILED_AMBIGUOUS_AXIS = prefixed("portal.failure.ambiguous_axis", "&cThat frame cannot become a shaped portal: &fthe frame is valid on both axes&r&c.&r");
+    public static final TextKey PORTAL_FAILED_START_BLOCKED = prefixed("portal.failure.start_blocked", "&cThat frame cannot become a shaped portal: &fthe ignition block is no longer replaceable&r&c.&r");
+    public static final TextKey PORTAL_FAILED_OPEN_FRAME = prefixed("portal.failure.open_frame", "&cThat frame cannot become a shaped portal: &fthe frame is open or contains a blocked interior cell&r&c.&r");
+    public static final TextKey PORTAL_FAILED_REGION_UNAVAILABLE = prefixed("portal.failure.region_unavailable", "&cThat frame cannot become a shaped portal: &fthe owning region was unavailable&r&c.&r");
+    public static final TextKey PORTAL_FAILED_WORMHOLES_REJECTED = prefixed("portal.failure.wormholes_rejected", "&cThat frame cannot become a shaped portal: &fWormholes rejected portal creation&r&c.&r");
+    public static final TextKey PORTAL_FAILED_EVENT_CANCELLED = prefixed("portal.failure.event_cancelled", "&cThat frame cannot become a shaped portal: &fanother plugin cancelled creation&r&c.&r");
+    public static final TextKey PORTAL_FAILED_BLOCK_DENIED = prefixed("portal.failure.block_denied", "&cThat frame cannot become a shaped portal: &fanother plugin denied one or more portal blocks&r&c.&r");
+    public static final TextKey PORTAL_FAILED_FRAME_CHANGED = prefixed("portal.failure.frame_changed", "&cThat frame cannot become a shaped portal: &fthe frame changed during creation&r&c.&r");
+    public static final TextKey PORTAL_FAILED_OVERLAPPING_PORTAL = prefixed("portal.failure.overlapping_portal", "&cThat frame cannot become a shaped portal: &fthe shape overlaps an existing managed portal&r&c.&r");
+    public static final TextKey PORTAL_FAILED_WORLD_MUTATION_FAILED = prefixed("portal.failure.world_mutation_failed", "&cThat frame cannot become a shaped portal: &fthe world mutation failed&r&c.&r");
 
     public static final TextKey PORTAL_LIST_EMPTY = TextKey.of("portal.navigation.list.empty", "&eNo managed shaped portals are registered.&r");
     public static final TextKey PORTAL_LIST_ENTRY = TextKey.ofOptional("portal.navigation.list.entry", "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Location:&r &f{x}, {y}, {z}&r &8•&r &7Axis:&r &f{axis}&r &8•&r &7Cells:&r &f{blocks}&r\n&8  └&r &7Creator:&r &f{creator}&r &8•&r &7Created:&r &f{created}&r", "type");
@@ -221,7 +235,12 @@ public final class ShapedMessages {
                 CONFIG_SAVED, CONFIG_SAVE_FAILED, DEBUG_STARTED, DEBUG_BUSY, DEBUG_SAVED, DEBUG_UPLOADED,
                 DEBUG_LINK_HOVER, DEBUG_UPLOAD_FAILED, DEBUG_FAILED, STATUS_HEADER, STATUS_CONFIG, STATUS_PORTALS,
                 STATUS_ATTEMPTS, STATUS_COMPATIBILITY, PORTAL_NETHER_CREATED, PORTAL_END_CREATED,
-                PORTAL_NETHER_TITLE, PORTAL_END_TITLE, PORTAL_FAILED,
+                PORTAL_NETHER_TITLE, PORTAL_END_TITLE,
+                PORTAL_FAILED_CROSS_REGION, PORTAL_FAILED_TOO_LARGE, PORTAL_FAILED_TOO_WIDE,
+                PORTAL_FAILED_TOO_TALL, PORTAL_FAILED_TOO_SMALL, PORTAL_FAILED_AMBIGUOUS_AXIS,
+                PORTAL_FAILED_START_BLOCKED, PORTAL_FAILED_OPEN_FRAME, PORTAL_FAILED_REGION_UNAVAILABLE,
+                PORTAL_FAILED_WORMHOLES_REJECTED, PORTAL_FAILED_EVENT_CANCELLED, PORTAL_FAILED_BLOCK_DENIED,
+                PORTAL_FAILED_FRAME_CHANGED, PORTAL_FAILED_OVERLAPPING_PORTAL, PORTAL_FAILED_WORLD_MUTATION_FAILED,
                 PORTAL_LIST_EMPTY, PORTAL_LIST_ENTRY, PORTAL_LIST_HOVER, PORTAL_LIST_FRAME_POLICY_NOTE, PORTAL_NOT_FOUND,
                 PORTAL_AMBIGUOUS, PORTAL_REMOVED, PORTAL_WORLD_UNAVAILABLE, PORTAL_DESTINATION_UNAVAILABLE,
                 PORTAL_INACTIVE, PORTAL_NO_SAFE_LANDING, PORTAL_UNSAFE_CONFIRMATION, PORTAL_TELEPORT_PREPARING,

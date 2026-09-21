@@ -106,7 +106,7 @@ upload = "启用公开上传时上传报告"
 
 [command.status]
 attempts = "{prefix}&r &7› &7&7尝试次数:&r&f{attempts}&r&8|&r&7创建时间:&r&a{created}&r&8|&r&7已拒绝:&r&c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7工件:&r&fJava 17 / Bukkit 1.20.1+&r&8|&r&7调度程序:&r&f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7工件:&r&fJava 25 / Bukkit 26.1+&r&8|&r&7调度程序:&r&f{scheduler}&r"
 config = "{prefix}&r &7› &7&7创建：&r{enabled}&8|&r&7语言：&r&f{language}&r&8|&r&7热重载：&r{hot_reload}"
 header = "{prefix}&r &7› &7运行时&r"
 portals = "{prefix}&r &7› &7&7已管理传送门：&r&f{portals}&r&8|&r&7内部单元格：&r&f{cells}&r"
@@ -292,7 +292,23 @@ success = "{prefix}&r &7› &7&7已传送到&7&f{portal}&r&7的旁边，位于&f
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7创建了一个带有&7&f{blocks}&7内部方块的形状传送门.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7创建了一个带有&f{blocks}&7内部方块的形状传送门.&r"
-failed = "{prefix}&r &7› &7&c该框架无法成为形状传送门:&f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：形状跨越了独立管理的多个 Folia 区域。&r"
+too_large = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：内部方块数量超过了配置的上限。&r"
+too_wide = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：内部宽度超过了配置的上限。&r"
+too_tall = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：内部高度超过了配置的上限。&r"
+too_small = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：内部空间小于配置的最小值。&r"
+ambiguous_axis = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：框架在两个轴上都有效。&r"
+start_blocked = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：点火位置的方块已无法替换。&r"
+open_frame = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：框架未封闭，或内部有被阻挡的位置。&r"
+region_unavailable = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：负责此位置的区域不可用。&r"
+wormholes_rejected = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：Wormholes 拒绝了传送门创建。&r"
+event_cancelled = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：其他插件取消了创建。&r"
+block_denied = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：其他插件拒绝了一个或多个传送门方块。&r"
+frame_changed = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：框架在创建过程中发生了变化。&r"
+overlapping_portal = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：形状与现有的受管理传送门重叠。&r"
+world_mutation_failed = "{prefix}&r &7› &7&c无法用这个框架创建自定义形状的传送门：世界修改失败。&r"
 
 [runtime]
 player_only = "{prefix}&r &7› &7&c此命令只能由玩家使用。&r"

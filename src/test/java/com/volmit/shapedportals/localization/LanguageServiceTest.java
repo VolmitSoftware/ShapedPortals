@@ -4,6 +4,7 @@ import art.arcane.volmlib.util.localization.LanguageAudience;
 import art.arcane.volmlib.util.localization.MessageArgs;
 import art.arcane.volmlib.util.localization.PluginLanguageService;
 import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
+import art.arcane.volmlib.util.localization.TextKey;
 import art.arcane.volmlib.util.localization.VolmitLocales;
 import art.arcane.volmlib.util.plugin.ComponentText;
 import org.junit.jupiter.api.Test;
@@ -91,7 +92,7 @@ class LanguageServiceTest {
         LanguageService service = service();
         service.validateDownloadedContent("es_ES", "");
         service.validateDownloadedContent("es_ES", "[runtime]\nprefix = 42\n");
-        service.validateDownloadedContent("es_ES", "[portal.notice]\nfailed = \"{wrong}\"\n");
+        service.validateDownloadedContent("es_ES", "[portal.failure]\nopen_frame = \"{wrong}\"\n");
     }
 
     @Test
@@ -229,15 +230,16 @@ class LanguageServiceTest {
         LanguageService service = service();
         Path file = service.languageFile("en_US").toPath();
         Files.createDirectories(file.getParent());
-        Files.writeString(file, "[portal.notice]\nfailed = \"&cFailure &#12ABef\\\\&eLiteral {reason}\"\n",
+        Files.writeString(file, "[command.feedback.config]\nsave_failed = \"&cFailure &#12ABef\\\\&eLiteral {setting}: {reason}\"\n",
                 StandardCharsets.UTF_8);
         service.install(service.prepare("en_US"));
 
-        ComponentText message = service.render(ShapedMessages.PORTAL_FAILED, MessageArgs.builder()
+        ComponentText message = service.render(ShapedMessages.CONFIG_SAVE_FAILED, MessageArgs.builder()
+                .untrusted("setting", "frame")
                 .untrusted("reason", "&4[12ABef]<red>unsafe</red>")
                 .build());
 
-        assertThat(message.plain()).isEqualTo("Failure &eLiteral &4[12ABef]<red>unsafe</red>");
+        assertThat(message.plain()).isEqualTo("Failure &eLiteral frame: &4[12ABef]<red>unsafe</red>");
         assertThat(message.legacy()).contains("\u00a7cFailure");
         assertThat(message.legacy()).contains("\u00a7x\u00a71\u00a72\u00a7a\u00a7b\u00a7e\u00a7f");
         assertThat(message.legacy()).doesNotContain("\u00a7eLiteral");
@@ -420,6 +422,70 @@ class LanguageServiceTest {
             Thread.interrupted();
         }
         assertThat(Files.readString(file)).isEqualTo(previous);
+    }
+
+    @Test
+    void allPublishedLocalesTranslateEveryPortalFailure() throws IOException {
+        Path sourceDirectory = Path.of(System.getProperty("shapedportals.projectDir"),
+                "src", "main", "resources", "languages");
+        List<TextKey> failures = ShapedMessages.catalog().keys().stream()
+                .filter(key -> key.id().startsWith("portal.failure."))
+                .map(TextKey.class::cast)
+                .toList();
+        assertThat(failures).hasSize(15);
+        LanguageService service = service();
+        try (Stream<Path> sources = Files.list(sourceDirectory)) {
+            service.install(service.prepare("en_US"));
+            for (Path source : sources.filter(path -> path.toString().endsWith(".toml")).toList()) {
+                String locale = source.getFileName().toString().replace(".toml", "");
+                Path target = service.languageFile(locale).toPath();
+                Files.copy(source, target);
+                service.install(service.prepare(locale));
+                for (TextKey failure : failures) {
+                    assertThat(service.render(failure).plain())
+                            .as("%s in %s", failure.id(), locale)
+                            .isNotBlank()
+                            .doesNotContain("That frame cannot become", "{prefix}", "{reason}");
+                }
+            }
+        } finally {
+            service.close();
+        }
+    }
+
+    @Test
+    void portalFailuresUsePersonalLocaleAndRefreshAfterLanguageReload() throws Exception {
+        LanguageService service = service();
+        try {
+            service.install(service.prepare("en_US"));
+            Path file = service.languageFile("custom").toPath();
+            String content = "[portal.failure]\nopen_frame = \"&cCadre ouvert.&r\"\n";
+            Files.writeString(file, content);
+            service.prepare("custom");
+            PluginLanguageService selections = service.initializeSelections(() -> "en_US",
+                    (locale, snapshot) -> service.install(new LanguageService.PreparedLanguage(
+                            locale, service.languageFile(locale), snapshot, true)));
+            UUID playerId = UUID.randomUUID();
+            selections.selectPlayer(playerId, "custom").get(5L, TimeUnit.SECONDS);
+
+            assertThat(service.render(ShapedMessages.PORTAL_FAILED_OPEN_FRAME).plain())
+                    .contains("the frame is open");
+            assertThat(LanguageAudience.call(playerId,
+                    () -> service.render(ShapedMessages.PORTAL_FAILED_OPEN_FRAME).plain()))
+                    .isEqualTo("Cadre ouvert.");
+            assertThat(LanguageAudience.call(playerId,
+                    () -> service.render(ShapedMessages.PORTAL_FAILED_TOO_SMALL).plain()))
+                    .contains("the interior is smaller than the configured minimum");
+
+            String updated = content.replace("Cadre ouvert.", "Cadre incomplet.");
+            Files.writeString(file, updated);
+            assertThat(service.reloadSnapshot(file.toFile(), updated)).isTrue();
+            assertThat(LanguageAudience.call(playerId,
+                    () -> service.render(ShapedMessages.PORTAL_FAILED_OPEN_FRAME).plain()))
+                    .isEqualTo("Cadre incomplet.");
+        } finally {
+            service.close();
+        }
     }
 
     private LanguageService service() {

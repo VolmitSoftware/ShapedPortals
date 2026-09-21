@@ -103,7 +103,7 @@ header = "{prefix}&r &7› &7&d&lTrạng thái {prefix}&r"
 config = "{prefix}&r &7› &7&7Tạo cổng:&r {enabled} &8|&r &7Ngôn ngữ:&r &f{language}&r &8|&r &7Tải lại tức thời:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Cổng được quản lý:&r &f{portals}&r &8|&r &7Khối bên trong:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Số lần thử:&r &f{attempts}&r &8|&r &7Đã tạo:&r &a{created}&r &8|&r &7Đã từ chối:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Gói dựng:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Bộ lập lịch:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Gói dựng:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Bộ lập lịch:&r &f{scheduler}&r"
 
 [command.description]
 version = "Hiển thị phiên bản {prefix} đã cài đặt"
@@ -125,7 +125,23 @@ upload = "Tải báo cáo lên khi bật tải lên công khai"
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7Đã&7 tạo một cổng tùy hình với &f{blocks}&7 khối bên trong.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7Đã tạo một cổng tùy hình với &f{blocks}&7 khối bên trong.&r"
-failed = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng tùy hình: &f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: hình dạng trải qua các vùng Folia được quản lý độc lập.&r"
+too_large = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: phần bên trong vượt quá giới hạn số khối đã cấu hình.&r"
+too_wide = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: phần bên trong vượt quá giới hạn chiều rộng đã cấu hình.&r"
+too_tall = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: phần bên trong vượt quá giới hạn chiều cao đã cấu hình.&r"
+too_small = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: phần bên trong nhỏ hơn mức tối thiểu đã cấu hình.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: khung hợp lệ trên cả hai trục.&r"
+start_blocked = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: không còn có thể thay thế khối tại điểm châm lửa.&r"
+open_frame = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: khung chưa kín hoặc có ô bị chặn bên trong.&r"
+region_unavailable = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: vùng phụ trách không khả dụng.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: Wormholes đã từ chối tạo cổng.&r"
+event_cancelled = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: một plugin khác đã hủy việc tạo cổng.&r"
+block_denied = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: một plugin khác đã từ chối một hoặc nhiều khối của cổng.&r"
+frame_changed = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: khung đã thay đổi trong quá trình tạo.&r"
+overlapping_portal = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: hình dạng chồng lên một cổng được quản lý hiện có.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: việc thay đổi thế giới đã thất bại.&r"
 
 [portal.title]
 nether_created = "&5&lĐã tạo cổng Nether&r"

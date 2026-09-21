@@ -106,7 +106,7 @@ upload = "公開アップロードが有効な場合にレポートをアップ�
 
 [command.status]
 attempts = "{prefix}&r &7› &7&7試行回数:&r&f{attempts}&r&8|&r&7作成日:&r&a{created}&r&8|&r&7拒否:&r&c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7成果物:&r&fJava 17 / Bukkit 1.20.1+&r&8|&r&7スケジューラ:&r&f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7成果物:&r&fJava 25 / Bukkit 26.1+&r&8|&r&7スケジューラ:&r&f{scheduler}&r"
 config = "{prefix}&r &7› &7&7作成:&r{enabled}&8|&r&7言語:&r&f{language}&r&8|&r&7ホットリロード:&r{hot_reload}"
 header = "{prefix}&r &7› &7実行時&r"
 portals = "{prefix}&r &7› &7&7管理されたポータル:&r&f{portals}&r&8|&r&7インテリアセル:&r&f{cells}&r"
@@ -292,7 +292,23 @@ success = "{prefix}&r &7› &7&7&f{world}&r&7にある&f{portal}&r&7のそばへ
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7&f{blocks}&7内部ブロックで形作られたポータルを作成しました.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7&f{blocks}&7内部ブロックで形作られたポータルを作成しました.&r"
-failed = "{prefix}&r &7› &7&cそのフレームは形作られたポータルにはなりません:&f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。形状が個別に管理される複数のFoliaリージョンにまたがっています。&r"
+too_large = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。内部のブロック数が設定された上限を超えています。&r"
+too_wide = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。内部の幅が設定された上限を超えています。&r"
+too_tall = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。内部の高さが設定された上限を超えています。&r"
+too_small = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。内部が設定された最小サイズを下回っています。&r"
+ambiguous_axis = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。フレームが両方の軸で有効です。&r"
+start_blocked = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。着火地点のブロックを置き換えられなくなりました。&r"
+open_frame = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。フレームが閉じていないか、内部に塞がれた箇所があります。&r"
+region_unavailable = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。担当するリージョンを利用できませんでした。&r"
+wormholes_rejected = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。Wormholesがポータルの作成を拒否しました。&r"
+event_cancelled = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。別のプラグインが作成をキャンセルしました。&r"
+block_denied = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。別のプラグインがポータルのブロックを1つ以上拒否しました。&r"
+frame_changed = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。作成中にフレームが変化しました。&r"
+overlapping_portal = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。形状が既存の管理対象ポータルと重なっています。&r"
+world_mutation_failed = "{prefix}&r &7› &7&cこのフレームからカスタム形状のポータルを作成できません。ワールドの変更に失敗しました。&r"
 
 [runtime]
 player_only = "{prefix}&r &7› &7&cこのコマンドはプレイヤーのみ使用できます。&r"

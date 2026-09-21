@@ -103,7 +103,7 @@ header = "{prefix}&r &7› &7in tila&r"
 config = "{prefix}&r &7› &7&7Luonti:&r {enabled} &8|&r &7Kieli:&r &f{language}&r &8|&r &7Automaattinen lataus:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Hallinnoidut portaalit:&r &f{portals}&r &8|&r &7Sisäsolut:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Yritykset:&r &f{attempts}&r &8|&r &7Luotu:&r &a{created}&r &8|&r &7Hylätty:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Artefakti:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Ajastin:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Artefakti:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Ajastin:&r &f{scheduler}&r"
 
 [command.description]
 version = "Näytä asennettu {prefix}-versio"
@@ -125,7 +125,23 @@ upload = "Lähetä raportti, kun julkiset lähetykset ovat käytössä"
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7Muotoiltu&7 portaali luotiin käyttäen &f{blocks}&7 sisälohkoa.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7Muotoiltu portaali luotiin käyttäen &f{blocks}&7 sisälohkoa.&r"
-failed = "{prefix}&r &7› &7&cTuosta kehyksestä ei voi tehdä muotoiltua portaalia: &f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: muoto ulottuu usean erikseen hallitun Folia-alueen yli.&r"
+too_large = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: sisäosan lohkomäärä ylittää asetetun rajan.&r"
+too_wide = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: sisäosan leveys ylittää asetetun rajan.&r"
+too_tall = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: sisäosan korkeus ylittää asetetun rajan.&r"
+too_small = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: sisäosa on asetettua vähimmäiskokoa pienempi.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: kehys on kelvollinen molemmilla akseleilla.&r"
+start_blocked = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: sytytyslohkoa ei voi enää korvata.&r"
+open_frame = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: kehys on avoin tai sisäosassa on estetty solu.&r"
+region_unavailable = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: vastuussa oleva alue ei ollut käytettävissä.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: Wormholes hylkäsi portaalin luonnin.&r"
+event_cancelled = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: toinen lisäosa peruutti luonnin.&r"
+block_denied = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: toinen lisäosa esti yhden tai useamman portaalilohkon.&r"
+frame_changed = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: kehys muuttui luonnin aikana.&r"
+overlapping_portal = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: muoto on päällekkäin olemassa olevan hallitun portaalin kanssa.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cTästä kehyksestä ei voi luoda mukautetun muotoista portaalia: maailman muuttaminen epäonnistui.&r"
 
 [portal.title]
 nether_created = "&5&lNether-portaali luotu&r"

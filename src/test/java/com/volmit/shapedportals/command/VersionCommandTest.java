@@ -6,12 +6,14 @@ import art.arcane.volmlib.util.director.context.DirectorContextRegistry;
 import art.arcane.volmlib.util.director.runtime.DirectorInvocation;
 import art.arcane.volmlib.util.director.runtime.DirectorRuntimeEngine;
 import art.arcane.volmlib.util.director.runtime.DirectorSender;
+import art.arcane.volmlib.util.plugin.ComponentText;
 import com.volmit.shapedportals.ShapedPortals;
 import com.volmit.shapedportals.localization.LanguageService;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.ArgumentCaptor;
 
 import java.util.List;
 import java.nio.file.Path;
@@ -44,6 +46,9 @@ class VersionCommandTest {
         assertThat(engine.execute(new DirectorInvocation(invocationSender, "shapedportals", List.of("debug", "version"))).isSuccess()).isTrue();
         assertThat(engine.execute(new DirectorInvocation(invocationSender, "shapedportals", List.of("version"))).isSuccess()).isTrue();
 
-        verify(sender, times(2)).sendMessage("ShapedPortals v3.2.1-test");
+        ArgumentCaptor<String> messages = ArgumentCaptor.forClass(String.class);
+        verify(sender, times(2)).sendRichMessage(messages.capture());
+        assertThat(messages.getAllValues()).allSatisfy(message ->
+                assertThat(ComponentText.markup(message).plain()).isEqualTo("ShapedPortals v3.2.1-test"));
     }
 }

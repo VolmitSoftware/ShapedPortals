@@ -106,7 +106,7 @@ upload = "공개 업로드가 활성화된 경우 보고서 업로드"
 
 [command.status]
 attempts = "{prefix}&r &7› &7&7시도:&r&f{attempts}&r&8|&r&7생성됨:&r&a{created}&r&8|&r&7거부됨:&r&c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7아티팩트:&r&fJava 17 / Bukkit 1.20.1+&r&8|&r&7스케줄러:&r&f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7아티팩트:&r&fJava 25 / Bukkit 26.1+&r&8|&r&7스케줄러:&r&f{scheduler}&r"
 config = "{prefix}&r &7› &7&7생성:&r{enabled}&8|&r&7언어:&r&f{language}&r&8|&r&7핫 리로드:&r{hot_reload}"
 header = "{prefix}&r &7› &7런타임&r"
 portals = "{prefix}&r &7› &7&7관리 포털:&r&f{portals}&r&8|&r&7내부 셀:&r&f{cells}&r"
@@ -292,7 +292,23 @@ success = "{prefix}&r &7› &7&7&f{world}&r&7에서&f{portal}&r&7옆으로 순�
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7&f{blocks}&7내부 블록으로 형태가 있는 포털을 생성했습니다.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7&f{blocks}&7내부 블록으로 형태가 있는 포털을 생성했습니다.&r"
-failed = "{prefix}&r &7› &7&c그 프레임은 형태가 있는 포털이 될 수 없습니다:&f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. 모양이 각각 독립적으로 관리되는 여러 Folia 지역에 걸쳐 있습니다.&r"
+too_large = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. 내부 블록 수가 설정된 제한을 초과합니다.&r"
+too_wide = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. 내부 너비가 설정된 제한을 초과합니다.&r"
+too_tall = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. 내부 높이가 설정된 제한을 초과합니다.&r"
+too_small = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. 내부 크기가 설정된 최솟값보다 작습니다.&r"
+ambiguous_axis = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. 틀이 두 축에서 모두 유효합니다.&r"
+start_blocked = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. 점화 위치의 블록을 더 이상 교체할 수 없습니다.&r"
+open_frame = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. 틀이 열려 있거나 내부에 막힌 칸이 있습니다.&r"
+region_unavailable = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. 담당 지역을 사용할 수 없었습니다.&r"
+wormholes_rejected = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. Wormholes가 포털 생성을 거부했습니다.&r"
+event_cancelled = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. 다른 플러그인이 생성을 취소했습니다.&r"
+block_denied = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. 다른 플러그인이 하나 이상의 포털 블록을 거부했습니다.&r"
+frame_changed = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. 생성 중에 틀이 변경되었습니다.&r"
+overlapping_portal = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. 모양이 기존 관리 대상 포털과 겹칩니다.&r"
+world_mutation_failed = "{prefix}&r &7› &7&c이 틀로는 사용자 지정 모양의 포털을 만들 수 없습니다. 월드를 변경하지 못했습니다.&r"
 
 [runtime]
 player_only = "{prefix}&r &7› &7&c이 명령은 플레이어만 사용할 수 있습니다.&r"

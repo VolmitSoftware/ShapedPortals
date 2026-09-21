@@ -103,7 +103,7 @@ header = "{prefix}&r &7› &7Laufzeit&r"
 config = "{prefix}&r &7› &7&7Erstellung:&r {enabled} &8|&r &7Sprache:&r &f{language}&r &8|&r &7Automatisches Neuladen:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Verwaltete Portale:&r &f{portals}&r &8|&r &7Innenzellen:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Versuche:&r &f{attempts}&r &8|&r &7Erstellt:&r &a{created}&r &8|&r &7Abgelehnt:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Artefakt:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Planer:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Artefakt:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Planer:&r &f{scheduler}&r"
 
 [command.description]
 version = "Installierte Version von {prefix} anzeigen"
@@ -125,7 +125,23 @@ upload = "Den Bericht hochladen, wenn öffentliche Uploads aktiviert sind"
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7Ein&7 geformtes Portal mit &f{blocks}&7 Innenblöcken wurde erstellt.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7Ein geformtes Portal mit &f{blocks}&7 Innenblöcken wurde erstellt.&r"
-failed = "{prefix}&r &7› &7&cDieser Rahmen kann kein geformtes Portal werden: &f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: die Form erstreckt sich über mehrere unabhängig verwaltete Folia-Regionen.&r"
+too_large = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: der Innenraum überschreitet die eingestellte Blockanzahl.&r"
+too_wide = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: der Innenraum überschreitet die eingestellte Breite.&r"
+too_tall = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: der Innenraum überschreitet die eingestellte Höhe.&r"
+too_small = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: der Innenraum ist kleiner als das eingestellte Minimum.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: der Rahmen ist auf beiden Achsen gültig.&r"
+start_blocked = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: der Block am Zündpunkt ist nicht mehr ersetzbar.&r"
+open_frame = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: der Rahmen ist offen oder enthält einen blockierten Innenblock.&r"
+region_unavailable = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: die zuständige Region war nicht verfügbar.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: Wormholes hat die Portalerstellung abgelehnt.&r"
+event_cancelled = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: ein anderes Plugin hat die Erstellung abgebrochen.&r"
+block_denied = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: ein anderes Plugin hat einen oder mehrere Portalblöcke verweigert.&r"
+frame_changed = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: der Rahmen hat sich während der Erstellung verändert.&r"
+overlapping_portal = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: die Form überschneidet sich mit einem bereits verwalteten Portal.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cAus diesem Rahmen kann kein geformtes Portal entstehen: die Änderung der Welt ist fehlgeschlagen.&r"
 
 [portal.title]
 nether_created = "&5&lNetherportal erstellt&r"

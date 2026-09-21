@@ -10,8 +10,9 @@ import com.volmit.shapedportals.config.RuntimeConfig;
 import com.volmit.shapedportals.config.ShapedPortalsConfig;
 import com.volmit.shapedportals.localization.LanguageService;
 import com.volmit.shapedportals.localization.ShapedMessages;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ClickEvent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -53,7 +54,7 @@ class UpdateNotifierTest {
         when(plugin.getConfigService()).thenReturn(configService);
         when(plugin.getLanguageService()).thenReturn(language);
         when(plugin.getDescription()).thenReturn(new PluginDescriptionFile(
-                "ShapedPortals", "2.0.0-1.20.1-26.2", ShapedPortals.class.getName()));
+                "ShapedPortals", "2.0.0-26.2", ShapedPortals.class.getName()));
         when(plugin.isEnabled()).thenReturn(true);
         when(configService.runtime()).thenAnswer(invocation -> RuntimeConfig.from(config));
         when(player.isOnline()).thenReturn(true);
@@ -67,7 +68,7 @@ class UpdateNotifierTest {
 
     @Test
     void ordinaryPlayersDoNotRequestOrReceiveANotice() {
-        notifier.onJoin(new PlayerJoinEvent(player, null));
+        notifier.onJoin(new PlayerJoinEvent(player, (String) null));
 
         verify(checker, never()).check();
         verifyNoInteractions(language);
@@ -77,7 +78,7 @@ class UpdateNotifierTest {
     void operatorsReceiveOneDeferredNoticeEvenWithoutPermission() {
         when(player.isOp()).thenReturn(true);
         try (MockedStatic<FoliaScheduler> scheduler = captureScheduler()) {
-            notifier.onJoin(new PlayerJoinEvent(player, null));
+            notifier.onJoin(new PlayerJoinEvent(player, (String) null));
             completeUpdate();
             verifyNoInteractions(language);
             assertThat(scheduled).hasSize(1);
@@ -85,20 +86,19 @@ class UpdateNotifierTest {
         }
 
         verify(language).renderPrefixed(eq(player), eq(ShapedMessages.UPDATE_AVAILABLE), any(MessageArgs.class));
-        ArgumentCaptor<BaseComponent[]> components = ArgumentCaptor.forClass(BaseComponent[].class);
-        verify(spigot).sendMessage(components.capture());
-        assertThat(components.getValue()).isNotEmpty().allSatisfy(component -> {
-            assertThat(component.getClickEvent().getAction()).isEqualTo(ClickEvent.Action.OPEN_URL);
-            assertThat(component.getClickEvent().getValue())
-                    .isEqualTo("https://github.com/VolmitSoftware/ShapedPortals/releases/tag/2.0.1");
-        });
+        ArgumentCaptor<String> messages = ArgumentCaptor.forClass(String.class);
+        verify(player).sendRichMessage(messages.capture());
+        Component component = MiniMessage.miniMessage().deserialize(messages.getValue());
+        assertThat(ComponentText.markup(messages.getValue()).plain()).isEqualTo("ShapedPortals 2.0.1 is available");
+        assertThat(component.clickEvent()).isEqualTo(ClickEvent.openUrl(
+                "https://github.com/VolmitSoftware/ShapedPortals/releases/tag/2.0.1"));
     }
 
     @Test
     void permittedNonOperatorsReceiveANotice() {
         when(player.hasPermission("shapedportals.update")).thenReturn(true);
         try (MockedStatic<FoliaScheduler> scheduler = captureScheduler()) {
-            notifier.onJoin(new PlayerJoinEvent(player, null));
+            notifier.onJoin(new PlayerJoinEvent(player, (String) null));
             completeUpdate();
             scheduled.get(0).run();
         }
@@ -110,7 +110,7 @@ class UpdateNotifierTest {
     void noNewerReleaseDoesNotScheduleANotice() {
         when(player.isOp()).thenReturn(true);
         try (MockedStatic<FoliaScheduler> scheduler = captureScheduler()) {
-            notifier.onJoin(new PlayerJoinEvent(player, null));
+            notifier.onJoin(new PlayerJoinEvent(player, (String) null));
             response.complete(Optional.empty());
             assertThat(scheduled).isEmpty();
         }
@@ -120,10 +120,10 @@ class UpdateNotifierTest {
     void disablingAndReenablingInvalidatesAnInFlightJoin() {
         when(player.isOp()).thenReturn(true);
         try (MockedStatic<FoliaScheduler> scheduler = captureScheduler()) {
-            notifier.onJoin(new PlayerJoinEvent(player, null));
+            notifier.onJoin(new PlayerJoinEvent(player, (String) null));
             config.general.updateNotifications = false;
             notifier.reconfigure();
-            notifier.onJoin(new PlayerJoinEvent(player, null));
+            notifier.onJoin(new PlayerJoinEvent(player, (String) null));
             config.general.updateNotifications = true;
             notifier.reconfigure();
             completeUpdate();
@@ -140,7 +140,7 @@ class UpdateNotifierTest {
     void permissionIsRecheckedOnTheOwningThread() {
         when(player.hasPermission("shapedportals.update")).thenReturn(true);
         try (MockedStatic<FoliaScheduler> scheduler = captureScheduler()) {
-            notifier.onJoin(new PlayerJoinEvent(player, null));
+            notifier.onJoin(new PlayerJoinEvent(player, (String) null));
             completeUpdate();
             when(player.hasPermission("shapedportals.update")).thenReturn(false);
             scheduled.get(0).run();
@@ -153,7 +153,7 @@ class UpdateNotifierTest {
     void disconnectedPlayersDoNotReceiveQueuedNotices() {
         when(player.isOp()).thenReturn(true);
         try (MockedStatic<FoliaScheduler> scheduler = captureScheduler()) {
-            notifier.onJoin(new PlayerJoinEvent(player, null));
+            notifier.onJoin(new PlayerJoinEvent(player, (String) null));
             completeUpdate();
             when(player.isOnline()).thenReturn(false);
             scheduled.get(0).run();
@@ -166,7 +166,7 @@ class UpdateNotifierTest {
     void configOptOutStopsQueuedNoticesBeforeReconfiguration() {
         when(player.isOp()).thenReturn(true);
         try (MockedStatic<FoliaScheduler> scheduler = captureScheduler()) {
-            notifier.onJoin(new PlayerJoinEvent(player, null));
+            notifier.onJoin(new PlayerJoinEvent(player, (String) null));
             completeUpdate();
             config.general.updateNotifications = false;
             scheduled.get(0).run();
@@ -179,7 +179,7 @@ class UpdateNotifierTest {
     void closingStopsQueuedNoticesAndChecker() {
         when(player.isOp()).thenReturn(true);
         try (MockedStatic<FoliaScheduler> scheduler = captureScheduler()) {
-            notifier.onJoin(new PlayerJoinEvent(player, null));
+            notifier.onJoin(new PlayerJoinEvent(player, (String) null));
             completeUpdate();
             notifier.close();
             scheduled.get(0).run();

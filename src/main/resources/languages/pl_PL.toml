@@ -103,7 +103,7 @@ header = "{prefix}&r &7› &7&d&lStan {prefix}&r"
 config = "{prefix}&r &7› &7&7Tworzenie:&r {enabled} &8|&r &7Język:&r &f{language}&r &8|&r &7Automatyczne wczytywanie:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Zarządzane portale:&r &f{portals}&r &8|&r &7Komórki wewnętrzne:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Próby:&r &f{attempts}&r &8|&r &7Utworzone:&r &a{created}&r &8|&r &7Odrzucone:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Artefakt:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Harmonogram:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Artefakt:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Harmonogram:&r &f{scheduler}&r"
 
 [command.description]
 version = "Wyświetl zainstalowaną wersję {prefix}"
@@ -125,7 +125,23 @@ upload = "Prześlij raport, gdy publiczne przesyłanie jest włączone"
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7Utworzono&7 portal o dowolnym kształcie z &f{blocks}&7 blokami wewnętrznymi.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7Utworzono portal o dowolnym kształcie z &f{blocks}&7 blokami wewnętrznymi.&r"
-failed = "{prefix}&r &7› &7&cTa rama nie może stać się portalem o dowolnym kształcie: &f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: kształt obejmuje niezależnie zarządzane regiony Folia.&r"
+too_large = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: liczba bloków wnętrza przekracza ustawiony limit.&r"
+too_wide = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: szerokość wnętrza przekracza ustawiony limit.&r"
+too_tall = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: wysokość wnętrza przekracza ustawiony limit.&r"
+too_small = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: wnętrze jest mniejsze od ustawionego minimum.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: rama jest poprawna na obu osiach.&r"
+start_blocked = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: bloku w miejscu zapłonu nie można już zastąpić.&r"
+open_frame = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: rama jest otwarta lub zawiera zablokowaną komórkę wnętrza.&r"
+region_unavailable = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: odpowiedzialny region był niedostępny.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: Wormholes odrzucił utworzenie portalu.&r"
+event_cancelled = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: inny plugin anulował tworzenie.&r"
+block_denied = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: inny plugin odrzucił co najmniej jeden blok portalu.&r"
+frame_changed = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: rama zmieniła się podczas tworzenia.&r"
+overlapping_portal = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: kształt nakłada się na istniejący zarządzany portal.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cZ tej ramy nie można utworzyć portalu o niestandardowym kształcie: zmiana świata nie powiodła się.&r"
 
 [portal.title]
 nether_created = "&5&lUtworzono portal do Netheru&r"

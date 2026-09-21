@@ -30,10 +30,10 @@ apply plugin: 'art.arcane.volmit-packaging'
 tasks.named('slimJar').get()
 
 group = 'com.volmit'
-version = '2.0.2'
+version = '2.0.0'
 
 String mainClass = 'com.volmit.shapedportals.ShapedPortals'
-String apiVersion = '1.20'
+String apiVersion = '26.1'
 String relocatedLibraryPackage = 'com.volmit.shapedportals.libs'
 String volmLibCoordinate = providers.gradleProperty('volmLibCoordinate')
     .orElse('com.github.VolmitSoftware:VolmLib:master-SNAPSHOT')
@@ -66,11 +66,11 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.named('compileJava', JavaCompile).configure {
-    options.release.set(17)
+    options.release.set(25)
 }
 
 tasks.named('compileTestJava', JavaCompile).configure {
-    options.release.set(17)
+    options.release.set(25)
 }
 
 repositories {
@@ -114,9 +114,9 @@ configurations {
 }
 
 dependencies {
-    compileOnly('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
+    compileOnly('org.spigotmc:spigot-api:26.1-R0.1-SNAPSHOT')
     compileOnly(files(providers.gradleProperty('wormholesApiJar')
-            .orElse('../WormholesPlugin/build/libs/Wormholes-2.0.6-26.2-api.jar')))
+            .orElse('../Wormholes/build/libs/Wormholes-2.0.6-26.2-api.jar')))
     implementation(volmLibCoordinate) {
         changing = true
         transitive = false
@@ -140,7 +140,6 @@ dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter')
     testImplementation('org.assertj:assertj-core:3.27.4')
     testImplementation('org.mockito:mockito-core:5.23.0')
-    testImplementation('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
     testRuntimeOnly('org.junit.platform:junit-platform-launcher')
 }
 
@@ -246,7 +245,7 @@ def packagingTest = tasks.register('packagingTest', Test) {
     }
 }
 
-tasks.register('verifyJava17Artifact') {
+tasks.register('verifyJava25Artifact') {
     dependsOn(tasks.named('shadowJar'))
     inputs.file(tasks.named('shadowJar').flatMap { it.archiveFile })
     doLast {
@@ -312,8 +311,8 @@ tasks.register('verifyJava17Artifact') {
         if (pluginMetadataCount != 1) {
             throw new GradleException("Expected one plugin.yml, found ${pluginMetadataCount}")
         }
-        if (maximumClassMajor > 61) {
-            throw new GradleException("Shaded artifact contains class major ${maximumClassMajor}; Java 17 allows at most 61")
+        if (maximumClassMajor > 69) {
+            throw new GradleException("Shaded artifact contains class major ${maximumClassMajor}; Java 25 allows at most 69")
         }
         if (!bStatsMetricsClassPresent) {
             throw new GradleException('Shaded artifact does not contain the package-isolated bStats Metrics class')
@@ -338,7 +337,7 @@ tasks.named('check').configure {
     dependsOn(packagingTest)
     dependsOn(tasks.named('compileCurrentPaperCompatibility'))
     dependsOn(tasks.named('compileCurrentSpigotCompatibility'))
-    dependsOn(tasks.named('verifyJava17Artifact'))
+    dependsOn(tasks.named('verifyJava25Artifact'))
 }
 
 def reactApiPackTask = tasks.register('copyReactApiPack', Copy) {
@@ -397,7 +396,7 @@ tasks.register('buildSwiftSwamp', Copy) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     dependsOn(tasks.named('check'), tasks.named('shadowJar'))
     from(tasks.named('shadowJar').flatMap { it.archiveFile })
-    into(file('C://VolmitSoftware/BUILDS'))
+    into(file('../BUILDS'))
     rename { String ignored -> 'ShapedPortals.jar' }
 }
 
@@ -454,3 +453,5 @@ tasks.register('compilePaper263Compatibility', JavaCompile) {
 tasks.named('check').configure {
     dependsOn(tasks.named('compilePaper263Compatibility'))
 }
+
+apply from: rootProject.file('../build-support/test-fixtures.gradle')

@@ -106,7 +106,7 @@ upload = "啟用公開上傳時上傳報告"
 
 [command.status]
 attempts = "{prefix}&r &7› &7&7嘗試次數:&r&f{attempts}&r&8|&r&7建立日期:&r&a{created}&r&8|&r&7拒絕:&r&c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7工件:&r&fJava 17 / Bukkit 1.20.1+&r&8|&r&7排程者:&r&f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7工件:&r&fJava 25 / Bukkit 26.1+&r&8|&r&7排程者:&r&f{scheduler}&r"
 config = "{prefix}&r &7› &7&7建立：&r{enabled}&8|&r&7語言：&r&f{language}&r&8|&r&7熱重載：&r{hot_reload}"
 header = "{prefix}&r &7› &7執行狀態&r"
 portals = "{prefix}&r &7› &7&7已管理傳送門：&r&f{portals}&r&8|&r&7內部方塊：&r&f{cells}&r"
@@ -292,7 +292,23 @@ success = "{prefix}&r &7› &7&7已傳送至&7&f{portal}&r&7旁的&f{world}&r&7�
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7已建立一個內部由&7&f{blocks}&7方塊組成的成形傳送門.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7已建立一個內部由&f{blocks}&7方塊組成的成形傳送門.&r"
-failed = "{prefix}&r &7› &7&c該框架無法成為成形傳送門:&f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：形狀跨越了獨立管理的多個 Folia 區域。&r"
+too_large = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：內部方塊數量超過了設定的上限。&r"
+too_wide = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：內部寬度超過了設定的上限。&r"
+too_tall = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：內部高度超過了設定的上限。&r"
+too_small = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：內部空間小於設定的最小值。&r"
+ambiguous_axis = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：框架在兩個軸上都有效。&r"
+start_blocked = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：點火位置的方塊已無法替換。&r"
+open_frame = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：框架未封閉，或內部有被阻擋的位置。&r"
+region_unavailable = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：負責此位置的區域無法使用。&r"
+wormholes_rejected = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：Wormholes 拒絕了傳送門建立。&r"
+event_cancelled = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：其他插件取消了建立。&r"
+block_denied = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：其他插件拒絕了一個或多個傳送門方塊。&r"
+frame_changed = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：框架在建立過程中發生了變化。&r"
+overlapping_portal = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：形狀與現有的受管理傳送門重疊。&r"
+world_mutation_failed = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：世界修改失敗。&r"
 
 [runtime]
 player_only = "{prefix}&r &7› &7&c此指令僅能由玩家使用。&r"

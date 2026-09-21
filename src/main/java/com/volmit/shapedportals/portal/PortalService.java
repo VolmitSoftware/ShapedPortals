@@ -1,6 +1,7 @@
 package com.volmit.shapedportals.portal;
 
 import art.arcane.volmlib.util.localization.MessageArgs;
+import art.arcane.volmlib.util.localization.TextKey;
 import art.arcane.volmlib.util.scheduling.FoliaScheduler;
 import com.volmit.shapedportals.ShapedPortals;
 import com.volmit.shapedportals.config.ConfigService;
@@ -91,7 +92,7 @@ public final class PortalService {
             stats.attempted();
             stats.rejected(RejectionReason.REGION_SCHEDULING_UNAVAILABLE);
             if (creator instanceof Player player) {
-                fail(player, "the owning region was unavailable");
+                fail(player, ShapedMessages.PORTAL_FAILED_REGION_UNAVAILABLE);
             }
         }
     }
@@ -124,7 +125,7 @@ public final class PortalService {
         if (!scheduled) {
             stats.attempted();
             stats.rejected(RejectionReason.REGION_SCHEDULING_UNAVAILABLE);
-            fail(creator, "the owning region was unavailable");
+            fail(creator, ShapedMessages.PORTAL_FAILED_REGION_UNAVAILABLE);
         }
     }
 
@@ -152,7 +153,7 @@ public final class PortalService {
         if (!selected.valid()) {
             stats.rejected(RejectionReason.fromShapeFailure(selected.failure()));
             if (creator instanceof Player player) {
-                fail(player, failureText(selected.failure()));
+                fail(player, failureKey(selected.failure()));
             }
             return;
         }
@@ -169,7 +170,7 @@ public final class PortalService {
         if (ownership == WormholesIntegration.Result.REJECTED) {
             stats.rejected(RejectionReason.EVENT_CANCELLED);
             if (creator instanceof Player player) {
-                fail(player, "Wormholes rejected portal creation");
+                fail(player, ShapedMessages.PORTAL_FAILED_WORMHOLES_REJECTED);
             }
             return;
         }
@@ -192,7 +193,7 @@ public final class PortalService {
         if (event.isCancelled()) {
             stats.rejected(RejectionReason.EVENT_CANCELLED);
             if (creator instanceof Player player) {
-                fail(player, "another plugin cancelled creation");
+                fail(player, ShapedMessages.PORTAL_FAILED_EVENT_CANCELLED);
             }
             return;
         }
@@ -201,7 +202,7 @@ public final class PortalService {
         if (!revalidated.valid() || !revalidated.shape().equals(shape)) {
             stats.rejected(RejectionReason.FRAME_CHANGED);
             if (creator instanceof Player player) {
-                fail(player, "the frame changed during creation");
+                fail(player, ShapedMessages.PORTAL_FAILED_FRAME_CHANGED);
             }
             return;
         }
@@ -222,7 +223,7 @@ public final class PortalService {
         if (!registry.register(record, false)) {
             stats.rejected(RejectionReason.OVERLAPPING_PORTAL);
             if (creator instanceof Player player) {
-                fail(player, "the shape overlaps an existing managed portal");
+                fail(player, ShapedMessages.PORTAL_FAILED_OVERLAPPING_PORTAL);
             }
             return;
         }
@@ -237,7 +238,7 @@ public final class PortalService {
             plugin.getLogger().log(Level.SEVERE, "Failed to commit shaped portal " + record.id(), exception);
             stats.rejected(RejectionReason.WORLD_MUTATION_FAILED);
             if (creator instanceof Player player) {
-                fail(player, "the world mutation failed");
+                fail(player, ShapedMessages.PORTAL_FAILED_WORLD_MUTATION_FAILED);
             }
             return;
         }
@@ -294,7 +295,7 @@ public final class PortalService {
         BlockData portalData = PortalType.END.createBlockData(PortalAxis.Y);
         if (!canBuildEndPortal(creator, world, interior, portalData)) {
             stats.rejected(RejectionReason.EVENT_CANCELLED);
-            fail(creator, "another plugin denied one or more portal blocks");
+            fail(creator, ShapedMessages.PORTAL_FAILED_BLOCK_DENIED);
             return;
         }
 
@@ -304,7 +305,7 @@ public final class PortalService {
                 || !revalidated.result().shape().equals(shape)
                 || !hasEveryEndEye(world, frame)) {
             stats.rejected(RejectionReason.FRAME_CHANGED);
-            fail(creator, "the frame changed during creation");
+            fail(creator, ShapedMessages.PORTAL_FAILED_FRAME_CHANGED);
             return;
         }
 
@@ -326,7 +327,7 @@ public final class PortalService {
         );
         if (!registry.register(record, false)) {
             stats.rejected(RejectionReason.OVERLAPPING_PORTAL);
-            fail(creator, "the shape overlaps an existing managed portal");
+            fail(creator, ShapedMessages.PORTAL_FAILED_OVERLAPPING_PORTAL);
             return;
         }
 
@@ -339,7 +340,7 @@ public final class PortalService {
             restore(originals);
             plugin.getLogger().log(Level.SEVERE, "Failed to commit shaped End portal " + record.id(), exception);
             stats.rejected(RejectionReason.WORLD_MUTATION_FAILED);
-            fail(creator, "the world mutation failed");
+            fail(creator, ShapedMessages.PORTAL_FAILED_WORLD_MUTATION_FAILED);
             return;
         }
 
@@ -556,12 +557,11 @@ public final class PortalService {
         return previous != null && now - previous < cooldownMillis;
     }
 
-    private void fail(Player player, String reason) {
+    private void fail(Player player, TextKey message) {
         if (!configService.runtime().failureFeedback()) {
             return;
         }
-        MessageArgs arguments = MessageArgs.builder().untrusted("reason", reason).build();
-        presentation.portal(player, ShapedMessages.PORTAL_FAILED, arguments, FeedbackTone.FAILURE);
+        presentation.portal(player, message, MessageArgs.empty(), FeedbackTone.FAILURE);
     }
 
     private void failPermission(Player player) {
@@ -571,16 +571,16 @@ public final class PortalService {
         presentation.portal(player, ShapedMessages.NO_PERMISSION, MessageArgs.empty(), FeedbackTone.FAILURE);
     }
 
-    private String failureText(ShapeFailure failure) {
+    private TextKey failureKey(ShapeFailure failure) {
         return switch (failure) {
-            case CROSS_REGION -> "the shape crosses independently owned Folia regions";
-            case TOO_LARGE -> "the interior exceeds the configured block limit";
-            case TOO_WIDE -> "the interior exceeds the configured width limit";
-            case TOO_TALL -> "the interior exceeds the configured height limit";
-            case TOO_SMALL -> "the interior is smaller than the configured minimum";
-            case AMBIGUOUS_AXIS -> "the frame is valid on both axes";
-            case START_BLOCKED -> "the ignition block is no longer replaceable";
-            default -> "the frame is open or contains a blocked interior cell";
+            case CROSS_REGION -> ShapedMessages.PORTAL_FAILED_CROSS_REGION;
+            case TOO_LARGE -> ShapedMessages.PORTAL_FAILED_TOO_LARGE;
+            case TOO_WIDE -> ShapedMessages.PORTAL_FAILED_TOO_WIDE;
+            case TOO_TALL -> ShapedMessages.PORTAL_FAILED_TOO_TALL;
+            case TOO_SMALL -> ShapedMessages.PORTAL_FAILED_TOO_SMALL;
+            case AMBIGUOUS_AXIS -> ShapedMessages.PORTAL_FAILED_AMBIGUOUS_AXIS;
+            case START_BLOCKED -> ShapedMessages.PORTAL_FAILED_START_BLOCKED;
+            default -> ShapedMessages.PORTAL_FAILED_OPEN_FRAME;
         };
     }
 

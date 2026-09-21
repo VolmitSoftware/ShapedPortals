@@ -103,7 +103,7 @@ header = "{prefix}&r &7› &7&d&lStato di {prefix}&r"
 config = "{prefix}&r &7› &7&7Creazione:&r {enabled} &8|&r &7Lingua:&r &f{language}&r &8|&r &7Ricaricamento automatico:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Portali gestiti:&r &f{portals}&r &8|&r &7Celle interne:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Tentativi:&r &f{attempts}&r &8|&r &7Creati:&r &a{created}&r &8|&r &7Rifiutati:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Artefatto:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Pianificatore:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Artefatto:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Pianificatore:&r &f{scheduler}&r"
 
 [command.description]
 version = "Mostra la versione installata di {prefix}"
@@ -125,7 +125,23 @@ upload = "Carica il rapporto quando i caricamenti pubblici sono abilitati"
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7È&7 stato creato un portale sagomato con &f{blocks}&7 blocchi interni.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7È stato creato un portale sagomato con &f{blocks}&7 blocchi interni.&r"
-failed = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale sagomato: &f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: la forma attraversa regioni Folia gestite indipendentemente.&r"
+too_large = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: l’interno supera il limite di blocchi configurato.&r"
+too_wide = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: l’interno supera il limite di larghezza configurato.&r"
+too_tall = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: l’interno supera il limite di altezza configurato.&r"
+too_small = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: l’interno è più piccolo del minimo configurato.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: la cornice è valida su entrambi gli assi.&r"
+start_blocked = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: il blocco di accensione non è più sostituibile.&r"
+open_frame = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: la cornice è aperta o contiene una cella interna ostruita.&r"
+region_unavailable = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: la regione responsabile non era disponibile.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: Wormholes ha rifiutato la creazione del portale.&r"
+event_cancelled = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: un altro plugin ha annullato la creazione.&r"
+block_denied = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: un altro plugin ha negato uno o più blocchi del portale.&r"
+frame_changed = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: la cornice è cambiata durante la creazione.&r"
+overlapping_portal = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: la forma si sovrappone a un portale gestito esistente.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cQuesta cornice non può diventare un portale dalla forma personalizzata: la modifica del mondo non è riuscita.&r"
 
 [portal.title]
 nether_created = "&5&lPortale del Nether creato&r"

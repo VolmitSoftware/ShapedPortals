@@ -103,7 +103,7 @@ header = "{prefix}&r &7› &7çalışma durumu&r"
 config = "{prefix}&r &7› &7&7Oluşturma:&r {enabled} &8|&r &7Dil:&r &f{language}&r &8|&r &7Canlı yeniden yükleme:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Yönetilen portallar:&r &f{portals}&r &8|&r &7İç bloklar:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Denemeler:&r &f{attempts}&r &8|&r &7Oluşturulan:&r &a{created}&r &8|&r &7Reddedilen:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Derleme:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Zamanlayıcı:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Derleme:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Zamanlayıcı:&r &f{scheduler}&r"
 
 [command.description]
 version = "Yüklü {prefix} sürümünü göster"
@@ -125,7 +125,23 @@ upload = "Herkese açık yüklemeler etkinse raporu yükle"
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7&f{blocks}&7 iç bloğa sahip şekilli bir portal oluşturuldu.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7&f{blocks}&7 iç bloğa sahip şekilli bir portal oluşturuldu.&r"
-failed = "{prefix}&r &7› &7&cBu çerçeve şekilli bir portala dönüşemez: &f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: şekil, bağımsız yönetilen Folia bölgelerinin sınırlarını aşıyor.&r"
+too_large = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: iç alan, yapılandırılan blok sınırını aşıyor.&r"
+too_wide = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: iç alan, yapılandırılan genişlik sınırını aşıyor.&r"
+too_tall = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: iç alan, yapılandırılan yükseklik sınırını aşıyor.&r"
+too_small = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: iç alan, yapılandırılan minimumdan daha küçük.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: çerçeve her iki eksende de geçerli.&r"
+start_blocked = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: tutuşturma noktasındaki blok artık değiştirilemiyor.&r"
+open_frame = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: çerçeve açık veya iç alanda engellenmiş bir hücre var.&r"
+region_unavailable = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: sorumlu bölge kullanılamıyordu.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: Wormholes portal oluşturmayı reddetti.&r"
+event_cancelled = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: başka bir eklenti oluşturmayı iptal etti.&r"
+block_denied = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: başka bir eklenti bir veya daha fazla portal bloğuna izin vermedi.&r"
+frame_changed = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: çerçeve oluşturma sırasında değişti.&r"
+overlapping_portal = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: şekil, mevcut bir yönetilen portalla örtüşüyor.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: dünya değişikliği başarısız oldu.&r"
 
 [portal.title]
 nether_created = "&5&lNether Portalı Oluşturuldu&r"

@@ -103,7 +103,7 @@ header = "{prefix}&r &7› &7&d&lEstado do {prefix}&r"
 config = "{prefix}&r &7› &7&7Criação:&r {enabled} &8|&r &7Idioma:&r &f{language}&r &8|&r &7Recarregamento automático:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Portais geridos:&r &f{portals}&r &8|&r &7Células interiores:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Tentativas:&r &f{attempts}&r &8|&r &7Criados:&r &a{created}&r &8|&r &7Rejeitados:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Artefacto:&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Agendador:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Artefacto:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Agendador:&r &f{scheduler}&r"
 
 [command.description]
 version = "Mostrar a versão instalada de {prefix}"
@@ -125,7 +125,23 @@ upload = "Carregar o relatório quando os carregamentos públicos estão ativado
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7Foi&7 criado um portal moldado com &f{blocks}&7 blocos interiores.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7Foi criado um portal moldado com &f{blocks}&7 blocos interiores.&r"
-failed = "{prefix}&r &7› &7&cEsta moldura não pode tornar-se um portal moldado: &f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: a forma atravessa regiões Folia geridas de forma independente.&r"
+too_large = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: o interior excede o limite de blocos configurado.&r"
+too_wide = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: o interior excede o limite de largura configurado.&r"
+too_tall = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: o interior excede o limite de altura configurado.&r"
+too_small = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: o interior é menor do que o mínimo configurado.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: a moldura é válida em ambos os eixos.&r"
+start_blocked = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: o bloco no ponto de ignição já não pode ser substituído.&r"
+open_frame = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: a moldura está aberta ou contém uma célula interior bloqueada.&r"
+region_unavailable = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: a região responsável não estava disponível.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: o Wormholes rejeitou a criação do portal.&r"
+event_cancelled = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: outro plugin cancelou a criação.&r"
+block_denied = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: outro plugin recusou um ou mais blocos do portal.&r"
+frame_changed = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: a moldura mudou durante a criação.&r"
+overlapping_portal = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: a forma sobrepõe-se a um portal gerido existente.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cEsta moldura não pode formar um portal com uma forma personalizada: a alteração do mundo falhou.&r"
 
 [portal.title]
 nether_created = "&5&lPortal do Nether criado&r"

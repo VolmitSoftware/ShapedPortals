@@ -103,7 +103,7 @@ header = "{prefix}&r &7› &7&d&lÉtat de {prefix}&r"
 config = "{prefix}&r &7› &7&7Création :&r {enabled} &8|&r &7Langue :&r &f{language}&r &8|&r &7Rechargement automatique :&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Portails gérés :&r &f{portals}&r &8|&r &7Cellules intérieures :&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Tentatives :&r &f{attempts}&r &8|&r &7Créés :&r &a{created}&r &8|&r &7Refusés :&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Artefact :&r &fJava 17 / Bukkit 1.20.1+&r &8|&r &7Planificateur :&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Artefact :&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Planificateur :&r &f{scheduler}&r"
 
 [command.description]
 version = "Afficher la version installée de {prefix}"
@@ -125,7 +125,23 @@ upload = "Téléverser le rapport lorsque les envois publics sont activés"
 [portal.notice]
 nether_created = "{prefix}&r &7› &7&7Un&7 portail personnalisé de &f{blocks}&7 blocs intérieurs a été créé.&r"
 end_created = "{prefix}&r &7› &7&7End&7&r &7Un portail personnalisé de &f{blocks}&7 blocs intérieurs a été créé.&r"
-failed = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail personnalisé : &f{reason}&r&c.&r"
+
+[portal.failure]
+cross_region = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : la forme traverse plusieurs régions Folia gérées indépendamment.&r"
+too_large = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : l’intérieur dépasse la limite de blocs configurée.&r"
+too_wide = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : l’intérieur dépasse la largeur maximale configurée.&r"
+too_tall = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : l’intérieur dépasse la hauteur maximale configurée.&r"
+too_small = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : l’intérieur est plus petit que le minimum configuré.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : le cadre est valide sur les deux axes.&r"
+start_blocked = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : le bloc d’allumage ne peut plus être remplacé.&r"
+open_frame = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : le cadre est ouvert ou contient une case intérieure obstruée.&r"
+region_unavailable = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : la région responsable n’était pas disponible.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : Wormholes a refusé la création du portail.&r"
+event_cancelled = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : un autre plugin a annulé la création.&r"
+block_denied = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : un autre plugin a refusé un ou plusieurs blocs du portail.&r"
+frame_changed = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : le cadre a changé pendant la création.&r"
+overlapping_portal = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : la forme chevauche un portail géré existant.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : la modification du monde a échoué.&r"
 
 [portal.title]
 nether_created = "&5&lPortail du Nether créé&r"

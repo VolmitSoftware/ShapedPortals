@@ -51,14 +51,14 @@ Free-form Nether and End portals with durable registration, configurable present
 ## Building
 
 ```text
-./gradlew build                 # full gate, shaded jar, and workspace BUILDS copy
+./gradlew build                 # full gate and shaded plugin jar
 ./gradlew shadowJar             # shaded plugin jar only
 ./gradlew publishToMavenLocal   # verified plugin and sources in local Maven
 ```
 
-The build runs on Java 25 and emits Java 17 bytecode. A sibling `VolmLib` checkout is resolved automatically as a composite build; pass `-PuseLocalVolmLib=false` to use the configured remote dependency instead.
+The build requires Java 25 and emits Java 25 bytecode. A sibling `VolmLib` checkout is resolved automatically as a composite build; pass `-PuseLocalVolmLib=false` to use the configured remote dependency instead. Build the sibling `WormholesPlugin` API jar first, or pass its path with `-PwormholesApiJar=/path/to/Wormholes-api.jar`. Tests use the Paper API and registry fixtures included in this repository.
 
-The versioned plugin is written to `build/libs/ShapedPortals-2.0.0.jar`. Successful full builds also refresh `C:/VolmitSoftware/BUILDS/ShapedPortals.jar`, and the React API Pack is copied to `build/distributions/react-api-packs/`.
+The versioned plugin is written to `build/libs/ShapedPortals-2.0.0.jar`, and the React API Pack is copied to `build/distributions/react-api-packs/`.
 
 ## Data layout
 

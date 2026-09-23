@@ -116,7 +116,7 @@ configurations {
 dependencies {
     compileOnly('org.spigotmc:spigot-api:26.1-R0.1-SNAPSHOT')
     compileOnly(files(providers.gradleProperty('wormholesApiJar')
-            .orElse('../Wormholes/build/libs/Wormholes-2.0.6-26.2-api.jar')))
+            .orElse('../WormholesPlugin/build/libs/Wormholes-2.0.6-26.2-api.jar')))
     implementation(volmLibCoordinate) {
         changing = true
         transitive = false
@@ -140,6 +140,7 @@ dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter')
     testImplementation('org.assertj:assertj-core:3.27.4')
     testImplementation('org.mockito:mockito-core:5.23.0')
+    testImplementation('io.papermc.paper:paper-api:26.1.2.build.74-stable')
     testRuntimeOnly('org.junit.platform:junit-platform-launcher')
 }
 
@@ -453,5 +454,3 @@ tasks.register('compilePaper263Compatibility', JavaCompile) {
 tasks.named('check').configure {
     dependsOn(tasks.named('compilePaper263Compatibility'))
 }
-
-apply from: rootProject.file('../build-support/test-fixtures.gradle')

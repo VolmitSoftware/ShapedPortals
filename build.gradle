@@ -30,7 +30,7 @@ apply plugin: 'art.arcane.volmit-packaging'
 tasks.named('slimJar').get()
 
 group = 'com.volmit'
-version = '2.0.0'
+version = '2.0.1'
 
 String mainClass = 'com.volmit.shapedportals.ShapedPortals'
 String apiVersion = '26.1'
@@ -116,7 +116,7 @@ configurations {
 dependencies {
     compileOnly('org.spigotmc:spigot-api:26.1-R0.1-SNAPSHOT')
     compileOnly(files(providers.gradleProperty('wormholesApiJar')
-            .orElse('../WormholesPlugin/build/libs/Wormholes-2.0.6-26.2-api.jar')))
+            .orElse('../WormholesPlugin/build/libs/Wormholes-2.0.7-26.2-api.jar')))
     implementation(volmLibCoordinate) {
         changing = true
         transitive = false
@@ -378,14 +378,15 @@ tasks.register('buildPsychoLT', Copy) {
     description = 'Builds, verifies, and deploys ShapedPortals to the managed Minecraft test-server dropins.'
     outputs.upToDateWhen { false }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    dependsOn(tasks.named('check'), tasks.named('shadowJar'), reactApiPackTask)
-    from(tasks.named('shadowJar').flatMap { it.archiveFile })
+    dependsOn(tasks.named('check'), 'packedJar', reactApiPackTask)
+    from({ tasks.named('packedJar').get().outputJar })
     into(layout.projectDirectory.dir('../../[Minecraft Server]/consumers/plugin-consumers/dropins/plugins'))
     rename { String ignored -> 'ShapedPortals.jar' }
     doLast {
         project.copy {
-            from(tasks.named('shadowJar').get().archiveFile.get().asFile)
+            from(tasks.named('packedJar').get().outputJar.get().asFile)
             into(layout.projectDirectory.dir('../PluginOuts'))
+            rename { String fileName -> fileName.replaceFirst(/-packed\.jar$/, '.jar') }
         }
     }
 }
@@ -395,8 +396,8 @@ tasks.register('buildSwiftSwamp', Copy) {
     description = 'Builds, verifies, and stages ShapedPortals in the workspace BUILDS directory.'
     outputs.upToDateWhen { false }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    dependsOn(tasks.named('check'), tasks.named('shadowJar'))
-    from(tasks.named('shadowJar').flatMap { it.archiveFile })
+    dependsOn(tasks.named('check'), 'packedJar')
+    from({ tasks.named('packedJar').get().outputJar })
     into(file('../BUILDS'))
     rename { String ignored -> 'ShapedPortals.jar' }
 }
@@ -409,6 +410,7 @@ configurations.configureEach {
 pluginPackaging {
     artifacts {
         create('distribution') {
+            packed = true
             taskName = 'shadowJar'
             policyName = 'ShapedPortals'
             prunePrefixes = ['com/volmit/shapedportals/libs/volmlib/']

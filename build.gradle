@@ -1,3 +1,4 @@
+import art.arcane.volmit.packaging.PackagingMode
 import org.gradle.api.attributes.Usage
 import org.gradle.api.attributes.java.TargetJvmVersion
 import org.gradle.api.publish.maven.MavenPublication
@@ -30,7 +31,7 @@ apply plugin: 'art.arcane.volmit-packaging'
 tasks.named('slimJar').get()
 
 group = 'com.volmit'
-version = '2.0.1'
+version = '2.1.0'
 
 String mainClass = 'com.volmit.shapedportals.ShapedPortals'
 String apiVersion = '26.1'
@@ -410,6 +411,10 @@ configurations.configureEach {
 pluginPackaging {
     artifacts {
         create('distribution') {
+            stripDirectories = true
+            stripLocalVariables = true
+            releaseCompression = providers.gradleProperty('compactRelease').map { it.toBoolean() }
+                    .getOrElse(!PackagingMode.resolve(providers).development())
             packed = true
             taskName = 'shadowJar'
             policyName = 'ShapedPortals'

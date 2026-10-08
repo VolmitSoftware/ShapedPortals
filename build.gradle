@@ -39,6 +39,17 @@ String relocatedLibraryPackage = 'com.volmit.shapedportals.libs'
 String volmLibCoordinate = providers.gradleProperty('volmLibCoordinate')
     .orElse('com.github.VolmitSoftware:VolmLib:master-SNAPSHOT')
     .get()
+String wormholesApiJar = providers.gradleProperty('wormholesApiJar')
+    .orElse(providers.fileContents(layout.projectDirectory.file('../WormholesPlugin/gradle.properties')).asText.map { String contents ->
+        Properties wormholesProperties = new Properties()
+        wormholesProperties.load(new StringReader(contents))
+        String wormholesVersion = wormholesProperties.getProperty('wormholesVersion')
+        if (wormholesVersion == null || wormholesVersion.isBlank()) {
+            throw new GradleException('WormholesPlugin/gradle.properties must declare wormholesVersion')
+        }
+        return "../WormholesPlugin/build/libs/Wormholes-${wormholesVersion}-api.jar"
+    })
+    .get()
 String languageSourceReference = 'ebde960aa4fd53e56f66f6c34b6659d1e2843410'
 List<File> languageSourceFiles = fileTree('src/main/resources/languages') {
     include('*.toml')
@@ -116,8 +127,7 @@ configurations {
 
 dependencies {
     compileOnly('org.spigotmc:spigot-api:26.1-R0.1-SNAPSHOT')
-    compileOnly(files(providers.gradleProperty('wormholesApiJar')
-            .orElse('../WormholesPlugin/build/libs/Wormholes-2.0.7-26.2-api.jar')))
+    compileOnly(files(wormholesApiJar))
     implementation(volmLibCoordinate) {
         changing = true
         transitive = false

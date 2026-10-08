@@ -31,7 +31,7 @@ apply plugin: 'art.arcane.volmit-packaging'
 tasks.named('slimJar').get()
 
 group = 'com.volmit'
-version = '2.1.0'
+version = '2.1.1'
 
 String mainClass = 'com.volmit.shapedportals.ShapedPortals'
 String apiVersion = '26.1'

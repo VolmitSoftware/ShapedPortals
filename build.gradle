@@ -32,6 +32,7 @@ tasks.named('slimJar').get()
 
 group = 'com.volmit'
 version = '2.1.1'
+String bukkitMinecraftRange = providers.gradleProperty('bukkitMinecraftRange').getOrElse('26.1-26.3')
 
 String mainClass = 'com.volmit.shapedportals.ShapedPortals'
 String apiVersion = '26.1'
@@ -397,7 +398,7 @@ tasks.register('buildPsychoLT', Copy) {
         project.copy {
             from(tasks.named('packedJar').get().outputJar.get().asFile)
             into(layout.projectDirectory.dir('../PluginOuts'))
-            rename { String fileName -> fileName.replaceFirst(/-packed\.jar$/, '.jar') }
+            rename { String ignored -> "ShapedPortals v${project.version} [CraftBukkit] ${bukkitMinecraftRange}.jar" }
         }
     }
 }

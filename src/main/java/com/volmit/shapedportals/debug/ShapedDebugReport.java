@@ -23,7 +23,7 @@ final class ShapedDebugReport {
     static String create(ShapedDebugSnapshot snapshot) {
         StringBuilder report = new StringBuilder(12_288);
         section(report, "ShapedPortals services");
-        value(report, "Java bytecode target", 17);
+        value(report, "Java bytecode target", 25);
         value(report, "Scheduler", snapshot.scheduler());
         value(report, "Active locale", snapshot.activeLocale());
         value(report, "Available locales", String.join(", ", snapshot.availableLocales()));

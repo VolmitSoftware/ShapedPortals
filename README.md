@@ -22,9 +22,9 @@ Free-form Nether and End portals with durable registration, configurable present
 
 ## Requirements
 
-- Minecraft 1.20.1 or newer.
+- Minecraft 26.1 through 26.3.
 - Spigot, Paper, Folia, or a compatible derivative.
-- Java 17 bytecode support; use the newer Java runtime required by the server version when applicable.
+- Java 25.
 - Optional: React, when the ShapedPortals Runtime Plugin API Pack is installed for dashboard samplers.
 
 ## Commands
@@ -58,7 +58,7 @@ Free-form Nether and End portals with durable registration, configurable present
 
 The build requires Java 25 and emits Java 25 bytecode. A sibling `VolmLib` checkout is resolved automatically as a composite build; pass `-PuseLocalVolmLib=false` to use the configured remote dependency instead. Build the sibling `WormholesPlugin` API jar first, or pass its path with `-PwormholesApiJar=/path/to/Wormholes-api.jar`. Tests use the Paper API and registry fixtures included in this repository.
 
-The versioned plugin is written to `build/libs/ShapedPortals-2.0.0.jar`, and the React API Pack is copied to `build/distributions/react-api-packs/`.
+The versioned plugin is written to `build/libs/ShapedPortals-<version>.jar`, and the React API Pack is copied to `build/distributions/react-api-packs/`.
 
 ## Data layout
 

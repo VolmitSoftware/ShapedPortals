@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -70,6 +71,13 @@ final class ShapedDebugReportTest {
         config.portal.allowedWorlds = List.of();
 
         String report = ShapedDebugReport.create(snapshot);
+
+        try (DataInputStream bytecode = new DataInputStream(ShapedDebugReport.class.getResourceAsStream("ShapedDebugReport.class"))) {
+            assertThat(bytecode.readInt()).isEqualTo(0xCAFEBABE);
+            bytecode.readUnsignedShort();
+            int javaTarget = bytecode.readUnsignedShort() - 44;
+            assertThat(report).contains("Java bytecode target: " + javaTarget);
+        }
 
         assertThat(report)
                 .contains("Managed portals: 4")

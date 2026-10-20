@@ -31,7 +31,7 @@ apply plugin: 'art.arcane.volmit-packaging'
 tasks.named('slimJar').get()
 
 group = 'com.volmit'
-version = '2.1.1'
+version = '2.1.2'
 String bukkitMinecraftRange = providers.gradleProperty('bukkitMinecraftRange').getOrElse('26.1-26.3')
 
 String mainClass = 'com.volmit.shapedportals.ShapedPortals'

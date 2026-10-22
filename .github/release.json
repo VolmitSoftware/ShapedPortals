@@ -1,0 +1,8 @@
+{
+  "name": "ShapedPortals",
+  "platform": "bukkit",
+  "versionProperty": "shapedportalsVersion",
+  "betaTag": "beta",
+  "wormholesRef": "471d7e789da5a0b313ef9186171aad04ab5b2146",
+  "volmlibRef": "master"
+}

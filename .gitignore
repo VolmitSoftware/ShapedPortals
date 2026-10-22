@@ -8,3 +8,5 @@
 build/
 
 /C:/
+
+__pycache__/

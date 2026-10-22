@@ -90,6 +90,39 @@ class PortalRegistryTest {
     }
 
     @Test
+    void skipsUnreadableRecordsAndKeepsACopyOfTheOriginalStore() throws IOException {
+        JsonObject readable = JsonParser.parseString(new Gson().toJson(record())).getAsJsonObject();
+        JsonObject unreadable = JsonParser.parseString(new Gson().toJson(record())).getAsJsonObject();
+        JsonArray materials = new JsonArray();
+        materials.add("NOT_A_REAL_MATERIAL");
+        unreadable.add("frameMaterialSnapshot", materials);
+        unreadable.addProperty("id", UUID.randomUUID().toString());
+        JsonArray portals = new JsonArray();
+        portals.add(readable);
+        portals.add(unreadable);
+        JsonObject store = new JsonObject();
+        store.addProperty("schemaVersion", PortalRecord.CURRENT_SCHEMA_VERSION);
+        store.add("portals", portals);
+        Path storeFile = temporaryDirectory.resolve("portals.json");
+        Files.writeString(storeFile, store.toString(), StandardCharsets.UTF_8);
+        List<Throwable> failures = new CopyOnWriteArrayList<>();
+        PortalRegistry registry = new PortalRegistry(temporaryDirectory.toFile(), failures::add);
+
+        registry.load();
+
+        assertThat(registry.portalCount()).isEqualTo(1);
+        assertThat(failures).singleElement().satisfies(failure ->
+                assertThat(failure).hasMessageContaining("Skipped 1 unreadable portal record"));
+        try (var files = Files.list(temporaryDirectory)) {
+            List<Path> backups = files.filter(path -> path.getFileName().toString().startsWith("portals.json.unreadable-"))
+                    .toList();
+            assertThat(backups).singleElement().satisfies(backup ->
+                    assertThat(Files.readString(backup, StandardCharsets.UTF_8)).isEqualTo(store.toString()));
+        }
+        registry.close();
+    }
+
+    @Test
     void loadsExistingRecordsWithoutAFrameMaterialSnapshot() throws IOException {
         JsonObject portal = JsonParser.parseString(new Gson().toJson(record())).getAsJsonObject();
         portal.remove("frameMaterialSnapshot");

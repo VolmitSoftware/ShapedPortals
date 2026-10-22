@@ -1,78 +1,27 @@
-<div align="center">
-
-<img src="image.png" alt="ShapedPortals" width="640"/>
-
 # ShapedPortals
 
-Free-form Nether and End portals with durable registration, configurable presentation, and complete in-game administration.
-
-</div>
-
-## Features
-
-- **Arbitrary portal shapes** — Ignite bounded vertical Nether portals with irregular, concave, or asymmetric interiors.
-- **Shaped End portals** — Fill horizontal, fully eyed End Portal Frame boundaries of non-vanilla sizes and shapes while retaining vanilla End travel.
-- **Vanilla-compatible creation** — Nether proposals use cancellable `PortalCreateEvent`; End activation respects the eye interaction and preflights every interior through `BlockCanBuildEvent`.
-- **Managed integrity** — Portals persist across restarts, repair replaceable portal cells, and retain their recorded frame materials when the creation whitelist changes.
-- **Hot-reloadable configuration** — Every persisted option is available in the 54-slot in-game editor and can also be edited in `config.toml` without a restart.
-- **Localization** — Players can keep a personal language or follow the server default. Code-owned English remains available offline; 17 additional locale files download only when selected and remain directly editable afterward. Messages accept classic `&` colors, RGB, and MiniMessage.
-- **Administration** — Paginated portal listings, safe and permission-gated forced teleportation, and comprehensive local diagnostics with optional mclo.gs upload.
-- **Cooperative presentation** — Separate Nether/End creation messages, channels, titles, boss bars, and sounds hot-reload while respecting VolmLib's shared HUD claims.
-- **Metrics** — Enabled-by-default bStats metrics retain both plugin-local and global opt-outs; optional React Plugin API Pack metrics stay on the server.
+Custom-shaped Nether and horizontal End portals with saved records, integrity repair, and in-game administration. Minecraft handles travel unless Wormholes accepts a Nether portal.
 
 ## Requirements
 
-- Minecraft 26.1 through 26.3.
-- Spigot, Paper, Folia, or a compatible derivative.
+- Minecraft 26.1 through 26.3 on Spigot, Paper, Folia, or a compatible server.
 - Java 25.
-- Optional: React, when the ShapedPortals Runtime Plugin API Pack is installed for dashboard samplers.
+- Network access for dependency downloads on the first start.
 
-## Commands
+## Install
 
-`/shapedportals` is the root command, with `/shapedportal` and `/sp` as aliases.
+1. Stop the server and back up its worlds and plugin data.
+2. Place the ShapedPortals distribution jar in `plugins/`, replacing the previous jar.
+3. Start the server, check `/sp status`, and open `/sp config` to review the settings.
 
-| Command | Result |
-|---|---|
-| `/sp` | Open the localized paginated help menu. |
-| `/sp status` | Show creation, registry, scheduler, and integration state. |
-| `/sp config` | Open the complete in-game configuration and language editor. |
-| `/sp language` | Open the personal language picker in-game or the server picker from console. |
-| `/sp language self <locale\|reset>` | Select a personal language or return to the server default. |
-| `/sp language server <locale>` | Change the server default. |
-| `/sp language server edit [locale]` | Open the per-language message editor. |
-| `/volmit plugins` | Open the shared Volmit language and diagnostic tools. |
-| `/volmit plugins languages [locale]` | Change the server default across registered Volmit plugins. |
-| `/volmit plugins debug [plugin] [upload=true\|false]` | List shared debug providers or request one report. |
-| `/sp portals [page]` | List managed portals with frame status and teleport shortcuts. |
-| `/sp teleport [UUID/prefix]` | Teleport safely beside a managed portal; authorized operators may confirm an unsafe landing. |
-| `/sp debug` | Open the diagnostic command help menu. |
-| `/sp debug dump [upload=true]` | Save a diagnostic report and optionally upload it to mclo.gs. |
+See the [wiki](https://docs.volmitsoftware.com/shapedportals), [configuration reference](https://docs.volmitsoftware.com/shapedportals/01-installation-configuration), and [commands and permissions](https://docs.volmitsoftware.com/shapedportals/00-overview#commands).
 
-## Building
+## Build
 
-```text
-./gradlew build                 # full gate and shaded plugin jar
-./gradlew shadowJar             # shaded plugin jar only
-./gradlew publishToMavenLocal   # verified plugin and sources in local Maven
+Use Java 25. Build the sibling `Wormholes` API with its `apiJar` task first, or supply `-PwormholesApiJar=<path>`. From the ShapedPortals repository:
+
+```powershell
+.\gradlew.bat build buildSwiftSwamp
 ```
 
-The build requires Java 25 and emits Java 25 bytecode. A sibling `VolmLib` checkout is resolved automatically as a composite build; pass `-PuseLocalVolmLib=false` to use the configured remote dependency instead. Build the sibling `WormholesPlugin` API jar first, or pass its path with `-PwormholesApiJar=/path/to/Wormholes-api.jar`. Tests use the Paper API and registry fixtures included in this repository.
-
-The versioned plugin is written to `build/libs/ShapedPortals-<version>.jar`, and the React API Pack is copied to `build/distributions/react-api-packs/`.
-
-## Data layout
-
-ShapedPortals creates its configuration and English fallback on first start. Other files and folders appear only when their feature has data to store.
-
-```text
-plugins/ShapedPortals/
-├── config.toml                              all runtime settings; always
-├── languages/
-│   ├── language-preferences.properties     persistent personal choices, after the first selection
-│   ├── en_US.toml                          editable English fallback; always
-│   └── <locale>.toml                       selected repository or custom locales
-├── portals.json                            persisted managed portals, after the first registry write
-└── debug/shapedportals-v<version>-debugdump-yyyy-MM-dd-HH-mm-ss.txt    locally saved `/sp debug dump` reports
-```
-
-`config.toml` and the active server language file hot-reload. A missing repository locale is fetched from the latest `main` language directory, validated, installed once, and activated by the original selection; the console reports its source URL and final path. Existing files and local edits are never automatically replaced.
+The build resolves local VolmLib automatically and stages the verified distribution as `../BUILDS/ShapedPortals.jar`. Override the staging directory with `-PbuildsDirectory=<path>`. See [building from source](https://docs.volmitsoftware.com/shapedportals/04-architecture-limits#build-from-source) for dependency and publication details.

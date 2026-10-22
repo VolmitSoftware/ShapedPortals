@@ -77,9 +77,6 @@ denied = "{prefix}&r &7› &7&cBạn không có quyền thực hiện thao tác 
 success = "{prefix}&r &7› &7&7Đã&7 áp dụng các thay đổi trong tệp cấu hình và ngôn ngữ.&r"
 failed = "{prefix}&r &7› &7&cĐã từ chối thay đổi tệp; các thiết lập hợp lệ gần nhất vẫn đang hoạt động.&r"
 
-[runtime.update]
-available = "{prefix}&r &7› &7&7Đã có {prefix} &e{new}&7 (đã cài: &f{old}&7).&r\n&7Bản phát hành: &b{url}&r"
-
 [command.feedback]
 version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
 failed = "{prefix}&r &7› &7&cKhông thể hoàn tất lệnh. Hãy xem bảng điều khiển để biết chi tiết.&r"
@@ -103,7 +100,7 @@ header = "{prefix}&r &7› &7&d&lTrạng thái {prefix}&r"
 config = "{prefix}&r &7› &7&7Tạo cổng:&r {enabled} &8|&r &7Ngôn ngữ:&r &f{language}&r &8|&r &7Tải lại tức thời:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Cổng được quản lý:&r &f{portals}&r &8|&r &7Khối bên trong:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Số lần thử:&r &f{attempts}&r &8|&r &7Đã tạo:&r &a{created}&r &8|&r &7Đã từ chối:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Gói dựng:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Bộ lập lịch:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Gói dựng:&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7Bộ lập lịch:&r &f{scheduler}&r"
 
 [command.description]
 version = "Hiển thị phiên bản {prefix} đã cài đặt"

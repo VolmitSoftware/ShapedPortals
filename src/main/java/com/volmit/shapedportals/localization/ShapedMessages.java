@@ -22,7 +22,6 @@ public final class ShapedMessages {
     public static final TextKey PLAYER_ONLY = prefixed("runtime.player_only", "&cThis command can only be used by a player.&r");
     public static final TextKey HOT_RELOAD_SUCCESS = prefixed("runtime.hot_reload.success", "&aApplied&7 configuration and language file changes.&r");
     public static final TextKey HOT_RELOAD_FAILED = prefixed("runtime.hot_reload.failed", "&cRejected file changes; the last known good settings remain active.&r");
-    public static final TextKey UPDATE_AVAILABLE = prefixed("runtime.update.available", "&7Version &f{new}&7 is &eavailable&7 (installed: &f{old}&7).&r\n&7Release: &b{url}&r");
 
     public static final TextKey COMMAND_CONFIG_OPENED = prefixed("command.feedback.config.opened", "&aOpened&7 the complete in-game configuration editor.&r");
     public static final TextKey COMMAND_FAILED = prefixed("command.feedback.failed", "&cThe command could not be completed. See the console for details.&r");
@@ -40,7 +39,7 @@ public final class ShapedMessages {
     public static final TextKey STATUS_CONFIG = prefixed("command.status.config", "&7Creation:&r {enabled} &8|&r &7Language:&r &f{language}&r &8|&r &7Hot reload:&r {hot_reload}");
     public static final TextKey STATUS_PORTALS = prefixed("command.status.portals", "&7Managed portals:&r &f{portals}&r &8|&r &7Interior cells:&r &f{cells}&r");
     public static final TextKey STATUS_ATTEMPTS = prefixed("command.status.attempts", "&7Attempts:&r &f{attempts}&r &8|&r &7Created:&r &a{created}&r &8|&r &7Rejected:&r &c{rejected}&r");
-    public static final TextKey STATUS_COMPATIBILITY = prefixed("command.status.compatibility", "&7Artifact:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Scheduler:&r &f{scheduler}&r");
+    public static final TextKey STATUS_COMPATIBILITY = prefixed("command.status.compatibility", "&7Artifact:&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7Scheduler:&r &f{scheduler}&r");
 
     public static final TextKey PORTAL_NETHER_CREATED = prefixed("portal.notice.nether_created", "&aCreated&7 a shaped Nether portal with &f{blocks}&7 interior blocks.&r");
     public static final TextKey PORTAL_END_CREATED = prefixed("portal.notice.end_created", "&aCreated&7 a shaped End portal with &f{blocks}&7 interior blocks.&r");
@@ -230,7 +229,7 @@ public final class ShapedMessages {
 
     private static List<TextKey> productKeys() {
         return List.of(
-                PREFIX, VERSION, NO_PERMISSION, PLAYER_ONLY, HOT_RELOAD_SUCCESS, HOT_RELOAD_FAILED, UPDATE_AVAILABLE,
+                PREFIX, VERSION, NO_PERMISSION, PLAYER_ONLY, HOT_RELOAD_SUCCESS, HOT_RELOAD_FAILED,
                 COMMAND_CONFIG_OPENED, COMMAND_FAILED,
                 CONFIG_SAVED, CONFIG_SAVE_FAILED, DEBUG_STARTED, DEBUG_BUSY, DEBUG_SAVED, DEBUG_UPLOADED,
                 DEBUG_LINK_HOVER, DEBUG_UPLOAD_FAILED, DEBUG_FAILED, STATUS_HEADER, STATUS_CONFIG, STATUS_PORTALS,

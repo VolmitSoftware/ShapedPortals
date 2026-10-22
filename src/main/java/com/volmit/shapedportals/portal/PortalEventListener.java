@@ -1,5 +1,6 @@
 package com.volmit.shapedportals.portal;
 
+import com.volmit.shapedportals.config.RuntimeConfig;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.EndPortalFrame;
@@ -24,6 +25,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.projectiles.BlockProjectileSource;
 
 import java.util.HashSet;
 import java.util.List;
@@ -43,10 +45,16 @@ public final class PortalEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onIgnite(BlockIgniteEvent event) {
-        Entity creator = event.getPlayer() == null
-                ? responsibleCreator(event.getIgnitingEntity())
-                : event.getPlayer();
-        portalService.attempt(event.getBlock(), creator, event.getCause().name());
+        if (event.getPlayer() != null) {
+            portalService.attempt(event.getBlock(), event.getPlayer(), event.getCause().name());
+            return;
+        }
+        Entity igniter = event.getIgnitingEntity();
+        if (igniter instanceof Projectile projectile && projectile.getShooter() instanceof BlockProjectileSource) {
+            portalService.attempt(event.getBlock(), null, RuntimeConfig.DISPENSER_CAUSE);
+            return;
+        }
+        portalService.attempt(event.getBlock(), responsibleCreator(igniter), event.getCause().name());
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -60,7 +68,7 @@ public final class PortalEventListener implements Listener {
             return;
         }
         if (block.getType() == Material.FIRE || block.getType() == Material.SOUL_FIRE) {
-            portalService.attempt(block, event.getPlayer(), "PLACED_FIRE");
+            portalService.attempt(block, event.getPlayer(), RuntimeConfig.PLACED_FIRE_CAUSE);
         }
     }
 

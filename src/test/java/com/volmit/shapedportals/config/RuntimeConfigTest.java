@@ -49,6 +49,16 @@ class RuntimeConfigTest {
     }
 
     @Test
+    void acceptsDispenserIgnitionOnlyWhenListed() {
+        ShapedPortalsConfig config = new ShapedPortalsConfig();
+        assertThat(RuntimeConfig.from(config).allowsIgnition(RuntimeConfig.DISPENSER_CAUSE)).isFalse();
+
+        config.portal.ignitionCauses.add("dispenser");
+
+        assertThat(RuntimeConfig.from(config).allowsIgnition(RuntimeConfig.DISPENSER_CAUSE)).isTrue();
+    }
+
+    @Test
     void rejectsFrameAndInteriorOverlap() {
         ShapedPortalsConfig config = new ShapedPortalsConfig();
         config.portal.interiorMaterials.add("OBSIDIAN");

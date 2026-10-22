@@ -1,5 +1,6 @@
 package com.volmit.shapedportals;
 
+import art.arcane.volmlib.integration.ReloadAware;
 import art.arcane.volmlib.util.diagnostics.BukkitDebugDump;
 import art.arcane.volmlib.util.localization.BukkitLanguageSwitcher;
 import art.arcane.volmlib.util.localization.LocalizationSnapshot;
@@ -8,7 +9,6 @@ import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
 import art.arcane.volmlib.util.plugin.ComponentText;
 import art.arcane.volmlib.util.scheduling.FoliaScheduler;
 import art.arcane.volmlib.util.scheduling.SchedulerUtils;
-import art.arcane.volmlib.util.update.GitHubReleaseChecker;
 import com.volmit.shapedportals.command.CommandService;
 import com.volmit.shapedportals.config.ConfigHotReloadService;
 import com.volmit.shapedportals.config.ConfigRepository;
@@ -37,11 +37,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
-public final class ShapedPortals extends JavaPlugin {
+public final class ShapedPortals extends JavaPlugin implements ReloadAware {
     private ConfigService configService;
     private LanguageService languageService;
     private ConfigHotReloadService hotReloadService;
@@ -57,6 +60,7 @@ public final class ShapedPortals extends JavaPlugin {
     private ShapedPortalsIntegrationService integrationService;
     private BukkitLanguageSwitcher languageSwitcher;
     private final Set<String> pendingLanguageActivations = ConcurrentHashMap.newKeySet();
+    private final AtomicBoolean stopped = new AtomicBoolean();
 
     public ShapedPortals() {
         getLogger().info("Loading libraries...");
@@ -66,6 +70,7 @@ public final class ShapedPortals extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        stopped.set(false);
         long startedNanos = System.nanoTime();
         try {
             configService = new ConfigService(getDataFolder());
@@ -81,7 +86,7 @@ public final class ShapedPortals extends JavaPlugin {
             getServer().getPluginManager().registerEvents(presentationService, this);
 
             portalRegistry = new PortalRegistry(getDataFolder(),
-                    exception -> getLogger().log(Level.SEVERE, "Portal registry persistence failed", exception));
+                    exception -> getLogger().log(Level.SEVERE, "Portal registry error", exception));
             portalRegistry.load();
             portalStats = new PortalStats();
             integrationService = new ShapedPortalsIntegrationService(
@@ -139,9 +144,7 @@ public final class ShapedPortals extends JavaPlugin {
                     failure
             ));
             requestConfiguredLanguage();
-            updateNotifier = new UpdateNotifier(this, new GitHubReleaseChecker(new GitHubReleaseChecker.Options(
-                    "VolmitSoftware", "ShapedPortals", getDescription().getVersion(), getLogger())));
-            getServer().getPluginManager().registerEvents(updateNotifier, this);
+            updateNotifier = new UpdateNotifier(this);
             updateNotifier.reconfigure();
             long startupMillis = (System.nanoTime() - startedNanos) / 1_000_000L;
             if (configService.runtime().splashScreen()) {
@@ -160,6 +163,20 @@ public final class ShapedPortals extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        stop();
+    }
+
+    @Override
+    public CompletionStage<Void> commitReload(PreUnloadReason reason) {
+        stop();
+        return CompletableFuture.completedFuture(null);
+    }
+
+    // BileTools disables the plugin again after commitReload, so teardown must tolerate a second call.
+    private void stop() {
+        if (!stopped.compareAndSet(false, true)) {
+            return;
+        }
         if (updateNotifier != null) {
             updateNotifier.close();
         }
@@ -216,7 +233,11 @@ public final class ShapedPortals extends JavaPlugin {
                 getLogger().info("Reloaded ShapedPortals configuration and language files.");
             }
             return true;
-        } catch (IOException | RuntimeException exception) {
+        } catch (IOException exception) {
+            getLogger().severe("ShapedPortals reload failed; the previous runtime configuration remains active. "
+                    + rootCause(exception));
+            return false;
+        } catch (RuntimeException exception) {
             getLogger().log(Level.SEVERE,
                     "ShapedPortals reload failed; the previous runtime configuration remains active", exception);
             return false;
@@ -301,7 +322,15 @@ public final class ShapedPortals extends JavaPlugin {
     }
 
     private void installInitialConfiguration() throws IOException {
-        ConfigRepository.PreparedConfig preparedConfig = configService.prepareFromDisk();
+        ConfigRepository.PreparedConfig preparedConfig;
+        try {
+            preparedConfig = configService.prepareFromDisk();
+        } catch (IOException exception) {
+            getLogger().severe("config.toml could not be loaded. Portal creation is paused and existing"
+                    + " portals are maintained with default settings until the file is fixed; the file was not changed. "
+                    + rootCause(exception));
+            preparedConfig = configService.creationPausedDefaults();
+        }
         configService.install(preparedConfig);
         try {
             LanguageService.PreparedLanguage preparedLanguage = languageService.prepare(
@@ -315,6 +344,16 @@ public final class ShapedPortals extends JavaPlugin {
             );
             languageService.install(languageService.englishFallback(preparedConfig.runtime().language()));
         }
+    }
+
+    // Operator file mistakes need the parser's line, not a stack trace.
+    private static String rootCause(Throwable exception) {
+        Throwable cause = exception;
+        while (cause.getCause() != null && cause.getCause() != cause) {
+            cause = cause.getCause();
+        }
+        String message = cause.getMessage();
+        return "Cause: " + (message == null || message.isBlank() ? cause.getClass().getSimpleName() : message);
     }
 
     private synchronized void selectDefaultLanguage(String locale, LocalizationSnapshot prepared) throws IOException {

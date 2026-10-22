@@ -77,9 +77,6 @@ denied = "{prefix}&r &7› &7&cDu hast keine Berechtigung dafür.&r"
 success = "{prefix}&r &7› &7&7Änderungen&7 an Konfiguration und Sprachdatei wurden übernommen.&r"
 failed = "{prefix}&r &7› &7&cDateiänderungen wurden abgelehnt; die letzten gültigen Einstellungen bleiben aktiv.&r"
 
-[runtime.update]
-available = "{prefix}&r &7› &7&e{new}&7 ist verfügbar (installiert: &f{old}&7).&r\n&7Veröffentlichung: &b{url}&r"
-
 [command.feedback]
 version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
 failed = "{prefix}&r &7› &7&cDer Befehl konnte nicht ausgeführt werden. Details stehen in der Konsole.&r"
@@ -103,7 +100,7 @@ header = "{prefix}&r &7› &7Laufzeit&r"
 config = "{prefix}&r &7› &7&7Erstellung:&r {enabled} &8|&r &7Sprache:&r &f{language}&r &8|&r &7Automatisches Neuladen:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Verwaltete Portale:&r &f{portals}&r &8|&r &7Innenzellen:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Versuche:&r &f{attempts}&r &8|&r &7Erstellt:&r &a{created}&r &8|&r &7Abgelehnt:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Artefakt:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Planer:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Artefakt:&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7Planer:&r &f{scheduler}&r"
 
 [command.description]
 version = "Installierte Version von {prefix} anzeigen"

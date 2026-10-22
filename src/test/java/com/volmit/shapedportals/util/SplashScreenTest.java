@@ -13,7 +13,7 @@ class SplashScreenTest {
                         "ShapedPortals, Free-form Nether and End Portals",
                         "Version: 2.0.0-26.2",
                         "By: VolmitSoftware (Arcane Arts) | VolmitSoftware.com",
-                        "Server: Paper 26.2 | MC Support: 26.x+",
+                        "Server: Paper 26.2 | MC Support: 26.1-26.3",
                         "Java: 25 | Date: 2026-09-03"
                 );
     }

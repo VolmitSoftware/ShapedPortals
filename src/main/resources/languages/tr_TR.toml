@@ -77,9 +77,6 @@ denied = "{prefix}&r &7› &7&cBunu yapmak için izniniz yok.&r"
 success = "{prefix}&r &7› &7&7Yapılandırma&7 ve dil dosyası değişiklikleri uygulandı.&r"
 failed = "{prefix}&r &7› &7&cDosya değişiklikleri reddedildi; son geçerli ayarlar etkin kalmaya devam ediyor.&r"
 
-[runtime.update]
-available = "{prefix}&r &7› &7&e{new}&7 kullanılabilir (yüklü: &f{old}&7).&r\n&7Sürüm: &b{url}&r"
-
 [command.feedback]
 version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
 failed = "{prefix}&r &7› &7&cKomut tamamlanamadı. Ayrıntılar için konsola bakın.&r"
@@ -103,7 +100,7 @@ header = "{prefix}&r &7› &7çalışma durumu&r"
 config = "{prefix}&r &7› &7&7Oluşturma:&r {enabled} &8|&r &7Dil:&r &f{language}&r &8|&r &7Canlı yeniden yükleme:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Yönetilen portallar:&r &f{portals}&r &8|&r &7İç bloklar:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Denemeler:&r &f{attempts}&r &8|&r &7Oluşturulan:&r &a{created}&r &8|&r &7Reddedilen:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Derleme:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Zamanlayıcı:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Derleme:&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7Zamanlayıcı:&r &f{scheduler}&r"
 
 [command.description]
 version = "Yüklü {prefix} sürümünü göster"

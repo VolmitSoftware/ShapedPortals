@@ -3,11 +3,15 @@ version: ${version}
 main: ${main}
 api-version: '${apiVersion}'
 folia-supported: true
-softdepend: [Wormholes]
+load: POSTWORLD
 authors:
-  - Volmit Software
-website: https://volmit.com
-description: Create durable Nether and End portals with arbitrary two-dimensional frame shapes.
+  - VolmitSoftware
+  - Arcane Arts
+  - SwiftSwamp
+  - NextdoorPsycho
+website: https://volmitsoftware.com
+description: Custom-shaped Nether and horizontal End portals with saved records, integrity repair, and in-game administration.
+softdepend: [Wormholes]
 commands:
   shapedportals:
     aliases: [shapedportal, sp]
@@ -16,7 +20,7 @@ commands:
 
 permissions:
   shapedportals.update:
-    description: Receives newer GitHub release notifications on join
+    description: Includes ShapedPortals in shared update notices and permits its update report
     default: op
   shapedportals.create:
     description: Allows igniting shaped portals

@@ -52,7 +52,7 @@ Provider<String> wormholesApiJar = providers.gradleProperty('wormholesApiJar')
         }
         return "../WormholesPlugin/build/libs/Wormholes-${wormholesVersion}-api.jar"
     })
-String languageSourceReference = 'ebde960aa4fd53e56f66f6c34b6659d1e2843410'
+String languageSourceReference = '30cea6163bc3a0e790d3aeb6816e79a67cac615f'
 List<File> languageSourceFiles = fileTree('src/main/resources/languages') {
     include('*.toml')
 }.files.toList().sort { File left, File right -> left.name <=> right.name }
@@ -81,6 +81,12 @@ tasks.withType(JavaCompile).configureEach {
 
 tasks.named('compileJava', JavaCompile).configure {
     options.release.set(25)
+    doFirst {
+        File wormholesApi = file(wormholesApiJar.get())
+        if (!wormholesApi.isFile()) {
+            throw new GradleException("Missing Wormholes API jar ${wormholesApi}: run gradlew apiJar in ../WormholesPlugin, or pass -PwormholesApiJar=<path>")
+        }
+    }
 }
 
 tasks.named('compileTestJava', JavaCompile).configure {
@@ -267,6 +273,7 @@ tasks.register('verifyJava25Artifact') {
         java.util.zip.ZipFile archive = new java.util.zip.ZipFile(artifact)
         int pluginMetadataCount = 0
         int maximumClassMajor = 0
+        int entryPointClassMajor = 0
         boolean bStatsMetricsClassPresent = false
         Set<String> bundledLanguages = new TreeSet<>()
         Properties languageManifest = null
@@ -287,6 +294,12 @@ tasks.register('verifyJava25Artifact') {
                 }
                 if (path == 'plugin.yml') {
                     pluginMetadataCount++
+                    String descriptor = archive.getInputStream(entry).withCloseable { InputStream input ->
+                        new String(input.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8)
+                    }
+                    if (!descriptor.readLines().contains("api-version: '26.1'")) {
+                        throw new GradleException('Runtime artifact must declare API 26.1')
+                    }
                 }
                 if (!entry.directory && path.startsWith('languages/') && path.endsWith('.toml')) {
                     bundledLanguages.add(path.substring('languages/'.length(), path.length() - '.toml'.length()))
@@ -314,6 +327,9 @@ tasks.register('verifyJava25Artifact') {
                             throw new GradleException("Invalid class header in shaded artifact: ${path}")
                         }
                         maximumClassMajor = Math.max(maximumClassMajor, major)
+                        if (path == 'com/volmit/shapedportals/ShapedPortals.class') {
+                            entryPointClassMajor = major
+                        }
                     } finally {
                         input.close()
                     }
@@ -324,6 +340,9 @@ tasks.register('verifyJava25Artifact') {
         }
         if (pluginMetadataCount != 1) {
             throw new GradleException("Expected one plugin.yml, found ${pluginMetadataCount}")
+        }
+        if (entryPointClassMajor != 69) {
+            throw new GradleException("Plugin entry point must target Java 25, found class major ${entryPointClassMajor}")
         }
         if (maximumClassMajor > 69) {
             throw new GradleException("Shaded artifact contains class major ${maximumClassMajor}; Java 25 allows at most 69")
@@ -402,7 +421,6 @@ pluginPackaging {
             taskName = 'shadowJar'
             policyName = 'ShapedPortals'
             prunePrefixes = ['com/volmit/shapedportals/libs/volmlib/']
-            keepPrefixes = ['com/volmit/shapedportals/libs/volmlib/util/matter/slices/']
             shrinkRules = [file('packaging/shrink.pro')]
             shrinkRelocations = [
                 'com.google.gson': "${relocatedLibraryPackage}.gson",

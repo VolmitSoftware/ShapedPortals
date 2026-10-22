@@ -2,7 +2,10 @@ package com.volmit.shapedportals.portal;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -28,7 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 public final class PortalRegistry implements AutoCloseable {
-    private static final long MAXIMUM_STORE_BYTES = 32L * 1024L * 1024L;
+    private static final long MAXIMUM_STORE_BYTES = 128L * 1024L * 1024L;
 
     private final Object mutationLock = new Object();
     private final Object persistenceLock = new Object();
@@ -45,7 +48,7 @@ public final class PortalRegistry implements AutoCloseable {
 
     public PortalRegistry(File dataFolder, Consumer<Throwable> failureHandler) {
         this.storeFile = new File(dataFolder, "portals.json");
-        this.gson = new GsonBuilder().setPrettyPrinting().create();
+        this.gson = new GsonBuilder().create();
         this.failureHandler = failureHandler;
         this.persistenceExecutor = Executors.newSingleThreadExecutor(runnable -> {
             Thread thread = new Thread(runnable, "ShapedPortals-Persistence");
@@ -60,24 +63,54 @@ public final class PortalRegistry implements AutoCloseable {
             return;
         }
         if (!storeFile.isFile() || storeFile.length() > MAXIMUM_STORE_BYTES) {
-            throw new IOException("Portal store is missing, invalid, or exceeds the 32 MiB safety limit");
+            throw new IOException("Portal store is missing, invalid, or exceeds the 128 MiB safety limit");
         }
         String raw = Files.readString(storeFile.toPath(), StandardCharsets.UTF_8);
-        PortalStore store;
+        JsonObject store;
         try {
-            store = gson.fromJson(raw, PortalStore.class);
-        } catch (JsonParseException exception) {
+            store = JsonParser.parseString(raw).getAsJsonObject();
+        } catch (JsonParseException | IllegalStateException exception) {
             throw new IOException("Invalid portal store", exception);
         }
-        if (store == null || store.schemaVersion() != PortalRecord.CURRENT_SCHEMA_VERSION || store.portals() == null) {
+        JsonElement schemaVersion = store.get("schemaVersion");
+        JsonElement portals = store.get("portals");
+        if (schemaVersion == null || !schemaVersion.isJsonPrimitive()
+                || !schemaVersion.getAsJsonPrimitive().isNumber()
+                || schemaVersion.getAsInt() != PortalRecord.CURRENT_SCHEMA_VERSION
+                || portals == null || !portals.isJsonArray()) {
             throw new IOException("Unsupported or incomplete portal store");
         }
-        for (PortalRecord record : store.portals()) {
-            if (record == null || !register(record, false)) {
+        int unreadable = 0;
+        for (JsonElement element : portals.getAsJsonArray()) {
+            PortalRecord record = decode(element);
+            if (record == null) {
+                unreadable++;
+                continue;
+            }
+            if (!register(record, false)) {
                 throw new IOException("Portal store contains duplicate or overlapping records");
             }
         }
+        if (unreadable > 0) {
+            Path backup = storeFile.toPath().resolveSibling(
+                    storeFile.getName() + ".unreadable-" + System.currentTimeMillis() + ".bak");
+            Files.copy(storeFile.toPath(), backup, StandardCopyOption.REPLACE_EXISTING);
+            failureHandler.accept(new IOException("Skipped " + unreadable
+                    + " unreadable portal record(s), for example a frame material this server no longer has. "
+                    + "The original store was copied to " + backup.getFileName()));
+        }
         persistenceEnabled.set(true);
+    }
+
+    private PortalRecord decode(JsonElement element) {
+        if (element == null || !element.isJsonObject()) {
+            return null;
+        }
+        try {
+            return gson.fromJson(element, PortalRecord.class);
+        } catch (RuntimeException exception) {
+            return null;
+        }
     }
 
     public boolean register(PortalRecord record) {
@@ -243,9 +276,14 @@ public final class PortalRegistry implements AutoCloseable {
         try {
             Files.createDirectories(storeFile.toPath().getParent());
             String serialized = gson.toJson(new PortalStore(PortalRecord.CURRENT_SCHEMA_VERSION, snapshot));
+            byte[] encoded = serialized.getBytes(StandardCharsets.UTF_8);
+            // Writing past the load limit would produce a store the next startup refuses.
+            if (encoded.length > MAXIMUM_STORE_BYTES) {
+                throw new IOException("Portal store would exceed the 128 MiB safety limit; the previous store was kept");
+            }
             Path target = storeFile.toPath();
             Path temporary = target.resolveSibling(target.getFileName() + ".tmp");
-            Files.writeString(temporary, serialized, StandardCharsets.UTF_8);
+            Files.write(temporary, encoded);
             try {
                 Files.move(temporary, target, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
             } catch (AtomicMoveNotSupportedException exception) {

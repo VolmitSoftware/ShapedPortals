@@ -25,14 +25,19 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 
 public final class CommandService implements CommandExecutor, TabCompleter {
     private static final String ROOT_COMMAND = "shapedportals";
+    private static final Map<String, Predicate<CommandSender>> ROOT_SUBCOMMANDS = rootSubcommands();
 
     private final ShapedPortals plugin;
     private final ShapedPortalsCommands commands;
@@ -103,19 +108,11 @@ public final class CommandService implements CommandExecutor, TabCompleter {
         if (!command.getName().equalsIgnoreCase(ROOT_COMMAND)) {
             return List.of();
         }
+        if (args.length == 1) {
+            return rootSuggestions(sender, args[0]);
+        }
         if (!mayTabComplete(sender, args)) {
-            List<String> suggestions = new ArrayList<>(2);
-            if (args.length == 1) {
-                String prefix = args[0].toLowerCase(Locale.ROOT);
-                if ("language".startsWith(prefix) && sender.hasPermission("volmit.language.self")
-                        && sender.hasPermission("shapedportals.language.self")) {
-                    suggestions.add("language");
-                }
-                if ("debug".startsWith(prefix) && sender.hasPermission("shapedportals.debug")) {
-                    suggestions.add("debug");
-                }
-            }
-            return List.copyOf(suggestions);
+            return List.of();
         }
         UUID audience = sender instanceof Player player ? player.getUniqueId() : null;
         return LanguageAudience.call(audience, () -> complete(sender, alias, args));
@@ -190,11 +187,38 @@ public final class CommandService implements CommandExecutor, TabCompleter {
                 && !subcommand.equalsIgnoreCase("tp");
     }
 
+    static List<String> rootSuggestions(CommandSender sender, String typed) {
+        String prefix = typed.toLowerCase(Locale.ROOT);
+        List<String> suggestions = new ArrayList<>();
+        for (Map.Entry<String, Predicate<CommandSender>> entry : ROOT_SUBCOMMANDS.entrySet()) {
+            if (entry.getKey().startsWith(prefix) && entry.getValue().test(sender)) {
+                suggestions.add(entry.getKey());
+            }
+        }
+        return List.copyOf(suggestions);
+    }
+
+    private static Map<String, Predicate<CommandSender>> rootSubcommands() {
+        Map<String, Predicate<CommandSender>> subcommands = new LinkedHashMap<>();
+        subcommands.put("status", sender -> sender.hasPermission("shapedportals.command"));
+        subcommands.put("config", sender -> sender.hasPermission("shapedportals.config"));
+        subcommands.put("language", sender -> sender.hasPermission("volmit.language.self")
+                && sender.hasPermission("shapedportals.language.self"));
+        subcommands.put("portals", sender -> sender.hasPermission("shapedportals.portals"));
+        subcommands.put("teleport", sender -> sender.hasPermission("shapedportals.teleport")
+                || sender.hasPermission("shapedportals.portals"));
+        subcommands.put("debug", sender -> sender.hasPermission("shapedportals.debug"));
+        return Collections.unmodifiableMap(subcommands);
+    }
+
     private boolean mayTabComplete(CommandSender sender, String[] args) {
         if (args.length == 0) {
             return sender.hasPermission("shapedportals.command");
         }
         String subcommand = args[0];
+        if (subcommand.equalsIgnoreCase("debug")) {
+            return sender.hasPermission("shapedportals.debug");
+        }
         if (subcommand.equalsIgnoreCase("portals")) {
             return sender.hasPermission("shapedportals.portals");
         }

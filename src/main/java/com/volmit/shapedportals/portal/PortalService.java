@@ -144,6 +144,10 @@ public final class PortalService {
         if (ignition.getType() == Material.NETHER_PORTAL) {
             return;
         }
+        // A cancelled fire placement removes the fire after the ignite event already queued this attempt.
+        if (ignition.getType() != Material.FIRE && ignition.getType() != Material.SOUL_FIRE) {
+            return;
+        }
         if (!PortalIgnitionEligibility.hasLowerFrameBoundary(ignition, config)) {
             return;
         }
@@ -162,6 +166,12 @@ public final class PortalService {
         List<BlockPosition> interior = absolutePositions(ignition, shape.axis(), shape.interior());
         List<BlockPosition> frame = absolutePositions(ignition, shape.axis(), shape.frame());
         World world = ignition.getWorld();
+        if (creator instanceof Player player
+                && !canBuildPortal(player, world, interior, PortalType.NETHER.createBlockData(shape.axis()))) {
+            stats.rejected(RejectionReason.EVENT_CANCELLED);
+            fail(player, ShapedMessages.PORTAL_FAILED_BLOCK_DENIED);
+            return;
+        }
         WormholesIntegration.Result ownership = WormholesIntegration.submit(world, interior, shape.axis(), eventCreator(creator));
         if (ownership == WormholesIntegration.Result.ACCEPTED) {
             created(location, creator, interior.size(), config);
@@ -293,7 +303,7 @@ public final class PortalService {
 
         stats.attempted();
         BlockData portalData = PortalType.END.createBlockData(PortalAxis.Y);
-        if (!canBuildEndPortal(creator, world, interior, portalData)) {
+        if (!canBuildPortal(creator, world, interior, portalData)) {
             stats.rejected(RejectionReason.EVENT_CANCELLED);
             fail(creator, ShapedMessages.PORTAL_FAILED_BLOCK_DENIED);
             return;
@@ -417,7 +427,7 @@ public final class PortalService {
         return true;
     }
 
-    private boolean canBuildEndPortal(Player creator, World world, List<BlockPosition> interior, BlockData portalData) {
+    private boolean canBuildPortal(Player creator, World world, List<BlockPosition> interior, BlockData portalData) {
         Player eventPlayer = FoliaScheduler.isFoliaThreading(plugin.getServer())
                 && !FoliaScheduler.isOwnedByCurrentRegion(creator) ? null : creator;
         for (BlockPosition position : interior) {
@@ -456,7 +466,7 @@ public final class PortalService {
             return blockCanBuildConstructor.newInstance(block, player, data, true);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException exception) {
             plugin.getLogger().log(Level.SEVERE,
-                    "Failed to create a build-permission event for shaped End portal block " + block.getLocation(),
+                    "Failed to create a build-permission event for shaped portal block " + block.getLocation(),
                     exception);
             return null;
         }

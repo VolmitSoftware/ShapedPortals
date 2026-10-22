@@ -77,9 +77,6 @@ root = "{prefix}幫助與管理"
 status = "顯示已管理傳送門和嘗試統計"
 teleport = "安全傳送到管理的傳送門旁或在省略時列出傳送門"
 
-[runtime.update]
-available = "{prefix}&r &7› &7&e{new}&7 已發布（已安裝：&f{old}&7）。&r\n&7發布頁面: &b{url}&r"
-
 [command.feedback]
 version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
 failed = "{prefix}&r &7› &7&c命令無法完成。請查看控制台以獲取詳情。&r"
@@ -106,7 +103,7 @@ upload = "啟用公開上傳時上傳報告"
 
 [command.status]
 attempts = "{prefix}&r &7› &7&7嘗試次數:&r&f{attempts}&r&8|&r&7建立日期:&r&a{created}&r&8|&r&7拒絕:&r&c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7工件:&r&fJava 25 / Bukkit 26.1+&r&8|&r&7排程者:&r&f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7工件:&r&fJava 25 / Bukkit 26.1-26.3&r&8|&r&7排程者:&r&f{scheduler}&r"
 config = "{prefix}&r &7› &7&7建立：&r{enabled}&8|&r&7語言：&r&f{language}&r&8|&r&7熱重載：&r{hot_reload}"
 header = "{prefix}&r &7› &7執行狀態&r"
 portals = "{prefix}&r &7› &7&7已管理傳送門：&r&f{portals}&r&8|&r&7內部方塊：&r&f{cells}&r"

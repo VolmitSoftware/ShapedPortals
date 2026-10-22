@@ -77,9 +77,6 @@ denied = "{prefix}&r &7› &7&cSinulla ei ole oikeutta tehdä sitä.&r"
 success = "{prefix}&r &7› &7&7Asetusten&7 ja kielitiedostojen muutokset otettiin käyttöön.&r"
 failed = "{prefix}&r &7› &7&cTiedostomuutokset hylättiin; viimeksi toimineet asetukset pysyvät käytössä.&r"
 
-[runtime.update]
-available = "{prefix}&r &7› &7&e{new}&7 on saatavilla (asennettu: &f{old}&7).&r\n&7Julkaisu: &b{url}&r"
-
 [command.feedback]
 version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
 failed = "{prefix}&r &7› &7&cKomentoa ei voitu suorittaa. Katso lisätiedot konsolista.&r"
@@ -103,7 +100,7 @@ header = "{prefix}&r &7› &7in tila&r"
 config = "{prefix}&r &7› &7&7Luonti:&r {enabled} &8|&r &7Kieli:&r &f{language}&r &8|&r &7Automaattinen lataus:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Hallinnoidut portaalit:&r &f{portals}&r &8|&r &7Sisäsolut:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Yritykset:&r &f{attempts}&r &8|&r &7Luotu:&r &a{created}&r &8|&r &7Hylätty:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Artefakti:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Ajastin:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Artefakti:&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7Ajastin:&r &f{scheduler}&r"
 
 [command.description]
 version = "Näytä asennettu {prefix}-versio"

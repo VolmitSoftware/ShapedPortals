@@ -2,7 +2,6 @@ package com.volmit.shapedportals.util;
 
 import art.arcane.volmlib.util.plugin.ComponentLog;
 import art.arcane.volmlib.util.plugin.SplashScreenSupport;
-import org.bukkit.Bukkit;
 import com.volmit.shapedportals.ShapedPortals;
 import net.md_5.bungee.api.ChatColor;
 
@@ -35,7 +34,7 @@ public final class SplashScreen {
         ChatColor meta = ChatColor.of("#bba8cf");
         ChatColor accent = ChatColor.of("#c778ff");
         String[] column = details(plugin.getDescription().getVersion(),
-                SplashScreenSupport.serverVersionWithoutMcSuffix(Bukkit.getVersion()),
+                SplashScreenSupport.serverVersionWithoutMcSuffix(plugin.getServer().getVersion()),
                 Integer.toString(SplashScreenSupport.javaMajorVersion()), SplashScreenSupport.startupDate());
         for (int index = 1; index < column.length; index++) {
             column[index] = meta + "   " + column[index]
@@ -57,7 +56,7 @@ public final class SplashScreen {
                 "ShapedPortals, Free-form Nether and End Portals",
                 "Version: " + version,
                 "By: VolmitSoftware (Arcane Arts) | VolmitSoftware.com",
-                "Server: " + server + " | MC Support: 26.x+",
+                "Server: " + server + " | MC Support: 26.1-26.3",
                 "Java: " + javaVersion + " | Date: " + date
         };
     }

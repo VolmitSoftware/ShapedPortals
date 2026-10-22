@@ -77,9 +77,6 @@ denied = "{prefix}&r &7› &7&cNo tienes permiso para hacer eso.&r"
 success = "{prefix}&r &7› &7&7Se&7 aplicaron los cambios de configuración y de los archivos de idioma.&r"
 failed = "{prefix}&r &7› &7&cSe rechazaron los cambios de archivo; se mantiene activa la última configuración válida.&r"
 
-[runtime.update]
-available = "{prefix}&r &7› &7&e{new}&7 está disponible (instalado: &f{old}&7).&r\n&7Versión: &b{url}&r"
-
 [command.feedback]
 version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
 failed = "{prefix}&r &7› &7&cNo se pudo completar el comando. Consulta la consola para obtener más información.&r"
@@ -103,7 +100,7 @@ header = "{prefix}&r &7› &7&d&lEstado de {prefix}&r"
 config = "{prefix}&r &7› &7&7Creación:&r {enabled} &8|&r &7Idioma:&r &f{language}&r &8|&r &7Recarga automática:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Portales administrados:&r &f{portals}&r &8|&r &7Celdas interiores:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Intentos:&r &f{attempts}&r &8|&r &7Creados:&r &a{created}&r &8|&r &7Rechazados:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Artefacto:&r &fJava 25 / Bukkit 26.1+&r &8|&r &7Planificador:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Artefacto:&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7Planificador:&r &f{scheduler}&r"
 
 [command.description]
 version = "Mostrar la versión instalada de {prefix}"

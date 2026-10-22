@@ -77,9 +77,6 @@ root = "{prefix}ヘルプと管理"
 status = "管理されたポータルと試行統計を表示"
 teleport = "管理ポータルの近くに安全にテレポートするか、省略した場合はポータルを一覧表示"
 
-[runtime.update]
-available = "{prefix}&r &7› &7&e{new}&7 が利用可能です（インストール済み: &f{old}&7）。&r\n&7リリース: &b{url}&r"
-
 [command.feedback]
 version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
 failed = "{prefix}&r &7› &7&cコマンドを完了できませんでした。詳細はコンソールを参照してください。&r"
@@ -106,7 +103,7 @@ upload = "公開アップロードが有効な場合にレポートをアップ�
 
 [command.status]
 attempts = "{prefix}&r &7› &7&7試行回数:&r&f{attempts}&r&8|&r&7作成日:&r&a{created}&r&8|&r&7拒否:&r&c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7成果物:&r&fJava 25 / Bukkit 26.1+&r&8|&r&7スケジューラ:&r&f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7成果物:&r&fJava 25 / Bukkit 26.1-26.3&r&8|&r&7スケジューラ:&r&f{scheduler}&r"
 config = "{prefix}&r &7› &7&7作成:&r{enabled}&8|&r&7言語:&r&f{language}&r&8|&r&7ホットリロード:&r{hot_reload}"
 header = "{prefix}&r &7› &7実行時&r"
 portals = "{prefix}&r &7› &7&7管理されたポータル:&r&f{portals}&r&8|&r&7インテリアセル:&r&f{cells}&r"

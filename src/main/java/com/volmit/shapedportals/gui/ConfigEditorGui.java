@@ -22,6 +22,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -160,6 +161,14 @@ public final class ConfigEditorGui implements Listener {
                 () -> prompts.remove(player.getUniqueId(), prompt));
     }
 
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onCommand(PlayerCommandPreprocessEvent event) {
+        Player player = event.getPlayer();
+        if (prompts.remove(player.getUniqueId()) != null) {
+            presentation.command(player, ShapedMessages.GUI_PROMPT_CANCELLED, FeedbackTone.INFO);
+        }
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onQuit(PlayerQuitEvent event) {
         UUID playerId = event.getPlayer().getUniqueId();
@@ -260,6 +269,10 @@ public final class ConfigEditorGui implements Listener {
     }
 
     private void processPrompt(Player player, PromptSession prompt, String input) {
+        if (!player.hasPermission("shapedportals.config")) {
+            presentation.command(player, ShapedMessages.NO_PERMISSION, FeedbackTone.FAILURE);
+            return;
+        }
         if (input.equalsIgnoreCase("cancel")) {
             presentation.command(player, ShapedMessages.GUI_PROMPT_CANCELLED, FeedbackTone.INFO);
             openCategoryOwned(player, prompt.category());
@@ -323,8 +336,13 @@ public final class ConfigEditorGui implements Listener {
     }
 
     private void saveFailed(SaveOperation operation, Exception exception) {
-        plugin.getLogger().log(Level.SEVERE,
-                "Failed to save ShapedPortals setting " + operation.setting().path(), exception);
+        if (exception instanceof IOException) {
+            plugin.getLogger().warning("Did not save ShapedPortals setting " + operation.setting().path()
+                    + ": " + reason(exception));
+        } else {
+            plugin.getLogger().log(Level.SEVERE,
+                    "Failed to save ShapedPortals setting " + operation.setting().path(), exception);
+        }
         scheduleFailure(operation, reason(exception));
     }
 

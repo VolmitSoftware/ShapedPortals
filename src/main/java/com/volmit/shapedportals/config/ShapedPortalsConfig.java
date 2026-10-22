@@ -75,7 +75,7 @@ public final class ShapedPortalsConfig {
         public List<String> frameMaterials = new ArrayList<>(List.of("OBSIDIAN", "CRYING_OBSIDIAN"));
         @ConfigDoc(value = "Blocks that may be replaced inside a newly created portal.", impact = "NETHER_PORTAL cannot be added because vanilla creation takes priority.")
         public List<String> interiorMaterials = new ArrayList<>(List.of("AIR", "CAVE_AIR", "VOID_AIR", "FIRE", "SOUL_FIRE"));
-        @ConfigDoc(value = "BlockIgniteEvent causes allowed to start a shaped portal, plus PLACED_FIRE for direct fire placement.", impact = "SPREAD and LAVA are excluded by default to prevent accidental portals.")
+        @ConfigDoc(value = "BlockIgniteEvent causes allowed to start a shaped portal, plus PLACED_FIRE for direct fire placement and DISPENSER for dispensed fire charges.", impact = "SPREAD, LAVA, and DISPENSER are excluded by default. Dispensed ignition has no player to check for shapedportals.create.")
         public List<String> ignitionCauses = new ArrayList<>(List.of("FLINT_AND_STEEL", "FIREBALL", "PLACED_FIRE"));
         @ConfigDoc(value = "Optional world allow-list by world name.", impact = "An empty list allows every world not denied below.")
         public List<String> allowedWorlds = new ArrayList<>();

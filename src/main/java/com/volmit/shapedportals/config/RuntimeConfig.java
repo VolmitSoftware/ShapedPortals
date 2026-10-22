@@ -60,6 +60,8 @@ public record RuntimeConfig(
         int titleFadeOutTicks,
         boolean debugUploadEnabled
 ) {
+    public static final String PLACED_FIRE_CAUSE = "PLACED_FIRE";
+    public static final String DISPENSER_CAUSE = "DISPENSER";
     private static final int HARD_MAXIMUM_INTERIOR = 4096;
     private static final int HARD_MAXIMUM_DIMENSION = 512;
     private static final Pattern LOCALE_PATTERN = Pattern.compile("[A-Za-z0-9_-]{2,32}");
@@ -267,7 +269,7 @@ public record RuntimeConfig(
                 throw new IllegalArgumentException("portal.ignitionCauses cannot contain null");
             }
             String normalized = value.trim().toUpperCase(Locale.ROOT);
-            if (!normalized.equals("PLACED_FIRE")) {
+            if (!normalized.equals(PLACED_FIRE_CAUSE) && !normalized.equals(DISPENSER_CAUSE)) {
                 try {
                     BlockIgniteEvent.IgniteCause.valueOf(normalized);
                 } catch (IllegalArgumentException exception) {

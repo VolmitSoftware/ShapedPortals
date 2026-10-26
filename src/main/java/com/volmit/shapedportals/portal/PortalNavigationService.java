@@ -48,7 +48,7 @@ public final class PortalNavigationService {
             .withZone(ZoneId.systemDefault());
     private static final int MINIMUM_PREFIX_LENGTH = 8;
     private static final int PORTAL_CARD_LINES = 4;
-    private static final int PORTALS_PER_PAGE = (DirectorMiniMenu.MENU_LINE_COUNT - 2) / PORTAL_CARD_LINES;
+    private static final int PORTALS_PER_PAGE = (DirectorMiniMenu.CHAT_LINE_COUNT - 3) / PORTAL_CARD_LINES;
     private static final String UNSAFE_TELEPORT_PERMISSION = "shapedportals.teleport.unsafe";
     private static final long UNSAFE_CONFIRMATION_SECONDS = 10L;
     private static final long UNSAFE_CONFIRMATION_TICKS = UNSAFE_CONFIRMATION_SECONDS * 20L;

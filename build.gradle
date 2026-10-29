@@ -219,6 +219,7 @@ slimJar {
 
 tasks.named('shadowJar', com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar).configure {
     archiveClassifier.set('')
+    archiveFileName.set("ShapedPortals v${project.version} [CraftBukkit] ${bukkitMinecraftRange}.jar")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     minimize {
         exclude(dependency('de.crazydev22.slimjar.helper:.*:.*'))

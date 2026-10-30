@@ -43,14 +43,14 @@ String volmLibCoordinate = providers.gradleProperty('volmLibCoordinate')
     .orElse('com.github.VolmitSoftware:VolmLib:master-SNAPSHOT')
     .get()
 Provider<String> wormholesApiJar = providers.gradleProperty('wormholesApiJar')
-    .orElse(providers.fileContents(layout.projectDirectory.file('../WormholesPlugin/gradle.properties')).asText.map { String contents ->
+    .orElse(providers.fileContents(layout.projectDirectory.file('../Wormholes/gradle.properties')).asText.map { String contents ->
         Properties wormholesProperties = new Properties()
         wormholesProperties.load(new StringReader(contents))
         String wormholesVersion = wormholesProperties.getProperty('wormholesVersion')
         if (wormholesVersion == null || wormholesVersion.isBlank()) {
-            throw new GradleException('WormholesPlugin/gradle.properties must declare wormholesVersion')
+            throw new GradleException('Wormholes/gradle.properties must declare wormholesVersion')
         }
-        return "../WormholesPlugin/build/libs/Wormholes-${wormholesVersion}-api.jar"
+        return "../Wormholes/build/libs/Wormholes-${wormholesVersion}-api.jar"
     })
 String languageSourceReference = '30cea6163bc3a0e790d3aeb6816e79a67cac615f'
 List<File> languageSourceFiles = fileTree('src/main/resources/languages') {
@@ -84,7 +84,7 @@ tasks.named('compileJava', JavaCompile).configure {
     doFirst {
         File wormholesApi = file(wormholesApiJar.get())
         if (!wormholesApi.isFile()) {
-            throw new GradleException("Missing Wormholes API jar ${wormholesApi}: run gradlew apiJar in ../WormholesPlugin, or pass -PwormholesApiJar=<path>")
+            throw new GradleException("Missing Wormholes API jar ${wormholesApi}: run gradlew apiJar in ../Wormholes, or pass -PwormholesApiJar=<path>")
         }
     }
 }

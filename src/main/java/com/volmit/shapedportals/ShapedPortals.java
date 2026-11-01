@@ -5,7 +5,6 @@ import art.arcane.volmlib.util.diagnostics.BukkitDebugDump;
 import art.arcane.volmlib.util.localization.BukkitLanguageSwitcher;
 import art.arcane.volmlib.util.localization.LocalizationSnapshot;
 import art.arcane.volmlib.util.localization.MessageArgs;
-import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
 import art.arcane.volmlib.util.plugin.ComponentText;
 import art.arcane.volmlib.util.scheduling.FoliaScheduler;
 import art.arcane.volmlib.util.scheduling.SchedulerUtils;
@@ -103,6 +102,7 @@ public final class ShapedPortals extends JavaPlugin implements ReloadAware {
 
             configEditor = new ConfigEditorGui(this, configService, languageService, presentationService);
             getServer().getPluginManager().registerEvents(configEditor, this);
+            configEditor.closeStaleEditors();
             languageSwitcher = BukkitLanguageSwitcher.register(
                     this,
                     languageService.selections(),
@@ -120,7 +120,9 @@ public final class ShapedPortals extends JavaPlugin implements ReloadAware {
                                             .untrusted("old", compactChangeValue(change.before()))
                                             .untrusted("new", compactChangeValue(change.after()))
                                             .build()
-                            )
+                            ),
+                            languageService.updateAction(),
+                            languageService.displayNames()
                     )
             );
             debugDump = BukkitDebugDump.create(this, new BukkitDebugDump.Options(
@@ -138,11 +140,12 @@ public final class ShapedPortals extends JavaPlugin implements ReloadAware {
             integrityService.start();
             hotReloadService = new ConfigHotReloadService(this, configService);
             hotReloadService.start();
-            languageService.remoteCatalogFailure().ifPresent(failure -> getLogger().log(
+            languageService.sourceFailure().ifPresent(failure -> getLogger().log(
                     Level.WARNING,
-                    "Remote language catalog is unavailable; code-owned English and installed local language files remain active",
+                    "Language source is unavailable; code-owned English and installed local language files remain active",
                     failure
             ));
+            languageService.startUpstreamCheck();
             requestConfiguredLanguage();
             updateNotifier = new UpdateNotifier(this);
             updateNotifier.reconfigure();
@@ -374,76 +377,31 @@ public final class ShapedPortals extends JavaPlugin implements ReloadAware {
             return;
         }
         String locale = configService.runtime().language();
-        languageService.requestRemote(locale, result -> remoteLanguageCompleted(locale, result));
-    }
-
-    private void remoteLanguageCompleted(String requestedLocale, RemoteLanguageCatalog.DownloadResult result) {
-        if (!result.successful()) {
-            getLogger().warning(languageFailureMessage(result, "the current verified language remains active"));
+        if (languageService.languageFile(locale).isFile() || !languageService.isRepositoryLocale(locale)) {
             return;
         }
-        if (!FoliaScheduler.runGlobal(this, () -> activateDownloadedLanguage(requestedLocale))) {
-            getLogger().warning("Downloaded locale " + requestedLocale
-                    + " will activate on the next reload or restart because scheduling was unavailable.");
-        }
-    }
-
-    private void activateDownloadedLanguage(String requestedLocale) {
-        if (!isEnabled() || !requestedLocale.equalsIgnoreCase(configService.runtime().language())) {
-            return;
-        }
-        reloadAll(false);
+        requestPendingLanguage(locale);
     }
 
     private void requestPendingLanguage(String locale) {
         if (!pendingLanguageActivations.add(locale)) {
             return;
         }
-        RemoteLanguageCatalog.RequestState state = languageService.requestRemote(
-                locale,
-                result -> pendingLanguageCompleted(locale, result)
-        );
-        if (state == RemoteLanguageCatalog.RequestState.SCHEDULED
-                || state == RemoteLanguageCatalog.RequestState.IN_FLIGHT) {
-            return;
-        }
-        pendingLanguageActivations.remove(locale);
-        if (state == RemoteLanguageCatalog.RequestState.CURRENT) {
-            schedulePendingLanguageReload(locale);
-            return;
-        }
-        getLogger().warning("Unable to prepare language file " + locale + " (" + state.name().toLowerCase()
-                + "); the previous configuration and language remain active");
-    }
-
-    private void pendingLanguageCompleted(String locale, RemoteLanguageCatalog.DownloadResult result) {
-        pendingLanguageActivations.remove(locale);
-        if (!result.successful()) {
-            getLogger().warning(languageFailureMessage(
-                    result,
-                    "the previous configuration and language remain active"
-            ));
-            return;
-        }
-        schedulePendingLanguageReload(locale);
-    }
-
-    private void schedulePendingLanguageReload(String locale) {
-        if (!FoliaScheduler.runGlobal(this, () -> reloadAll(false))) {
-            getLogger().warning("Downloaded locale " + locale
-                    + " could not activate because scheduling was unavailable");
-        }
-    }
-
-    private String languageFailureMessage(RemoteLanguageCatalog.DownloadResult result, String outcome) {
-        Throwable failure = result.failure();
-        String detail = failure == null || failure.getMessage() == null || failure.getMessage().isBlank()
-                ? "unknown download failure"
-                : failure.getMessage();
-        String failureMessage = detail.startsWith("Unable to fetch language file ")
-                ? detail
-                : "Unable to fetch language file " + result.locale() + " from " + result.source() + ": " + detail;
-        return failureMessage + "; " + outcome;
+        languageService.requestInstall(locale).whenComplete((content, failure) -> {
+            pendingLanguageActivations.remove(locale);
+            if (failure != null) {
+                getLogger().log(Level.WARNING, "Unable to install language " + locale
+                        + "; the previous configuration and language remain active", failure);
+                return;
+            }
+            if (!isEnabled() || !locale.equalsIgnoreCase(configService.runtime().language())) {
+                return;
+            }
+            if (!FoliaScheduler.runGlobal(this, () -> reloadAll(false))) {
+                getLogger().warning("Installed locale " + locale
+                        + " will activate on the next reload or restart because scheduling was unavailable.");
+            }
+        });
     }
 
     private static String compactChangeValue(String value) {

@@ -14,6 +14,7 @@
 #
 # === Muuttujat ===
 # Säilytä muuttujien nimet ja käytä vain kunkin viestin omia muuttujia.
+#   {added}  Kielipäivityksen lisäämät viestit
 #   {after}  Arvo muutoksen jälkeen
 #   {argument}  odottamaton argumentti
 #   {attempts}  luontiyritykset
@@ -30,6 +31,7 @@
 #   {group}  Lupa tai pelaajaryhmä
 #   {hot_reload}  pikalatauksen tila
 #   {id}  lyhyt ID
+#   {kept}  Kielipäivityksessä säilytetyt paikalliset muokkaukset
 #   {key}  parametriavain
 #   {language}  aktiivinen kieli
 #   {line}  Lähderivi tai viivanumero
@@ -56,6 +58,7 @@
 #   {status}  valintamerkki
 #   {target}  Kohdepelaaja, yhteisö tai arvo
 #   {type}  tyyppi
+#   {updated}  Kielipäivityksen muuttamat viestit
 #   {url}  julkinen URL
 #   {uuid}  täysi UUID
 #   {value}  nykyinen, oletus- tai raaka-arvo
@@ -353,6 +356,7 @@ unavailable-for-all = "{prefix}&r &7› &7&cKieli {locale} ei ole saatavilla kai
 editor = "{prefix}&r &7› &7&7Käyttö: /{command} language server edit [locale]"
 selection = "{prefix}&r &7› &7&7Käyttö: /{command} language self [locale|reset] or server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7Käyttö: /volmit plugins languages [locale]"
+update = "{prefix}&r &7› &7&7Käyttö: /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7Valmistellaan kieltä {locale} kohteelle {target}..."
@@ -361,6 +365,13 @@ english-fallback = "{prefix}&r &7› &7&e{locale} ei ole saatavilla; käytetää
 personal-selected = "{prefix}&r &7› &7&7kieli on nyt {locale}."
 server-selected = "{prefix}&r &7› &7&7palvelinkieli on nyt {locale}."
 server-default-selected = "{prefix}&r &7› &7&7kielesi noudattaa nyt palvelimen oletuskieltä."
+
+[language.update]
+checking = "{prefix}&r &7› &7&7Tarkistetaan kielivaraston muutoksia..."
+unchanged = "{prefix}&r &7› &7&7Asennetut kielet vastaavat jo varastoa."
+applied = "{prefix}&r &7› &7&7{locale} päivitetty ({added} lisätty, {updated} muutettu, {kept} paikallista muokkausta säilytetty)."
+locale-failed = "{prefix}&r &7› &7&c{locale} ei päivittynyt: {reason}"
+failed = "{prefix}&r &7› &7&cKielipäivitys epäonnistui: {reason}"
 
 [language.editor]
 title = "{prefix} › {section}"

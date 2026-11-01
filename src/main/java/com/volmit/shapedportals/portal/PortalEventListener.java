@@ -50,15 +50,26 @@ public final class PortalEventListener implements Listener {
             return;
         }
         Entity igniter = event.getIgnitingEntity();
-        if (igniter instanceof Projectile projectile && projectile.getShooter() instanceof BlockProjectileSource) {
+        if (isDispensed(event, igniter)) {
             portalService.attempt(event.getBlock(), null, RuntimeConfig.DISPENSER_CAUSE);
             return;
         }
         portalService.attempt(event.getBlock(), responsibleCreator(igniter), event.getCause().name());
     }
 
+    private static boolean isDispensed(BlockIgniteEvent event, Entity igniter) {
+        if (igniter instanceof Projectile projectile && projectile.getShooter() instanceof BlockProjectileSource) {
+            return true;
+        }
+        Block source = event.getIgnitingBlock();
+        return source != null && source.getType() == Material.DISPENSER;
+    }
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent event) {
+        if (event instanceof PortalPlacementCheckEvent) {
+            return;
+        }
         Block block = event.getBlockPlaced();
         dirty(block);
         if (event.canBuild()

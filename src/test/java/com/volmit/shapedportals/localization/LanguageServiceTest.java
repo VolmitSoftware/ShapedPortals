@@ -1,16 +1,21 @@
 package com.volmit.shapedportals.localization;
 
 import art.arcane.volmlib.util.localization.LanguageAudience;
+import art.arcane.volmlib.util.localization.LanguageMeta;
 import art.arcane.volmlib.util.localization.MessageArgs;
 import art.arcane.volmlib.util.localization.PluginLanguageService;
-import art.arcane.volmlib.util.localization.RemoteLanguageCatalog;
 import art.arcane.volmlib.util.localization.TextKey;
+import art.arcane.volmlib.util.localization.TomlLanguageEditor;
+import art.arcane.volmlib.util.localization.TomlLanguageParser;
 import art.arcane.volmlib.util.localization.VolmitLocales;
 import art.arcane.volmlib.util.plugin.ComponentText;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpServer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -49,9 +54,11 @@ class LanguageServiceTest {
 
         assertThat(prepared.file().toPath()).isEqualTo(file);
         assertThat(file).isRegularFile();
-        assertThat(service.remoteCatalogReference()).contains("30cea6163bc3a0e790d3aeb6816e79a67cac615f");
-        assertThat(service.hasRemoteCatalogLocale("fr_FR")).isTrue();
-        assertThat(service.hasRemoteCatalogLocale("en_US")).isFalse();
+        assertThat(service.sourceFailure()).isEmpty();
+        assertThat(service.sourceDescription()).startsWith("VolmitSoftware/ShapedPortals@");
+        assertThat(service.isRepositoryLocale("fr_FR")).isTrue();
+        assertThat(service.isRepositoryLocale("en_US")).isFalse();
+        assertThat(temporaryDirectory.resolve("languages/.upstream/en_US.toml")).isRegularFile();
         assertThat(toml)
                 .contains("=== File editing ===")
                 .contains("Local changes are preserved")
@@ -77,22 +84,22 @@ class LanguageServiceTest {
         String latest = Files.readString(service.languageFile("en_US").toPath())
                 + "\n[future]\nmessage = \"Newer catalog value\"\n";
 
-        service.validateDownloadedContent("es_ES", latest);
+        service.validateContent("es_ES", latest);
     }
 
     @Test
     void downloadedLanguageCanUseEnglishForKeysAddedAfterItsTranslation() throws IOException {
         LanguageService service = service();
 
-        service.validateDownloadedContent("es_ES", "[runtime]\nprefix = \"&6Portales &8> \"\n");
+        service.validateContent("es_ES", "[runtime]\nprefix = \"&6Portales &8> \"\n");
     }
 
     @Test
     void emptyAndInvalidDownloadedEntriesUseEnglish() throws IOException {
         LanguageService service = service();
-        service.validateDownloadedContent("es_ES", "");
-        service.validateDownloadedContent("es_ES", "[runtime]\nprefix = 42\n");
-        service.validateDownloadedContent("es_ES", "[portal.failure]\nopen_frame = \"{wrong}\"\n");
+        service.validateContent("es_ES", "");
+        service.validateContent("es_ES", "[runtime]\nprefix = 42\n");
+        service.validateContent("es_ES", "[portal.failure]\nopen_frame = \"{wrong}\"\n");
     }
 
     @Test
@@ -109,7 +116,13 @@ class LanguageServiceTest {
 
         assertThat(service.render(ShapedMessages.PREFIX).plain()).contains("Local");
         assertThat(restarted.render(ShapedMessages.PREFIX).plain()).contains("Local");
-        assertThat(Files.readString(file)).isEqualTo(content);
+        String merged = Files.readString(file);
+        java.util.Map<String, String> values = TomlLanguageParser.parseText(merged);
+        assertThat(values.get(ShapedMessages.PREFIX.id())).isEqualTo("&6Local &8> ");
+        assertThat(values).containsKey(ShapedMessages.NO_PERMISSION.id());
+        assertThat(merged).startsWith("# ShapedPortals");
+        restarted.install(restarted.prepare("en_US"));
+        assertThat(Files.readString(file)).isEqualTo(merged);
     }
 
     @Test
@@ -138,7 +151,8 @@ class LanguageServiceTest {
                 .build());
 
         assertThat(rendered.plain()).contains("portal", "world", "operator").doesNotContain("NETHER");
-        assertThat(Files.readString(file)).isEqualTo(content);
+        assertThat(TomlLanguageParser.parseText(Files.readString(file)).get(ShapedMessages.PORTAL_LIST_ENTRY.id()))
+                .isEqualTo(TomlLanguageParser.parseText(content).get(ShapedMessages.PORTAL_LIST_ENTRY.id()));
     }
 
     @Test
@@ -176,7 +190,11 @@ class LanguageServiceTest {
         service.install(service.prepare("en_US"));
 
         assertThat(service.render(ShapedMessages.PREFIX).plain()).contains("Current");
-        assertThat(Files.readString(file)).isEqualTo(content);
+        java.util.Map<String, String> values = TomlLanguageParser.parseText(Files.readString(file)
+                .replace("retired_number = 12", "retired_number = \"12\""));
+        assertThat(values.get("portal.navigation.list.previous")).isEqualTo("&7Retired");
+        assertThat(values.get("portal.navigation.list.retired_number")).isEqualTo("12");
+        assertThat(values.get(ShapedMessages.PREFIX.id())).isEqualTo("&6Current &8> ");
     }
 
     @Test
@@ -282,32 +300,134 @@ class LanguageServiceTest {
     }
 
     @Test
-    void completedDownloadStillActivatesWhenTheHotReloadObserverFails() throws IOException {
-        Logger logger = Logger.getLogger(LanguageServiceTest.class.getName() + ".download");
-        logger.setUseParentHandlers(false);
-        CapturingHandler handler = new CapturingHandler();
-        logger.addHandler(handler);
-        LanguageService service = new LanguageService(temporaryDirectory.toFile(), logger);
-        Path file = service.languageFile("fr_FR").toPath();
-        Files.createDirectories(file.getParent());
-        Files.writeString(file, "[runtime]\nprefix = \"&6Portails &8> \"\n", StandardCharsets.UTF_8);
-        service.setSelfWriteListener((written, content) -> {
-            throw new IllegalStateException("observer failed");
-        });
-        RemoteLanguageCatalog.DownloadResult download = new RemoteLanguageCatalog.DownloadResult(
-                "fr_FR",
-                URI.create("https://raw.githubusercontent.com/VolmitSoftware/ShapedPortals/main/"
-                        + "src/main/resources/languages/fr_FR.toml"),
-                file,
-                null
-        );
-        AtomicReference<RemoteLanguageCatalog.DownloadResult> completed = new AtomicReference<>();
+    void upstreamSyncInstallsMergesAndKeepsEditsFromTheRepositoryBranch() throws Exception {
+        LoopbackRepository repository = new LoopbackRepository();
+        repository.files.put(LoopbackRepository.REVISION_ONE + "/fr_FR",
+                "# fr v1\n\n[runtime]\nprefix = \"&6Portails &8> \"\n");
+        LanguageService service = repository.service(temporaryDirectory);
+        List<String> selfWrites = new java.util.ArrayList<>();
+        service.setSelfWriteListener((written, content) -> selfWrites.add(written.getName()));
+        try {
+            service.install(service.prepare("en_US"));
+            PluginLanguageService selections = service.initializeSelections(() -> "en_US",
+                    (locale, snapshot) -> service.install(new LanguageService.PreparedLanguage(
+                            locale, service.languageFile(locale), snapshot, true)));
+            UUID playerId = UUID.randomUUID();
 
-        service.remoteInstallCompleted(file.toFile(), download, completed::set);
+            assertThat(service.requestInstall("fr_FR").get(10L, TimeUnit.SECONDS)).contains("Portails");
+            assertThat(service.languageFile("fr_FR")).isFile();
+            assertThat(temporaryDirectory.resolve("languages/.upstream/fr_FR.toml")).isRegularFile();
+            assertThat(temporaryDirectory.resolve("languages/.upstream/upstream.properties")).isRegularFile();
+            assertThat(selfWrites).contains("fr_FR.toml");
+            selections.selectPlayer(playerId, "fr_FR").get(5L, TimeUnit.SECONDS);
+            assertThat(LanguageAudience.call(playerId, () -> service.render(ShapedMessages.PREFIX).plain()))
+                    .contains("Portails");
 
-        assertThat(completed.get()).isEqualTo(download);
-        assertThat(handler.record()).isNotNull();
-        assertThat(handler.record().getMessage()).contains("continuing with activation");
+            service.updateMessage("fr_FR", ShapedMessages.PREFIX.id(), "&6Portes &8> ");
+            repository.revision.set(LoopbackRepository.REVISION_TWO);
+            repository.files.put(LoopbackRepository.REVISION_TWO + "/fr_FR",
+                    "# fr v2\n\n[runtime]\nprefix = \"&6Portails v2 &8> \"\n\n[portal.failure]\n"
+                            + "open_frame = \"&cCadre ouvert.&r\"\n");
+
+            var report = service.updateAction().update().get(10L, TimeUnit.SECONDS);
+
+            assertThat(report.failure()).isEmpty();
+            assertThat(report.changedLocales()).containsExactly("fr_FR");
+            assertThat(report.merged().get("fr_FR").kept()).containsExactly(ShapedMessages.PREFIX.id());
+            assertThat(report.merged().get("fr_FR").added()).containsExactly(ShapedMessages.PORTAL_FAILED_OPEN_FRAME.id());
+            String merged = Files.readString(service.languageFile("fr_FR").toPath());
+            assertThat(merged).startsWith("# fr v2\n").contains("Portes").contains("Cadre ouvert.").doesNotContain("Portails v2");
+            assertThat(Files.readString(temporaryDirectory.resolve("languages/.upstream/fr_FR.toml")))
+                    .contains("Portails v2");
+            assertThat(LanguageAudience.call(playerId,
+                    () -> service.render(ShapedMessages.PORTAL_FAILED_OPEN_FRAME).plain()))
+                    .isEqualTo("Cadre ouvert.");
+            assertThat(LanguageAudience.call(playerId, () -> service.render(ShapedMessages.PREFIX).plain()))
+                    .contains("Portes");
+            assertThat(service.upstreamStatus()).isPresent();
+            assertThat(service.upstreamStatus().get().revision()).contains(LoopbackRepository.REVISION_TWO);
+
+            var unchanged = service.updateAction().update().get(10L, TimeUnit.SECONDS);
+
+            assertThat(unchanged.unchanged()).isTrue();
+            assertThat(unchanged.changedLocales()).isEmpty();
+            assertThat(Files.readString(service.languageFile("fr_FR").toPath())).isEqualTo(merged);
+        } finally {
+            service.close();
+            repository.close();
+        }
+    }
+
+    @Test
+    void customLocaleMetaProvidesDisplayNameAndBaseFallback() throws Exception {
+        LanguageService service = service();
+        try {
+            service.install(service.prepare("en_US"));
+            Path german = service.languageFile("de_DE").toPath();
+            Files.writeString(german, "[portal.failure]\nopen_frame = \"&cRahmen offen.&r\"\ntoo_small = \"&cZu klein.&r\"\n");
+            Path austrian = service.languageFile("de_AT").toPath();
+            Files.writeString(austrian, "[meta]\nname = \"Österreichisch\"\nbase = \"de_DE\"\n\n"
+                    + "[portal.failure]\nopen_frame = \"&cRahmen offen, Oida.&r\"\n");
+
+            assertThat(service.prepare("de_AT").selectionReady()).isTrue();
+            assertThat(service.availableLocales()).contains("de_AT", "de_DE");
+            assertThat(service.localeDisplayName("de_AT")).isEqualTo("Österreichisch");
+            assertThat(service.localeDisplayName("de_DE")).isEqualTo("German (Germany)");
+            assertThat(service.displayNames().displayName("de_AT")).isEqualTo("Österreichisch");
+            assertThat(service.displayNames().displayName("de_DE")).isNull();
+            assertThat(service.meta("de_AT").base()).contains("de_DE");
+
+            PluginLanguageService selections = service.initializeSelections(() -> "en_US",
+                    (locale, snapshot) -> service.install(new LanguageService.PreparedLanguage(
+                            locale, service.languageFile(locale), snapshot, true)));
+            UUID playerId = UUID.randomUUID();
+            selections.selectPlayer(playerId, "de_AT").get(5L, TimeUnit.SECONDS);
+
+            assertThat(LanguageAudience.call(playerId,
+                    () -> service.render(ShapedMessages.PORTAL_FAILED_OPEN_FRAME).plain()))
+                    .isEqualTo("Rahmen offen, Oida.");
+            assertThat(LanguageAudience.call(playerId,
+                    () -> service.render(ShapedMessages.PORTAL_FAILED_TOO_SMALL).plain()))
+                    .isEqualTo("Zu klein.");
+            assertThat(LanguageAudience.call(playerId, () -> service.render(ShapedMessages.NO_PERMISSION).plain()))
+                    .contains("You do not have permission");
+
+            service.prepare("pirate");
+            LanguageMeta generated = LanguageMeta.parse(Files.readString(service.languageFile("pirate").toPath()));
+
+            assertThat(generated.name()).contains("pirate");
+            assertThat(generated.base()).contains("en_US");
+            assertThat(service.availableLocales()).contains("pirate");
+        } finally {
+            service.close();
+        }
+    }
+
+    @Test
+    void englishReferenceGainsNewCatalogKeysWhileKeepingEdits() throws IOException {
+        LanguageService first = service();
+        first.prepare("en_US");
+        first.close();
+        Path english = temporaryDirectory.resolve("languages/en_US.toml");
+        Path sidecar = temporaryDirectory.resolve("languages/.upstream/en_US.toml");
+        String olderReference = TomlLanguageEditor.remove(Files.readString(sidecar), ShapedMessages.NO_PERMISSION.id()).content();
+        Files.writeString(sidecar, olderReference);
+        Files.writeString(english, TomlLanguageEditor.upsertText(olderReference, ShapedMessages.PREFIX.id(),
+                "&6Shaped &8> ").content());
+
+        LanguageService service = service();
+        try {
+            service.install(service.prepare("en_US"));
+            java.util.Map<String, String> values = TomlLanguageParser.parseText(Files.readString(english));
+
+            assertThat(values).containsKey(ShapedMessages.NO_PERMISSION.id());
+            assertThat(values.get(ShapedMessages.PREFIX.id())).isEqualTo("&6Shaped &8> ");
+            assertThat(service.render(ShapedMessages.PREFIX).plain()).contains("Shaped");
+            assertThat(Files.readString(sidecar)).contains(ShapedMessages.NO_PERMISSION.id().substring(
+                    ShapedMessages.NO_PERMISSION.id().lastIndexOf('.') + 1));
+        } finally {
+            service.close();
+        }
     }
 
     @Test
@@ -321,7 +441,8 @@ class LanguageServiceTest {
         service.install(service.prepare("en_US"));
         assertThat(service.render(ShapedMessages.STATUS_HEADER).plain())
                 .isEqualTo("ShapedPortals › Runtime");
-        assertThat(Files.readString(file)).isEqualTo(content);
+        assertThat(TomlLanguageParser.parseText(Files.readString(file)).get(ShapedMessages.STATUS_HEADER.id()))
+                .isEqualTo("<green><bold>Broken</green>");
     }
 
     @Test
@@ -506,6 +627,60 @@ class LanguageServiceTest {
             placeholders.add(matcher.group(1));
         }
         return Set.copyOf(placeholders);
+    }
+
+    private static final class LoopbackRepository {
+        private static final String REVISION_ONE = "1111111111111111111111111111111111111111";
+        private static final String REVISION_TWO = "2222222222222222222222222222222222222222";
+
+        private final HttpServer server;
+        private final AtomicReference<String> revision = new AtomicReference<>(REVISION_ONE);
+        private final java.util.Map<String, String> files = new java.util.concurrent.ConcurrentHashMap<>();
+
+        private LoopbackRepository() throws IOException {
+            server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
+            server.createContext("/api/", this::api);
+            server.createContext("/raw/", this::raw);
+            server.start();
+        }
+
+        private LanguageService service(Path dataFolder) {
+            URI root = URI.create("http://127.0.0.1:" + server.getAddress().getPort() + "/");
+            return new LanguageService(dataFolder.toFile(), TEST_LOGGER, root.resolve("api/"), root.resolve("raw/"));
+        }
+
+        private void close() {
+            server.stop(0);
+        }
+
+        private void api(HttpExchange exchange) throws IOException {
+            String etag = "\"" + revision.get() + "\"";
+            if (etag.equals(exchange.getRequestHeaders().getFirst("If-None-Match"))) {
+                exchange.sendResponseHeaders(304, -1);
+                exchange.close();
+                return;
+            }
+            exchange.getResponseHeaders().set("ETag", etag);
+            byte[] response = ("[{\"sha\":\"" + revision.get() + "\"}]").getBytes(StandardCharsets.UTF_8);
+            exchange.sendResponseHeaders(200, response.length);
+            exchange.getResponseBody().write(response);
+            exchange.close();
+        }
+
+        private void raw(HttpExchange exchange) throws IOException {
+            String[] parts = exchange.getRequestURI().getPath().split("/");
+            String key = parts[4] + "/" + parts[parts.length - 1].replace(".toml", "");
+            String content = files.get(key);
+            if (content == null) {
+                exchange.sendResponseHeaders(404, -1);
+                exchange.close();
+                return;
+            }
+            byte[] response = content.getBytes(StandardCharsets.UTF_8);
+            exchange.sendResponseHeaders(200, response.length);
+            exchange.getResponseBody().write(response);
+            exchange.close();
+        }
     }
 
     private static final class CapturingHandler extends Handler {

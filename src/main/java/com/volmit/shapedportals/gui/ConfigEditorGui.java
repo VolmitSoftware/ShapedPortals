@@ -1,5 +1,6 @@
 package com.volmit.shapedportals.gui;
 
+import art.arcane.volmlib.util.bukkit.BukkitInventoryViews;
 import art.arcane.volmlib.util.localization.LanguageAudience;
 import art.arcane.volmlib.util.localization.MessageArgs;
 import art.arcane.volmlib.util.localization.TextKey;
@@ -90,6 +91,37 @@ public final class ConfigEditorGui implements Listener {
     public void shutdown() {
         prompts.clear();
         writer.shutdownNow();
+        closeOpenEditors();
+    }
+
+    public void closeStaleEditors() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            FoliaScheduler.runEntity(plugin, player, () -> {
+                InventoryHolder holder = BukkitInventoryViews.top(player.getOpenInventory()).getHolder();
+                if (holder != null && !(holder instanceof EditorHolder)
+                        && holder.getClass().getName().equals(EditorHolder.class.getName())) {
+                    player.closeInventory();
+                }
+            });
+        }
+    }
+
+    private void closeOpenEditors() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            try {
+                Inventory top = BukkitInventoryViews.top(player.getOpenInventory());
+                if (top == null || !(top.getHolder() instanceof EditorHolder)) {
+                    continue;
+                }
+                top.clear();
+                if (FoliaScheduler.isOwnedByCurrentRegion(player)) {
+                    player.closeInventory();
+                }
+            } catch (RuntimeException exception) {
+                plugin.getLogger().log(Level.WARNING,
+                        "Could not close the ShapedPortals config editor for " + player.getName(), exception);
+            }
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

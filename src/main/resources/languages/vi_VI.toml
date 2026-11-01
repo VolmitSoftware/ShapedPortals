@@ -14,6 +14,7 @@
 #
 # === Biến ===
 # Giữ nguyên tên biến và chỉ dùng những biến có sẵn trong từng thông báo.
+#   {added}  Thông báo được thêm bởi bản cập nhật ngôn ngữ
 #   {after}  Giá trị sau khi thay đổi
 #   {argument}  đối số ngoài dự kiến
 #   {attempts}  lần thử tạo
@@ -30,6 +31,7 @@
 #   {group}  Cho phép hay nhóm người chơi
 #   {hot_reload}  trạng thái tải lại
 #   {id}  ID ngắn
+#   {kept}  Chỉnh sửa cục bộ được giữ bởi bản cập nhật ngôn ngữ
 #   {key}  khóa tham số
 #   {language}  ngôn ngữ đang dùng
 #   {line}  Số dòng hay dòng nguồn
@@ -56,6 +58,7 @@
 #   {status}  dấu chọn
 #   {target}  Người chơi đích, thực thể hay giá trị
 #   {type}  kiểu
+#   {updated}  Thông báo được thay đổi bởi bản cập nhật ngôn ngữ
 #   {url}  URL công khai
 #   {uuid}  UUID đầy đủ
 #   {value}  giá trị hiện tại, mặc định hoặc thô
@@ -353,6 +356,7 @@ unavailable-for-all = "{prefix}&r &7› &7&cNgôn ngữ {locale} không khả d�
 editor = "{prefix}&r &7› &7&7Cách dùng: /{command} language server edit [locale]"
 selection = "{prefix}&r &7› &7&7Cách dùng: /{command} language self [locale|reset] or server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7Cách dùng: /volmit plugins languages [locale]"
+update = "{prefix}&r &7› &7&7Cách dùng: /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7Đang chuẩn bị ngôn ngữ {locale} cho {target}..."
@@ -361,6 +365,13 @@ english-fallback = "{prefix}&r &7› &7&e{locale} không khả dụng; sẽ dùn
 personal-selected = "{prefix}&r &7› &7&7ngôn ngữ của bạn hiện là {locale}."
 server-selected = "{prefix}&r &7› &7&7ngôn ngữ máy chủ hiện là {locale}."
 server-default-selected = "{prefix}&r &7› &7&7ngôn ngữ của bạn hiện theo ngôn ngữ mặc định của máy chủ."
+
+[language.update]
+checking = "{prefix}&r &7› &7&7Đang kiểm tra thay đổi trong kho ngôn ngữ..."
+unchanged = "{prefix}&r &7› &7&7Các ngôn ngữ đã cài đặt đã khớp với kho."
+applied = "{prefix}&r &7› &7&7Đã cập nhật {locale} ({added} thêm, {updated} thay đổi, {kept} chỉnh sửa cục bộ được giữ)."
+locale-failed = "{prefix}&r &7› &7&c{locale} chưa được cập nhật: {reason}"
+failed = "{prefix}&r &7› &7&cCập nhật ngôn ngữ thất bại: {reason}"
 
 [language.editor]
 title = "{prefix} › {section}"

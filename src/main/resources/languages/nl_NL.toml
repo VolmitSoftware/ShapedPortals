@@ -14,6 +14,7 @@
 #
 # === Variabelen ===
 # Behoud de namen van variabelen en gebruik alleen de variabelen die bij het bericht horen.
+#   {added}  Berichten toegevoegd door een taalupdate
 #   {after}  Waarde na de wijziging
 #   {argument}  onverwacht argument
 #   {attempts}  aanmaakpogingen
@@ -30,6 +31,7 @@
 #   {group}  Toestemming of spelersgroep
 #   {hot_reload}  hot-reloadstatus
 #   {id}  korte ID
+#   {kept}  Lokale bewerkingen behouden door een taalupdate
 #   {key}  parametersleutel
 #   {language}  actieve taal
 #   {line}  Bronregel of regelnummer
@@ -56,6 +58,7 @@
 #   {status}  selectiemarkering
 #   {target}  Doelspeler, entiteit of waarde
 #   {type}  type
+#   {updated}  Berichten gewijzigd door een taalupdate
 #   {url}  openbare URL
 #   {uuid}  volledige UUID
 #   {value}  huidige, standaard- of ruwe waarde
@@ -353,6 +356,7 @@ unavailable-for-all = "{prefix}&r &7› &7&cDe taal {locale} is niet voor alle g
 editor = "{prefix}&r &7› &7&7Gebruik: /{command} language server edit [locale]"
 selection = "{prefix}&r &7› &7&7Gebruik: /{command} language self [locale|reset] or server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7Gebruik: /volmit plugins languages [locale]"
+update = "{prefix}&r &7› &7&7Gebruik: /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7Taal {locale} wordt voorbereid voor {target}..."
@@ -361,6 +365,13 @@ english-fallback = "{prefix}&r &7› &7&e{locale} is niet beschikbaar; Engels (e
 personal-selected = "{prefix}&r &7› &7&7uw taal is nu {locale}."
 server-selected = "{prefix}&r &7› &7&7servertaal is nu {locale}."
 server-default-selected = "{prefix}&r &7› &7&7je taal volgt nu de standaardtaal van de server."
+
+[language.update]
+checking = "{prefix}&r &7› &7&7Taalrepository wordt gecontroleerd op wijzigingen..."
+unchanged = "{prefix}&r &7› &7&7Geïnstalleerde talen komen al overeen met de repository."
+applied = "{prefix}&r &7› &7&7{locale} bijgewerkt ({added} toegevoegd, {updated} gewijzigd, {kept} lokale bewerkingen behouden)."
+locale-failed = "{prefix}&r &7› &7&c{locale} is niet bijgewerkt: {reason}"
+failed = "{prefix}&r &7› &7&cTaalupdate mislukt: {reason}"
 
 [language.editor]
 title = "{prefix} › {section}"

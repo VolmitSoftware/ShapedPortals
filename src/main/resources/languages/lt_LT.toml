@@ -14,6 +14,7 @@
 #
 # === Kintamieji ===
 # Nekeiskite kintamųjų pavadinimų ir naudokite tik konkrečiame pranešime esančius kintamuosius.
+#   {added}  Kalbos atnaujinimo pridėti pranešimai
 #   {after}  Vertė po pakeitimo
 #   {argument}  netikėtas argumentas
 #   {attempts}  kūrimo bandymai
@@ -30,6 +31,7 @@
 #   {group}  Leidimas arba žaidėjo grupė
 #   {hot_reload}  karštojo įkėlimo būsena
 #   {id}  trumpas ID
+#   {kept}  Kalbos atnaujinimo išsaugoti vietiniai pakeitimai
 #   {key}  parametro raktas
 #   {language}  aktyvi kalba
 #   {line}  Pradinės eilutės arba eilutės numeris
@@ -56,6 +58,7 @@
 #   {status}  pasirinkimo žyma
 #   {target}  Tikslinis žaidėjas, subjektas arba vertė
 #   {type}  tipas
+#   {updated}  Kalbos atnaujinimo pakeisti pranešimai
 #   {url}  viešas URL
 #   {uuid}  visas UUID
 #   {value}  dabartinė, numatytoji arba neapdorota reikšmė
@@ -353,6 +356,7 @@ unavailable-for-all = "{prefix}&r &7› &7&cKalba {locale} prieinama ne visiems 
 editor = "{prefix}&r &7› &7&7Naudojimas: /{command} language server edit [locale]"
 selection = "{prefix}&r &7› &7&7Naudojimas: /{command} language self [locale|reset] or server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7Naudojimas: /volmit plugins languages [locale]"
+update = "{prefix}&r &7› &7&7Naudojimas: /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7Ruošiama kalba {locale} papildiniui {target}..."
@@ -361,6 +365,13 @@ english-fallback = "{prefix}&r &7› &7&e{locale} neprieinama; naudojama anglų 
 personal-selected = "{prefix}&r &7› &7&7dabar jūsų kalba {locale}."
 server-selected = "{prefix}&r &7› &7&7serverio kalba yra dabar {locale}."
 server-default-selected = "{prefix}&r &7› &7&7jūsų kalba dabar atitinka numatytąją serverio kalbą."
+
+[language.update]
+checking = "{prefix}&r &7› &7&7Tikrinami kalbų saugyklos pakeitimai..."
+unchanged = "{prefix}&r &7› &7&7Įdiegtos kalbos jau atitinka saugyklą."
+applied = "{prefix}&r &7› &7&7{locale} atnaujinta ({added} pridėta, {updated} pakeista, {kept} vietinių pakeitimų išsaugota)."
+locale-failed = "{prefix}&r &7› &7&c{locale} neatnaujinta: {reason}"
+failed = "{prefix}&r &7› &7&cKalbų atnaujinimas nepavyko: {reason}"
 
 [language.editor]
 title = "{prefix} › {section}"

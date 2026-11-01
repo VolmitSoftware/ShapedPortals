@@ -14,6 +14,7 @@
 #
 # === 変数 ===
 # 変数名を変更せず、各メッセージに元からある変数だけを使用してください。
+#   {added}  言語更新で追加されたメッセージ
 #   {after}  変更後の値
 #   {argument}  予期しない引数
 #   {attempts}  作成試行数
@@ -30,6 +31,7 @@
 #   {group}  許可またはプレイヤーグループ
 #   {hot_reload}  ホットリロード状態
 #   {id}  短縮 ID
+#   {kept}  言語更新で保持されたローカル編集
 #   {key}  パラメーターキー
 #   {language}  使用中の言語
 #   {line}  ラインまたはライン番号
@@ -56,6 +58,7 @@
 #   {status}  選択記号
 #   {target}  ターゲットプレーヤー、エンティティティティ、または値
 #   {type}  型
+#   {updated}  言語更新で変更されたメッセージ
 #   {url}  公開 URL
 #   {uuid}  完全な UUID
 #   {value}  現在値、既定値、または入力値
@@ -353,6 +356,7 @@ unavailable-for-all = "{prefix}&r &7› &7&c選択したすべてのプラグイ
 editor = "{prefix}&r &7› &7&7使い方: /{command} language server edit [locale]"
 selection = "{prefix}&r &7› &7&7使い方: /{command} language self [locale|reset] or server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7使い方: /volmit plugins languages [locale]"
+update = "{prefix}&r &7› &7&7使い方: /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7{target}の言語{locale}を準備しています..."
@@ -361,6 +365,13 @@ english-fallback = "{prefix}&r &7› &7&e{locale}は利用できないため、�
 personal-selected = "{prefix}&r &7› &7&7個人言語を{locale}に変更しました。"
 server-selected = "{prefix}&r &7› &7&7サーバー言語を{locale}に変更しました。"
 server-default-selected = "{prefix}&r &7› &7&7個人言語はサーバーの既定の言語に従うようになりました。"
+
+[language.update]
+checking = "{prefix}&r &7› &7&7言語リポジトリの変更を確認しています..."
+unchanged = "{prefix}&r &7› &7&7インストール済みの言語はすでにリポジトリと一致しています。"
+applied = "{prefix}&r &7› &7&7{locale} を更新しました（追加 {added}、変更 {updated}、ローカル編集の保持 {kept}）。"
+locale-failed = "{prefix}&r &7› &7&c{locale} は更新されませんでした: {reason}"
+failed = "{prefix}&r &7› &7&c言語の更新に失敗しました: {reason}"
 
 [language.editor]
 title = "{prefix} › {section}"

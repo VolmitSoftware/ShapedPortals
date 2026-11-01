@@ -14,6 +14,7 @@
 #
 # === 변수 ===
 # 변수 이름을 변경하지 말고 각 메시지에 원래 있는 변수만 사용하세요.
+#   {added}  언어 업데이트로 추가된 메시지
 #   {after}  변경 후 가치
 #   {argument}  예상하지 못한 인수
 #   {attempts}  생성 시도 수
@@ -30,6 +31,7 @@
 #   {group}  권한 또는 선수 그룹
 #   {hot_reload}  핫 리로드 상태
 #   {id}  짧은 ID
+#   {kept}  언어 업데이트에서 유지된 로컬 편집
 #   {key}  매개변수 키
 #   {language}  활성 언어
 #   {line}  소스 라인 또는 라인 번호
@@ -56,6 +58,7 @@
 #   {status}  선택 표시
 #   {target}  대상 플레이어, 단체, 또는 가치
 #   {type}  형식
+#   {updated}  언어 업데이트로 변경된 메시지
 #   {url}  공개 URL
 #   {uuid}  전체 UUID
 #   {value}  현재값, 기본값 또는 원시값
@@ -353,6 +356,7 @@ unavailable-for-all = "{prefix}&r &7› &7&c{locale} 언어는 선택한 모든 
 editor = "{prefix}&r &7› &7&7사용법: /{command} language server edit [locale]"
 selection = "{prefix}&r &7› &7&7사용법: /{command} language self [locale|reset] or server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7사용법: /volmit plugins languages [locale]"
+update = "{prefix}&r &7› &7&7사용법: /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7{target}의 {locale} 언어를 준비하는 중..."
@@ -361,6 +365,13 @@ english-fallback = "{prefix}&r &7› &7&e{locale}을 사용할 수 없어 영어
 personal-selected = "{prefix}&r &7› &7&7개인 언어를 {locale}으로 변경했습니다."
 server-selected = "{prefix}&r &7› &7&7서버 언어를 {locale}으로 변경했습니다."
 server-default-selected = "{prefix}&r &7› &7&7개인 언어가 이제 서버 기본 언어를 따릅니다."
+
+[language.update]
+checking = "{prefix}&r &7› &7&7언어 저장소의 변경 사항을 확인하는 중..."
+unchanged = "{prefix}&r &7› &7&7설치된 언어가 이미 저장소와 일치합니다."
+applied = "{prefix}&r &7› &7&7{locale} 업데이트됨 (추가 {added}, 변경 {updated}, 로컬 편집 유지 {kept})."
+locale-failed = "{prefix}&r &7› &7&c{locale}이(가) 업데이트되지 않았습니다: {reason}"
+failed = "{prefix}&r &7› &7&c언어 업데이트 실패: {reason}"
 
 [language.editor]
 title = "{prefix} › {section}"

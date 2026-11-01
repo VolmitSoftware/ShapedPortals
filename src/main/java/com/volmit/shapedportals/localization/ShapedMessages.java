@@ -205,6 +205,7 @@ public final class ShapedMessages {
         boolean feedback = key.id().startsWith("language.error.")
                 || key.id().startsWith("language.usage.")
                 || key.id().startsWith("language.selection.")
+                || key.id().startsWith("language.update.")
                 || key.id().startsWith("language.editor.prompt.")
                 || key.id().startsWith("language.editor.input.")
                 || key.id().startsWith("language.editor.error.")

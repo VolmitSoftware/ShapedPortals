@@ -14,6 +14,7 @@
 #
 # === Variables ===
 # Conservez les noms des variables et utilisez uniquement celles du message concerné.
+#   {added}  Messages ajoutés par une mise à jour de langue
 #   {after}  Valeur après le changement
 #   {argument}  argument inattendu
 #   {attempts}  tentatives de création
@@ -30,6 +31,7 @@
 #   {group}  Autorisation ou groupe de joueurs
 #   {hot_reload}  état du rechargement
 #   {id}  ID court
+#   {kept}  Modifications locales conservées par une mise à jour de langue
 #   {key}  clé du paramètre
 #   {language}  langue active
 #   {line}  Ligne source ou numéro de ligne
@@ -56,6 +58,7 @@
 #   {status}  marque de sélection
 #   {target}  Lecteur cible, entité ou valeur
 #   {type}  type
+#   {updated}  Messages modifiés par une mise à jour de langue
 #   {url}  URL publique
 #   {uuid}  UUID complet
 #   {value}  valeur actuelle, par défaut ou brute
@@ -353,6 +356,7 @@ unavailable-for-all = "{prefix}&r &7› &7&cLa langue {locale} n’est pas dispo
 editor = "{prefix}&r &7› &7&7Utilisation: /{command} language server edit [locale]"
 selection = "{prefix}&r &7› &7&7Utilisation: /{command} language self [locale|reset] or server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7Utilisation: /volmit plugins languages [locale]"
+update = "{prefix}&r &7› &7&7Utilisation: /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7Préparation de la langue {locale} pour {target}..."
@@ -361,6 +365,13 @@ english-fallback = "{prefix}&r &7› &7&e{prefix} : {locale} est indisponible ; 
 personal-selected = "{prefix}&r &7› &7&7votre langue est maintenant {locale}."
 server-selected = "{prefix}&r &7› &7&7la langue du serveur est maintenant {locale}."
 server-default-selected = "{prefix}&r &7› &7&7{prefix} : votre langue suit désormais la langue par défaut du serveur."
+
+[language.update]
+checking = "{prefix}&r &7› &7&7Vérification des modifications du dépôt de langues..."
+unchanged = "{prefix}&r &7› &7&7Les langues installées correspondent déjà au dépôt."
+applied = "{prefix}&r &7› &7&7{locale} mis à jour ({added} ajoutés, {updated} modifiés, {kept} modifications locales conservées)."
+locale-failed = "{prefix}&r &7› &7&c{locale} n’a pas été mis à jour : {reason}"
+failed = "{prefix}&r &7› &7&cLa mise à jour des langues a échoué : {reason}"
 
 [language.editor]
 title = "{prefix} › {section}"

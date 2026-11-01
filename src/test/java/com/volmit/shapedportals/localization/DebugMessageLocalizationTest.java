@@ -4,6 +4,7 @@ import art.arcane.volmlib.util.diagnostics.BukkitDebugMessages;
 import art.arcane.volmlib.util.localization.MessageArgs;
 import art.arcane.volmlib.util.localization.MessageKey;
 import art.arcane.volmlib.util.localization.TextKey;
+import art.arcane.volmlib.util.localization.TomlLanguageParser;
 import art.arcane.volmlib.util.plugin.ComponentText;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -61,7 +62,8 @@ class DebugMessageLocalizationTest {
                     .isEqualTo("Capturing ShapedPortals diagnostics");
             assertThat(ComponentText.markup(service.directorResolver().resolve(BukkitDebugMessages.PROVIDER_CLOSED)).plain())
                     .isEqualTo("ShapedPortals › The debug provider is closed.");
-            assertThat(Files.readString(languageFile)).isEqualTo(edited);
+            assertThat(TomlLanguageParser.parseText(Files.readString(languageFile)).get(BukkitDebugMessages.PREPARING.id()))
+                    .isEqualTo("Capturing {prefix} diagnostics");
         } finally {
             service.close();
         }

@@ -14,6 +14,7 @@
 #
 # === Değişkenler ===
 # Değişken adlarını değiştirmeyin ve yalnızca ilgili iletinin değişkenlerini kullanın.
+#   {added}  Dil güncellemesiyle eklenen iletiler
 #   {after}  Değişim sonrası Değer
 #   {argument}  beklenmeyen argüman
 #   {attempts}  oluşturma denemeleri
@@ -30,6 +31,7 @@
 #   {group}  İzin veya oyuncu grubu
 #   {hot_reload}  yeniden yükleme durumu
 #   {id}  kısa ID
+#   {kept}  Dil güncellemesinde korunan yerel düzenlemeler
 #   {key}  parametre anahtarı
 #   {language}  etkin dil
 #   {line}  Source line or line number
@@ -56,6 +58,7 @@
 #   {status}  seçim işareti
 #   {target}  Hedef oyuncu, varlık veya değer
 #   {type}  tür
+#   {updated}  Dil güncellemesiyle değiştirilen iletiler
 #   {url}  genel URL
 #   {uuid}  tam UUID
 #   {value}  geçerli, varsayılan veya ham değer
@@ -353,6 +356,7 @@ unavailable-for-all = "{prefix}&r &7› &7&c{locale} dili, seçilen eklentilerin
 editor = "{prefix}&r &7› &7&7Kullanım: /{command} language server edit [locale]"
 selection = "{prefix}&r &7› &7&7Kullanım: /{command} language self [locale|reset] or server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7Kullanım: /volmit plugins languages [locale]"
+update = "{prefix}&r &7› &7&7Kullanım: /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7{target} için {locale} dili hazırlanıyor..."
@@ -361,6 +365,13 @@ english-fallback = "{prefix}&r &7› &7&e{locale} kullanılamıyor; İngilizce (
 personal-selected = "{prefix}&r &7› &7&7Diliniz şimdi {locale}."
 server-selected = "{prefix}&r &7› &7&7sunucu dili şimdi {locale}."
 server-default-selected = "{prefix}&r &7› &7&7diliniz artık sunucunun varsayılan dilini kullanıyor."
+
+[language.update]
+checking = "{prefix}&r &7› &7&7Dil deposundaki değişiklikler denetleniyor..."
+unchanged = "{prefix}&r &7› &7&7Yüklü diller zaten depoyla eşleşiyor."
+applied = "{prefix}&r &7› &7&7{locale} güncellendi ({added} eklendi, {updated} değiştirildi, {kept} yerel düzenleme korundu)."
+locale-failed = "{prefix}&r &7› &7&c{locale} güncellenmedi: {reason}"
+failed = "{prefix}&r &7› &7&cDil güncellemesi başarısız oldu: {reason}"
 
 [language.editor]
 title = "{prefix} › {section}"

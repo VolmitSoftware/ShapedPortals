@@ -23,6 +23,7 @@ import org.bukkit.Material;
 import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.EndPortalFrame;
@@ -31,6 +32,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockCanBuildEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -167,7 +169,8 @@ public final class PortalService {
         List<BlockPosition> frame = absolutePositions(ignition, shape.axis(), shape.frame());
         World world = ignition.getWorld();
         if (creator instanceof Player player
-                && !canBuildPortal(player, world, interior, PortalType.NETHER.createBlockData(shape.axis()))) {
+                && !canBuildPortal(player, world, interior, PortalType.NETHER.createBlockData(shape.axis()),
+                Material.FLINT_AND_STEEL)) {
             stats.rejected(RejectionReason.EVENT_CANCELLED);
             fail(player, ShapedMessages.PORTAL_FAILED_BLOCK_DENIED);
             return;
@@ -303,7 +306,7 @@ public final class PortalService {
 
         stats.attempted();
         BlockData portalData = PortalType.END.createBlockData(PortalAxis.Y);
-        if (!canBuildPortal(creator, world, interior, portalData)) {
+        if (!canBuildPortal(creator, world, interior, portalData, Material.ENDER_EYE)) {
             stats.rejected(RejectionReason.EVENT_CANCELLED);
             fail(creator, ShapedMessages.PORTAL_FAILED_BLOCK_DENIED);
             return;
@@ -427,7 +430,8 @@ public final class PortalService {
         return true;
     }
 
-    private boolean canBuildPortal(Player creator, World world, List<BlockPosition> interior, BlockData portalData) {
+    private boolean canBuildPortal(Player creator, World world, List<BlockPosition> interior, BlockData portalData,
+                                   Material placementItem) {
         Player eventPlayer = FoliaScheduler.isFoliaThreading(plugin.getServer())
                 && !FoliaScheduler.isOwnedByCurrentRegion(creator) ? null : creator;
         for (BlockPosition position : interior) {
@@ -438,6 +442,12 @@ public final class PortalService {
             }
             plugin.getServer().getPluginManager().callEvent(event);
             if (!event.isBuildable()) {
+                return false;
+            }
+            PortalPlacementCheckEvent placement = new PortalPlacementCheckEvent(
+                    block, block.getRelative(BlockFace.DOWN), new ItemStack(placementItem), creator);
+            plugin.getServer().getPluginManager().callEvent(placement);
+            if (placement.isCancelled() || !placement.canBuild()) {
                 return false;
             }
         }

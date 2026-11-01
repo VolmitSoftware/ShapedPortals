@@ -14,6 +14,7 @@
 #
 # === משתנים ===
 # יש לשמור על שמות המשתנים ולהשתמש רק במשתנים הקיימים בכל הודעה.
+#   {added}  הודעות שנוספו בעדכון שפה
 #   {after}  ערך לאחר השינוי
 #   {argument}  ארגומנט לא צפוי
 #   {attempts}  ניסיונות יצירה
@@ -30,6 +31,7 @@
 #   {group}  Permission או שחקן
 #   {hot_reload}  מצב טעינה חמה
 #   {id}  מזהה קצר
+#   {kept}  עריכות מקומיות שנשמרו בעדכון שפה
 #   {key}  מפתח פרמטר
 #   {language}  שפה פעילה
 #   {line}  מקור או קו מספר
@@ -56,6 +58,7 @@
 #   {status}  סימן בחירה
 #   {target}  שחקן היעד, הישות או הערך
 #   {type}  סוג
+#   {updated}  הודעות ששונו בעדכון שפה
 #   {url}  כתובת דוח ציבורית
 #   {uuid}  UUID מלא
 #   {value}  ערך נוכחי, ברירת מחדל או גולמי
@@ -353,6 +356,7 @@ unavailable-for-all = "{prefix}&r &7› &7&cהשפה {locale} אינה זמינ�
 editor = "{prefix}&r &7› &7&7שימוש: /{command} language server edit [locale]"
 selection = "{prefix}&r &7› &7&7שימוש: /{command} language self [locale|reset] or server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7שימוש: /volmit plugins languages [locale]"
+update = "{prefix}&r &7› &7&7שימוש: /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7מכין את השפה {locale} עבור {target}..."
@@ -361,6 +365,13 @@ english-fallback = "{prefix}&r &7› &7&eהשפה {locale} אינה זמינה; 
 personal-selected = "{prefix}&r &7› &7&7השפה שלך עכשיו {locale}."
 server-selected = "{prefix}&r &7› &7&7שפת השרת עכשיו {locale}."
 server-default-selected = "{prefix}&r &7› &7&7השפה שלך תואמת כעת לשפת ברירת המחדל של השרת."
+
+[language.update]
+checking = "{prefix}&r &7› &7&7בודק שינויים במאגר השפות..."
+unchanged = "{prefix}&r &7› &7&7השפות המותקנות כבר תואמות למאגר."
+applied = "{prefix}&r &7› &7&7{locale} עודכן ({added} נוספו, {updated} שונו, {kept} עריכות מקומיות נשמרו)."
+locale-failed = "{prefix}&r &7› &7&c{locale} לא עודכן: {reason}"
+failed = "{prefix}&r &7› &7&cעדכון השפות נכשל: {reason}"
 
 [language.editor]
 title = "{prefix} › {section}"

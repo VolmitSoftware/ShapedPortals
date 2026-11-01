@@ -14,6 +14,7 @@
 #
 # === 變數 ===
 # 請勿變更變數名稱，僅使用各訊息中原有的變數。
+#   {added}  語言更新新增的訊息
 #   {after}  變更后的值
 #   {argument}  意外引數
 #   {attempts}  建立嘗試數
@@ -30,6 +31,7 @@
 #   {group}  權限或玩家群組
 #   {hot_reload}  熱重載狀態
 #   {id}  短 ID
+#   {kept}  語言更新保留的本機修改
 #   {key}  參數鍵
 #   {language}  目前語言
 #   {line}  來源行或行號
@@ -56,6 +58,7 @@
 #   {status}  選取標記
 #   {target}  目標播放器、 實體或值
 #   {type}  類型
+#   {updated}  語言更新變更的訊息
 #   {url}  公開報告網址
 #   {uuid}  完整 UUID
 #   {value}  目前值、預設值或原始值
@@ -353,6 +356,7 @@ unavailable-for-all = "{prefix}&r &7› &7&c語言 {locale} 並非適用於所�
 editor = "{prefix}&r &7› &7&7用法: /{command} language server edit [locale]"
 selection = "{prefix}&r &7› &7&7用法: /{command} language self [locale|reset] or server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7用法: /volmit plugins languages [locale]"
+update = "{prefix}&r &7› &7&7用法: /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7正在為 {target} 準備語言 {locale}..."
@@ -361,6 +365,13 @@ english-fallback = "{prefix}&r &7› &7&e{prefix}：{locale} 無法使用；將�
 personal-selected = "{prefix}&r &7› &7&7{prefix}：你的語言現在是 {locale}。"
 server-selected = "{prefix}&r &7› &7&7{prefix}：伺服器語言現在是 {locale}。"
 server-default-selected = "{prefix}&r &7› &7&7{prefix}：你的語言現在跟隨伺服器預設語言。"
+
+[language.update]
+checking = "{prefix}&r &7› &7&7正在檢查語言儲存庫的變更..."
+unchanged = "{prefix}&r &7› &7&7已安裝的語言已與儲存庫一致。"
+applied = "{prefix}&r &7› &7&7已更新 {locale}（新增 {added}，變更 {updated}，保留本機修改 {kept}）。"
+locale-failed = "{prefix}&r &7› &7&c{locale} 未更新：{reason}"
+failed = "{prefix}&r &7› &7&c語言更新失敗：{reason}"
 
 [language.editor]
 title = "{prefix} › {section}"

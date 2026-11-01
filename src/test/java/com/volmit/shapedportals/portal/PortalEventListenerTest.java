@@ -1,6 +1,7 @@
 package com.volmit.shapedportals.portal;
 
 import com.volmit.shapedportals.config.RuntimeConfig;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.EndPortalFrame;
 import org.bukkit.entity.Player;
@@ -8,6 +9,7 @@ import org.bukkit.entity.SmallFireball;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.BlockProjectileSource;
 import org.junit.jupiter.api.Test;
 
@@ -42,6 +44,22 @@ class PortalEventListenerTest {
     }
 
     @Test
+    void ignoresItsOwnPlacementChecks() {
+        PortalService portalService = mock(PortalService.class);
+        PortalRegistry registry = mock(PortalRegistry.class);
+        PortalEventListener listener = new PortalEventListener(
+                portalService, registry, mock(PortalIntegrityService.class));
+        Block block = mock(Block.class);
+        when(block.getType()).thenReturn(Material.FIRE);
+        PortalPlacementCheckEvent check = new PortalPlacementCheckEvent(
+                block, mock(Block.class), mock(ItemStack.class), mock(Player.class));
+
+        listener.onPlace(check);
+
+        verifyNoInteractions(portalService, registry);
+    }
+
+    @Test
     void routesDispensedFireChargesToTheDispenserCauseWithoutACreator() {
         PortalService portalService = mock(PortalService.class);
         PortalEventListener listener = new PortalEventListener(
@@ -53,6 +71,24 @@ class PortalEventListenerTest {
         when(event.getBlock()).thenReturn(block);
         when(event.getIgnitingEntity()).thenReturn(fireball);
         when(event.getCause()).thenReturn(BlockIgniteEvent.IgniteCause.FIREBALL);
+
+        listener.onIgnite(event);
+
+        verify(portalService).attempt(block, null, RuntimeConfig.DISPENSER_CAUSE);
+    }
+
+    @Test
+    void routesDispensedFlintAndSteelToTheDispenserCause() {
+        PortalService portalService = mock(PortalService.class);
+        PortalEventListener listener = new PortalEventListener(
+                portalService, mock(PortalRegistry.class), mock(PortalIntegrityService.class));
+        BlockIgniteEvent event = mock(BlockIgniteEvent.class);
+        Block block = mock(Block.class);
+        Block dispenser = mock(Block.class);
+        when(dispenser.getType()).thenReturn(Material.DISPENSER);
+        when(event.getBlock()).thenReturn(block);
+        when(event.getIgnitingBlock()).thenReturn(dispenser);
+        when(event.getCause()).thenReturn(BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL);
 
         listener.onIgnite(event);
 

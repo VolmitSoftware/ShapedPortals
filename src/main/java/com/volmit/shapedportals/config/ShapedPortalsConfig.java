@@ -31,7 +31,7 @@ public final class ShapedPortalsConfig {
     public static final class General {
         @ConfigDoc(value = "Master switch for shaped portal creation.", impact = "Existing managed portals continue to be maintained while creation is disabled.")
         public boolean enabled = true;
-        @ConfigDoc(value = "Active locale stored as the directly editable languages/<locale>.toml file.", impact = "Repository locales are verified and downloaded only when missing; local changes are never automatically replaced, and missing entries use code-owned English.")
+        @ConfigDoc(value = "Active locale stored as the directly editable languages/<locale>.toml file.", impact = "Repository locales install when selected and merge upstream changes on startup or /shapedportals language update while keeping local edits; custom files are listed as found, and missing entries use code-owned English.")
         public String language = "en_US";
         @ConfigDoc(value = "Require shapedportals.create from players creating Nether or End portals.", impact = "Non-player Nether ignition follows the configured ignition causes.")
         public boolean requireCreatePermission = true;
@@ -75,7 +75,7 @@ public final class ShapedPortalsConfig {
         public List<String> frameMaterials = new ArrayList<>(List.of("OBSIDIAN", "CRYING_OBSIDIAN"));
         @ConfigDoc(value = "Blocks that may be replaced inside a newly created portal.", impact = "NETHER_PORTAL cannot be added because vanilla creation takes priority.")
         public List<String> interiorMaterials = new ArrayList<>(List.of("AIR", "CAVE_AIR", "VOID_AIR", "FIRE", "SOUL_FIRE"));
-        @ConfigDoc(value = "BlockIgniteEvent causes allowed to start a shaped portal, plus PLACED_FIRE for direct fire placement and DISPENSER for dispensed fire charges.", impact = "SPREAD, LAVA, and DISPENSER are excluded by default. Dispensed ignition has no player to check for shapedportals.create.")
+        @ConfigDoc(value = "BlockIgniteEvent causes allowed to start a shaped portal, plus PLACED_FIRE for direct fire placement and DISPENSER for dispensed fire charges and flint and steel.", impact = "SPREAD, LAVA, and DISPENSER are excluded by default. Dispensed ignition has no player to check for shapedportals.create.")
         public List<String> ignitionCauses = new ArrayList<>(List.of("FLINT_AND_STEEL", "FIREBALL", "PLACED_FIRE"));
         @ConfigDoc(value = "Optional world allow-list by world name.", impact = "An empty list allows every world not denied below.")
         public List<String> allowedWorlds = new ArrayList<>();

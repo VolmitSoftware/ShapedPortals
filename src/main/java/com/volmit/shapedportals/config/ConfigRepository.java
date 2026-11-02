@@ -1,14 +1,12 @@
 package com.volmit.shapedportals.config;
 
 import art.arcane.volmlib.util.config.TomlCodec;
+import art.arcane.volmlib.util.io.AtomicFileIO;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 
 public final class ConfigRepository {
     private static final long MAXIMUM_CONFIG_BYTES = 2L * 1024L * 1024L;
@@ -25,7 +23,7 @@ public final class ConfigRepository {
         if (!configFile.exists()) {
             ShapedPortalsConfig defaults = new ShapedPortalsConfig();
             PreparedConfig prepared = prepare(defaults, null);
-            writeAtomic(prepared.serialized());
+            AtomicFileIO.writeString(configFile.toPath(), prepared.serialized());
             return prepared;
         }
         if (!configFile.isFile()) {
@@ -44,7 +42,7 @@ public final class ConfigRepository {
 
     public synchronized PreparedConfig save(ShapedPortalsConfig config) throws IOException {
         PreparedConfig prepared = prepare(config, null);
-        writeAtomic(prepared.serialized());
+        AtomicFileIO.writeString(configFile.toPath(), prepared.serialized());
         return prepared;
     }
 
@@ -81,18 +79,6 @@ public final class ConfigRepository {
         RuntimeConfig runtime = RuntimeConfig.from(config);
         String serialized = TomlCodec.toToml(runtime.source(), "shapedportals");
         return new PreparedConfig(runtime.source(), runtime, serialized, diskContent == null ? serialized : diskContent);
-    }
-
-    private void writeAtomic(String content) throws IOException {
-        Files.createDirectories(dataFolder.toPath());
-        Path target = configFile.toPath();
-        Path temporary = target.resolveSibling(target.getFileName() + ".tmp");
-        Files.writeString(temporary, content, StandardCharsets.UTF_8);
-        try {
-            Files.move(temporary, target, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
-        } catch (AtomicMoveNotSupportedException exception) {
-            Files.move(temporary, target, StandardCopyOption.REPLACE_EXISTING);
-        }
     }
 
     /**

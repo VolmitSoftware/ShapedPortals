@@ -58,7 +58,7 @@ class PortalRegistryTest {
     }
 
     @Test
-    void rejectsOverlappingRecordsWithoutRewritingTheStore() throws IOException {
+    void skipsOverlappingRecordsAndKeepsACopyOfTheOriginalStore() throws IOException {
         PortalRecord first = record();
         PortalRecord second = new PortalRecord(
                 PortalRecord.CURRENT_SCHEMA_VERSION,
@@ -73,20 +73,56 @@ class PortalRegistryTest {
                 first.createdAtEpochMillis(),
                 first.creator()
         );
-        String invalid = new Gson().toJson(Map.of(
+        PortalRecord separate = record();
+        String original = new Gson().toJson(Map.of(
                 "schemaVersion", PortalRecord.CURRENT_SCHEMA_VERSION,
-                "portals", List.of(first, second)
+                "portals", List.of(first, second, separate)
         ));
         Path store = temporaryDirectory.resolve("portals.json");
-        Files.writeString(store, invalid, StandardCharsets.UTF_8);
-        PortalRegistry registry = new PortalRegistry(temporaryDirectory.toFile(), ignored -> {
-        });
+        Files.writeString(store, original, StandardCharsets.UTF_8);
+        List<Throwable> failures = new CopyOnWriteArrayList<>();
+        PortalRegistry registry = new PortalRegistry(temporaryDirectory.toFile(), failures::add);
 
-        assertThatThrownBy(registry::load)
-                .isInstanceOf(IOException.class)
-                .hasMessageContaining("overlapping");
+        registry.load();
+
+        assertThat(registry.portalCount()).isEqualTo(2);
+        assertThat(registry.get(first.id())).isEqualTo(first);
+        assertThat(registry.get(separate.id())).isEqualTo(separate);
+        assertThat(registry.get(second.id())).isNull();
+        assertThat(failures).singleElement().satisfies(failure ->
+                assertThat(failure).hasMessageContaining("Skipped 0 unreadable and 1 duplicate or overlapping"));
+        assertThat(Files.readString(skippedBackup(), StandardCharsets.UTF_8)).isEqualTo(original);
         registry.close();
-        assertThat(Files.readString(store, StandardCharsets.UTF_8)).isEqualTo(invalid);
+
+        List<Throwable> reloadFailures = new CopyOnWriteArrayList<>();
+        PortalRegistry reloaded = new PortalRegistry(temporaryDirectory.toFile(), reloadFailures::add);
+        reloaded.load();
+        assertThat(reloaded.portalCount()).isEqualTo(2);
+        assertThat(reloadFailures).isEmpty();
+        reloaded.close();
+    }
+
+    @Test
+    void rapidChangesAreAllPersistedWithoutLeavingTemporaryFiles() throws IOException {
+        List<Throwable> failures = new CopyOnWriteArrayList<>();
+        PortalRegistry registry = new PortalRegistry(temporaryDirectory.toFile(), failures::add);
+        registry.load();
+        for (int index = 0; index < 500; index++) {
+            assertThat(registry.register(record())).isTrue();
+        }
+        PortalRecord removed = registry.allRecords().get(0);
+        assertThat(registry.unregister(removed.id())).isEqualTo(removed);
+        registry.close();
+
+        try (var files = Files.list(temporaryDirectory)) {
+            assertThat(files.map(path -> path.getFileName().toString()).toList()).containsExactly("portals.json");
+        }
+        PortalRegistry reloaded = new PortalRegistry(temporaryDirectory.toFile(), failures::add);
+        reloaded.load();
+        assertThat(reloaded.portalCount()).isEqualTo(499);
+        assertThat(reloaded.get(removed.id())).isNull();
+        reloaded.close();
+        assertThat(failures).isEmpty();
     }
 
     @Test
@@ -112,13 +148,8 @@ class PortalRegistryTest {
 
         assertThat(registry.portalCount()).isEqualTo(1);
         assertThat(failures).singleElement().satisfies(failure ->
-                assertThat(failure).hasMessageContaining("Skipped 1 unreadable portal record"));
-        try (var files = Files.list(temporaryDirectory)) {
-            List<Path> backups = files.filter(path -> path.getFileName().toString().startsWith("portals.json.unreadable-"))
-                    .toList();
-            assertThat(backups).singleElement().satisfies(backup ->
-                    assertThat(Files.readString(backup, StandardCharsets.UTF_8)).isEqualTo(store.toString()));
-        }
+                assertThat(failure).hasMessageContaining("Skipped 1 unreadable and 0 duplicate or overlapping"));
+        assertThat(Files.readString(skippedBackup(), StandardCharsets.UTF_8)).isEqualTo(store.toString());
         registry.close();
     }
 
@@ -171,6 +202,15 @@ class PortalRegistryTest {
         reloaded.load();
         assertThat(reloaded.get(legacy.id()).frameMaterialSnapshot()).containsOnly(Material.GRASS_BLOCK);
         reloaded.close();
+    }
+
+    private Path skippedBackup() throws IOException {
+        try (var files = Files.list(temporaryDirectory)) {
+            List<Path> backups = files.filter(path -> path.getFileName().toString().startsWith("portals.json.skipped-"))
+                    .toList();
+            assertThat(backups).hasSize(1);
+            return backups.get(0);
+        }
     }
 
     private PortalRecord record() {

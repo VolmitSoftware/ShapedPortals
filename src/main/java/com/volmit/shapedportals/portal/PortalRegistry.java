@@ -1,5 +1,6 @@
 package com.volmit.shapedportals.portal;
 
+import art.arcane.volmlib.util.io.AtomicFileIO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -13,7 +14,6 @@ import org.bukkit.block.Block;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -44,6 +44,7 @@ public final class PortalRegistry implements AutoCloseable {
     private final Map<BlockKey, Set<UUID>> affectedIndex = new ConcurrentHashMap<>();
     private final Map<ChunkKey, Set<UUID>> chunkIndex = new ConcurrentHashMap<>();
     private final AtomicBoolean persistenceEnabled = new AtomicBoolean();
+    private final AtomicBoolean savePending = new AtomicBoolean();
     private final AtomicBoolean closed = new AtomicBoolean();
 
     public PortalRegistry(File dataFolder, Consumer<Throwable> failureHandler) {
@@ -81,23 +82,22 @@ public final class PortalRegistry implements AutoCloseable {
             throw new IOException("Unsupported or incomplete portal store");
         }
         int unreadable = 0;
+        int overlapping = 0;
         for (JsonElement element : portals.getAsJsonArray()) {
             PortalRecord record = decode(element);
             if (record == null) {
                 unreadable++;
-                continue;
-            }
-            if (!register(record, false)) {
-                throw new IOException("Portal store contains duplicate or overlapping records");
+            } else if (!register(record, false)) {
+                overlapping++;
             }
         }
-        if (unreadable > 0) {
+        if (unreadable > 0 || overlapping > 0) {
             Path backup = storeFile.toPath().resolveSibling(
-                    storeFile.getName() + ".unreadable-" + System.currentTimeMillis() + ".bak");
+                    storeFile.getName() + ".skipped-" + System.currentTimeMillis() + ".bak");
             Files.copy(storeFile.toPath(), backup, StandardCopyOption.REPLACE_EXISTING);
-            failureHandler.accept(new IOException("Skipped " + unreadable
-                    + " unreadable portal record(s), for example a frame material this server no longer has. "
-                    + "The original store was copied to " + backup.getFileName()));
+            failureHandler.accept(new IOException("Skipped " + unreadable + " unreadable and " + overlapping
+                    + " duplicate or overlapping portal record(s). The original store was copied to "
+                    + backup.getFileName()));
         }
         persistenceEnabled.set(true);
     }
@@ -227,8 +227,9 @@ public final class PortalRegistry implements AutoCloseable {
             if (!persistenceEnabled.get() || closed.get()) {
                 return;
             }
-            List<PortalRecord> snapshot = new ArrayList<>(records.values());
-            persistenceExecutor.execute(() -> writeSnapshot(snapshot));
+            if (savePending.compareAndSet(false, true)) {
+                persistenceExecutor.execute(this::writePending);
+            }
         }
     }
 
@@ -240,8 +241,7 @@ public final class PortalRegistry implements AutoCloseable {
                     return;
                 }
                 if (persistenceEnabled.get()) {
-                    List<PortalRecord> snapshot = new ArrayList<>(records.values());
-                    persistenceExecutor.execute(() -> writeSnapshot(snapshot));
+                    persistenceExecutor.execute(this::writePending);
                 }
                 persistenceExecutor.shutdown();
             }
@@ -272,23 +272,16 @@ public final class PortalRegistry implements AutoCloseable {
         });
     }
 
-    private void writeSnapshot(List<PortalRecord> snapshot) {
+    private void writePending() {
+        savePending.set(false);
         try {
-            Files.createDirectories(storeFile.toPath().getParent());
+            List<PortalRecord> snapshot = new ArrayList<>(records.values());
             String serialized = gson.toJson(new PortalStore(PortalRecord.CURRENT_SCHEMA_VERSION, snapshot));
-            byte[] encoded = serialized.getBytes(StandardCharsets.UTF_8);
             // Writing past the load limit would produce a store the next startup refuses.
-            if (encoded.length > MAXIMUM_STORE_BYTES) {
+            if (serialized.getBytes(StandardCharsets.UTF_8).length > MAXIMUM_STORE_BYTES) {
                 throw new IOException("Portal store would exceed the 128 MiB safety limit; the previous store was kept");
             }
-            Path target = storeFile.toPath();
-            Path temporary = target.resolveSibling(target.getFileName() + ".tmp");
-            Files.write(temporary, encoded);
-            try {
-                Files.move(temporary, target, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
-            } catch (AtomicMoveNotSupportedException exception) {
-                Files.move(temporary, target, StandardCopyOption.REPLACE_EXISTING);
-            }
+            AtomicFileIO.writeString(storeFile.toPath(), serialized);
         } catch (Throwable exception) {
             failureHandler.accept(exception);
         }

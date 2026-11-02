@@ -329,7 +329,7 @@ public final class ShapedPortals extends JavaPlugin implements ReloadAware {
         try {
             preparedConfig = configService.prepareFromDisk();
         } catch (IOException exception) {
-            getLogger().severe("config.toml could not be loaded. Portal creation is paused and existing"
+            getLogger().severe("shapedportals.toml could not be loaded. Portal creation is paused and existing"
                     + " portals are maintained with default settings until the file is fixed; the file was not changed. "
                     + rootCause(exception));
             preparedConfig = configService.creationPausedDefaults();

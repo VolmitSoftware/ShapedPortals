@@ -31,7 +31,7 @@ class ConfigRepositoryTest {
         assertThat(reloaded.runtime().metricsEnabled()).isFalse();
         assertThat(initial.runtime().updateNotifications()).isTrue();
         assertThat(reloaded.runtime().updateNotifications()).isFalse();
-        assertThat(Files.readString(temporaryDirectory.resolve("config.toml")))
+        assertThat(Files.readString(temporaryDirectory.resolve("shapedportals.toml")))
                 .contains("maximumInteriorBlocks = 512")
                 .contains("notifyOperators = true")
                 .contains("updateNotifications = false")
@@ -47,7 +47,7 @@ class ConfigRepositoryTest {
 
     @Test
     void malformedConfigIsPreserved() throws IOException {
-        Path file = temporaryDirectory.resolve("config.toml");
+        Path file = temporaryDirectory.resolve("shapedportals.toml");
         String malformed = "[portal\nmaximumInteriorBlocks = nope";
         Files.writeString(file, malformed, StandardCharsets.UTF_8);
         ConfigRepository repository = new ConfigRepository(temporaryDirectory.toFile());

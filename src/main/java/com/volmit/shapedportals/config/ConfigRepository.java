@@ -18,7 +18,7 @@ public final class ConfigRepository {
 
     public ConfigRepository(File dataFolder) {
         this.dataFolder = dataFolder;
-        this.configFile = new File(dataFolder, "config.toml");
+        this.configFile = new File(dataFolder, "shapedportals.toml");
     }
 
     public synchronized PreparedConfig load() throws IOException {
@@ -96,7 +96,7 @@ public final class ConfigRepository {
     }
 
     /**
-     * {@code diskContent} is the config.toml text this configuration was accepted from, or null when
+     * {@code diskContent} is the shapedportals.toml text this configuration was accepted from, or null when
      * the file on disk was never accepted and must not be overwritten by in-game edits.
      */
     public record PreparedConfig(ShapedPortalsConfig source, RuntimeConfig runtime, String serialized,

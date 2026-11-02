@@ -54,7 +54,7 @@ final class RuntimeJarTest {
         Class<?> repositoryType = loader.loadClass(PLUGIN_PACKAGE + "config.ConfigRepository");
         Object repository = repositoryType.getConstructor(File.class).newInstance(temporaryDirectory.toFile());
         repositoryType.getMethod("load").invoke(repository);
-        Path configFile = temporaryDirectory.resolve("config.toml");
+        Path configFile = temporaryDirectory.resolve("shapedportals.toml");
         String saved = Files.readString(configFile).replace("maximumInteriorBlocks = 256", "maximumInteriorBlocks = 512");
         Files.writeString(configFile, saved);
         Object prepared = repositoryType.getMethod("load").invoke(repository);

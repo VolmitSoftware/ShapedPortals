@@ -131,7 +131,7 @@ final class ShapedDebugReport {
     private static void appendFiles(StringBuilder report, ShapedDebugSnapshot snapshot) {
         section(report, "ShapedPortals files");
         report.append(DebugDumpReport.describeFiles(snapshot.dataDirectory(), List.of(
-                Path.of("config.toml"),
+                Path.of("shapedportals.toml"),
                 Path.of("portals.json"),
                 Path.of("languages", snapshot.activeLocale() + ".toml"),
                 Path.of("languages", "language-preferences.properties")

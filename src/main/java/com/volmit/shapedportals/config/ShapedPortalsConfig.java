@@ -1,18 +1,28 @@
 package com.volmit.shapedportals.config;
 
+import art.arcane.volmlib.util.config.ConfigDescription;
 import art.arcane.volmlib.util.config.ConfigDoc;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@ConfigDescription("Edits apply automatically while hot reload is on.")
 public final class ShapedPortalsConfig {
+    @ConfigDoc("Portal creation switch, language, permission, and notifications.")
     public General general = new General();
+    @ConfigDoc("Anonymous usage statistics.")
     public Metrics metrics = new Metrics();
+    @ConfigDoc("Nether and End portal creation rules.")
     public Portal portal = new Portal();
+    @ConfigDoc("Sounds played when a portal is created.")
     public Effects effects = new Effects();
+    @ConfigDoc("Automatic reloading of edited config and language files.")
     public HotReload hotReload = new HotReload();
+    @ConfigDoc("Repair checks for existing portals.")
     public Integrity integrity = new Integrity();
+    @ConfigDoc("Startup banner, command feedback, and player notices.")
     public Presentation presentation = new Presentation();
+    @ConfigDoc("Diagnostic reports.")
     public Debug debug = new Debug();
 
     public ShapedPortalsConfig copy() {
@@ -29,15 +39,15 @@ public final class ShapedPortalsConfig {
     }
 
     public static final class General {
-        @ConfigDoc(value = "Master switch for shaped portal creation.", impact = "Existing managed portals continue to be maintained while creation is disabled.")
+        @ConfigDoc(value = "Allow new shaped portals to be created.", impact = "Existing portals keep working and are still maintained when off.")
         public boolean enabled = true;
-        @ConfigDoc(value = "Active locale stored as the directly editable languages/<locale>.toml file.", impact = "Repository locales install when selected and merge upstream changes on startup or /shapedportals language update while keeping local edits; custom files are listed as found, and missing entries use code-owned English.")
+        @ConfigDoc(value = "Server default language: en_US, a repository locale, or the name of any languages/<id>.toml file.", impact = "Repository languages download when selected and update at startup without losing your edits; missing messages use English.")
         public String language = "en_US";
-        @ConfigDoc(value = "Require shapedportals.create from players creating Nether or End portals.", impact = "Non-player Nether ignition follows the configured ignition causes.")
+        @ConfigDoc(value = "Require shapedportals.create to create Nether or End portals.", impact = "Portals lit without a player are controlled by portal.ignitionCauses instead.")
         public boolean requireCreatePermission = true;
-        @ConfigDoc(value = "Tell players why a recognized shaped portal was not created.", impact = "Incomplete, duplicate, and vanilla-handled attempts remain quiet.")
+        @ConfigDoc(value = "Tell players why a shaped portal was not created.", impact = "Unrelated fires, incomplete End frames, and vanilla portals stay quiet.")
         public boolean failureFeedback = true;
-        @ConfigDoc(value = "Notify operators and players with shapedportals.update about newer GitHub releases on join.", impact = "Checks run asynchronously once per hour; disabling stops checks and notices. No updates are downloaded or installed.")
+        @ConfigDoc(value = "Tell operators and players with shapedportals.update about new GitHub releases when they join.", impact = "Checks at startup and on /volmit plugins updates, and never downloads anything; off stops the checks.")
         public boolean updateNotifications = true;
 
         private General copy() {
@@ -52,7 +62,7 @@ public final class ShapedPortalsConfig {
     }
 
     public static final class Metrics {
-        @ConfigDoc(value = "Submit anonymous ShapedPortals usage statistics to bStats.", impact = "The global plugins/bStats/config.yml opt-out remains authoritative; changes apply immediately without a restart.")
+        @ConfigDoc(value = "Send anonymous usage statistics to bStats.", impact = "Applies immediately; the global opt-out in plugins/bStats/config.yml still wins.")
         public boolean enabled = true;
 
         private Metrics copy() {
@@ -63,37 +73,37 @@ public final class ShapedPortalsConfig {
     }
 
     public static final class Portal {
-        @ConfigDoc(value = "Minimum connected interior cells in a shaped portal.", impact = "A value of two rejects ambiguous one-cell cavities.")
+        @ConfigDoc(value = "Smallest Nether portal interior, in blocks (1 to 4096).", impact = "A value of 2 rejects single-block openings, whose axis is ambiguous.")
         public int minimumInteriorBlocks = 2;
-        @ConfigDoc(value = "Maximum connected interior cells in a shaped portal.", impact = "The hard safety ceiling is 4096 cells.")
+        @ConfigDoc("Largest Nether portal interior, in blocks, from the minimum up to 4096.")
         public int maximumInteriorBlocks = 256;
-        @ConfigDoc(value = "Maximum interior width in blocks.", impact = "Bounds long open scans and cross-chunk work.")
+        @ConfigDoc(value = "Widest Nether portal interior, in blocks (1 to 512).", impact = "Also limits how far the frame scan reaches.")
         public int maximumWidth = 64;
-        @ConfigDoc(value = "Maximum interior height in blocks.", impact = "Bounds vertical scans within world height.")
+        @ConfigDoc(value = "Tallest Nether portal interior, in blocks (1 to 512).", impact = "Also limits how far the frame scan reaches.")
         public int maximumHeight = 64;
-        @ConfigDoc(value = "Blocks accepted when creating a new closed portal frame.", impact = "Existing portals keep the frame-material snapshot recorded when they were created.")
+        @ConfigDoc(value = "Blocks that can form a new Nether portal frame.", impact = "Changes do not affect existing portals.")
         public List<String> frameMaterials = new ArrayList<>(List.of("OBSIDIAN", "CRYING_OBSIDIAN"));
-        @ConfigDoc(value = "Blocks that may be replaced inside a newly created portal.", impact = "NETHER_PORTAL cannot be added because vanilla creation takes priority.")
+        @ConfigDoc(value = "Blocks a Nether portal can fill when created or repaired.", impact = "Cannot include NETHER_PORTAL or any frame material.")
         public List<String> interiorMaterials = new ArrayList<>(List.of("AIR", "CAVE_AIR", "VOID_AIR", "FIRE", "SOUL_FIRE"));
-        @ConfigDoc(value = "BlockIgniteEvent causes allowed to start a shaped portal, plus PLACED_FIRE for direct fire placement and DISPENSER for dispensed fire charges and flint and steel.", impact = "SPREAD, LAVA, and DISPENSER are excluded by default. Dispensed ignition has no player to check for shapedportals.create.")
+        @ConfigDoc(value = "What can light a Nether portal: any BlockIgniteEvent cause, PLACED_FIRE for placed fire, or DISPENSER for dispensers.", impact = "Portals lit by a dispenser skip the shapedportals.create check.")
         public List<String> ignitionCauses = new ArrayList<>(List.of("FLINT_AND_STEEL", "FIREBALL", "PLACED_FIRE"));
-        @ConfigDoc(value = "Optional world allow-list by world name.", impact = "An empty list allows every world not denied below.")
+        @ConfigDoc(value = "Worlds where portals can be created, ignoring case.", impact = "An empty list allows every world not in deniedWorlds.")
         public List<String> allowedWorlds = new ArrayList<>();
-        @ConfigDoc(value = "World deny-list by world name.", impact = "Denied worlds always win over the allow-list.")
+        @ConfigDoc(value = "Worlds where portals cannot be created, ignoring case.", impact = "Takes priority over allowedWorlds.")
         public List<String> deniedWorlds = new ArrayList<>();
-        @ConfigDoc(value = "Cooldown for duplicate ignition events at the same block.", impact = "Prevents BlockIgniteEvent and BlockPlaceEvent from double-processing one action.")
+        @ConfigDoc(value = "How long to ignore repeat ignitions at the same block, in milliseconds (0 to 60000).", impact = "Stops one action that fires two events from being handled twice.")
         public long deduplicationMillis = 1500L;
-        @ConfigDoc(value = "Create managed non-vanilla End portals when the final eye is inserted.", impact = "Vanilla 3x3 End portals remain owned by the server.")
+        @ConfigDoc(value = "Create shaped End portals when the last eye completes a frame.", impact = "Vanilla 3x3 End portals are left to the server.")
         public boolean endPortalCreation = true;
-        @ConfigDoc(value = "Minimum connected interior cells in a shaped End portal.", impact = "Accepted range is 1 through 4096 cells.")
+        @ConfigDoc("Smallest End portal interior, in blocks (1 to 4096).")
         public int endMinimumInteriorBlocks = 1;
-        @ConfigDoc(value = "Maximum connected interior cells in a shaped End portal.", impact = "The hard safety ceiling is 4096 cells.")
+        @ConfigDoc("Largest End portal interior, in blocks, from the minimum up to 4096.")
         public int endMaximumInteriorBlocks = 256;
-        @ConfigDoc(value = "Maximum horizontal X span of a shaped End portal interior.", impact = "Accepted range is 1 through 512 blocks.")
+        @ConfigDoc("Longest End portal interior along X, in blocks (1 to 512).")
         public int endMaximumWidth = 64;
-        @ConfigDoc(value = "Maximum horizontal Z span of a shaped End portal interior.", impact = "Accepted range is 1 through 512 blocks.")
+        @ConfigDoc("Longest End portal interior along Z, in blocks (1 to 512).")
         public int endMaximumLength = 64;
-        @ConfigDoc(value = "Blocks that may be replaced inside a newly created shaped End portal.", impact = "END_PORTAL is always recognized so vanilla portals can be left untouched.")
+        @ConfigDoc(value = "Blocks an End portal can fill when created or repaired.", impact = "Cannot include END_PORTAL, END_PORTAL_FRAME, or NETHER_PORTAL.")
         public List<String> endInteriorMaterials = new ArrayList<>(List.of("AIR", "CAVE_AIR", "VOID_AIR"));
 
         private Portal copy() {
@@ -119,21 +129,21 @@ public final class ShapedPortalsConfig {
     }
 
     public static final class Effects {
-        @ConfigDoc(value = "Play a sound after a shaped Nether portal is successfully committed.", impact = "Cancelled or failed attempts stay silent.")
+        @ConfigDoc("Play a sound when a shaped Nether portal is created.")
         public boolean creationSound = true;
-        @ConfigDoc(value = "Bukkit sound used for successful Nether portal creation.", impact = "Namespaced keys and legacy enum names are accepted.")
+        @ConfigDoc("Sound for a new Nether portal, as a namespaced key or Bukkit sound name.")
         public String creationSoundType = "minecraft:block.portal.trigger";
-        @ConfigDoc(value = "Nether portal creation sound volume.", impact = "Accepted range is 0.0 through 4.0.")
+        @ConfigDoc("Nether portal sound volume (0.0 to 4.0).")
         public float creationSoundVolume = 0.6F;
-        @ConfigDoc(value = "Nether portal creation sound pitch.", impact = "Accepted range is 0.5 through 2.0.")
+        @ConfigDoc("Nether portal sound pitch (0.5 to 2.0).")
         public float creationSoundPitch = 0.67F;
-        @ConfigDoc(value = "Play a sound after a shaped End portal is successfully committed.", impact = "Vanilla-created portals remain silent to ShapedPortals.")
+        @ConfigDoc("Play a sound when a shaped End portal is created.")
         public boolean endCreationSound = true;
-        @ConfigDoc(value = "Bukkit sound used for successful End portal creation.", impact = "Namespaced keys and legacy enum names are accepted.")
+        @ConfigDoc("Sound for a new End portal, as a namespaced key or Bukkit sound name.")
         public String endCreationSoundType = "minecraft:block.end_portal.spawn";
-        @ConfigDoc(value = "End portal creation sound volume.", impact = "Accepted range is 0.0 through 4.0.")
+        @ConfigDoc("End portal sound volume (0.0 to 4.0).")
         public float endCreationSoundVolume = 0.8F;
-        @ConfigDoc(value = "End portal creation sound pitch.", impact = "Accepted range is 0.5 through 2.0.")
+        @ConfigDoc("End portal sound pitch (0.5 to 2.0).")
         public float endCreationSoundPitch = 1.0F;
 
         private Effects copy() {
@@ -151,13 +161,13 @@ public final class ShapedPortalsConfig {
     }
 
     public static final class HotReload {
-        @ConfigDoc(value = "Apply stable config and language file changes automatically.", impact = "Invalid edits keep the last known good runtime snapshot.")
+        @ConfigDoc(value = "Reload config and language files automatically when they change.", impact = "Invalid edits are rejected and the last working settings stay active.")
         public boolean enabled = true;
-        @ConfigDoc(value = "Filesystem watcher poll interval in milliseconds.", impact = "Accepted range is 250 through 60000 milliseconds.")
+        @ConfigDoc("How often to check for file changes, in milliseconds (250 to 60000).")
         public long pollIntervalMillis = 1000L;
-        @ConfigDoc(value = "Quiet period used to coalesce editor save bursts.", impact = "Accepted range is 250 through 60000 milliseconds.")
+        @ConfigDoc("How long a changed file must stay unchanged before it loads, in milliseconds (250 to 60000).")
         public long cooldownMillis = 1500L;
-        @ConfigDoc(value = "Notify online operators when automatic file reload succeeds or fails.", impact = "Uses a cooperative action-bar notice and never sends chat spam.")
+        @ConfigDoc(value = "Tell online players with shapedportals.config when a reload succeeds or fails.", impact = "Shown on the action bar, not in chat.")
         public boolean notifyOperators = true;
 
         private HotReload copy() {
@@ -171,11 +181,11 @@ public final class ShapedPortalsConfig {
     }
 
     public static final class Integrity {
-        @ConfigDoc(value = "Maintain registered shaped portals after vanilla physics and external block edits.", impact = "Disabling this makes non-rectangular native portal blocks best-effort only.")
+        @ConfigDoc(value = "Keep existing portals intact after physics updates and outside block changes.", impact = "When off, non-rectangular portals may break.")
         public boolean enabled = true;
-        @ConfigDoc(value = "Ticks between bounded managed-portal integrity sweeps.", impact = "Accepted range is 20 through 72000 ticks.")
+        @ConfigDoc("Ticks between portal checks (20 to 72000).")
         public long checkIntervalTicks = 200L;
-        @ConfigDoc(value = "Maximum registered portals queued for validation per sweep.", impact = "Accepted range is 1 through 1024 portals.")
+        @ConfigDoc("Most portals checked each cycle (1 to 1024).")
         public int maximumChecksPerCycle = 32;
 
         private Integrity copy() {
@@ -188,25 +198,25 @@ public final class ShapedPortalsConfig {
     }
 
     public static final class Presentation {
-        @ConfigDoc(value = "Print the ShapedPortals startup splash after services are ready.", impact = "The splash is console-only and is not replayed by reloads.")
+        @ConfigDoc("Print the startup banner in the console.")
         public boolean splashScreen = true;
-        @ConfigDoc(value = "Play short success and failure sounds for player command feedback.", impact = "Console command output is unaffected.")
+        @ConfigDoc("Play success and failure sounds for player commands.")
         public boolean commandSounds = true;
-        @ConfigDoc(value = "Optional transient overlays added to normal command chat output.", impact = "Accepted values are ACTION_BAR, TITLE, and BOSS_BAR. Chat output is always retained.")
+        @ConfigDoc(value = "Extra places to show command results: ACTION_BAR, TITLE, BOSS_BAR.", impact = "Results always appear in chat too.")
         public List<String> commandOverlays = new ArrayList<>(List.of("ACTION_BAR"));
-        @ConfigDoc(value = "Channels used for portal creation and rejection notices.", impact = "Accepted values are CHAT, ACTION_BAR, TITLE, and BOSS_BAR. An empty list disables portal notices.")
+        @ConfigDoc(value = "Where to show why a portal was not created: CHAT, ACTION_BAR, TITLE, BOSS_BAR.", impact = "An empty list hides these notices.")
         public List<String> portalNotices = new ArrayList<>(List.of("ACTION_BAR"));
-        @ConfigDoc(value = "Channels used after shaped Nether portal creation.", impact = "Accepted values are CHAT, ACTION_BAR, TITLE, and BOSS_BAR. An empty list disables the message.")
+        @ConfigDoc(value = "Where to confirm a new Nether portal: CHAT, ACTION_BAR, TITLE, BOSS_BAR.", impact = "An empty list hides the message.")
         public List<String> netherCreationNotices = new ArrayList<>(List.of("ACTION_BAR"));
-        @ConfigDoc(value = "Channels used after shaped End portal creation.", impact = "Accepted values are CHAT, ACTION_BAR, TITLE, and BOSS_BAR. An empty list disables the message.")
+        @ConfigDoc(value = "Where to confirm a new End portal: CHAT, ACTION_BAR, TITLE, BOSS_BAR.", impact = "An empty list hides the message.")
         public List<String> endCreationNotices = new ArrayList<>(List.of("ACTION_BAR"));
-        @ConfigDoc(value = "Lifetime of transient action-bar, title-claim, and boss-bar feedback.", impact = "Accepted range is 10 through 600 ticks.")
+        @ConfigDoc("How long action bar and boss bar messages stay up, in ticks (10 to 600).")
         public long overlayDurationTicks = 50L;
-        @ConfigDoc(value = "Title fade-in duration in ticks.", impact = "Accepted range is 0 through 200 ticks.")
+        @ConfigDoc("Title fade-in time in ticks (0 to 200).")
         public int titleFadeInTicks = 5;
-        @ConfigDoc(value = "Title fully-visible duration in ticks.", impact = "Accepted range is 1 through 600 ticks.")
+        @ConfigDoc("How long titles stay fully visible, in ticks (1 to 600).")
         public int titleStayTicks = 30;
-        @ConfigDoc(value = "Title fade-out duration in ticks.", impact = "Accepted range is 0 through 200 ticks.")
+        @ConfigDoc("Title fade-out time in ticks (0 to 200).")
         public int titleFadeOutTicks = 10;
 
         private Presentation copy() {
@@ -226,7 +236,7 @@ public final class ShapedPortalsConfig {
     }
 
     public static final class Debug {
-        @ConfigDoc(value = "Upload /shapedportals debug dump reports to the public mclo.gs service after saving them locally.", impact = "Enabled by default. Disabling this keeps reports local; ShapedPortals does not retain the service deletion credential for public uploads.")
+        @ConfigDoc(value = "Upload /shapedportals debug dump reports to the public mclo.gs service.", impact = "Reports are always saved locally; ShapedPortals does not keep the key needed to delete an upload.")
         public boolean uploadEnabled = true;
 
         private Debug copy() {

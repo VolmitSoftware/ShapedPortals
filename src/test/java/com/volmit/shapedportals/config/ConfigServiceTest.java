@@ -23,7 +23,7 @@ class ConfigServiceTest {
         service.update(config -> config.portal.maximumInteriorBlocks = 300);
         service.update(config -> config.portal.maximumInteriorBlocks = 400);
 
-        assertThat(Files.readString(temporaryDirectory.resolve("config.toml"), StandardCharsets.UTF_8))
+        assertThat(Files.readString(temporaryDirectory.resolve("shapedportals.toml"), StandardCharsets.UTF_8))
                 .contains("maximumInteriorBlocks = 400");
     }
 
@@ -31,7 +31,7 @@ class ConfigServiceTest {
     void inGameEditsDoNotOverwriteUnappliedFileChanges() throws IOException {
         ConfigService service = new ConfigService(temporaryDirectory.toFile());
         service.install(service.prepareFromDisk());
-        Path file = temporaryDirectory.resolve("config.toml");
+        Path file = temporaryDirectory.resolve("shapedportals.toml");
         String operatorEdit = Files.readString(file, StandardCharsets.UTF_8) + "\n# operator note\n";
         Files.writeString(file, operatorEdit, StandardCharsets.UTF_8);
 
@@ -43,7 +43,7 @@ class ConfigServiceTest {
 
     @Test
     void unreadableFileFallsBackWithCreationPausedAndIsNeverOverwritten() throws IOException {
-        Path file = temporaryDirectory.resolve("config.toml");
+        Path file = temporaryDirectory.resolve("shapedportals.toml");
         String broken = "[portal\nmaximumInteriorBlocks = ";
         Files.writeString(file, broken, StandardCharsets.UTF_8);
         ConfigService service = new ConfigService(temporaryDirectory.toFile());

@@ -34,7 +34,7 @@ class ConfigHotReloadServiceTest {
 
     @Test
     void watchesConfigurationAndDirectLocaleFilesIncludingDeletedPersonalFiles() {
-        File config = temporaryDirectory.resolve("config.toml").toFile();
+        File config = temporaryDirectory.resolve("shapedportals.toml").toFile();
         File active = temporaryDirectory.resolve("languages/es_ES.toml").toFile();
         File inactive = temporaryDirectory.resolve("languages/fr_FR.toml").toFile();
         LanguageService language = new LanguageService(temporaryDirectory.toFile(), Logger.getAnonymousLogger());
@@ -69,7 +69,7 @@ class ConfigHotReloadServiceTest {
         ConfigService config = mock(ConfigService.class);
         RuntimeConfig runtime = mock(RuntimeConfig.class);
         when(config.runtime()).thenReturn(runtime);
-        File configuration = write("config.toml", "enabled = true\n");
+        File configuration = write("shapedportals.toml", "enabled = true\n");
         when(config.configFile()).thenReturn(configuration);
         when(config.dataFolder()).thenReturn(temporaryDirectory.toFile());
         when(runtime.hotReloadEnabled()).thenReturn(true);
@@ -148,7 +148,7 @@ class ConfigHotReloadServiceTest {
         ConfigService config = mock(ConfigService.class);
         RuntimeConfig runtime = mock(RuntimeConfig.class);
         when(config.runtime()).thenReturn(runtime);
-        when(config.configFile()).thenReturn(write("config.toml", "enabled = true\n"));
+        when(config.configFile()).thenReturn(write("shapedportals.toml", "enabled = true\n"));
         when(config.dataFolder()).thenReturn(temporaryDirectory.toFile());
         when(runtime.hotReloadEnabled()).thenReturn(true);
         when(runtime.hotReloadPollMillis()).thenReturn(250L);
@@ -186,7 +186,7 @@ class ConfigHotReloadServiceTest {
 
     @Test
     void selfWriteSnapshotDoesNotStartOrAnnounceAReload() throws IOException {
-        File config = write("config.toml", "language = \"en_US\"\n");
+        File config = write("shapedportals.toml", "language = \"en_US\"\n");
         File active = write("languages/en_US.toml", "prefix = \"English\"\n");
         ConfigHotloadEngine engine = engine(config, active);
         try {
@@ -215,7 +215,7 @@ class ConfigHotReloadServiceTest {
 
     @Test
     void externalBatchReloadsOnce() throws IOException {
-        File config = write("config.toml", "language = \"en_US\"\n");
+        File config = write("shapedportals.toml", "language = \"en_US\"\n");
         File active = write("languages/en_US.toml", "prefix = \"English\"\n");
         ConfigHotloadEngine engine = engine(config, active);
         try {

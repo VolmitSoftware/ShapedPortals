@@ -51,7 +51,7 @@ public final class ConfigService {
         }
         String accepted = current.get().diskContent();
         if (accepted == null || !ConfigFileSupport.normalize(disk).equals(ConfigFileSupport.normalize(accepted))) {
-            throw new IOException("config.toml has changes that are not applied yet; fix or wait for the file to reload, then edit again");
+            throw new IOException("shapedportals.toml has changes that are not applied yet; fix or wait for the file to reload, then edit again");
         }
     }
 

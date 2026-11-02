@@ -2,72 +2,74 @@
 #
 # === Dosyayı düzenleme ===
 # plugins/ShapedPortals/languages/tr_TR.toml
-# Bu dosyayı doğrudan düzenleyebilirsiniz. Yerel değişiklikler korunur; eksik veya geçersiz girdiler yerleşik İngilizce metni kullanır.
+# Bu dosyayı doğrudan düzenleyebilirsiniz. Yerel değişiklikler korunur; eksik veya geçersiz değerlerin yerine yerleşik İngilizce metin kullanılır.
 # /shapedportals language server edit tr_TR
 #
 # === Önek ===
-# {prefix}  runtime.prefix içindeki biçimlendirilmiş eklenti adı; ayırıcı mesajın içindedir. İkisini de gizlemek için {prefix}&r &7› &7 bölümünü kaldırın.
+# {prefix}  Biçimlendirilmiş eklenti adı runtime.prefix değerinden gelir. Sohbet şablonları gri › ayırıcısını ekler.
+# Adı ve ayırıcıyı gizlemek için mesajın başındaki {prefix}&r &7› &7 bölümünü kaldırın.
 #
 # === Biçimlendirme ===
-# Renkler: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B ve [RRGGBB]. Özel biçimlendirme için MiniMessage da kullanılabilir.
+# Renkler ve stiller: &0-&f, &k-&r. RGB renkleri: &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B ve [RRGGBB]. Özel biçimlendirme için MiniMessage da kullanılabilir.
 # & veya [ karakterini olduğu gibi göstermek için önüne ters eğik çizgi koyun.
 #
 # === Değişkenler ===
-# Değişken adlarını değiştirmeyin ve yalnızca ilgili iletinin değişkenlerini kullanın.
-#   {added}  Dil güncellemesiyle eklenen iletiler
-#   {after}  Değişim sonrası Değer
-#   {argument}  beklenmeyen argüman
-#   {attempts}  oluşturma denemeleri
-#   {axis}  eksen
-#   {before}  Değişim öncesinde değer
-#   {blocks}  portal hücreleri
-#   {category}  kategori
-#   {cells}  tüm hücreler
-#   {command}  komut yolu
-#   {count}  eşleşen giriş sayısı sayısı
-#   {created}  oluşturulan sayı veya zaman
-#   {creator}  oluşturan
-#   {enabled}  oluşturma durumu
-#   {group}  İzin veya oyuncu grubu
-#   {hot_reload}  yeniden yükleme durumu
-#   {id}  kısa ID
+# Değişken adlarını değiştirmeyin ve her mesajda yalnızca o mesaja ait değişkenleri kullanın.
+#   {added}  Dil güncellemesiyle eklenen mesajlar
+#   {after}  Değişiklik sonrasındaki değer
+#   {argument}  Beklenmeyen komut argümanı
+#   {attempts}  Geçit oluşturma denemeleri
+#   {axis}  Geçit ekseni
+#   {before}  Değişiklik öncesindeki değer
+#   {blocks}  Geçidin iç hücreleri
+#   {category}  Düzenleyici kategorisi
+#   {cells}  Yönetilen tüm hücreler
+#   {command}  Komut yolu
+#   {count}  Mesaj sayısı
+#   {created}  Oluşturulan sayısı veya oluşturma zamanı
+#   {creator}  Oluşturanın kimliği
+#   {enabled}  Geçit oluşturma durumu
+#   {group}  Mesaj kategorisinin adı
+#   {hot_reload}  Canlı yeniden yükleme durumu
+#   {id}  Kısa geçit kimliği
 #   {kept}  Dil güncellemesinde korunan yerel düzenlemeler
-#   {key}  parametre anahtarı
-#   {language}  etkin dil
-#   {line}  Source line or line number
-#   {locale}  yerel ayar
-#   {matches}  eşleşen portallar
-#   {materials}  kaydedilmiş çerçeve malzemeleri
-#   {maximum}  Maksimum izin verilen değer
-#   {name}  dilin tam adı
-#   {new}  yeni değer
-#   {old}  önceki değer
-#   {parameter}  parametre adı
-#   {path}  yerel rapor yolu
-#   {permission}  gerekli izin
-#   {personal}  kişisel yerel ayar
-#   {portal}  tanımlayıcı
-#   {portals}  yönetilen sayı
-#   {prefix}  runtime.prefix içindeki biçimlendirilmiş eklenti adı; ayırıcı mesajın içindedir. İkisini de gizlemek için {prefix}&r &7› &7 bölümünü kaldırın.
-#   {reason}  hata nedeni
-#   {rejected}  reddedilen denemeler
-#   {scheduler}  zamanlayıcı
-#   {seconds}  saniye cinsinden onay süresi
-#   {section}  Düzenleyici bölümü
-#   {setting}  ayar adı
-#   {status}  seçim işareti
-#   {target}  Hedef oyuncu, varlık veya değer
-#   {type}  tür
-#   {updated}  Dil güncellemesiyle değiştirilen iletiler
-#   {url}  genel URL
-#   {uuid}  tam UUID
-#   {value}  geçerli, varsayılan veya ham değer
-#   {variables}  geçerli yer tutucular
-#   {version}  eklenti sürümü
-#   {world}  dünya
-#   {x}  çapa koordinatları
-#   {y}  çapa koordinatları
-#   {z}  çapa koordinatları
+#   {key}  Parametre anahtarı
+#   {language}  Etkin dil
+#   {line}  Mesaj satır numarası
+#   {locale}  Yerel ayar kimliği
+#   {matches}  Eşleşen geçit sayısı
+#   {materials}  Kaydedilmiş çerçeve malzemeleri
+#   {maximum}  İzin verilen en büyük değer
+#   {name}  Dilin tam adı
+#   {new}  Yeni değer
+#   {old}  Önceki değer
+#   {parameter}  Parametre adı
+#   {path}  Yerel rapor yolu
+#   {permission}  Gerekli izin
+#   {personal}  Sunucu varsayılanından farklıysa kişisel yerel ayar
+#   {portal}  Geçit tanımlayıcısı
+#   {portals}  Yönetilen geçit sayısı
+#   {prefix}  Genel runtime.prefix değeri; her mesajda isteğe bağlıdır
+#   {reason}  Hata nedeni
+#   {rejected}  Reddedilen oluşturma denemeleri
+#   {remaining}  Bir sonraki dil denetimine kalan süre
+#   {scheduler}  Zamanlayıcı uygulaması
+#   {seconds}  Onay süresi
+#   {section}  Dil düzenleyicisi bölümü
+#   {setting}  Ayar adı
+#   {status}  Seçim işareti
+#   {target}  Dil seçiminin hedefi
+#   {type}  Parametre türü veya geçit türü
+#   {updated}  Dil güncellemesiyle değiştirilen mesajlar
+#   {url}  Herkese açık rapor URL'si
+#   {uuid}  Geçidin tam UUID'si
+#   {value}  Geçerli, varsayılan veya ham değer
+#   {variables}  Seçili mesajda geçerli yer tutucular
+#   {version}  Eklenti sürümü
+#   {world}  Dünya adı
+#   {x}  Bağlantı noktası koordinatları
+#   {y}  Bağlantı noktası koordinatları
+#   {z}  Bağlantı noktası koordinatları
 
 [runtime]
 prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
@@ -77,112 +79,112 @@ player_only = "{prefix}&r &7› &7&cBu komut yalnızca bir oyuncu tarafından ku
 denied = "{prefix}&r &7› &7&cBunu yapmak için izniniz yok.&r"
 
 [runtime.hot_reload]
-success = "{prefix}&r &7› &7&7Yapılandırma&7 ve dil dosyası değişiklikleri uygulandı.&r"
-failed = "{prefix}&r &7› &7&cDosya değişiklikleri reddedildi; son geçerli ayarlar etkin kalmaya devam ediyor.&r"
+success = "{prefix}&r &7› &7Yapılandırma ve dil dosyası değişiklikleri &auygulandı&7.&r"
+failed = "{prefix}&r &7› &7&cDosya değişiklikleri reddedildi; bilinen son geçerli ayarlar etkin kalıyor.&r"
 
 [command.feedback]
 version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
 failed = "{prefix}&r &7› &7&cKomut tamamlanamadı. Ayrıntılar için konsola bakın.&r"
 
 [command.feedback.config]
-opened = "{prefix}&r &7› &7&7Eksiksiz&7 oyun içi yapılandırma düzenleyicisi açıldı.&r"
-saved = "{prefix}&r &7› &7&a{setting}&r &7değeri &f{old}&r &7yerine &f{new}&r &7olarak değiştirildi.&r"
-save_failed = "{prefix}&r &7› &7&c&f{setting}&r&c uygulanamadı: {reason}&r"
+opened = "{prefix}&r &7› &7Eksiksiz oyun içi yapılandırma düzenleyicisi &aaçıldı&7.&r"
+saved = "{prefix}&r &7› &7&f{setting}&r &adeğiştirildi&7: &f{old}&r &7yerine &f{new}&r&7.&r"
+save_failed = "{prefix}&r &7› &7&c&f{setting}&r&c ayarı uygulanamadı: {reason}&r"
 
 [command.feedback.debug]
-started = "{prefix}&r &7› &7&7Sunucu ve {prefix} tanı bilgileri toplanıyor…&r"
-busy = "{prefix}&r &7› &7&eBir {prefix} tanı raporu zaten oluşturuluyor.&r"
-saved = "{prefix}&r &7› &7&7Tanı&7 raporu &f{path}&r&7 konumuna kaydedildi.&r"
-uploaded = "{prefix}&r &7› &7&7Tanı&7 raporu yüklendi:&r &b&n{url}&r"
+started = "{prefix}&r &7› &7&7Sunucu ve {prefix} tanılama verileri toplanıyor…&r"
+busy = "{prefix}&r &7› &7&eBir {prefix} tanılama raporu zaten oluşturuluyor.&r"
+saved = "{prefix}&r &7› &7Tanılama raporu &f{path}&r&7 konumuna &akaydedildi&7.&r"
+uploaded = "{prefix}&r &7› &7Tanılama raporu &ayüklendi&7:&r &b&n{url}&r"
 link_hover = "&7Herkese açık mclo.gs raporunu açın.&r"
-upload_failed = "{prefix}&r &7› &7&eYerel rapor kaydedildi ancak mclo.gs yüklemesi başarısız oldu. Ayrıntılar için konsola bakın.&r"
-failed = "{prefix}&r &7› &7&cTanı raporu oluşturulamadı. Ayrıntılar için konsola bakın.&r"
+upload_failed = "{prefix}&r &7› &7&eYerel rapor kaydedildi ancak mclo.gs'ye yükleme başarısız oldu. Ayrıntılar için konsola bakın.&r"
+failed = "{prefix}&r &7› &7&cTanılama raporu oluşturulamadı. Ayrıntılar için konsola bakın.&r"
 
 [command.status]
-header = "{prefix}&r &7› &7çalışma durumu&r"
+header = "{prefix}&r &7› &7&7Çalışma zamanı&r"
 config = "{prefix}&r &7› &7&7Oluşturma:&r {enabled} &8|&r &7Dil:&r &f{language}&r &8|&r &7Canlı yeniden yükleme:&r {hot_reload}"
-portals = "{prefix}&r &7› &7&7Yönetilen portallar:&r &f{portals}&r &8|&r &7İç bloklar:&r &f{cells}&r"
+portals = "{prefix}&r &7› &7&7Yönetilen geçitler:&r &f{portals}&r &8|&r &7İç hücreler:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Denemeler:&r &f{attempts}&r &8|&r &7Oluşturulan:&r &a{created}&r &8|&r &7Reddedilen:&r &c{rejected}&r"
 compatibility = "{prefix}&r &7› &7&7Derleme:&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7Zamanlayıcı:&r &f{scheduler}&r"
 
 [command.description]
 version = "Yüklü {prefix} sürümünü göster"
-root = "{prefix} yardım ve yönetimi"
+root = "{prefix} yardımı ve yönetimi"
 config = "Eksiksiz oyun içi yapılandırma düzenleyicisini aç"
 language = "Kullanılabilir bir {prefix} dili seç"
 debug = "{prefix} tanı araçları"
 debug_dump = "Kapsamlı bir {prefix} tanı raporu oluştur"
-portals = "Yönetilen tüm portalları ve ışınlanma kısayollarını listele"
-teleport = "Yönetilen bir portalın yanına güvenle ışınlan veya belirtilmezse portalları listele"
-status = "Yönetilen portal ve deneme istatistiklerini göster"
+portals = "Yönetilen tüm geçitleri ve ışınlanma kısayollarını listele"
+teleport = "Yönetilen bir geçidin yanına güvenle ışınlan; geçit belirtilmezse geçitleri listele"
+status = "Yönetilen geçit ve deneme istatistiklerini göster"
 
 [command.parameter]
 locale = "Kullanılabilir dil yerel ayarı"
-page = "Birden başlayan portal listesi sayfası"
-portal = "Portal UUID değeri, benzersiz önek veya list"
+page = "Geçit listesi sayfası (1'den başlar)"
+portal = "Geçit UUID'si, benzersiz önek veya list"
 upload = "Herkese açık yüklemeler etkinse raporu yükle"
 
 [portal.notice]
-nether_created = "{prefix}&r &7› &7&7&f{blocks}&7 iç bloğa sahip şekilli bir portal oluşturuldu.&r"
-end_created = "{prefix}&r &7› &7&7End&7&r &7&f{blocks}&7 iç bloğa sahip şekilli bir portal oluşturuldu.&r"
+nether_created = "{prefix}&r &7› &7&f{blocks}&7 iç bloklu özel şekilli bir Nether Geçidi &aoluşturuldu&7.&r"
+end_created = "{prefix}&r &7› &7&f{blocks}&7 iç bloklu özel şekilli bir End Geçidi &aoluşturuldu&7.&r"
 
 [portal.failure]
-cross_region = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: şekil, bağımsız yönetilen Folia bölgelerinin sınırlarını aşıyor.&r"
-too_large = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: iç alan, yapılandırılan blok sınırını aşıyor.&r"
-too_wide = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: iç alan, yapılandırılan genişlik sınırını aşıyor.&r"
-too_tall = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: iç alan, yapılandırılan yükseklik sınırını aşıyor.&r"
-too_small = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: iç alan, yapılandırılan minimumdan daha küçük.&r"
-ambiguous_axis = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: çerçeve her iki eksende de geçerli.&r"
-start_blocked = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: tutuşturma noktasındaki blok artık değiştirilemiyor.&r"
-open_frame = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: çerçeve açık veya iç alanda engellenmiş bir hücre var.&r"
-region_unavailable = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: sorumlu bölge kullanılamıyordu.&r"
-wormholes_rejected = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: Wormholes portal oluşturmayı reddetti.&r"
-event_cancelled = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: başka bir eklenti oluşturmayı iptal etti.&r"
-block_denied = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: başka bir eklenti bir veya daha fazla portal bloğuna izin vermedi.&r"
-frame_changed = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: çerçeve oluşturma sırasında değişti.&r"
-overlapping_portal = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: şekil, mevcut bir yönetilen portalla örtüşüyor.&r"
-world_mutation_failed = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir portal oluşturulamıyor: dünya değişikliği başarısız oldu.&r"
+cross_region = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fşekil, bağımsız olarak sahiplenilen birden fazla Folia bölgesine yayılıyor&r&c.&r"
+too_large = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fiç alan, yapılandırılan blok sınırını aşıyor&r&c.&r"
+too_wide = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fiç alan, yapılandırılan genişlik sınırını aşıyor&r&c.&r"
+too_tall = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fiç alan, yapılandırılan yükseklik sınırını aşıyor&r&c.&r"
+too_small = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fiç alan, yapılandırılan en küçük boyuttan küçük&r&c.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fçerçeve her iki eksende de geçerli&r&c.&r"
+start_blocked = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fateşleme noktasındaki blok artık değiştirilemiyor&r&c.&r"
+open_frame = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fçerçeve açık veya iç alanda engellenmiş bir hücre var&r&c.&r"
+region_unavailable = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fsahip bölge kullanılamıyordu&r&c.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fWormholes geçit oluşturmayı reddetti&r&c.&r"
+event_cancelled = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fbaşka bir eklenti oluşturmayı iptal etti&r&c.&r"
+block_denied = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fbaşka bir eklenti bir veya daha fazla geçit bloğunu engelledi&r&c.&r"
+frame_changed = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fçerçeve oluşturma sırasında değişti&r&c.&r"
+overlapping_portal = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fşekil, mevcut bir yönetilen geçitle çakışıyor&r&c.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cBu çerçeveden özel şekilli bir geçit oluşturulamıyor: &fdünya değişikliği başarısız oldu&r&c.&r"
 
 [portal.title]
-nether_created = "&5&lNether Portalı Oluşturuldu&r"
-end_created = "&5&lEnd Portalı Oluşturuldu&r"
+nether_created = "&5&lNether Geçidi Oluşturuldu&r"
+end_created = "&5&lEnd Geçidi Oluşturuldu&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&r &7› &7&c&f{portal}&r&c yanında güvenli bir durma alanı yok. &eYine de içine ışınlanmak için &f{seconds}&r&e saniye içinde aynı portala tekrar tıklayın.&r"
+unsafe = "{prefix}&r &7› &7&c&f{portal}&r&c geçidinin yanında güvenli bir durma alanı yok. &eYine de içine ışınlanmak için &f{seconds}&r&e saniye içinde aynı geçide tekrar tıklayın.&r"
 
 [portal.navigation.list]
-frame_policy_note = "&8  ⚠&r &eMevcut çerçeve &f{materials}&r&e kullanıyor; bu malzemelerle yeni portal oluşturulamaz.&r"
-empty = "&eKayıtlı yönetilen şekilli portal yok.&r"
-entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Konum:&r &f{x}, {y}, {z}&r &8•&r &7Eksen:&r &f{axis}&r &8•&r &7Hücreler:&r &f{blocks}&r\n&8  └&r &7Oluşturan:&r &f{creator}&r &8•&r &7Oluşturuldu:&r &f{created}&r"
-hover = "&7UUID:&r &f{uuid}&r\n&aBu portala ışınlanmak için tıklayın.&r"
+frame_policy_note = "&8  ⚠&r &eMevcut çerçeve &f{materials}&r&e kullanıyor; bu malzemelerle yeni geçit oluşturulamaz.&r"
+empty = "&eKayıtlı yönetilen özel şekilli geçit yok.&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Tür:&r &f{type}&r\n&8  ├&r &7Konum:&r &f{x}, {y}, {z}&r &8•&r &7Eksen:&r &f{axis}&r &8•&r &7Hücreler:&r &f{blocks}&r\n&8  └&r &7Oluşturan:&r &f{creator}&r &8•&r &7Oluşturuldu:&r &f{created}&r"
+hover = "&7UUID:&r &f{uuid}&r\n&aBu geçide ışınlanmak için tıklayın.&r"
 
 [portal.navigation.error]
-not_found = "{prefix}&r &7› &7&c&f{portal}&r&c ile eşleşen yönetilen bir portal yok.&r"
-ambiguous = "{prefix}&r &7› &7&c&f{portal}&r&c öneki {matches} portalla eşleşiyor. UUID değerinin daha fazlasını girin.&r"
-removed = "{prefix}&r &7› &7&cBu portal artık kayıtlı değil.&r"
-world_unavailable = "{prefix}&r &7› &7&c&f{world}&r&c portal dünyası şu anda kullanılamıyor.&r"
-destination_unavailable = "{prefix}&r &7› &7&cPortal hedefi geçici olarak kullanılamıyor.&r"
-inactive = "{prefix}&r &7› &7&cBu portal artık etkin değil. Bütünlük denetimi sıraya alındı.&r"
-no_safe_landing = "{prefix}&r &7› &7&cBu portalın yanında güvenli bir durma alanı yok.&r"
+not_found = "{prefix}&r &7› &7&c&f{portal}&r&c ile eşleşen yönetilen bir geçit yok.&r"
+ambiguous = "{prefix}&r &7› &7&c&f{portal}&r&c öneki {matches} geçitle eşleşiyor. UUID'nin daha fazlasını girin.&r"
+removed = "{prefix}&r &7› &7&cBu geçit artık kayıtlı değil.&r"
+world_unavailable = "{prefix}&r &7› &7&cGeçit dünyası &f{world}&r&c şu anda kullanılamıyor.&r"
+destination_unavailable = "{prefix}&r &7› &7&cGeçit hedefi geçici olarak kullanılamıyor.&r"
+inactive = "{prefix}&r &7› &7&cBu geçit artık etkin değil. Bütünlük denetimi sıraya alındı.&r"
+no_safe_landing = "{prefix}&r &7› &7&cBu geçidin yanında güvenli bir durma alanı yok.&r"
 
 [portal.navigation.teleport]
 preparing = "{prefix}&r &7› &7&7&f{portal}&r&7 için hedef hazırlanıyor…&r"
-success = "{prefix}&r &7› &7&7&f{world}&r&7 dünyasındaki &f{portal}&r&7 portalının yanına ışınlandınız.&r"
-failed = "{prefix}&r &7› &7&cPortal ışınlanması tamamlanmadı. Başka bir eklenti tarafından iptal edilmiş olabilir.&r"
+success = "{prefix}&r &7› &7&f{world}&r&7 dünyasındaki &f{portal}&r&7 geçidinin yanına &aışınlandınız&7.&r"
+failed = "{prefix}&r &7› &7&cGeçit ışınlanması tamamlanmadı. Başka bir eklenti tarafından iptal edilmiş olabilir.&r"
 
 [hud]
-title = "{prefix}"
+title = "{prefix}&r"
 success = "&aBaşarılı&r"
 failure = "&cİşlem başarısız&r"
-info = "{prefix}"
+info = "{prefix}&r"
 
 [gui.title]
-root = "{prefix} Yapılandırması&r"
+root = "{prefix}&r &7› &7Yapılandırma&r"
 category = "{prefix}&r &7› &7{category}"
 
 [gui.category]
 general = "&dGenel&r"
-portal = "&dPortal Kuralları&r"
+portal = "&dGeçit Kuralları&r"
 effects = "&dEfektler&r"
 hot_reload = "&dCanlı Yeniden Yükleme&r"
 integrity = "&dBütünlük&r"
@@ -197,8 +199,8 @@ close = "&cKapat&r"
 [gui.lore]
 state = "&7Geçerli:&r {value}"
 toggle = "&8Değiştirmek için tıklayın.&r"
-number = "&8Sol +1, sağ -1, shift ×10, yazmak için bırakma tuşu.&r"
-text = "&8Sohbette yeni bir değer yazmak için tıklayın.&r"
+number = "&8Sol +1, sağ -1, Shift ×10, yazmak için atma tuşu.&r"
+text = "&8Sohbete yeni bir değer yazmak için tıklayın.&r"
 language = "&8Kullanılabilir bir dil seçmek veya yerel ayar yazmak için tıklayın.&r"
 category = "&8Bu kategorideki her ayarı düzenlemek için tıklayın.&r"
 
@@ -210,51 +212,51 @@ cancelled = "{prefix}&r &7› &7&eYapılandırma düzenlemesi iptal edildi.&r"
 timeout = "{prefix}&r &7› &7&eYapılandırma düzenlemesinin süresi hiçbir şey değişmeden doldu.&r"
 
 [gui.language]
-type = "&7Bir dil ayarı oluşturmak veya seçmek için sohbete adını yazın.&r"
+type = "&7Oluşturmak veya seçmek için sohbete bir yerel ayar adı yazın.&r"
 option = "{status} &f{locale}&r &8›&r &7{name}&r"
-hover = "&7&f{locale}&r&7 seçmek için tıklayın.&r"
+hover = "&7&f{locale}&r&7 dilini seçmek için tıklayın.&r"
 empty = "&eKullanılabilir dil bulunamadı; oluşturmak için bir yerel ayar adı yazın.&r"
 current = "&7Geçerli değer:&r {value}"
 variables = "&7Geçerli değişkenler / yer tutucular:&r &f{variables}&r"
-changed = "&f{old}&r &7değerinden&r &f{new}&r &7değerine değiştirildi&r"
+changed = "&f{old}&r &7yerine artık&r &f{new}&r"
 
 [gui.setting.general]
 update_notifications = "&dGitHub güncelleme bildirimleri&r"
-enabled = "&dPortal oluşturma&r"
+enabled = "&dGeçit oluşturma&r"
 language = "&dEtkin dil yerel ayarı&r"
 require_create_permission = "&dOluşturma izni gerektir&r"
-failure_feedback = "&dPortal hatası geri bildirimi&r"
+failure_feedback = "&dGeçit hatası geri bildirimi&r"
 
 [gui.setting.metrics]
 enabled = "&dAnonim bStats istatistikleri&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dNether En az iç blok&r"
-maximum_interior_blocks = "&dNether En fazla iç blok&r"
-maximum_width = "&dNether En fazla genişlik&r"
-maximum_height = "&dNether En fazla yükseklik&r"
-frame_materials = "&dNether Çerçeve malzemeleri&r"
-interior_materials = "&dNether İç alan malzemeleri&r"
+minimum_interior_blocks = "&dNether: en az iç blok&r"
+maximum_interior_blocks = "&dNether: en fazla iç blok&r"
+maximum_width = "&dNether: en fazla genişlik&r"
+maximum_height = "&dNether: en fazla yükseklik&r"
+frame_materials = "&dNether: çerçeve malzemeleri&r"
+interior_materials = "&dNether: iç malzemeler&r"
 ignition_causes = "&dAteşleme nedenleri&r"
 allowed_worlds = "&dİzin verilen dünyalar&r"
-denied_worlds = "&dReddedilen dünyalar&r"
-deduplication_millis = "&dTekilleştirme milisaniyesi&r"
-end_portal_creation = "&dEnd Portal oluşturma&r"
-end_minimum_interior_blocks = "&dEnd En az iç blok&r"
-end_maximum_interior_blocks = "&dEnd En fazla iç blok&r"
-end_maximum_width = "&dEnd En fazla genişlik&r"
-end_maximum_length = "&dEnd En fazla genişlik&r"
-end_interior_materials = "&dEnd İç alan malzemeleri&r"
+denied_worlds = "&dYasaklı dünyalar&r"
+deduplication_millis = "&dTekilleştirme süresi (milisaniye)&r"
+end_portal_creation = "&dÖzel şekilli End Geçidi oluşturma&r"
+end_minimum_interior_blocks = "&dEnd: en az iç blok&r"
+end_maximum_interior_blocks = "&dEnd: en fazla iç blok&r"
+end_maximum_width = "&dEnd: en fazla genişlik&r"
+end_maximum_length = "&dEnd: en fazla uzunluk&r"
+end_interior_materials = "&dEnd: iç malzemeler&r"
 
 [gui.setting.effects]
-creation_sound = "&dNether Oluşturma sesi&r"
-creation_sound_type = "&dNether Oluşturma sesi türü&r"
-creation_sound_volume = "&dNether Oluşturma sesi seviyesi&r"
-creation_sound_pitch = "&dNether Oluşturma sesi perdesi&r"
-end_creation_sound = "&dEnd Oluşturma sesi&r"
-end_creation_sound_type = "&dEnd Oluşturma sesi türü&r"
-end_creation_sound_volume = "&dEnd Oluşturma sesi seviyesi&r"
-end_creation_sound_pitch = "&dEnd Oluşturma sesi perdesi&r"
+creation_sound = "&dNether: oluşturma sesi&r"
+creation_sound_type = "&dNether: oluşturma sesi türü&r"
+creation_sound_volume = "&dNether: oluşturma ses düzeyi&r"
+creation_sound_pitch = "&dNether: oluşturma ses perdesi&r"
+end_creation_sound = "&dEnd: oluşturma sesi&r"
+end_creation_sound_type = "&dEnd: oluşturma sesi türü&r"
+end_creation_sound_volume = "&dEnd: oluşturma ses düzeyi&r"
+end_creation_sound_pitch = "&dEnd: oluşturma ses perdesi&r"
 
 [gui.setting.hot_reload]
 enabled = "&dCanlı yeniden yükleme&r"
@@ -271,16 +273,16 @@ maximum_checks_per_cycle = "&dDöngü başına en fazla denetim&r"
 splash_screen = "&dBaşlangıç karşılama ekranı&r"
 command_sounds = "&dKomut sesleri&r"
 command_overlays = "&dKomut katmanları&r"
-portal_notices = "&dPortal bildirim kanalları&r"
-nether_creation_notices = "&dNether Portal bildirim kanalları&r"
-end_creation_notices = "&dEnd Portal bildirim kanalları&r"
+portal_notices = "&dGeçit reddi bildirim kanalları&r"
+nether_creation_notices = "&dNether: oluşturma bildirim kanalları&r"
+end_creation_notices = "&dEnd: oluşturma bildirim kanalları&r"
 overlay_duration_ticks = "&dKatman süresi (tik)&r"
 title_fade_in_ticks = "&dBaşlık belirme süresi (tik)&r"
 title_stay_ticks = "&dBaşlık kalma süresi (tik)&r"
 title_fade_out_ticks = "&dBaşlık kaybolma süresi (tik)&r"
 
 [gui.setting.debug]
-upload_enabled = "&dHata ayıklama raporlarını mclo.gs üzerine yükle&r"
+upload_enabled = "&dTanılama raporlarını mclo.gs'ye yükle&r"
 
 [director.help]
 category = "Komut kategorisi"
@@ -316,8 +318,8 @@ conversion_failed = "\"{value}\", {parameter} için {type} türüne dönüştür
 default_parse_failed = "{parameter} parametresinin varsayılan değeri ayrıştırılamıyor"
 execution_failed = "{command} komutu çalıştırılamadı: {reason}"
 invalid_origin = "Bu komut bu kaynaktan çalıştırılamaz."
-missing_argument = "Eksik bağımsız değişken \"{parameter}\" ({type})"
-unexpected_argument = "Beklenmeyen bağımsız değişken \"{argument}\". İsteğe bağlı parametreler anahtarla belirtilmelidir, ör. seed=123"
+missing_argument = "Eksik argüman \"{parameter}\" ({type})"
+unexpected_argument = "Beklenmeyen argüman \"{argument}\". İsteğe bağlı parametreler anahtarla belirtilmelidir, ör. seed=123"
 unclosed_group = "{key} parametresi için kapanış \"]\" karakteri eksik"
 unknown_parameter = "Bilinmeyen parametre anahtarı: {key}"
 
@@ -328,8 +330,8 @@ server_default = "Sunucu varsayılanı"
 edit_messages = "Dil mesajlarını düzenle"
 use_server_default = "Sunucu varsayılanını kullan"
 current = "Geçerli: {locale}"
-current_with_personal = "Geçerli: {locale} (Sizin: {personal})"
-your_description = "Yalnızca gördüğünüz mesajları değiştirin."
+current_with_personal = "Geçerli: {locale} (Sizinki: {personal})"
+your_description = "Yalnızca sizin gördüğünüz mesajları değiştirin."
 reset_description = "Sunucunun varsayılan dilini kullanın."
 server_description = "Sunucunun varsayılan dilini değiştirin."
 edit_description = "Her dil için mesaj düzenleyicisini açın."
@@ -337,39 +339,40 @@ select_description = "Bu dili seçmek için tıklayın."
 remove_personal_description = "Kişisel dil seçiminizi kaldırın."
 no_controls = "Kullanabileceğiniz dil ayarı yok."
 command = "Komut: {command}"
-selected = "Seçili"
-all-volmit-plugins = "Tüm Volmit eklentileri"
+selected = "seçili"
+all-volmit-plugins = "tüm Volmit eklentileri"
 
 [language.error]
-stopping = "{prefix}&r &7› &7&cDil seçimi, eklenti durdurulduğunda kullanılamaz."
-editor-player-only = "{prefix}&r &7› &7&cOyundaki dil editörü açın."
+stopping = "{prefix}&r &7› &7&cEklenti durdurulurken dil seçimi kullanılamaz."
+editor-player-only = "{prefix}&r &7› &7&cDil düzenleyicisini oyun içinde açın."
 no-providers = "{prefix}&r &7› &7&cKullanılabilir Volmit dil sağlayıcısı yok."
-numeric-page = "{prefix}&r &7› &7&cSayfa numarasını rakamla girin."
+numeric-page = "{prefix}&r &7› &7&cSayısal bir dil sayfası kullanın."
 personal-player-only = "{prefix}&r &7› &7&cOyuncu dili tercihleri oyunda seçilmelidir."
 personal-permission = "{prefix}&r &7› &7&cDilinizi seçmek için izniniz yok."
 plugin-personal-permission = "{prefix}&r &7› &7&c{prefix} için kendi dilinizi seçme izniniz yok."
 plugin-server-permission = "{prefix}&r &7› &7&c{prefix} için sunucu dilini değiştirme izniniz yok."
-server-locale-required = "{prefix}&r &7› &7&cSunucunun varsayılan dili için en_US gibi bir dil kodu seçin."
+server-locale-required = "{prefix}&r &7› &7&cSunucu varsayılanı için en_US gibi bir yerel ayar seçin."
 unavailable-for-all = "{prefix}&r &7› &7&c{locale} dili, seçilen eklentilerin tümünde kullanılamıyor."
 
 [language.usage]
 editor = "{prefix}&r &7› &7&7Kullanım: /{command} language server edit [locale]"
-selection = "{prefix}&r &7› &7&7Kullanım: /{command} language self [locale|reset] or server [locale]"
+selection = "{prefix}&r &7› &7&7Kullanım: /{command} language self [locale|reset] veya server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7Kullanım: /volmit plugins languages [locale]"
 update = "{prefix}&r &7› &7&7Kullanım: /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7{target} için {locale} dili hazırlanıyor..."
-save-failed = "{prefix}&r &7› &7&cdil seçimi kaydedilemedi; sunucu konsolunu kontrol edin."
+save-failed = "{prefix}&r &7› &7&cDil seçimi kaydedilemedi; sunucu konsolunu kontrol edin."
 english-fallback = "{prefix}&r &7› &7&e{locale} kullanılamıyor; İngilizce (en_US) kullanılıyor."
-personal-selected = "{prefix}&r &7› &7&7Diliniz şimdi {locale}."
-server-selected = "{prefix}&r &7› &7&7sunucu dili şimdi {locale}."
-server-default-selected = "{prefix}&r &7› &7&7diliniz artık sunucunun varsayılan dilini kullanıyor."
+personal-selected = "{prefix}&r &7› &7&7Diliniz artık {locale}."
+server-selected = "{prefix}&r &7› &7&7Sunucu dili artık {locale}."
+server-default-selected = "{prefix}&r &7› &7&7Diliniz artık sunucunun varsayılan dilini kullanıyor."
 
 [language.update]
 checking = "{prefix}&r &7› &7&7Dil deposundaki değişiklikler denetleniyor..."
 unchanged = "{prefix}&r &7› &7&7Yüklü diller zaten depoyla eşleşiyor."
 applied = "{prefix}&r &7› &7&7{locale} güncellendi ({added} eklendi, {updated} değiştirildi, {kept} yerel düzenleme korundu)."
+cooldown = "{prefix}&r &7› &7&7Dil deposu kısa süre önce denetlendi; {remaining} sonra yeniden deneyin."
 locale-failed = "{prefix}&r &7› &7&c{locale} güncellenmedi: {reason}"
 failed = "{prefix}&r &7› &7&cDil güncellemesi başarısız oldu: {reason}"
 
@@ -398,7 +401,7 @@ unable-to-save = "{prefix}&r &7› &7&cKaydedilemedi: {reason}"
 [language.editor.navigation]
 back = "&eGeri&r"
 close = "&cKapat&r"
-previous-page = "&eÖnceki Sayfa&r"
+previous-page = "&eÖnceki sayfa&r"
 next-page = "&eSonraki sayfa&r"
 
 [language.editor.search]
@@ -407,7 +410,7 @@ messages-lore = "Tüm mesajları aramak için tıklayın."
 clear = "Aramayı temizle"
 
 [language.editor.message]
-current-value = "&7Mevcut Değer:&r"
+current-value = "&7Geçerli değer:&r"
 variables = "&8{variables}&r"
 edit-plural = "&7Bir çoğul biçimini düzenlemek için tıklayın.&r"
 edit-lines = "&7Satırları ayrı ayrı düzenlemek için tıklayın.&r"

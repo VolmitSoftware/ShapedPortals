@@ -2,11 +2,11 @@
 #
 # === Bestand bewerken ===
 # plugins/ShapedPortals/languages/nl_NL.toml
-# Je kunt dit bestand rechtstreeks bewerken. Lokale wijzigingen blijven behouden; ontbrekende of ongeldige vermeldingen gebruiken het ingebouwde Engels.
+# Je kunt dit bestand rechtstreeks bewerken. Lokale wijzigingen blijven behouden; voor ontbrekende of ongeldige vermeldingen wordt het ingebouwde Engels gebruikt.
 # /shapedportals language server edit nl_NL
 #
 # === Voorvoegsel ===
-# {prefix}  Opgemaakte pluginnaam uit runtime.prefix; het scheidingsteken staat in het bericht. Verwijder {prefix}&r &7› &7 om beide te verbergen.
+# {prefix}  Opgemaakte pluginnaam uit runtime.prefix; het scheidingsteken staat in het bericht. Verwijder {prefix}&r &7› &7 om de naam en het scheidingsteken te verbergen.
 #
 # === Opmaak ===
 # Kleuren: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B en [RRGGBB]. MiniMessage blijft beschikbaar voor eigen opmaak.
@@ -16,58 +16,59 @@
 # Behoud de namen van variabelen en gebruik alleen de variabelen die bij het bericht horen.
 #   {added}  Berichten toegevoegd door een taalupdate
 #   {after}  Waarde na de wijziging
-#   {argument}  onverwacht argument
-#   {attempts}  aanmaakpogingen
-#   {axis}  as
+#   {argument}  Onverwacht opdrachtargument
+#   {attempts}  Pogingen om een portaal aan te maken
+#   {axis}  Portaalas
 #   {before}  Waarde vóór de wijziging
-#   {blocks}  portaalcellen
-#   {category}  categorie
-#   {cells}  alle beheerde cellen
-#   {command}  opdrachtpad
-#   {count}  Aantal overeenkomstige vermeldingen
-#   {created}  aantal aangemaakt of aanmaaktijd
-#   {creator}  maker
-#   {enabled}  aanmaakstatus
-#   {group}  Toestemming of spelersgroep
-#   {hot_reload}  hot-reloadstatus
-#   {id}  korte ID
+#   {blocks}  Binnencellen van het portaal
+#   {category}  Editorcategorie
+#   {cells}  Alle beheerde cellen
+#   {command}  Opdrachtpad
+#   {count}  Aantal berichten
+#   {created}  Aantal aangemaakte portalen of tijdstip van aanmaken
+#   {creator}  Maker
+#   {enabled}  Status van het aanmaken van portalen
+#   {group}  Naam van de berichtcategorie
+#   {hot_reload}  Status van automatisch herladen
+#   {id}  Korte portaal-ID
 #   {kept}  Lokale bewerkingen behouden door een taalupdate
-#   {key}  parametersleutel
-#   {language}  actieve taal
-#   {line}  Bronregel of regelnummer
-#   {locale}  landinstelling
-#   {matches}  overeenkomende portalen
-#   {materials}  opgenomen framematerialen
+#   {key}  Parametersleutel
+#   {language}  Actieve taal
+#   {line}  Regelnummer van het bericht
+#   {locale}  Taalcode
+#   {matches}  Aantal overeenkomende portalen
+#   {materials}  Vastgelegde framematerialen
 #   {maximum}  Maximaal toegestane waarde
-#   {name}  volledige taalnaam
-#   {new}  nieuwe waarde
-#   {old}  vorige waarde
-#   {parameter}  parameternaam
-#   {path}  lokaal rapportpad
-#   {permission}  vereiste machtiging
-#   {personal}  persoonlijke landinstelling
-#   {portal}  aanduiding
-#   {portals}  beheerd aantal
-#   {prefix}  Opgemaakte pluginnaam uit runtime.prefix; het scheidingsteken staat in het bericht. Verwijder {prefix}&r &7› &7 om beide te verbergen.
-#   {reason}  foutreden
-#   {rejected}  afgewezen pogingen
-#   {scheduler}  planner
-#   {seconds}  bevestigingstijd in seconden
-#   {section}  Onderdeel van de editor
-#   {setting}  instellingsnaam
-#   {status}  selectiemarkering
-#   {target}  Doelspeler, entiteit of waarde
-#   {type}  type
+#   {name}  Volledige taalnaam
+#   {new}  Nieuwe waarde
+#   {old}  Vorige waarde
+#   {parameter}  Parameternaam
+#   {path}  Lokaal rapportpad
+#   {permission}  Vereiste toestemming
+#   {personal}  Persoonlijke taalcode als die afwijkt van de serverstandaard
+#   {portal}  Portaalaanduiding
+#   {portals}  Aantal beheerde portalen
+#   {prefix}  Waarde van runtime.prefix; per bericht optioneel
+#   {reason}  Foutreden
+#   {rejected}  Geweigerde pogingen
+#   {remaining}  Resterende tijd tot de volgende taalcontrole
+#   {scheduler}  Planner-implementatie
+#   {seconds}  Bevestigingstermijn in seconden
+#   {section}  Onderdeel van de taaleditor
+#   {setting}  Instellingsnaam
+#   {status}  Selectiemarkering
+#   {target}  Doel van de taalkeuze
+#   {type}  Parametertype of portaaltype
 #   {updated}  Berichten gewijzigd door een taalupdate
-#   {url}  openbare URL
-#   {uuid}  volledige UUID
-#   {value}  huidige, standaard- of ruwe waarde
-#   {variables}  geldige tijdelijke aanduidingen
-#   {version}  pluginversie
-#   {world}  wereld
-#   {x}  ankercoördinaten
-#   {y}  ankercoördinaten
-#   {z}  ankercoördinaten
+#   {url}  Openbare rapport-URL
+#   {uuid}  Volledige portaal-UUID
+#   {value}  Huidige, standaard- of ruwe waarde
+#   {variables}  Geldige tijdelijke aanduidingen voor het gekozen bericht
+#   {version}  Pluginversie
+#   {world}  Wereldnaam
+#   {x}  Ankercoördinaten
+#   {y}  Ankercoördinaten
+#   {z}  Ankercoördinaten
 
 [runtime]
 prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
@@ -77,7 +78,7 @@ player_only = "{prefix}&r &7› &7&cDeze opdracht kan alleen door een speler wor
 denied = "{prefix}&r &7› &7&cJe hebt geen toestemming om dat te doen.&r"
 
 [runtime.hot_reload]
-success = "{prefix}&r &7› &7&7De&7 wijzigingen aan de configuratie en taalbestanden zijn toegepast.&r"
+success = "{prefix}&r &7› &7Wijzigingen in de configuratie en taalbestanden zijn &atoegepast&7.&r"
 failed = "{prefix}&r &7› &7&cDe bestandswijzigingen zijn geweigerd; de laatst geldige instellingen blijven actief.&r"
 
 [command.feedback]
@@ -85,74 +86,74 @@ version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
 failed = "{prefix}&r &7› &7&cDe opdracht kon niet worden uitgevoerd. Bekijk de console voor meer informatie.&r"
 
 [command.feedback.config]
-opened = "{prefix}&r &7› &7&7De&7 volledige configuratie-editor in het spel is geopend.&r"
-saved = "{prefix}&r &7› &7&a{setting}&r &7is gewijzigd van &f{old}&r &7naar &f{new}&r&7.&r"
-save_failed = "{prefix}&r &7› &7&c&f{setting}&r&c kon niet worden toegepast: {reason}&r"
+opened = "{prefix}&r &7› &7De volledige configuratie-editor in het spel is &ageopend&7.&r"
+saved = "{prefix}&r &7› &7&f{setting}&r &7is van &f{old}&r &7naar &f{new}&r &agewijzigd&7.&r"
+save_failed = "{prefix}&r &7› &7&cKan &f{setting}&r&c niet toepassen: {reason}&r"
 
 [command.feedback.debug]
-started = "{prefix}&r &7› &7&7Diagnostische gegevens van de server en {prefix} worden verzameld…&r"
-busy = "{prefix}&r &7› &7&eEr wordt al een diagnostisch rapport voor {prefix} gemaakt.&r"
-saved = "{prefix}&r &7› &7&7Het&7 diagnostische rapport is opgeslagen in &f{path}&r&7.&r"
-uploaded = "{prefix}&r &7› &7&7Diagnostisch&7 rapport geüpload:&r &b&n{url}&r"
+started = "{prefix}&r &7› &7&7Diagnosegegevens van de server en {prefix} worden verzameld…&r"
+busy = "{prefix}&r &7› &7&eEr wordt al een diagnoserapport voor {prefix} gemaakt.&r"
+saved = "{prefix}&r &7› &7Het diagnoserapport is &aopgeslagen&7 in &f{path}&r&7.&r"
+uploaded = "{prefix}&r &7› &7Diagnoserapport &ageüpload&7:&r &b&n{url}&r"
 link_hover = "&7Open het openbare rapport op mclo.gs.&r"
 upload_failed = "{prefix}&r &7› &7&eHet lokale rapport is opgeslagen, maar uploaden naar mclo.gs is mislukt. Bekijk de console voor meer informatie.&r"
-failed = "{prefix}&r &7› &7&cHet diagnostische rapport kon niet worden gemaakt. Bekijk de console voor meer informatie.&r"
+failed = "{prefix}&r &7› &7&cHet diagnoserapport kon niet worden gemaakt. Bekijk de console voor meer informatie.&r"
 
 [command.status]
-header = "{prefix}&r &7› &7status&r"
+header = "{prefix}&r &7› &7&7Runtime&r"
 config = "{prefix}&r &7› &7&7Aanmaken:&r {enabled} &8|&r &7Taal:&r &f{language}&r &8|&r &7Automatisch herladen:&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Beheerde portalen:&r &f{portals}&r &8|&r &7Binnencellen:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Pogingen:&r &f{attempts}&r &8|&r &7Aangemaakt:&r &a{created}&r &8|&r &7Geweigerd:&r &c{rejected}&r"
 compatibility = "{prefix}&r &7› &7&7Artefact:&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7Planner:&r &f{scheduler}&r"
 
 [command.description]
-version = "Geïnstalleerde versie van {prefix} tonen"
+version = "De geïnstalleerde versie van {prefix} tonen"
 root = "Hulp en beheer voor {prefix}"
 config = "De volledige configuratie-editor in het spel openen"
 language = "Een beschikbare {prefix}-taal selecteren"
 debug = "Diagnosehulpmiddelen voor {prefix}"
-debug_dump = "Een uitgebreid diagnostisch rapport voor {prefix} maken"
-portals = "Alle beheerde portalen en hun teleportatiesnelkoppeling weergeven"
-teleport = "Veilig naast een beheerd portaal teleporteren of zonder invoer de portalen weergeven"
-status = "Statistieken van beheerde portalen en pogingen weergeven"
+debug_dump = "Een uitgebreid diagnoserapport voor {prefix} maken"
+portals = "Alle beheerde portalen met hun teleportsnelkoppeling tonen"
+teleport = "Veilig naast een beheerd portaal teleporteren, of zonder opgave alle portalen tonen"
+status = "Statistieken over beheerde portalen en pogingen tonen"
 
 [command.parameter]
-locale = "Beschikbare landinstelling"
+locale = "Beschikbare taalcode"
 page = "Pagina van de portalenlijst, beginnend bij één"
 portal = "Portaal-UUID, uniek voorvoegsel of list"
 upload = "Het rapport uploaden wanneer openbare uploads zijn ingeschakeld"
 
 [portal.notice]
-nether_created = "{prefix}&r &7› &7&7Een&7 gevormd portaal met &f{blocks}&7 binnenblokken is aangemaakt.&r"
-end_created = "{prefix}&r &7› &7&7End&7&r &7Een gevormd portaal met &f{blocks}&7 binnenblokken is aangemaakt.&r"
+nether_created = "{prefix}&r &7› &7Er is een vrij gevormd Netherportaal met &f{blocks}&7 binnenblokken &aaangemaakt&7.&r"
+end_created = "{prefix}&r &7› &7Er is een vrij gevormd Endportaal met &f{blocks}&7 binnenblokken &aaangemaakt&7.&r"
 
 [portal.failure]
-cross_region = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: de vorm loopt door meerdere afzonderlijk beheerde Folia-regio’s.&r"
-too_large = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: het aantal blokken in de binnenruimte overschrijdt de ingestelde limiet.&r"
-too_wide = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: de binnenruimte overschrijdt de ingestelde breedtelimiet.&r"
-too_tall = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: de binnenruimte overschrijdt de ingestelde hoogtelimiet.&r"
-too_small = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: de binnenruimte is kleiner dan het ingestelde minimum.&r"
-ambiguous_axis = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: het frame is geldig op beide assen.&r"
-start_blocked = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: het blok op het ontstekingspunt kan niet meer worden vervangen.&r"
-open_frame = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: het frame is open of bevat een geblokkeerde binnenste cel.&r"
-region_unavailable = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: de verantwoordelijke regio was niet beschikbaar.&r"
-wormholes_rejected = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: Wormholes heeft het maken van het portaal geweigerd.&r"
-event_cancelled = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: een andere plugin heeft het maken geannuleerd.&r"
-block_denied = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: een andere plugin heeft een of meer portaalblokken geweigerd.&r"
-frame_changed = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: het frame is tijdens het maken veranderd.&r"
-overlapping_portal = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: de vorm overlapt een bestaand beheerd portaal.&r"
-world_mutation_failed = "{prefix}&r &7› &7&cVan dit frame kan geen portaal met een aangepaste vorm worden gemaakt: het wijzigen van de wereld is mislukt.&r"
+cross_region = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &fde vorm loopt door meerdere onafhankelijk beheerde Folia-regio's&r&c.&r"
+too_large = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &fde binnenruimte overschrijdt de ingestelde bloklimiet&r&c.&r"
+too_wide = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &fde binnenruimte overschrijdt de ingestelde breedtelimiet&r&c.&r"
+too_tall = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &fde binnenruimte overschrijdt de ingestelde hoogtelimiet&r&c.&r"
+too_small = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &fde binnenruimte is kleiner dan het ingestelde minimum&r&c.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &fhet frame is op beide assen geldig&r&c.&r"
+start_blocked = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &fhet ontstekingsblok kan niet meer worden vervangen&r&c.&r"
+open_frame = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &fhet frame is open of bevat een geblokkeerde binnencel&r&c.&r"
+region_unavailable = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &fde verantwoordelijke regio was niet beschikbaar&r&c.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &fWormholes heeft het aanmaken van het portaal geweigerd&r&c.&r"
+event_cancelled = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &feen andere plugin heeft het aanmaken geannuleerd&r&c.&r"
+block_denied = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &feen andere plugin heeft een of meer portaalblokken geweigerd&r&c.&r"
+frame_changed = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &fhet frame is tijdens het aanmaken veranderd&r&c.&r"
+overlapping_portal = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &fde vorm overlapt een bestaand beheerd portaal&r&c.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cVan dit frame kan geen vrij gevormd portaal worden aangemaakt: &fhet wijzigen van de wereld is mislukt&r&c.&r"
 
 [portal.title]
-nether_created = "&5&lNetherportaal gemaakt&r"
-end_created = "&5&lEndportaal gemaakt&r"
+nether_created = "&5&lNetherportaal aangemaakt&r"
+end_created = "&5&lEndportaal aangemaakt&r"
 
 [portal.navigation.confirm]
 unsafe = "{prefix}&r &7› &7&cNaast &f{portal}&r&c is geen veilige plek om te staan. &eKlik binnen &f{seconds}&r&e seconden opnieuw op hetzelfde portaal om er toch in te teleporteren.&r"
 
 [portal.navigation.list]
-frame_policy_note = "&8  ⚠&r &eHet bestaande frame gebruikt &f{materials}&r&e; daarmee kunnen geen nieuwe portalen worden gemaakt.&r"
-empty = "&eEr zijn geen beheerde gevormde portalen geregistreerd.&r"
+frame_policy_note = "&8  ⚠&r &eHet bestaande frame gebruikt &f{materials}&r&e; daarmee kunnen geen nieuwe portalen worden aangemaakt.&r"
+empty = "&eEr zijn geen beheerde vrij gevormde portalen geregistreerd.&r"
 entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Locatie:&r &f{x}, {y}, {z}&r &8•&r &7As:&r &f{axis}&r &8•&r &7Cellen:&r &f{blocks}&r\n&8  └&r &7Maker:&r &f{creator}&r &8•&r &7Aangemaakt:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aKlik om naar dit portaal te teleporteren.&r"
 
@@ -167,17 +168,17 @@ no_safe_landing = "{prefix}&r &7› &7&cEr is geen veilige plek om naast dit por
 
 [portal.navigation.teleport]
 preparing = "{prefix}&r &7› &7&7Bestemming voor &f{portal}&r&7 wordt voorbereid…&r"
-success = "{prefix}&r &7› &7&7Je&7 bent naast &f{portal}&r&7 in &f{world}&r&7 geteleporteerd.&r"
-failed = "{prefix}&r &7› &7&cDe portaalteleportatie is niet voltooid. Mogelijk is deze door een andere plug-in geannuleerd.&r"
+success = "{prefix}&r &7› &7Je bent naast &f{portal}&r&7 in &f{world}&r&7 &ageteleporteerd&7.&r"
+failed = "{prefix}&r &7› &7&cDe portaalteleportatie is niet voltooid. Mogelijk is deze door een andere plugin geannuleerd.&r"
 
 [hud]
-title = "{prefix}"
+title = "{prefix}&r"
 success = "&aGeslaagd&r"
 failure = "&cActie mislukt&r"
-info = "{prefix}"
+info = "{prefix}&r"
 
 [gui.title]
-root = "{prefix}-configuratie&r"
+root = "{prefix}&r &7› &7Configuratie&r"
 category = "{prefix}&r &7› &7{category}"
 
 [gui.category]
@@ -197,9 +198,9 @@ close = "&cSluiten&r"
 [gui.lore]
 state = "&7Huidig:&r {value}"
 toggle = "&8Klik om te wisselen.&r"
-number = "&8Links +1, rechts -1, shift ×10, laat vallen om te typen.&r"
+number = "&8Linksklik +1, rechtsklik -1, shift ×10, laten vallen om te typen.&r"
 text = "&8Klik om een nieuwe waarde in de chat te typen.&r"
-language = "&8Klik om een beschikbare taal te kiezen of typ een landinstelling.&r"
+language = "&8Klik om een beschikbare taal te kiezen of typ een taalcode.&r"
 category = "&8Klik om elke instelling in deze categorie te bewerken.&r"
 
 [gui.prompt]
@@ -210,18 +211,18 @@ cancelled = "{prefix}&r &7› &7&eConfiguratiebewerking geannuleerd.&r"
 timeout = "{prefix}&r &7› &7&eDe configuratiebewerking is verlopen zonder iets te wijzigen.&r"
 
 [gui.language]
-type = "&7Typ een landinstelling in de chat om deze aan te maken of te selecteren.&r"
+type = "&7Typ een taalcode in de chat om deze aan te maken of te selecteren.&r"
 option = "{status} &f{locale}&r &8›&r &7{name}&r"
 hover = "&7Klik om &f{locale}&r&7 te selecteren.&r"
-empty = "&eEr zijn geen beschikbare talen gevonden; typ een landinstelling om er een te maken.&r"
+empty = "&eEr zijn geen beschikbare talen gevonden; typ een taalcode om er een aan te maken.&r"
 current = "&7Huidige waarde:&r {value}"
 variables = "&7Huidige variabelen / tijdelijke aanduidingen:&r &f{variables}&r"
-changed = "&f{old}&r &7is gewijzigd naar&r &f{new}&r"
+changed = "&f{old}&r &7gewijzigd in&r &f{new}&r"
 
 [gui.setting.general]
 update_notifications = "&dGitHub-updatemeldingen&r"
 enabled = "&dPortalen aanmaken&r"
-language = "&dActieve landinstelling&r"
+language = "&dActieve taalcode&r"
 require_create_permission = "&dToestemming voor aanmaken vereisen&r"
 failure_feedback = "&dFeedback bij portaalfouten&r"
 
@@ -229,38 +230,38 @@ failure_feedback = "&dFeedback bij portaalfouten&r"
 enabled = "&dAnonieme bStats-statistieken&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dNether Minimumaantal binnenblokken&r"
-maximum_interior_blocks = "&dNether Maximumaantal binnenblokken&r"
-maximum_width = "&dNether Maximale breedte&r"
-maximum_height = "&dNether Maximale hoogte&r"
-frame_materials = "&dNether Framematerialen&r"
-interior_materials = "&dNether Binnenmaterialen&r"
+minimum_interior_blocks = "&dNether: minimaal aantal binnenblokken&r"
+maximum_interior_blocks = "&dNether: maximaal aantal binnenblokken&r"
+maximum_width = "&dNether: maximale breedte&r"
+maximum_height = "&dNether: maximale hoogte&r"
+frame_materials = "&dNether: framematerialen&r"
+interior_materials = "&dNether: binnenmaterialen&r"
 ignition_causes = "&dOntstekingsoorzaken&r"
 allowed_worlds = "&dToegestane werelden&r"
 denied_worlds = "&dGeweigerde werelden&r"
 deduplication_millis = "&dOntdubbeling in milliseconden&r"
-end_portal_creation = "&dEnd Portalen aanmaken&r"
-end_minimum_interior_blocks = "&dEnd Minimumaantal binnenblokken&r"
-end_maximum_interior_blocks = "&dEnd Maximumaantal binnenblokken&r"
-end_maximum_width = "&dEnd Maximale breedte&r"
-end_maximum_length = "&dEnd Maximale breedte&r"
-end_interior_materials = "&dEnd Binnenmaterialen&r"
+end_portal_creation = "&dVrij gevormde Endportalen aanmaken&r"
+end_minimum_interior_blocks = "&dEnd: minimaal aantal binnenblokken&r"
+end_maximum_interior_blocks = "&dEnd: maximaal aantal binnenblokken&r"
+end_maximum_width = "&dEnd: maximale breedte&r"
+end_maximum_length = "&dEnd: maximale lengte&r"
+end_interior_materials = "&dEnd: binnenmaterialen&r"
 
 [gui.setting.effects]
-creation_sound = "&dNether Aanmaakgeluid&r"
-creation_sound_type = "&dNether Type aanmaakgeluid&r"
-creation_sound_volume = "&dNether Volume van aanmaakgeluid&r"
-creation_sound_pitch = "&dNether Toonhoogte van aanmaakgeluid&r"
-end_creation_sound = "&dEnd Aanmaakgeluid&r"
-end_creation_sound_type = "&dEnd Type aanmaakgeluid&r"
-end_creation_sound_volume = "&dEnd Volume van aanmaakgeluid&r"
-end_creation_sound_pitch = "&dEnd Toonhoogte van aanmaakgeluid&r"
+creation_sound = "&dNether: aanmaakgeluid&r"
+creation_sound_type = "&dNether: type aanmaakgeluid&r"
+creation_sound_volume = "&dNether: volume aanmaakgeluid&r"
+creation_sound_pitch = "&dNether: toonhoogte aanmaakgeluid&r"
+end_creation_sound = "&dEnd: aanmaakgeluid&r"
+end_creation_sound_type = "&dEnd: type aanmaakgeluid&r"
+end_creation_sound_volume = "&dEnd: volume aanmaakgeluid&r"
+end_creation_sound_pitch = "&dEnd: toonhoogte aanmaakgeluid&r"
 
 [gui.setting.hot_reload]
 enabled = "&dAutomatisch herladen&r"
 poll_interval_millis = "&dControle-interval in milliseconden&r"
 cooldown_millis = "&dWachttijd voor opslaan in milliseconden&r"
-notify_operators = "&dOperators op de hoogte stellen&r"
+notify_operators = "&dOperators informeren&r"
 
 [gui.setting.integrity]
 enabled = "&dIntegriteitsservice&r"
@@ -271,19 +272,19 @@ maximum_checks_per_cycle = "&dMaximaal aantal controles per cyclus&r"
 splash_screen = "&dOpstartscherm&r"
 command_sounds = "&dOpdrachtgeluiden&r"
 command_overlays = "&dOpdrachtoverlays&r"
-portal_notices = "&dKanalen voor portaalmeldingen&r"
-nether_creation_notices = "&dNether Kanalen voor portaalmeldingen&r"
-end_creation_notices = "&dEnd Kanalen voor portaalmeldingen&r"
+portal_notices = "&dKanalen voor weigeringsmeldingen&r"
+nether_creation_notices = "&dNether: kanalen voor aanmaakmeldingen&r"
+end_creation_notices = "&dEnd: kanalen voor aanmaakmeldingen&r"
 overlay_duration_ticks = "&dOverlayduur in ticks&r"
-title_fade_in_ticks = "&dInvagen van titel in ticks&r"
-title_stay_ticks = "&dWeergaveduur van titel in ticks&r"
-title_fade_out_ticks = "&dUitvagen van titel in ticks&r"
+title_fade_in_ticks = "&dInfadetijd van titel in ticks&r"
+title_stay_ticks = "&dWeergavetijd van titel in ticks&r"
+title_fade_out_ticks = "&dUitfadetijd van titel in ticks&r"
 
 [gui.setting.debug]
-upload_enabled = "&dDebugrapporten uploaden naar mclo.gs&r"
+upload_enabled = "&dDiagnoserapporten uploaden naar mclo.gs&r"
 
 [director.help]
-category = "Commandocategorie"
+category = "Opdrachtcategorie"
 command_group = "Opdrachtgroep. Klik om te openen."
 no_description = "Geen beschrijving opgegeven"
 no_parameters = "Geen parameters. Klik om de opdracht vooraf in te vullen."
@@ -304,7 +305,7 @@ hover = "Terug naar de bovenliggende opdrachtgroep"
 hover = "Vorige pagina"
 
 [director.help.parameter]
-default = "Standaard \"{value}\" indien niet opgegeven."
+default = "Standaard “{value}” indien niet opgegeven."
 optional = "Deze parameter is optioneel."
 required = "Deze parameter is verplicht."
 type = "Deze parameter is van het type {type}."
@@ -312,70 +313,71 @@ type = "Deze parameter is van het type {type}."
 [director.runtime]
 
 [director.runtime.error]
-conversion_failed = "Kan \"{value}\" voor {parameter} niet naar {type} converteren"
+conversion_failed = "Kan “{value}” voor {parameter} niet naar {type} converteren"
 default_parse_failed = "Kan de standaardwaarde voor parameter {parameter} niet verwerken"
 execution_failed = "Opdracht {command} kon niet worden uitgevoerd: {reason}"
 invalid_origin = "Deze opdracht kan niet vanuit deze bron worden uitgevoerd."
-missing_argument = "Ontbrekend argument \"{parameter}\" ({type})"
-unexpected_argument = "Onverwacht argument \"{argument}\". Optionele parameters moeten met een sleutel worden opgegeven, bijv. seed=123"
-unclosed_group = "Ontbrekende sluitende \"]\" voor parameter {key}"
+missing_argument = "Ontbrekend argument “{parameter}” ({type})"
+unexpected_argument = "Onverwacht argument “{argument}”. Optionele parameters moeten met een sleutel worden opgegeven, bijv. seed=123"
+unclosed_group = "Ontbrekende sluitende “]” voor parameter {key}"
 unknown_parameter = "Onbekende parametersleutel: {key}"
 
 [language.menu]
 your_language = "Jouw taal"
-reset_your_language = "Jouw taalkeuze herstellen"
-server_default = "Standaardtaal van de server"
+reset_your_language = "Jouw taal herstellen"
+server_default = "Serverstandaard"
 edit_messages = "Taalberichten bewerken"
-use_server_default = "Standaardtaal van de server gebruiken"
+use_server_default = "Serverstandaard gebruiken"
 current = "Huidig: {locale}"
 current_with_personal = "Huidig: {locale} (Jouw keuze: {personal})"
 your_description = "Wijzig alleen de berichten die jij ziet."
 reset_description = "Gebruik de standaardtaal van de server."
-server_description = "Wijzig de standaardtaal van de server."
+server_description = "Wijzig de standaardtaal van de server"
 edit_description = "Open de berichteneditor voor elke taal."
 select_description = "Klik om deze taal te selecteren."
 remove_personal_description = "Verwijder jouw persoonlijke taalkeuze."
 no_controls = "Je hebt geen toegang tot taalinstellingen."
-command = "Commando: {command}"
+command = "Opdracht: {command}"
 selected = "geselecteerd"
-all-volmit-plugins = "Alle Volmit-plugins"
+all-volmit-plugins = "alle Volmit-plugins"
 
 [language.error]
-stopping = "{prefix}&r &7› &7&cTaalselectie is niet beschikbaar terwijl de plugin stopt."
-editor-player-only = "{prefix}&r &7› &7&cOpen de taalbewerker in het spel."
+stopping = "{prefix}&r &7› &7&cDe taalkeuze is niet beschikbaar terwijl de plugin stopt."
+editor-player-only = "{prefix}&r &7› &7&cOpen de taaleditor in het spel."
 no-providers = "{prefix}&r &7› &7&cEr zijn geen Volmit-taalaanbieders beschikbaar."
-numeric-page = "{prefix}&r &7› &7&cVoer een paginanummer in."
-personal-player-only = "{prefix}&r &7› &7&cSpelertaalvoorkeuren moeten in het spel worden geselecteerd."
-personal-permission = "{prefix}&r &7› &7&cU hebt geen toestemming om uw taal te selecteren."
+numeric-page = "{prefix}&r &7› &7&cGebruik een numeriek paginanummer voor de talen."
+personal-player-only = "{prefix}&r &7› &7&cPersoonlijke taalvoorkeuren moeten in het spel worden gekozen."
+personal-permission = "{prefix}&r &7› &7&cJe hebt geen toestemming om je taal te kiezen."
 plugin-personal-permission = "{prefix}&r &7› &7&cJe hebt geen toestemming om je taal voor {prefix} te kiezen."
 plugin-server-permission = "{prefix}&r &7› &7&cJe hebt geen toestemming om de servertaal voor {prefix} te wijzigen."
-server-locale-required = "{prefix}&r &7› &7&cKies een taalcode zoals en_US voor de standaardtaal van de server."
+server-locale-required = "{prefix}&r &7› &7&cKies een taalcode zoals en_US als standaardtaal van de server."
 unavailable-for-all = "{prefix}&r &7› &7&cDe taal {locale} is niet voor alle geselecteerde plugins beschikbaar."
 
 [language.usage]
 editor = "{prefix}&r &7› &7&7Gebruik: /{command} language server edit [locale]"
-selection = "{prefix}&r &7› &7&7Gebruik: /{command} language self [locale|reset] or server [locale]"
+selection = "{prefix}&r &7› &7&7Gebruik: /{command} language self [locale|reset] of server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7Gebruik: /volmit plugins languages [locale]"
 update = "{prefix}&r &7› &7&7Gebruik: /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7Taal {locale} wordt voorbereid voor {target}..."
-save-failed = "{prefix}&r &7› &7&cde taalkeuze kon niet worden opgeslagen; controleer de serverconsole."
+save-failed = "{prefix}&r &7› &7&cDe taalkeuze kon niet worden opgeslagen; controleer de serverconsole."
 english-fallback = "{prefix}&r &7› &7&e{locale} is niet beschikbaar; Engels (en_US) wordt gebruikt."
-personal-selected = "{prefix}&r &7› &7&7uw taal is nu {locale}."
-server-selected = "{prefix}&r &7› &7&7servertaal is nu {locale}."
-server-default-selected = "{prefix}&r &7› &7&7je taal volgt nu de standaardtaal van de server."
+personal-selected = "{prefix}&r &7› &7&7Je taal is nu {locale}."
+server-selected = "{prefix}&r &7› &7&7De servertaal is nu {locale}."
+server-default-selected = "{prefix}&r &7› &7&7Je taal volgt nu de standaardtaal van de server."
 
 [language.update]
-checking = "{prefix}&r &7› &7&7Taalrepository wordt gecontroleerd op wijzigingen..."
+checking = "{prefix}&r &7› &7&7De taalrepository wordt gecontroleerd op wijzigingen..."
 unchanged = "{prefix}&r &7› &7&7Geïnstalleerde talen komen al overeen met de repository."
 applied = "{prefix}&r &7› &7&7{locale} bijgewerkt ({added} toegevoegd, {updated} gewijzigd, {kept} lokale bewerkingen behouden)."
+cooldown = "{prefix}&r &7› &7&7De taalrepository is onlangs gecontroleerd; probeer het over {remaining} opnieuw."
 locale-failed = "{prefix}&r &7› &7&c{locale} is niet bijgewerkt: {reason}"
 failed = "{prefix}&r &7› &7&cTaalupdate mislukt: {reason}"
 
 [language.editor]
 title = "{prefix} › {section}"
-loading = "{prefix}&r &7› &7&7Berichten voor {locale} laden..."
+loading = "{prefix}&r &7› &7&7Berichten voor {locale} worden geladen..."
 
 [language.editor.section]
 languages = "Talen"
@@ -391,7 +393,7 @@ variables = "{prefix}&r &7› &7&7Variabelen: {variables}"
 guidance = "{prefix}&r &7› &7&7Gebruik \\n voor een nieuwe regel, \\\\ voor een backslash, of typ cancel om terug te gaan."
 
 [language.editor.input]
-expired = "{prefix}&r &7› &7&eDe invoer voor de taalbewerker is verlopen."
+expired = "{prefix}&r &7› &7&eDe invoer voor de taaleditor is verlopen."
 too-long = "{prefix}&r &7› &7&cDe invoer mag maximaal {maximum} tekens bevatten."
 unable-to-save = "{prefix}&r &7› &7&cOpslaan mislukt: {reason}"
 
@@ -440,7 +442,7 @@ preparing = "{prefix}&r &7› &7&7Diagnoserapport voor {prefix} wordt voorbereid
 saved = "{prefix}&r &7› &7&7Diagnoserapport voor {prefix} opgeslagen in {path}."
 
 [debug.error]
-missing-permission = "{prefix}&r &7› &7&cOntbrekende machtiging: {permission}"
+missing-permission = "{prefix}&r &7› &7&cOntbrekende toestemming: {permission}"
 already-preparing = "{prefix}&r &7› &7&cEr wordt al een diagnoserapport voor {prefix} voorbereid."
 already-preparing-short = "{prefix}&r &7› &7&cEr wordt al een diagnoserapport voorbereid."
 schedule-failed = "{prefix}&r &7› &7&cHet maken van het diagnoserapport kon niet worden ingepland."

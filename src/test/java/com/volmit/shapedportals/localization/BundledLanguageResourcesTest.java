@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -117,8 +118,16 @@ class BundledLanguageResourcesTest {
                 if (!new TextValue(template).placeholders().equals(key.placeholders())) {
                     invalid.add(key.id() + " changed placeholders");
                 }
-                if (key instanceof TextKey textKey && !template.equals(textKey.english())) {
-                    changed++;
+                if (key instanceof TextKey textKey) {
+                    if (!template.equals(textKey.english())) {
+                        changed++;
+                    }
+                    if (!tokens(PLACEHOLDER, template).equals(tokens(PLACEHOLDER, textKey.english()))) {
+                        invalid.add(key.id() + " repeats or drops placeholders");
+                    }
+                    if (!tokens(AMPERSAND_FORMATTING, template).equals(tokens(AMPERSAND_FORMATTING, textKey.english()))) {
+                        invalid.add(key.id() + " uses different formatting codes than English");
+                    }
                 }
             }
 
@@ -139,6 +148,16 @@ class BundledLanguageResourcesTest {
             placeholders.add(matcher.group(1));
         }
         return Set.copyOf(placeholders);
+    }
+
+    private List<String> tokens(Pattern pattern, String template) {
+        List<String> tokens = new ArrayList<>();
+        Matcher matcher = pattern.matcher(template);
+        while (matcher.find()) {
+            tokens.add(matcher.group().toLowerCase(Locale.ROOT));
+        }
+        tokens.sort(null);
+        return tokens;
     }
 
     private boolean hasTranslatableText(TextKey key) {

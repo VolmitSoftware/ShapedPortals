@@ -2,153 +2,154 @@
 #
 # === 編輯檔案 ===
 # plugins/ShapedPortals/languages/zh_TW.toml
-# 可直接編輯此檔案。本機修改會保留；缺少或無效的項目使用內建英文文字。
+# 可直接編輯此檔案。本機修改會被保留；缺少或無效的項目將使用內建的英文文字。
 # /shapedportals language server edit zh_TW
 #
 # === 前綴 ===
-# {prefix}  runtime.prefix 中帶格式的外掛名稱；分隔符位於訊息中。刪除 {prefix}&r &7› &7 可隱藏兩者。
+# {prefix}  runtime.prefix 中帶格式的外掛名稱；分隔符寫在各則訊息中。刪除 {prefix}&r &7› &7 可同時隱藏兩者。
 #
 # === 格式 ===
 # 顏色：&0-&f、&k-&r、&#RRGGBB、&xRRGGBB、&x&R&R&G&G&B&B 和 [RRGGBB]。自訂格式仍可使用 MiniMessage。
 # 在 & 或 [ 前加上反斜線可按原樣顯示該字元。
 #
 # === 變數 ===
-# 請勿變更變數名稱，僅使用各訊息中原有的變數。
-#   {added}  語言更新新增的訊息
-#   {after}  變更后的值
-#   {argument}  意外引數
-#   {attempts}  建立嘗試數
-#   {axis}  軸
+# 請勿變更變數名稱，僅使用各則訊息中原有的變數。
+#   {added}  語言更新中新增的訊息數
+#   {after}  變更後的值
+#   {argument}  非預期的參數
+#   {attempts}  建立嘗試次數
+#   {axis}  軸向
 #   {before}  變更前的值
-#   {blocks}  傳送門格數
-#   {category}  編輯器分類
-#   {cells}  全部管理格數
+#   {blocks}  傳送門內部方塊數
+#   {category}  編輯器類別
+#   {cells}  所有受管傳送門的內部格數
 #   {command}  指令路徑
-#   {count}  匹配項目數量
-#   {created}  建立數或建立時間
+#   {count}  符合的項目數
+#   {created}  建立數量或建立時間
 #   {creator}  建立者
 #   {enabled}  建立狀態
-#   {group}  權限或玩家群組
+#   {group}  權限群組或玩家群組
 #   {hot_reload}  熱重載狀態
 #   {id}  短 ID
-#   {kept}  語言更新保留的本機修改
-#   {key}  參數鍵
+#   {kept}  語言更新中保留的本機修改數
+#   {key}  參數鍵或訊息鍵
 #   {language}  目前語言
 #   {line}  來源行或行號
-#   {locale}  地區設定
+#   {locale}  語言代碼
 #   {matches}  符合的傳送門數
 #   {materials}  記錄的框架材料
-#   {maximum}  最大允許值
+#   {maximum}  允許的最大值
 #   {name}  語言完整名稱
 #   {new}  新值
 #   {old}  舊值
 #   {parameter}  參數名稱
 #   {path}  本機報告路徑
 #   {permission}  所需權限
-#   {personal}  個人地區設定
-#   {portal}  識別碼
-#   {portals}  管理數量
-#   {prefix}  runtime.prefix 中帶格式的外掛名稱；分隔符位於訊息中。刪除 {prefix}&r &7› &7 可隱藏兩者。
+#   {personal}  個人語言代碼
+#   {portal}  傳送門識別碼
+#   {portals}  受管傳送門數量
+#   {prefix}  runtime.prefix 中帶格式的外掛名稱；分隔符寫在各則訊息中。刪除 {prefix}&r &7› &7 可同時隱藏兩者。
 #   {reason}  失敗原因
-#   {rejected}  拒絕數
+#   {rejected}  遭拒絕次數
+#   {remaining}  距下次語言檢查的剩餘時間
 #   {scheduler}  排程器
 #   {seconds}  確認時限（秒）
 #   {section}  編輯器區段
 #   {setting}  設定名稱
 #   {status}  選取標記
-#   {target}  目標播放器、 實體或值
+#   {target}  目標玩家、實體或值
 #   {type}  類型
-#   {updated}  語言更新變更的訊息
+#   {updated}  語言更新中變更的訊息數
 #   {url}  公開報告網址
 #   {uuid}  完整 UUID
 #   {value}  目前值、預設值或原始值
-#   {variables}  可用佔位符
-#   {version}  外掛程式版本
+#   {variables}  可用的預留位置
+#   {version}  外掛版本
 #   {world}  世界
 #   {x}  錨點座標
 #   {y}  錨點座標
 #   {z}  錨點座標
 
 [command.description]
-version = "顯示已安裝的{prefix}版本"
-config = "打開完整的遊戲內配置編輯器"
-debug = "{prefix}診斷工具"
-debug_dump = "創建全面的{prefix}診斷報告"
+version = "顯示已安裝的 {prefix} 版本"
+config = "開啟完整的遊戲內設定編輯器"
+debug = "{prefix} 診斷工具"
+debug_dump = "建立完整的 {prefix} 診斷報告"
 language = "選擇可用的 {prefix} 語言"
-portals = "列出所有管理的傳送門及其傳送快捷方式"
-root = "{prefix}幫助與管理"
-status = "顯示已管理傳送門和嘗試統計"
-teleport = "安全傳送到管理的傳送門旁或在省略時列出傳送門"
+portals = "列出所有受管傳送門及其傳送捷徑"
+root = "{prefix} 說明與管理"
+status = "顯示受管傳送門與建立嘗試統計"
+teleport = "安全傳送到受管傳送門旁；省略參數時列出傳送門"
 
 [command.feedback]
 version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
-failed = "{prefix}&r &7› &7&c命令無法完成。請查看控制台以獲取詳情。&r"
+failed = "{prefix}&r &7› &7&c無法完成指令，詳情請查看主控台。&r"
 
 [command.feedback.config]
-opened = "{prefix}&r &7› &7&7已開啟完整的遊戲內設定編輯器。&7&r"
-save_failed = "{prefix}&r &7› &7&c無法套用&f{setting}&r&c：{reason}&r"
-saved = "{prefix}&r &7› &7&a{setting}&r &7已從 &f{old}&r &7變更為 &f{new}&r&7。&r"
+opened = "{prefix}&r &7› &7&a已開啟&7完整的遊戲內設定編輯器。&r"
+save_failed = "{prefix}&r &7› &7&c無法套用 &f{setting}&r&c：{reason}&r"
+saved = "{prefix}&r &7› &7&f{setting}&r &a已變更&7：從 &f{old}&r &7改為 &f{new}&r&7。&r"
 
 [command.feedback.debug]
-busy = "{prefix}&r &7› &7{prefix}診斷報告已在建立中。&r"
-failed = "{prefix}&r &7› &7&c無法建立診斷報告。詳情請參閱控制台。&r"
-link_hover = "&7打開公開的mclo.gs報告。&r"
-saved = "{prefix}&r &7› &7&7已將診斷報告儲存至&7&f{path}&r&7。&r"
-started = "{prefix}&r &7› &7&7正在擷取伺服器和{prefix}診斷資訊…&r"
-upload_failed = "{prefix}&r &7› &7&e本地報告已存，但mclo.gs上傳失敗。詳情請參閱控制台。&r"
-uploaded = "{prefix}&r &7› &7&7已上傳診斷報告：&7&r&b&n{url}&r"
+busy = "{prefix}&r &7› &7&e{prefix} 診斷報告已在建立中。&r"
+failed = "{prefix}&r &7› &7&c無法建立診斷報告，詳情請查看主控台。&r"
+link_hover = "&7開啟公開的 mclo.gs 報告。&r"
+saved = "{prefix}&r &7› &7&a已儲存&7診斷報告至 &f{path}&r&7。&r"
+started = "{prefix}&r &7› &7&7正在收集伺服器與 {prefix} 的診斷資訊…&r"
+upload_failed = "{prefix}&r &7› &7&e本機報告已儲存，但上傳至 mclo.gs 失敗。詳情請查看主控台。&r"
+uploaded = "{prefix}&r &7› &7&a已上傳&7診斷報告：&r &b&n{url}&r"
 
 [command.parameter]
-locale = "可用的語言地區"
-page = "從一開始編號的傳送門列表頁"
-portal = "傳送門UUID、唯一前綴或列表"
+locale = "可用的語言代碼"
+page = "傳送門清單頁碼（從 1 開始）"
+portal = "傳送門 UUID、唯一前綴或 list"
 upload = "啟用公開上傳時上傳報告"
 
 [command.status]
-attempts = "{prefix}&r &7› &7&7嘗試次數:&r&f{attempts}&r&8|&r&7建立日期:&r&a{created}&r&8|&r&7拒絕:&r&c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7工件:&r&fJava 25 / Bukkit 26.1-26.3&r&8|&r&7排程者:&r&f{scheduler}&r"
-config = "{prefix}&r &7› &7&7建立：&r{enabled}&8|&r&7語言：&r&f{language}&r&8|&r&7熱重載：&r{hot_reload}"
-header = "{prefix}&r &7› &7執行狀態&r"
-portals = "{prefix}&r &7› &7&7已管理傳送門：&r&f{portals}&r&8|&r&7內部方塊：&r&f{cells}&r"
+attempts = "{prefix}&r &7› &7&7嘗試：&r &f{attempts}&r &8|&r &7已建立：&r &a{created}&r &8|&r &7已拒絕：&r &c{rejected}&r"
+compatibility = "{prefix}&r &7› &7&7建置：&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7排程器：&r &f{scheduler}&r"
+config = "{prefix}&r &7› &7&7傳送門建立：&r {enabled} &8|&r &7語言：&r &f{language}&r &8|&r &7熱重載：&r {hot_reload}"
+header = "{prefix}&r &7› &7&7執行狀態&r"
+portals = "{prefix}&r &7› &7&7受管傳送門：&r &f{portals}&r &8|&r &7內部格數：&r &f{cells}&r"
 
 [director.help]
 category = "指令類別"
-command_group = "命令群組。點擊以開啟。"
+command_group = "指令群組。點擊以開啟。"
 no_description = "未提供說明"
-no_parameters = "無參數。點擊以預先填入命令。"
-no_subcommands = "此頁面沒有子命令。"
-parameters_hover = "將滑鼠懸停在參數上以瞭解更多。"
+no_parameters = "無參數。點擊以預先填入指令。"
+no_subcommands = "此頁沒有子指令。"
+parameters_hover = "將滑鼠游標停在參數上以瞭解詳情。"
 
 [director.help.navigation]
 back = "返回"
-page = "頁面"
+page = "頁"
 
 [director.help.navigation.next]
 hover = "下一頁"
 
 [director.help.navigation.parent]
-hover = "返回上層命令群組"
+hover = "返回上層指令群組"
 
 [director.help.navigation.previous]
 hover = "上一頁"
 
 [director.help.parameter]
-default = "未指定時預設為 \"{value}\"。"
-optional = "此參數為可選項。"
-required = "此參數為必填項。"
+default = "未指定時預設為「{value}」。"
+optional = "此參數為選填。"
+required = "此參數為必填。"
 type = "此參數的類型為 {type}。"
 
 [director.runtime]
 
 [director.runtime.error]
-conversion_failed = "無法將 \"{value}\" 轉換為 {parameter} 所需的 {type}"
+conversion_failed = "無法將「{value}」轉換為 {parameter} 所需的 {type} 類型"
 default_parse_failed = "無法解析參數 {parameter} 的預設值"
-execution_failed = "執行指令 {command} 失敗: {reason}"
-invalid_origin = "無法從此來源執行該指令。"
-missing_argument = "缺少參數 \"{parameter}\" ({type})"
-unclosed_group = "引數 {key} 缺少閉合的 \"]\""
-unexpected_argument = "意外參數 \"{argument}\"。選用參數必須使用鍵指定，例如 seed=123"
-unknown_parameter = "未知參數鍵: {key}"
+execution_failed = "執行指令 {command} 失敗：{reason}"
+invalid_origin = "無法從目前來源執行此指令。"
+missing_argument = "缺少參數「{parameter}」（{type}）"
+unclosed_group = "參數 {key} 缺少右括號「]」"
+unexpected_argument = "非預期的參數「{argument}」。選填參數必須以鍵值形式指定，例如 seed=123"
+unknown_parameter = "未知的參數鍵：{key}"
 
 [gui.category]
 debug = "&d診斷&r"
@@ -156,25 +157,25 @@ effects = "&d效果&r"
 general = "&d一般&r"
 hot_reload = "&d熱重載&r"
 integrity = "&d完整性&r"
-portal = "&d入口規則&r"
-presentation = "&d展示&r"
+portal = "&d傳送門規則&r"
+presentation = "&d顯示&r"
 languages = "&d語言&r"
 
 [gui.language]
-empty = "&e未找到可用語言；輸入區域名稱以建立一個。&r"
-hover = "&7點擊以選擇&f{locale}&r&7。&r"
+empty = "&e找不到可用的語言；輸入語言代碼即可建立。&r"
+hover = "&7點擊以選擇 &f{locale}&r&7。&r"
 option = "{status} &f{locale}&r &8›&r &7{name}&r"
-type = "&7在聊天中輸入一個區域名稱以創建或選擇它。&r"
+type = "&7在聊天中輸入語言代碼以建立或選擇該語言。&r"
 current = "&7目前值：&r {value}"
-variables = "&7目前的變數 / 佔位符：&r &f{variables}&r"
+variables = "&7目前的變數 / 預留位置：&r &f{variables}&r"
 changed = "&f{old}&r &7已變更為&r &f{new}&r"
 
 [gui.lore]
 category = "&8點擊以編輯此類別中的所有設定。&r"
-language = "&8點擊以選擇可用語言或輸入語言區域。&r"
-number = "&8左 +1，右 -1，Shift ×10，拖動至類型。&r"
-state = "&7當前：&r{value}"
-text = "&8點擊以在聊天中輸入新數值。&r"
+language = "&8點擊以選擇可用的語言，或輸入語言代碼。&r"
+number = "&8左鍵 +1，右鍵 -1，Shift ×10，按丟棄鍵手動輸入。&r"
+state = "&7目前：&r {value}"
+text = "&8點擊後在聊天中輸入新值。&r"
 toggle = "&8點擊以切換。&r"
 
 [gui.navigation]
@@ -182,170 +183,170 @@ back = "&e返回&r"
 close = "&c關閉&r"
 
 [gui.prompt]
-cancel = "{prefix}&r &7› &7&7輸入&fcancel&r&7以停止。本提示會在 60 秒後失效。&r"
-cancelled = "{prefix}&r &7› &7&e配置編輯已取消。&r"
-list = "{prefix}&r &7› &7&7用逗號分隔列表條目。輸入&fnone&r&7表示列表為空。&r"
-request = "{prefix}&r &7› &7&e在聊天中輸入&f{setting}&r&e的新數值。&r"
-timeout = "{prefix}&r &7› &7&e配置編輯到期且未更改任何內容。&r"
+cancel = "{prefix}&r &7› &7&7輸入 &fcancel&r&7 可取消。此提示將在 60 秒後失效。&r"
+cancelled = "{prefix}&r &7› &7&e已取消設定編輯。&r"
+list = "{prefix}&r &7› &7&7清單項目請以逗號分隔。輸入 &fnone&r&7 表示空白清單。&r"
+request = "{prefix}&r &7› &7&e請在聊天中輸入 &f{setting}&r&e 的新值。&r"
+timeout = "{prefix}&r &7› &7&e設定編輯已逾時，未做任何變更。&r"
 
 [gui.setting.debug]
-upload_enabled = "&d上傳除錯報告至mclo.gs&r"
+upload_enabled = "&d上傳診斷報告至 mclo.gs&r"
 
 [gui.setting.effects]
-creation_sound = "&dNether 創建音效&r"
-creation_sound_pitch = "&dNether 創建音效音調&r"
-end_creation_sound = "&dEnd 創建音效&r"
-end_creation_sound_type = "&dEnd 創建音效類型&r"
-end_creation_sound_volume = "&dEnd 創建音效音量&r"
-end_creation_sound_pitch = "&dEnd 創建音效音調&r"
-creation_sound_type = "&dNether 創建音效類型&r"
-creation_sound_volume = "&dNether 創建音效音量&r"
+creation_sound = "&d地獄傳送門音效&r"
+creation_sound_pitch = "&d地獄傳送門音效音調&r"
+end_creation_sound = "&d終界傳送門音效&r"
+end_creation_sound_type = "&d終界傳送門音效類型&r"
+end_creation_sound_volume = "&d終界傳送門音效音量&r"
+end_creation_sound_pitch = "&d終界傳送門音效音調&r"
+creation_sound_type = "&d地獄傳送門音效類型&r"
+creation_sound_volume = "&d地獄傳送門音效音量&r"
 
 [gui.setting.general]
 update_notifications = "&dGitHub 更新通知&r"
-enabled = "&d建立傳送門&r"
+enabled = "&d傳送門建立&r"
 failure_feedback = "&d傳送門失敗回饋&r"
-language = "&d活躍語言地區&r"
-require_create_permission = "&d需要創建權限&r"
+language = "&d目前語言代碼&r"
+require_create_permission = "&d需要建立權限&r"
 
 [gui.setting.metrics]
 enabled = "&d匿名 bStats 統計&r"
 
 [gui.setting.hot_reload]
-cooldown_millis = "&d保存冷卻毫秒&r"
-enabled = "&d熱加載&r"
-notify_operators = "&d通知操作員&r"
-poll_interval_millis = "&d輪詢間隔毫秒&r"
+cooldown_millis = "&d儲存冷卻（毫秒）&r"
+enabled = "&d熱重載&r"
+notify_operators = "&d通知管理員&r"
+poll_interval_millis = "&d輪詢間隔（毫秒）&r"
 
 [gui.setting.integrity]
-check_interval_ticks = "&d檢查間隔刻度&r"
+check_interval_ticks = "&d檢查間隔（刻）&r"
 enabled = "&d完整性服務&r"
-maximum_checks_per_cycle = "&d每個週期的最大檢查次數&r"
+maximum_checks_per_cycle = "&d每輪最大檢查數&r"
 
 [gui.setting.portal]
-allowed_worlds = "&d允許世界&r"
-deduplication_millis = "&d去重毫秒&r"
-end_portal_creation = "&dEnd 建立傳送門&r"
-end_minimum_interior_blocks = "&dEnd 最小內部區塊&r"
-end_maximum_interior_blocks = "&dEnd 最大內部區塊&r"
-end_maximum_width = "&dEnd 最大寬度&r"
-end_maximum_length = "&dEnd 最大寬度&r"
-end_interior_materials = "&dEnd 內部材料&r"
-denied_worlds = "&d禁止世界&r"
-frame_materials = "&dNether 框架材料&r"
-ignition_causes = "&d點火原因&r"
-interior_materials = "&dNether 內部材料&r"
-maximum_height = "&dNether 最大高度&r"
-maximum_interior_blocks = "&dNether 最大內部區塊&r"
-maximum_width = "&dNether 最大寬度&r"
-minimum_interior_blocks = "&dNether 最小內部區塊&r"
+allowed_worlds = "&d允許的世界&r"
+deduplication_millis = "&d去重間隔（毫秒）&r"
+end_portal_creation = "&d異形終界傳送門建立&r"
+end_minimum_interior_blocks = "&d終界最小內部方塊數&r"
+end_maximum_interior_blocks = "&d終界最大內部方塊數&r"
+end_maximum_width = "&d終界最大寬度&r"
+end_maximum_length = "&d終界最大長度&r"
+end_interior_materials = "&d終界內部材料&r"
+denied_worlds = "&d禁止的世界&r"
+frame_materials = "&d地獄框架材料&r"
+ignition_causes = "&d點燃方式&r"
+interior_materials = "&d地獄內部材料&r"
+maximum_height = "&d地獄最大高度&r"
+maximum_interior_blocks = "&d地獄最大內部方塊數&r"
+maximum_width = "&d地獄最大寬度&r"
+minimum_interior_blocks = "&d地獄最小內部方塊數&r"
 
 [gui.setting.presentation]
-command_overlays = "&d指令覆蓋層&r"
+command_overlays = "&d指令畫面提示&r"
 command_sounds = "&d指令音效&r"
-overlay_duration_ticks = "&d覆蓋層持續刻度&r"
-portal_notices = "&d入口通知頻道&r"
-nether_creation_notices = "&dNether 入口通知頻道&r"
-end_creation_notices = "&dEnd 入口通知頻道&r"
-splash_screen = "&d啟動閃屏&r"
-title_fade_in_ticks = "&d標題淡入刻度&r"
-title_fade_out_ticks = "&d標題淡出刻度&r"
-title_stay_ticks = "&d標題停留刻度&r"
+overlay_duration_ticks = "&d畫面提示時長（刻）&r"
+portal_notices = "&d傳送門拒絕通知方式&r"
+nether_creation_notices = "&d地獄傳送門建立通知方式&r"
+end_creation_notices = "&d終界傳送門建立通知方式&r"
+splash_screen = "&d啟動畫面&r"
+title_fade_in_ticks = "&d標題淡入（刻）&r"
+title_fade_out_ticks = "&d標題淡出（刻）&r"
+title_stay_ticks = "&d標題停留（刻）&r"
 
 [gui.title]
-category = "{prefix}&r&8›&r{category}"
-root = "{prefix}配置&r"
+category = "{prefix}&r &7› &7{category}"
+root = "{prefix}&r &7› &7設定&r"
 
 [hud]
 failure = "&c操作失敗&r"
-info = "{prefix}"
+info = "{prefix}&r"
 success = "&a成功&r"
-title = "{prefix}"
+title = "{prefix}&r"
 
 [portal.title]
-nether_created = "&5&l已建立地獄傳送門&r"
-end_created = "&5&l已建立終界傳送門&r"
+nether_created = "&5&l地獄傳送門已建立&r"
+end_created = "&5&l終界傳送門已建立&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&r &7› &7&c&f{portal}&r&c旁邊沒有安全的站立空間。&e若仍要傳送到門內，請在&f{seconds}&r&e秒內再次點擊同一個傳送門。&r"
+unsafe = "{prefix}&r &7› &7&c&f{portal}&r&c 旁邊沒有安全的落腳空間。&e若仍要傳送進入該傳送門，請在 &f{seconds}&r&e 秒內再次點擊同一個傳送門。&r"
 
 [portal.navigation.error]
-ambiguous = "{prefix}&r &7› &7&c前綴&f{portal}&r&c匹配{matches}個傳送門。請輸入更多UUID.&r"
-destination_unavailable = "{prefix}&r &7› &7&c該傳送門目的地暫時無法使用。&r"
-inactive = "{prefix}&r &7› &7&c該傳送門已不再啟用。其完整性檢查已排入隊列。&r"
-no_safe_landing = "{prefix}&r &7› &7&c在該傳送門旁沒有安全的站立空間。&r"
-not_found = "{prefix}&r &7› &7&c沒有符合的管理傳送門&f{portal}&r&c.&r"
-removed = "{prefix}&r &7› &7&c該傳送門已不再註冊.&r"
-world_unavailable = "{prefix}&r &7› &7&c傳送門世界&f{world}&r&c目前無法使用.&r"
+ambiguous = "{prefix}&r &7› &7&c前綴 &f{portal}&r&c 符合 {matches} 個傳送門。請輸入更完整的 UUID。&r"
+destination_unavailable = "{prefix}&r &7› &7&c該傳送門的目的地暫時無法使用。&r"
+inactive = "{prefix}&r &7› &7&c該傳送門已不再啟用，已排入完整性檢查。&r"
+no_safe_landing = "{prefix}&r &7› &7&c該傳送門旁邊沒有安全的落腳空間。&r"
+not_found = "{prefix}&r &7› &7&c沒有與 &f{portal}&r&c 符合的受管傳送門。&r"
+removed = "{prefix}&r &7› &7&c該傳送門已不再註冊。&r"
+world_unavailable = "{prefix}&r &7› &7&c傳送門所在的世界 &f{world}&r&c 目前無法使用。&r"
 
 [portal.navigation.list]
-frame_policy_note = "&8  ⚠&r &e現有框架使用 &f{materials}&r&e；這些材料無法再用於建立新傳送門。&r"
-empty = "&e未註冊任何已管理的異形傳送門。&r"
-entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7位置:&r &f{x}, {y}, {z}&r &8•&r &7軸:&r &f{axis}&r &8•&r &7單元:&r &f{blocks}&r\n&8  └&r &7建立者:&r &f{creator}&r &8•&r &7建立時間:&r &f{created}&r"
-hover = "&7UUID:&r&f{uuid}&r\n&a點擊以傳送至此傳送門。&r"
+frame_policy_note = "&8  ⚠&r &e現有框架使用 &f{materials}&r&e，此材料已無法用於建立新傳送門。&r"
+empty = "&e沒有已註冊的受管異形傳送門。&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7類型：&r &f{type}&r\n&8  ├&r &7位置：&r &f{x}, {y}, {z}&r &8•&r &7軸向：&r &f{axis}&r &8•&r &7格數：&r &f{blocks}&r\n&8  └&r &7建立者：&r &f{creator}&r &8•&r &7建立時間：&r &f{created}&r"
+hover = "&7UUID：&r &f{uuid}&r\n&a點擊以傳送至此傳送門。&r"
 
 [portal.navigation.teleport]
-failed = "{prefix}&r &7› &7&c傳送門傳送未完成。可能已被其他插件取消。&r"
-preparing = "{prefix}&r &7› &7&7正在準備目的地&f{portal}&r&7…&r"
-success = "{prefix}&r &7› &7&7已傳送至&7&f{portal}&r&7旁的&f{world}&r&7。&r"
+failed = "{prefix}&r &7› &7&c傳送門傳送未完成，可能已被其他外掛取消。&r"
+preparing = "{prefix}&r &7› &7&7正在為 &f{portal}&r&7 準備目的地…&r"
+success = "{prefix}&r &7› &7&a已傳送&7至 &f{world}&r&7 中 &f{portal}&r&7 的旁邊。&r"
 
 [portal.notice]
-nether_created = "{prefix}&r &7› &7&7已建立一個內部由&7&f{blocks}&7方塊組成的成形傳送門.&r"
-end_created = "{prefix}&r &7› &7&7End&7&r &7已建立一個內部由&f{blocks}&7方塊組成的成形傳送門.&r"
+nether_created = "{prefix}&r &7› &7&a已建立&7異形地獄傳送門，內部共 &f{blocks}&7 個方塊。&r"
+end_created = "{prefix}&r &7› &7&a已建立&7異形終界傳送門，內部共 &f{blocks}&7 個方塊。&r"
 
 [portal.failure]
-cross_region = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：形狀跨越了獨立管理的多個 Folia 區域。&r"
-too_large = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：內部方塊數量超過了設定的上限。&r"
-too_wide = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：內部寬度超過了設定的上限。&r"
-too_tall = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：內部高度超過了設定的上限。&r"
-too_small = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：內部空間小於設定的最小值。&r"
-ambiguous_axis = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：框架在兩個軸上都有效。&r"
-start_blocked = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：點火位置的方塊已無法替換。&r"
-open_frame = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：框架未封閉，或內部有被阻擋的位置。&r"
-region_unavailable = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：負責此位置的區域無法使用。&r"
-wormholes_rejected = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：Wormholes 拒絕了傳送門建立。&r"
-event_cancelled = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：其他插件取消了建立。&r"
-block_denied = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：其他插件拒絕了一個或多個傳送門方塊。&r"
-frame_changed = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：框架在建立過程中發生了變化。&r"
-overlapping_portal = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：形狀與現有的受管理傳送門重疊。&r"
-world_mutation_failed = "{prefix}&r &7› &7&c無法用這個框架建立自訂形狀的傳送門：世界修改失敗。&r"
+cross_region = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&f形狀跨越了多個獨立歸屬的 Folia 區域&r&c。&r"
+too_large = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&f內部方塊數超過了設定的上限&r&c。&r"
+too_wide = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&f內部寬度超過了設定的上限&r&c。&r"
+too_tall = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&f內部高度超過了設定的上限&r&c。&r"
+too_small = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&f內部小於設定的最小值&r&c。&r"
+ambiguous_axis = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&f框架在兩個軸向上皆有效&r&c。&r"
+start_blocked = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&f點燃位置的方塊已無法被取代&r&c。&r"
+open_frame = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&f框架未封閉，或內部有被阻擋的格子&r&c。&r"
+region_unavailable = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&f所屬區域無法使用&r&c。&r"
+wormholes_rejected = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&fWormholes 拒絕建立傳送門&r&c。&r"
+event_cancelled = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&f其他外掛取消了建立&r&c。&r"
+block_denied = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&f其他外掛拒絕放置一個或多個傳送門方塊&r&c。&r"
+frame_changed = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&f框架在建立過程中發生了變化&r&c。&r"
+overlapping_portal = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&f形狀與現有的受管傳送門重疊&r&c。&r"
+world_mutation_failed = "{prefix}&r &7› &7&c此框架無法成為異形傳送門：&f世界修改失敗&r&c。&r"
 
 [runtime]
-player_only = "{prefix}&r &7› &7&c此指令僅能由玩家使用。&r"
+player_only = "{prefix}&r &7› &7&c此指令只能由玩家使用。&r"
 prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
 
 [runtime.hot_reload]
-failed = "{prefix}&r &7› &7&c文件更改被拒絕；最後一次已知的良好設定仍然有效。&r"
-success = "{prefix}&r &7› &7&7已應用配置和語言文件更改。&7&r"
+failed = "{prefix}&r &7› &7&c已拒絕檔案變更；上一次有效的設定仍在使用中。&r"
+success = "{prefix}&r &7› &7&a已套用&7設定與語言檔案的變更。&r"
 
 [runtime.permission]
-denied = "{prefix}&r &7› &7&c您沒有權限執行此操作。&r"
+denied = "{prefix}&r &7› &7&c你沒有權限執行此操作。&r"
 
 [language.menu]
-your_language = "您的語言"
-reset_your_language = "重設您的語言"
+your_language = "你的語言"
+reset_your_language = "重設你的語言"
 server_default = "伺服器預設語言"
 edit_messages = "編輯語言訊息"
 use_server_default = "使用伺服器預設語言"
 current = "目前：{locale}"
-current_with_personal = "目前：{locale}（您的：{personal}）"
-your_description = "只變更您看到的訊息。"
+current_with_personal = "目前：{locale}（你的：{personal}）"
+your_description = "只變更你看到的訊息。"
 reset_description = "使用伺服器預設語言。"
 server_description = "變更伺服器預設語言。"
-edit_description = "開啟各語言的訊息編輯器。"
+edit_description = "開啟依語言編輯的訊息編輯器。"
 select_description = "點擊以選擇此語言。"
-remove_personal_description = "移除您的個人語言選擇。"
-no_controls = "您無權使用語言設定。"
-command = "命令: {command}"
+remove_personal_description = "移除你的個人語言選擇。"
+no_controls = "你沒有可用的語言選項。"
+command = "指令：{command}"
 selected = "已選擇"
 all-volmit-plugins = "所有 Volmit 外掛"
 
 [language.error]
 stopping = "{prefix}&r &7› &7&c外掛停止期間無法選擇語言。"
 editor-player-only = "{prefix}&r &7› &7&c請在遊戲中開啟語言編輯器。"
-no-providers = "{prefix}&r &7› &7&c沒有可用的 Volmit 語言提供程式。"
+no-providers = "{prefix}&r &7› &7&c沒有可用的 Volmit 語言提供者。"
 numeric-page = "{prefix}&r &7› &7&c請輸入數字頁碼。"
-personal-player-only = "{prefix}&r &7› &7&c玩家必須在遊戲中選擇個人語言。"
+personal-player-only = "{prefix}&r &7› &7&c玩家語言偏好必須在遊戲中選擇。"
 personal-permission = "{prefix}&r &7› &7&c你沒有權限選擇個人語言。"
 plugin-personal-permission = "{prefix}&r &7› &7&c你沒有權限為 {prefix} 選擇個人語言。"
 plugin-server-permission = "{prefix}&r &7› &7&c你沒有權限變更 {prefix} 的伺服器語言。"
@@ -353,23 +354,24 @@ server-locale-required = "{prefix}&r &7› &7&c請選擇 en_US 等語言代碼�
 unavailable-for-all = "{prefix}&r &7› &7&c語言 {locale} 並非適用於所有選取的外掛。"
 
 [language.usage]
-editor = "{prefix}&r &7› &7&7用法: /{command} language server edit [locale]"
-selection = "{prefix}&r &7› &7&7用法: /{command} language self [locale|reset] or server [locale]"
-volmit-selection = "{prefix}&r &7› &7&7用法: /volmit plugins languages [locale]"
-update = "{prefix}&r &7› &7&7用法: /{command} language update"
+editor = "{prefix}&r &7› &7&7用法：/{command} language server edit [locale]"
+selection = "{prefix}&r &7› &7&7用法：/{command} language self [locale|reset] 或 server [locale]"
+volmit-selection = "{prefix}&r &7› &7&7用法：/volmit plugins languages [locale]"
+update = "{prefix}&r &7› &7&7用法：/{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7正在為 {target} 準備語言 {locale}..."
-save-failed = "{prefix}&r &7› &7&c{prefix}：無法儲存語言選擇；請檢查伺服器主控台。"
-english-fallback = "{prefix}&r &7› &7&e{prefix}：{locale} 無法使用；將使用英語（en_US）。"
-personal-selected = "{prefix}&r &7› &7&7{prefix}：你的語言現在是 {locale}。"
-server-selected = "{prefix}&r &7› &7&7{prefix}：伺服器語言現在是 {locale}。"
-server-default-selected = "{prefix}&r &7› &7&7{prefix}：你的語言現在跟隨伺服器預設語言。"
+save-failed = "{prefix}&r &7› &7&c無法儲存語言選擇，請檢查伺服器主控台。"
+english-fallback = "{prefix}&r &7› &7&e{locale} 無法使用，將改用英文（en_US）。"
+personal-selected = "{prefix}&r &7› &7&7你的語言已設為 {locale}。"
+server-selected = "{prefix}&r &7› &7&7伺服器語言已設為 {locale}。"
+server-default-selected = "{prefix}&r &7› &7&7你的語言現在跟隨伺服器預設語言。"
 
 [language.update]
 checking = "{prefix}&r &7› &7&7正在檢查語言儲存庫的變更..."
-unchanged = "{prefix}&r &7› &7&7已安裝的語言已與儲存庫一致。"
+unchanged = "{prefix}&r &7› &7&7已安裝的語言與儲存庫一致。"
 applied = "{prefix}&r &7› &7&7已更新 {locale}（新增 {added}，變更 {updated}，保留本機修改 {kept}）。"
+cooldown = "{prefix}&r &7› &7&7最近已檢查過語言儲存庫，請在 {remaining} 後重試。"
 locale-failed = "{prefix}&r &7› &7&c{locale} 未更新：{reason}"
 failed = "{prefix}&r &7› &7&c語言更新失敗：{reason}"
 
@@ -384,41 +386,41 @@ search-title = "{locale} / 搜尋"
 group-title = "{locale} / {group}"
 
 [language.editor.prompt]
-search = "{prefix}&r &7› &7&7搜尋訊息鍵或內容。輸入 cancel 返回。"
+search = "{prefix}&r &7› &7&7搜尋訊息鍵或文字。輸入 cancel 返回。"
 value = "{prefix}&r &7› &7&7請在聊天中輸入 {key} 的新值。"
-current = "{prefix}&r &7› &7&7目前值： {value}"
-variables = "{prefix}&r &7› &7&7變數: {variables}"
+current = "{prefix}&r &7› &7&7目前值：{value}"
+variables = "{prefix}&r &7› &7&7變數：{variables}"
 guidance = "{prefix}&r &7› &7&7使用 \\n 表示換行，\\\\ 表示反斜線，或輸入 cancel 返回。"
 
 [language.editor.input]
-expired = "{prefix}&r &7› &7&e語言編輯器的輸入時間已到期。"
-too-long = "{prefix}&r &7› &7&c輸入最多可包含 {maximum} 個字元。"
+expired = "{prefix}&r &7› &7&e語言編輯器的輸入已逾時。"
+too-long = "{prefix}&r &7› &7&c編輯器輸入最多 {maximum} 個字元。"
 unable-to-save = "{prefix}&r &7› &7&c無法儲存：{reason}"
 
 [language.editor.navigation]
 back = "&e返回&r"
 close = "&c關閉&r"
-previous-page = "&e前一頁&r"
+previous-page = "&e上一頁&r"
 next-page = "&e下一頁&r"
 
 [language.editor.search]
 messages = "搜尋訊息"
-messages-lore = "點擊搜尋所有訊息。"
+messages-lore = "點擊以搜尋所有訊息。"
 clear = "清除搜尋"
 
 [language.editor.message]
-current-value = "&7目前值:&r"
+current-value = "&7目前值：&r"
 variables = "&8{variables}&r"
-edit-plural = "&7點擊編輯複數形式。&r"
-edit-lines = "&7點擊逐行編輯。&r"
-edit-chat = "&7點擊在聊天中編輯。&r"
+edit-plural = "&7點擊以編輯複數形式。&r"
+edit-lines = "&7點擊以逐行編輯。&r"
+edit-chat = "&7點擊以在聊天中編輯。&r"
 
 [language.editor.locale]
-open = "&8點擊開啟此語言。&r"
+open = "&8點擊以開啟此語言。&r"
 
 [language.editor.category]
 message-count = "&7{count} 則訊息&r"
-open = "&8點擊開啟此類別。&r"
+open = "&8點擊以開啟此類別。&r"
 
 [language.editor.error]
 no-permission = "{prefix}&r &7› &7&c你沒有權限編輯 {prefix} 的語言。"
@@ -433,11 +435,11 @@ line = "第 {line} 行"
 
 [language.editor.value]
 none = "無"
-empty = "(空)"
+empty = "（空白）"
 
 [debug.error]
 missing-permission = "{prefix}&r &7› &7&c缺少權限：{permission}"
-already-preparing = "{prefix}&r &7› &7&c正在為 {prefix} 產生診斷報告。"
+already-preparing = "{prefix}&r &7› &7&c已在為 {prefix} 產生診斷報告。"
 already-preparing-short = "{prefix}&r &7› &7&c已有診斷報告正在產生。"
 schedule-failed = "{prefix}&r &7› &7&c無法排程診斷報告產生工作。"
 provider-closed = "{prefix}&r &7› &7&c診斷資料提供者已關閉。"

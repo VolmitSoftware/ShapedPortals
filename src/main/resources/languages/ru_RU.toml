@@ -6,68 +6,69 @@
 # /shapedportals language server edit ru_RU
 #
 # === Префикс ===
-# {prefix}  Оформленное имя плагина из runtime.prefix; разделитель находится в сообщении. Удалите {prefix}&r &7› &7, чтобы скрыть оба элемента.
+# {prefix}  Оформленное имя плагина из runtime.prefix; разделитель находится в самом сообщении. Удалите {prefix}&r &7› &7, чтобы скрыть и имя, и разделитель.
 #
 # === Форматирование ===
-# Цвета: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B и [RRGGBB]. Для своего оформления также доступен MiniMessage.
-# Чтобы показать & или [ буквально, поставьте перед символом обратную косую черту.
+# Цвета: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B и [RRGGBB]. Для собственного оформления также доступен MiniMessage.
+# Чтобы показать & или [ как обычный символ, поставьте перед ним обратную косую черту.
 #
 # === Переменные ===
-# Не меняйте имена переменных и используйте только переменные исходного сообщения.
-#   {added}  Сообщения, добавленные обновлением языка
-#   {after}  Ценность после изменения
+# Не меняйте имена переменных и используйте только те переменные, которые есть в исходном сообщении.
+#   {added}  число сообщений, добавленных обновлением языка
+#   {after}  значение после изменения
 #   {argument}  неожиданный аргумент
-#   {attempts}  попытки создания
-#   {axis}  ось
-#   {before}  Ценность перед изменением
-#   {blocks}  ячейки портала
+#   {attempts}  число попыток создания
+#   {axis}  ось портала
+#   {before}  значение до изменения
+#   {blocks}  число внутренних блоков портала
 #   {category}  категория
-#   {cells}  все ячейки
+#   {cells}  общее число внутренних ячеек
 #   {command}  путь команды
-#   {count}  Количество совпадающих записей
-#   {created}  число созданных или время создания
+#   {count}  число подходящих записей
+#   {created}  число созданных порталов или время создания
 #   {creator}  создатель
-#   {enabled}  состояние создания
-#   {group}  Разрешение или группа игроков
-#   {hot_reload}  состояние перезагрузки
+#   {enabled}  состояние создания порталов
+#   {group}  разрешение или группа игроков
+#   {hot_reload}  состояние горячей перезагрузки
 #   {id}  короткий ID
-#   {kept}  Локальные правки, сохранённые обновлением языка
-#   {key}  ключ параметра
+#   {kept}  локальные правки, сохранённые при обновлении языка
+#   {key}  ключ параметра или сообщения
 #   {language}  активный язык
-#   {line}  Источник строки или номер строки
-#   {locale}  локаль
-#   {matches}  совпавшие порталы
-#   {materials}  записанные материалы рамки
-#   {maximum}  Максимально допустимая стоимость
+#   {line}  исходная строка или номер строки
+#   {locale}  код языка
+#   {matches}  число подходящих порталов
+#   {materials}  материалы рамки из записи портала
+#   {maximum}  максимально допустимое значение
 #   {name}  полное название языка
 #   {new}  новое значение
 #   {old}  предыдущее значение
 #   {parameter}  имя параметра
-#   {path}  путь локального отчёта
+#   {path}  путь к локальному отчёту
 #   {permission}  необходимое разрешение
-#   {personal}  личная локаль
-#   {portal}  идентификатор
-#   {portals}  число управляемых
-#   {prefix}  Оформленное имя плагина из runtime.prefix; разделитель находится в сообщении. Удалите {prefix}&r &7› &7, чтобы скрыть оба элемента.
+#   {personal}  личный код языка
+#   {portal}  идентификатор портала
+#   {portals}  число управляемых порталов
+#   {prefix}  Оформленное имя плагина из runtime.prefix; разделитель находится в самом сообщении. Удалите {prefix}&r &7› &7, чтобы скрыть и имя, и разделитель.
 #   {reason}  причина ошибки
-#   {rejected}  отклонённые попытки
+#   {rejected}  число отклонённых попыток
+#   {remaining}  время до следующей разрешённой проверки языков
 #   {scheduler}  планировщик
-#   {seconds}  время подтверждения в секундах
-#   {section}  Раздел редактора
+#   {seconds}  время на подтверждение в секундах
+#   {section}  раздел редактора
 #   {setting}  название настройки
 #   {status}  метка выбора
-#   {target}  Целевой игрок, сущность или ценность
+#   {target}  целевой игрок, сущность или значение
 #   {type}  тип
-#   {updated}  Сообщения, изменённые обновлением языка
+#   {updated}  число сообщений, изменённых обновлением языка
 #   {url}  публичный URL
 #   {uuid}  полный UUID
 #   {value}  текущее, стандартное или исходное значение
 #   {variables}  допустимые заполнители
 #   {version}  версия плагина
 #   {world}  мир
-#   {x}  координаты якоря
-#   {y}  координаты якоря
-#   {z}  координаты якоря
+#   {x}  координата X опорной точки
+#   {y}  координата Y опорной точки
+#   {z}  координата Z опорной точки
 
 [runtime]
 prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
@@ -77,33 +78,33 @@ player_only = "{prefix}&r &7› &7&cЭту команду может испол�
 denied = "{prefix}&r &7› &7&cУ вас нет разрешения на это действие.&r"
 
 [runtime.hot_reload]
-success = "{prefix}&r &7› &7&7Изменения&7 конфигурации и языковых файлов применены.&r"
-failed = "{prefix}&r &7› &7&cИзменения файлов отклонены; последние корректные настройки остаются активными.&r"
+success = "{prefix}&r &7› &7&aПрименены&7 изменения конфигурации и языковых файлов.&r"
+failed = "{prefix}&r &7› &7&cИзменения файлов отклонены; продолжают действовать последние корректные настройки.&r"
 
 [command.feedback]
 version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
 failed = "{prefix}&r &7› &7&cНе удалось выполнить команду. Подробности смотрите в консоли.&r"
 
 [command.feedback.config]
-opened = "{prefix}&r &7› &7&7Открыт&7 полный внутриигровой редактор конфигурации.&r"
-saved = "{prefix}&r &7› &7&a{setting}&r &7изменён с &f{old}&r &7на &f{new}&r&7.&r"
+opened = "{prefix}&r &7› &7&aОткрыт&7 полный внутриигровой редактор конфигурации.&r"
+saved = "{prefix}&r &7› &7Параметр &f{setting}&r &aизменён&7 с &f{old}&r &7на &f{new}&r&7.&r"
 save_failed = "{prefix}&r &7› &7&cНе удалось применить &f{setting}&r&c: {reason}&r"
 
 [command.feedback.debug]
 started = "{prefix}&r &7› &7&7Сбор диагностических данных сервера и {prefix}…&r"
 busy = "{prefix}&r &7› &7&eДиагностический отчёт {prefix} уже создаётся.&r"
-saved = "{prefix}&r &7› &7&7Диагностический&7 отчёт сохранён в &f{path}&r&7.&r"
-uploaded = "{prefix}&r &7› &7&7Диагностический&7 отчёт загружен:&r &b&n{url}&r"
-link_hover = "&7Открыть общедоступный отчёт mclo.gs.&r"
-upload_failed = "{prefix}&r &7› &7&eЛокальный отчёт сохранён, но загрузка на mclo.gs не удалась. Подробности смотрите в консоли.&r"
+saved = "{prefix}&r &7› &7Диагностический отчёт &aсохранён&7 в &f{path}&r&7.&r"
+uploaded = "{prefix}&r &7› &7Диагностический отчёт &aзагружен&7:&r &b&n{url}&r"
+link_hover = "&7Открыть публичный отчёт на mclo.gs.&r"
+upload_failed = "{prefix}&r &7› &7&eЛокальный отчёт сохранён, но загрузить его на mclo.gs не удалось. Подробности смотрите в консоли.&r"
 failed = "{prefix}&r &7› &7&cНе удалось создать диагностический отчёт. Подробности смотрите в консоли.&r"
 
 [command.status]
-header = "{prefix}&r &7› &7&d&lСостояние {prefix}&r"
+header = "{prefix}&r &7› &7&7Состояние&r"
 config = "{prefix}&r &7› &7&7Создание:&r {enabled} &8|&r &7Язык:&r &f{language}&r &8|&r &7Горячая перезагрузка:&r {hot_reload}"
-portals = "{prefix}&r &7› &7&7Управляемые порталы:&r &f{portals}&r &8|&r &7Внутренние блоки:&r &f{cells}&r"
+portals = "{prefix}&r &7› &7&7Управляемые порталы:&r &f{portals}&r &8|&r &7Внутренние ячейки:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Попытки:&r &f{attempts}&r &8|&r &7Создано:&r &a{created}&r &8|&r &7Отклонено:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Артефакт:&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7Планировщик:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7Сборка:&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7Планировщик:&r &f{scheduler}&r"
 
 [command.description]
 version = "Показать установленную версию {prefix}"
@@ -112,72 +113,72 @@ config = "Открыть полный внутриигровой редакто�
 language = "Выбрать доступный язык {prefix}"
 debug = "Инструменты диагностики {prefix}"
 debug_dump = "Создать подробный диагностический отчёт {prefix}"
-portals = "Показать все управляемые порталы и команды телепортации к ним"
-teleport = "Безопасно телепортироваться рядом с управляемым порталом или показать список порталов, если он не указан"
-status = "Показать статистику управляемых порталов и попыток"
+portals = "Показать все управляемые порталы и ссылки для телепортации к ним"
+teleport = "Безопасно телепортироваться к управляемому порталу или показать список порталов, если портал не указан"
+status = "Показать статистику управляемых порталов и попыток создания"
 
 [command.parameter]
-locale = "Доступная языковая локаль"
-page = "Номер страницы списка порталов, начиная с единицы"
+locale = "Код доступного языка"
+page = "Номер страницы списка порталов (с 1)"
 portal = "UUID портала, уникальный префикс или list"
-upload = "Загрузить отчёт, если включена публичная загрузка"
+upload = "Загрузить отчёт, если публичная загрузка включена"
 
 [portal.notice]
-nether_created = "{prefix}&r &7› &7&7Создан&7 фигурный портал с &f{blocks}&7 внутренними блоками.&r"
-end_created = "{prefix}&r &7› &7&7End&7&r &7Создан фигурный портал с &f{blocks}&7 внутренними блоками.&r"
+nether_created = "{prefix}&r &7› &7&aСоздан&7 портал в Незер произвольной формы; внутренних блоков: &f{blocks}&7.&r"
+end_created = "{prefix}&r &7› &7&aСоздан&7 портал в Энд произвольной формы; внутренних блоков: &f{blocks}&7.&r"
 
 [portal.failure]
-cross_region = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: форма пересекает независимо управляемые регионы Folia.&r"
-too_large = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: число блоков внутренней области превышает заданный предел.&r"
-too_wide = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: ширина внутренней области превышает заданный предел.&r"
-too_tall = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: высота внутренней области превышает заданный предел.&r"
-too_small = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: внутренняя область меньше заданного минимума.&r"
-ambiguous_axis = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: рамка допустима по обеим осям.&r"
-start_blocked = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: блок в точке поджигания больше нельзя заменить.&r"
-open_frame = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: рамка не замкнута или внутри есть заблокированная ячейка.&r"
-region_unavailable = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: ответственный регион был недоступен.&r"
-wormholes_rejected = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: Wormholes отклонил создание портала.&r"
-event_cancelled = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: другой плагин отменил создание.&r"
-block_denied = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: другой плагин запретил один или несколько блоков портала.&r"
-frame_changed = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: рамка изменилась во время создания.&r"
-overlapping_portal = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: форма пересекается с существующим управляемым порталом.&r"
-world_mutation_failed = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: изменение мира не удалось.&r"
+cross_region = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fфигура охватывает независимые регионы Folia&r&c.&r"
+too_large = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fвнутренняя область превышает заданный лимит блоков&r&c.&r"
+too_wide = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fвнутренняя область превышает заданный лимит ширины&r&c.&r"
+too_tall = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fвнутренняя область превышает заданный лимит высоты&r&c.&r"
+too_small = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fвнутренняя область меньше заданного минимума&r&c.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fрамка допустима по обеим осям&r&c.&r"
+start_blocked = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fблок в точке поджига больше нельзя заменить&r&c.&r"
+open_frame = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fрамка не замкнута или внутри есть занятая ячейка&r&c.&r"
+region_unavailable = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fрегион-владелец был недоступен&r&c.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fWormholes отклонил создание портала&r&c.&r"
+event_cancelled = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fдругой плагин отменил создание&r&c.&r"
+block_denied = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fдругой плагин запретил один или несколько блоков портала&r&c.&r"
+frame_changed = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fрамка изменилась во время создания&r&c.&r"
+overlapping_portal = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fфигура пересекается с существующим управляемым порталом&r&c.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cИз этой рамки нельзя создать портал произвольной формы: &fне удалось изменить мир&r&c.&r"
 
 [portal.title]
-nether_created = "&5&lПортал в Нижний мир создан&r"
-end_created = "&5&lПортал в Край создан&r"
+nether_created = "&5&lПортал в Незер создан&r"
+end_created = "&5&lПортал в Энд создан&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&r &7› &7&cРядом с &f{portal}&r&c нет безопасного места. &eНажмите на тот же портал ещё раз в течение &f{seconds}&r&e секунд, чтобы всё равно телепортироваться внутрь него.&r"
+unsafe = "{prefix}&r &7› &7&cРядом с &f{portal}&r&c нет безопасного места. &eНажмите на тот же портал ещё раз в течение &f{seconds}&r&e с, чтобы всё равно телепортироваться в него.&r"
 
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eСуществующая рамка использует &f{materials}&r&e; из этих материалов нельзя создавать новые порталы.&r"
-empty = "&eУправляемые фигурные порталы не зарегистрированы.&r"
-entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Местоположение:&r &f{x}, {y}, {z}&r &8•&r &7Ось:&r &f{axis}&r &8•&r &7Ячейки:&r &f{blocks}&r\n&8  └&r &7Создатель:&r &f{creator}&r &8•&r &7Создан:&r &f{created}&r"
+empty = "&eУправляемые порталы произвольной формы не зарегистрированы.&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Тип:&r &f{type}&r\n&8  ├&r &7Местоположение:&r &f{x}, {y}, {z}&r &8•&r &7Ось:&r &f{axis}&r &8•&r &7Ячейки:&r &f{blocks}&r\n&8  └&r &7Создатель:&r &f{creator}&r &8•&r &7Создан:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aНажмите, чтобы телепортироваться к этому порталу.&r"
 
 [portal.navigation.error]
 not_found = "{prefix}&r &7› &7&cУправляемый портал &f{portal}&r&c не найден.&r"
-ambiguous = "{prefix}&r &7› &7&cПрефиксу &f{portal}&r&c соответствуют {matches} порталов. Введите больше символов UUID.&r"
+ambiguous = "{prefix}&r &7› &7&cПрефиксу &f{portal}&r&c соответствует несколько порталов ({matches}). Введите больше символов UUID.&r"
 removed = "{prefix}&r &7› &7&cЭтот портал больше не зарегистрирован.&r"
 world_unavailable = "{prefix}&r &7› &7&cМир портала &f{world}&r&c сейчас недоступен.&r"
 destination_unavailable = "{prefix}&r &7› &7&cМесто назначения портала временно недоступно.&r"
 inactive = "{prefix}&r &7› &7&cЭтот портал больше не активен. Проверка его целостности поставлена в очередь.&r"
-no_safe_landing = "{prefix}&r &7› &7&cРядом с этим порталом нет безопасного места для телепортации.&r"
+no_safe_landing = "{prefix}&r &7› &7&cРядом с этим порталом нет безопасного места.&r"
 
 [portal.navigation.teleport]
 preparing = "{prefix}&r &7› &7&7Подготовка места назначения для &f{portal}&r&7…&r"
-success = "{prefix}&r &7› &7&7Вы&7 телепортированы рядом с &f{portal}&r&7 в мире &f{world}&r&7.&r"
+success = "{prefix}&r &7› &7Вы &aтелепортированы&7 к &f{portal}&r&7 в мире &f{world}&r&7.&r"
 failed = "{prefix}&r &7› &7&cТелепортация к порталу не завершена. Возможно, её отменил другой плагин.&r"
 
 [hud]
-title = "{prefix}"
+title = "{prefix}&r"
 success = "&aУспешно&r"
 failure = "&cДействие не выполнено&r"
-info = "{prefix}"
+info = "{prefix}&r"
 
 [gui.title]
-root = "&5Настройка {prefix}&r"
+root = "{prefix}&r &7› &7Настройки&r"
 category = "{prefix}&r &7› &7{category}"
 
 [gui.category]
@@ -197,96 +198,96 @@ close = "&cЗакрыть&r"
 [gui.lore]
 state = "&7Текущее значение:&r {value}"
 toggle = "&8Нажмите, чтобы переключить.&r"
-number = "&8ЛКМ +1, ПКМ -1, Shift ×10, выбросить для ввода.&r"
+number = "&8ЛКМ +1, ПКМ -1, Shift ×10, выбросить — ввести вручную.&r"
 text = "&8Нажмите, чтобы ввести новое значение в чат.&r"
-language = "&8Нажмите, чтобы выбрать доступный язык или ввести локаль.&r"
+language = "&8Нажмите, чтобы выбрать доступный язык или ввести код языка.&r"
 category = "&8Нажмите, чтобы изменить все параметры этой категории.&r"
 
 [gui.prompt]
 request = "{prefix}&r &7› &7&eВведите в чат новое значение для &f{setting}&r&e.&r"
-list = "{prefix}&r &7› &7&7Разделяйте элементы списка запятыми. Введите &fnone&r&7, чтобы очистить список.&r"
+list = "{prefix}&r &7› &7&7Разделяйте элементы списка запятыми. Введите &fnone&r&7, чтобы оставить список пустым.&r"
 cancel = "{prefix}&r &7› &7&7Введите &fcancel&r&7 для отмены. Запрос истечёт через 60 секунд.&r"
 cancelled = "{prefix}&r &7› &7&eИзменение конфигурации отменено.&r"
-timeout = "{prefix}&r &7› &7&eВремя изменения конфигурации истекло, ничего не изменено.&r"
+timeout = "{prefix}&r &7› &7&eВремя на изменение конфигурации истекло; ничего не изменено.&r"
 
 [gui.language]
-type = "&7Введите название локали в чат, чтобы создать или выбрать её.&r"
+type = "&7Введите код языка в чат, чтобы создать или выбрать его.&r"
 option = "{status} &f{locale}&r &8›&r &7{name}&r"
 hover = "&7Нажмите, чтобы выбрать &f{locale}&r&7.&r"
-empty = "&eДоступные языки не найдены; введите название локали, чтобы создать её.&r"
+empty = "&eДоступные языки не найдены; введите код языка, чтобы создать новый.&r"
 current = "&7Текущее значение:&r {value}"
-variables = "&7Текущие переменные / заполнители:&r &f{variables}&r"
+variables = "&7Доступные переменные / заполнители:&r &f{variables}&r"
 changed = "&f{old}&r &7изменено на&r &f{new}&r"
 
 [gui.setting.general]
-update_notifications = "&dУведомления об обновлениях GitHub&r"
+update_notifications = "&dУведомления об обновлениях с GitHub&r"
 enabled = "&dСоздание порталов&r"
-language = "&dАктивная языковая локаль&r"
+language = "&dАктивный язык&r"
 require_create_permission = "&dТребовать разрешение на создание&r"
-failure_feedback = "&dСообщения об ошибках порталов&r"
+failure_feedback = "&dСообщения об ошибках создания&r"
 
 [gui.setting.metrics]
 enabled = "&dАнонимная статистика bStats&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dNether Минимум внутренних блоков&r"
-maximum_interior_blocks = "&dNether Максимум внутренних блоков&r"
-maximum_width = "&dNether Максимальная ширина&r"
-maximum_height = "&dNether Максимальная высота&r"
-frame_materials = "&dNether Материалы рамки&r"
-interior_materials = "&dNether Материалы внутренней части&r"
-ignition_causes = "&dПричины зажигания&r"
+minimum_interior_blocks = "&dНезер: минимум внутренних блоков&r"
+maximum_interior_blocks = "&dНезер: максимум внутренних блоков&r"
+maximum_width = "&dНезер: максимальная ширина&r"
+maximum_height = "&dНезер: максимальная высота&r"
+frame_materials = "&dНезер: материалы рамки&r"
+interior_materials = "&dНезер: материалы внутренней области&r"
+ignition_causes = "&dИсточники поджига&r"
 allowed_worlds = "&dРазрешённые миры&r"
 denied_worlds = "&dЗапрещённые миры&r"
-deduplication_millis = "&dИнтервал дедупликации в миллисекундах&r"
-end_portal_creation = "&dEnd Создание порталов&r"
-end_minimum_interior_blocks = "&dEnd Минимум внутренних блоков&r"
-end_maximum_interior_blocks = "&dEnd Максимум внутренних блоков&r"
-end_maximum_width = "&dEnd Максимальная ширина&r"
-end_maximum_length = "&dEnd Максимальная ширина&r"
-end_interior_materials = "&dEnd Материалы внутренней части&r"
+deduplication_millis = "&dИнтервал дедупликации (мс)&r"
+end_portal_creation = "&dПорталы в Энд произвольной формы&r"
+end_minimum_interior_blocks = "&dЭнд: минимум внутренних блоков&r"
+end_maximum_interior_blocks = "&dЭнд: максимум внутренних блоков&r"
+end_maximum_width = "&dЭнд: максимальная ширина&r"
+end_maximum_length = "&dЭнд: максимальная длина&r"
+end_interior_materials = "&dЭнд: материалы внутренней области&r"
 
 [gui.setting.effects]
-creation_sound = "&dNether Звук создания&r"
-creation_sound_type = "&dNether Тип звука создания&r"
-creation_sound_volume = "&dNether Громкость звука создания&r"
-creation_sound_pitch = "&dNether Высота звука создания&r"
-end_creation_sound = "&dEnd Звук создания&r"
-end_creation_sound_type = "&dEnd Тип звука создания&r"
-end_creation_sound_volume = "&dEnd Громкость звука создания&r"
-end_creation_sound_pitch = "&dEnd Высота звука создания&r"
+creation_sound = "&dНезер: звук создания&r"
+creation_sound_type = "&dНезер: тип звука создания&r"
+creation_sound_volume = "&dНезер: громкость звука создания&r"
+creation_sound_pitch = "&dНезер: высота звука создания&r"
+end_creation_sound = "&dЭнд: звук создания&r"
+end_creation_sound_type = "&dЭнд: тип звука создания&r"
+end_creation_sound_volume = "&dЭнд: громкость звука создания&r"
+end_creation_sound_pitch = "&dЭнд: высота звука создания&r"
 
 [gui.setting.hot_reload]
 enabled = "&dГорячая перезагрузка&r"
-poll_interval_millis = "&dИнтервал опроса в миллисекундах&r"
-cooldown_millis = "&dЗадержка сохранения в миллисекундах&r"
+poll_interval_millis = "&dИнтервал опроса (мс)&r"
+cooldown_millis = "&dЗадержка после сохранения (мс)&r"
 notify_operators = "&dУведомлять операторов&r"
 
 [gui.setting.integrity]
 enabled = "&dСлужба целостности&r"
-check_interval_ticks = "&dИнтервал проверки в тиках&r"
+check_interval_ticks = "&dИнтервал проверки (тики)&r"
 maximum_checks_per_cycle = "&dМаксимум проверок за цикл&r"
 
 [gui.setting.presentation]
 splash_screen = "&dЗаставка при запуске&r"
 command_sounds = "&dЗвуки команд&r"
 command_overlays = "&dНаложения команд&r"
-portal_notices = "&dКаналы уведомлений портала&r"
-nether_creation_notices = "&dNether Каналы уведомлений портала&r"
-end_creation_notices = "&dEnd Каналы уведомлений портала&r"
-overlay_duration_ticks = "&dДлительность наложения в тиках&r"
-title_fade_in_ticks = "&dПоявление заголовка в тиках&r"
-title_stay_ticks = "&dПоказ заголовка в тиках&r"
-title_fade_out_ticks = "&dИсчезновение заголовка в тиках&r"
+portal_notices = "&dКаналы уведомлений об отказе&r"
+nether_creation_notices = "&dНезер: каналы уведомлений о создании&r"
+end_creation_notices = "&dЭнд: каналы уведомлений о создании&r"
+overlay_duration_ticks = "&dДлительность наложения (тики)&r"
+title_fade_in_ticks = "&dПоявление заголовка (тики)&r"
+title_stay_ticks = "&dПоказ заголовка (тики)&r"
+title_fade_out_ticks = "&dИсчезновение заголовка (тики)&r"
 
 [gui.setting.debug]
-upload_enabled = "&dЗагружать отладочные отчёты на mclo.gs&r"
+upload_enabled = "&dЗагружать диагностические отчёты на mclo.gs&r"
 
 [director.help]
 category = "Категория команд"
 command_group = "Группа команд. Нажмите, чтобы открыть."
-no_description = "Описание не указано"
-no_parameters = "Параметров нет. Нажмите, чтобы предварительно заполнить команду."
+no_description = "Описание отсутствует"
+no_parameters = "Параметров нет. Нажмите, чтобы подставить команду."
 no_subcommands = "На этой странице нет подкоманд."
 parameters_hover = "Наведите курсор на параметры, чтобы узнать больше."
 
@@ -304,78 +305,79 @@ hover = "Вернуться к родительской группе коман�
 hover = "Предыдущая страница"
 
 [director.help.parameter]
-default = "Если не задан, используется значение \"{value}\"."
-optional = "Этот параметр является необязательным."
-required = "Этот параметр является обязательным."
-type = "Этот параметр имеет тип {type}."
+default = "Если не задан, используется значение «{value}»."
+optional = "Этот параметр необязателен."
+required = "Этот параметр обязателен."
+type = "Тип этого параметра: {type}."
 
 [director.runtime]
 
 [director.runtime.error]
-conversion_failed = "Невозможно преобразовать \"{value}\" в {type} для {parameter}"
-default_parse_failed = "Невозможно разобрать значение по умолчанию параметра {parameter}"
+conversion_failed = "Невозможно преобразовать «{value}» в {type} для {parameter}"
+default_parse_failed = "Невозможно разобрать значение по умолчанию для параметра {parameter}"
 execution_failed = "Не удалось выполнить команду {command}: {reason}"
-invalid_origin = "Эту команду нельзя выполнить из данного источника."
-missing_argument = "Отсутствует аргумент \"{parameter}\" ({type})"
-unexpected_argument = "Неожиданный аргумент \"{argument}\". Необязательные параметры должны задаваться с ключом, например seed=123"
-unclosed_group = "Отсутствует закрывающая скобка \"]\" для параметра {key}"
+invalid_origin = "Эту команду нельзя выполнить из этого источника."
+missing_argument = "Отсутствует аргумент «{parameter}» ({type})"
+unexpected_argument = "Неожиданный аргумент «{argument}». Необязательные параметры указываются с ключом, например seed=123"
+unclosed_group = "Нет закрывающей скобки «]» для параметра {key}"
 unknown_parameter = "Неизвестный ключ параметра: {key}"
 
 [language.menu]
 your_language = "Ваш язык"
-reset_your_language = "Сбросить выбор языка"
+reset_your_language = "Сбросить ваш язык"
 server_default = "Язык сервера по умолчанию"
-edit_messages = "Изменить языковые сообщения"
-use_server_default = "Использовать язык сервера по умолчанию"
+edit_messages = "Редактировать сообщения"
+use_server_default = "Использовать язык сервера"
 current = "Текущий: {locale}"
-current_with_personal = "Текущий: {locale} (Ваш: {personal})"
+current_with_personal = "Текущий: {locale} (ваш: {personal})"
 your_description = "Изменить только сообщения, которые видите вы."
 reset_description = "Использовать язык сервера по умолчанию."
 server_description = "Изменить язык сервера по умолчанию."
-edit_description = "Открыть редактор сообщений для каждого языка."
+edit_description = "Открыть редактор сообщений для отдельного языка."
 select_description = "Нажмите, чтобы выбрать этот язык."
 remove_personal_description = "Удалить ваш личный выбор языка."
-no_controls = "У вас нет доступа к настройкам языка."
+no_controls = "Вам недоступны настройки языка."
 command = "Команда: {command}"
-selected = "выбранный"
-all-volmit-plugins = "Все плагины Volmit"
+selected = "выбран"
+all-volmit-plugins = "всех плагинов Volmit"
 
 [language.error]
 stopping = "{prefix}&r &7› &7&cВыбор языка недоступен, пока плагин останавливается."
 editor-player-only = "{prefix}&r &7› &7&cОткройте редактор языка в игре."
 no-providers = "{prefix}&r &7› &7&cНет доступных языковых провайдеров Volmit."
-numeric-page = "{prefix}&r &7› &7&cВведите номер страницы числом."
-personal-player-only = "{prefix}&r &7› &7&cЛичный язык игрока нужно выбрать в игре."
-personal-permission = "{prefix}&r &7› &7&cУ вас нет разрешения на выбор языка."
+numeric-page = "{prefix}&r &7› &7&cУкажите номер страницы числом."
+personal-player-only = "{prefix}&r &7› &7&cЛичный язык можно выбрать только в игре."
+personal-permission = "{prefix}&r &7› &7&cУ вас нет разрешения выбирать свой язык."
 plugin-personal-permission = "{prefix}&r &7› &7&cУ вас нет разрешения выбирать свой язык для {prefix}."
 plugin-server-permission = "{prefix}&r &7› &7&cУ вас нет разрешения менять язык сервера для {prefix}."
-server-locale-required = "{prefix}&r &7› &7&cВыберите код языка, например en_US, для языка сервера по умолчанию."
+server-locale-required = "{prefix}&r &7› &7&cУкажите код языка, например en_US, для языка сервера по умолчанию."
 unavailable-for-all = "{prefix}&r &7› &7&cЯзык {locale} доступен не для всех выбранных плагинов."
 
 [language.usage]
 editor = "{prefix}&r &7› &7&7Использование: /{command} language server edit [locale]"
-selection = "{prefix}&r &7› &7&7Использование: /{command} language self [locale|reset] or server [locale]"
+selection = "{prefix}&r &7› &7&7Использование: /{command} language self [locale|reset] или server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7Использование: /volmit plugins languages [locale]"
 update = "{prefix}&r &7› &7&7Использование: /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7Подготовка языка {locale} для {target}..."
-save-failed = "{prefix}&r &7› &7&cне удалось сохранить выбор языка; проверьте консоль сервера."
-english-fallback = "{prefix}&r &7› &7&e{locale} недоступен; используется английский (en_US)."
-personal-selected = "{prefix}&r &7› &7&7Ваш язык сейчас {locale}."
-server-selected = "{prefix}&r &7› &7&7Язык сервера теперь {locale}."
-server-default-selected = "{prefix}&r &7› &7&7теперь ваш язык соответствует языку сервера по умолчанию."
+save-failed = "{prefix}&r &7› &7&cНе удалось сохранить выбор языка; проверьте консоль сервера."
+english-fallback = "{prefix}&r &7› &7&eЯзык {locale} недоступен; используется английский (en_US)."
+personal-selected = "{prefix}&r &7› &7&7Теперь ваш язык: {locale}."
+server-selected = "{prefix}&r &7› &7&7Теперь язык сервера: {locale}."
+server-default-selected = "{prefix}&r &7› &7&7Теперь для вас используется язык сервера по умолчанию."
 
 [language.update]
 checking = "{prefix}&r &7› &7&7Проверка изменений в репозитории языков..."
 unchanged = "{prefix}&r &7› &7&7Установленные языки уже соответствуют репозиторию."
-applied = "{prefix}&r &7› &7&7{locale} обновлён ({added} добавлено, {updated} изменено, {kept} локальных правок сохранено)."
-locale-failed = "{prefix}&r &7› &7&c{locale} не обновлён: {reason}"
-failed = "{prefix}&r &7› &7&cОбновление языков не удалось: {reason}"
+applied = "{prefix}&r &7› &7&7Язык {locale} обновлён (добавлено: {added}, изменено: {updated}, сохранено локальных правок: {kept})."
+cooldown = "{prefix}&r &7› &7&7Репозиторий языков проверялся недавно; повторите попытку через {remaining}."
+locale-failed = "{prefix}&r &7› &7&cЯзык {locale} не обновлён: {reason}"
+failed = "{prefix}&r &7› &7&cНе удалось обновить языки: {reason}"
 
 [language.editor]
 title = "{prefix} › {section}"
-loading = "{prefix}&r &7› &7&7Загрузка сообщений для {locale}..."
+loading = "{prefix}&r &7› &7&7Загрузка сообщений языка {locale}..."
 
 [language.editor.section]
 languages = "Языки"
@@ -384,7 +386,7 @@ search-title = "{locale} / Поиск"
 group-title = "{locale} / {group}"
 
 [language.editor.prompt]
-search = "{prefix}&r &7› &7&7Найдите ключ или текст сообщения. Введите cancel, чтобы вернуться."
+search = "{prefix}&r &7› &7&7Введите ключ или текст сообщения для поиска. Введите cancel, чтобы вернуться."
 value = "{prefix}&r &7› &7&7Введите в чат новое значение для {key}."
 current = "{prefix}&r &7› &7&7Текущее значение: {value}"
 variables = "{prefix}&r &7› &7&7Переменные: {variables}"
@@ -403,7 +405,7 @@ next-page = "&eСледующая страница&r"
 
 [language.editor.search]
 messages = "Поиск сообщений"
-messages-lore = "Нажмите для поиска среди всех сообщений."
+messages-lore = "Нажмите, чтобы искать по всем сообщениям."
 clear = "Сбросить поиск"
 
 [language.editor.message]
@@ -411,21 +413,21 @@ current-value = "&7Текущее значение:&r"
 variables = "&8{variables}&r"
 edit-plural = "&7Нажмите, чтобы изменить форму множественного числа.&r"
 edit-lines = "&7Нажмите, чтобы изменить отдельные строки.&r"
-edit-chat = "&7Нажмите, чтобы изменить текст в чате.&r"
+edit-chat = "&7Нажмите, чтобы изменить в чате.&r"
 
 [language.editor.locale]
 open = "&8Нажмите, чтобы открыть этот язык.&r"
 
 [language.editor.category]
-message-count = "&7{count} сообщения&r"
+message-count = "&7Сообщений: {count}&r"
 open = "&8Нажмите, чтобы открыть эту категорию.&r"
 
 [language.editor.error]
 no-permission = "{prefix}&r &7› &7&cУ вас нет разрешения редактировать языки {prefix}."
-unable-to-edit = "{prefix}&r &7› &7&cНе удалось отредактировать: {reason}"
+unable-to-edit = "{prefix}&r &7› &7&cНе удалось изменить: {reason}"
 
 [language.editor.saved]
-summary = "{prefix}&r &7› &7&7{locale} сохранён. Выбранные языки не изменились."
+summary = "{prefix}&r &7› &7&7Язык {locale} сохранён. Выбор языков не изменился."
 change = "{prefix}&r &7› &7&7{key}: «{before}» заменено на «{after}»."
 
 [language.editor.part]
@@ -437,14 +439,14 @@ empty = "(пусто)"
 
 [debug.error]
 missing-permission = "{prefix}&r &7› &7&cНет разрешения: {permission}"
-already-preparing = "{prefix}&r &7› &7&cДиагностический отчёт для {prefix} уже создаётся."
-already-preparing-short = "{prefix}&r &7› &7&cДиагностический отчёт уже создаётся."
+already-preparing = "{prefix}&r &7› &7&cДиагностический отчёт {prefix} уже готовится."
+already-preparing-short = "{prefix}&r &7› &7&cДиагностический отчёт уже готовится."
 schedule-failed = "{prefix}&r &7› &7&cНе удалось запланировать создание диагностического отчёта."
-provider-closed = "{prefix}&r &7› &7&cПоставщик диагностических данных закрыт."
-closed-before-capture = "{prefix}&r &7› &7&cПоставщик диагностических данных закрылся до сбора данных отчёта."
+provider-closed = "{prefix}&r &7› &7&cИсточник диагностических данных закрыт."
+closed-before-capture = "{prefix}&r &7› &7&cИсточник диагностических данных закрылся до сбора данных для отчёта."
 writer-schedule-failed = "{prefix}&r &7› &7&cНе удалось запланировать запись диагностического отчёта."
-capture-failed = "{prefix}&r &7› &7&cНе удалось собрать данные диагностического отчёта; проверьте консоль сервера."
-closed-before-write = "{prefix}&r &7› &7&cПоставщик диагностических данных закрылся до записи отчёта."
+capture-failed = "{prefix}&r &7› &7&cНе удалось собрать данные для диагностического отчёта; проверьте консоль сервера."
+closed-before-write = "{prefix}&r &7› &7&cИсточник диагностических данных закрылся до записи отчёта."
 write-failed = "{prefix}&r &7› &7&cНе удалось записать диагностический отчёт; проверьте консоль сервера."
 
 [debug]

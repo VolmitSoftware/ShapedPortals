@@ -2,7 +2,7 @@
 #
 # === Chỉnh sửa tệp ===
 # plugins/ShapedPortals/languages/vi_VI.toml
-# Bạn có thể chỉnh sửa trực tiếp tệp này. Thay đổi cục bộ được giữ lại; mục thiếu hoặc không hợp lệ dùng bản tiếng Anh tích hợp.
+# Bạn có thể chỉnh sửa trực tiếp tệp này. Các thay đổi cục bộ được giữ lại; mục bị thiếu hoặc không hợp lệ sẽ dùng bản tiếng Anh tích hợp sẵn.
 # /shapedportals language server edit vi_VI
 #
 # === Tiền tố ===
@@ -10,100 +10,101 @@
 #
 # === Định dạng ===
 # Màu: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B và [RRGGBB]. MiniMessage vẫn dùng được cho định dạng tùy chỉnh.
-# Thêm dấu gạch chéo ngược trước & hoặc [ để hiển thị ký tự theo nghĩa đen.
+# Thêm dấu gạch chéo ngược trước & hoặc [ để hiển thị nguyên ký tự đó.
 #
 # === Biến ===
 # Giữ nguyên tên biến và chỉ dùng những biến có sẵn trong từng thông báo.
 #   {added}  Thông báo được thêm bởi bản cập nhật ngôn ngữ
 #   {after}  Giá trị sau khi thay đổi
-#   {argument}  đối số ngoài dự kiến
-#   {attempts}  lần thử tạo
-#   {axis}  trục
+#   {argument}  Đối số lệnh ngoài dự kiến
+#   {attempts}  Số lần thử tạo cổng
+#   {axis}  Trục của cổng
 #   {before}  Giá trị trước khi thay đổi
-#   {blocks}  ô cổng
-#   {category}  danh mục
-#   {cells}  tất cả ô
-#   {command}  đường dẫn lệnh
-#   {count}  Số mục khớp
-#   {created}  số đã tạo hoặc thời điểm tạo
-#   {creator}  người tạo
-#   {enabled}  trạng thái tạo
-#   {group}  Cho phép hay nhóm người chơi
-#   {hot_reload}  trạng thái tải lại
-#   {id}  ID ngắn
-#   {kept}  Chỉnh sửa cục bộ được giữ bởi bản cập nhật ngôn ngữ
-#   {key}  khóa tham số
-#   {language}  ngôn ngữ đang dùng
-#   {line}  Số dòng hay dòng nguồn
-#   {locale}  mã vùng
-#   {matches}  cổng khớp
-#   {materials}  vật liệu khung đã ghi
-#   {maximum}  Giá trị được chấp nhận tối đa
-#   {name}  tên đầy đủ của ngôn ngữ
-#   {new}  giá trị mới
-#   {old}  giá trị trước
-#   {parameter}  tên tham số
-#   {path}  đường dẫn báo cáo cục bộ
-#   {permission}  quyền cần có
-#   {personal}  mã vùng cá nhân
-#   {portal}  mã định danh
-#   {portals}  số được quản lý
+#   {blocks}  Số ô bên trong cổng
+#   {category}  Danh mục trong trình chỉnh sửa
+#   {cells}  Tổng số ô được quản lý
+#   {command}  Đường dẫn lệnh
+#   {count}  Số thông báo
+#   {created}  Số cổng đã tạo hoặc thời điểm tạo
+#   {creator}  Người tạo
+#   {enabled}  Trạng thái tạo cổng
+#   {group}  Tên danh mục thông báo
+#   {hot_reload}  Trạng thái tải lại tức thời
+#   {id}  ID ngắn của cổng
+#   {kept}  Chỉnh sửa cục bộ được giữ lại sau bản cập nhật ngôn ngữ
+#   {key}  Khóa tham số
+#   {language}  Ngôn ngữ đang dùng
+#   {line}  Số dòng của thông báo
+#   {locale}  Mã vùng
+#   {matches}  Số cổng khớp
+#   {materials}  Vật liệu khung đã ghi nhận
+#   {maximum}  Giá trị tối đa được chấp nhận
+#   {name}  Tên đầy đủ của ngôn ngữ
+#   {new}  Giá trị mới đã áp dụng
+#   {old}  Giá trị trước đó
+#   {parameter}  Tên tham số
+#   {path}  Đường dẫn báo cáo cục bộ
+#   {permission}  Quyền cần có
+#   {personal}  Mã vùng cá nhân khi khác với mặc định của máy chủ
+#   {portal}  Mã định danh cổng
+#   {portals}  Số cổng được quản lý
 #   {prefix}  Tên plugin có định dạng từ runtime.prefix; dấu phân cách nằm trong tin nhắn. Xóa {prefix}&r &7› &7 để ẩn cả hai.
-#   {reason}  lý do lỗi
-#   {rejected}  lần bị từ chối
-#   {scheduler}  bộ lập lịch
-#   {seconds}  thời hạn xác nhận tính bằng giây
-#   {section}  Mục trình chỉnh sửa
-#   {setting}  tên cài đặt
-#   {status}  dấu chọn
-#   {target}  Người chơi đích, thực thể hay giá trị
-#   {type}  kiểu
+#   {reason}  Lý do thất bại
+#   {rejected}  Số lần tạo cổng bị từ chối
+#   {remaining}  Thời gian còn lại đến lần kiểm tra ngôn ngữ tiếp theo
+#   {scheduler}  Bộ lập lịch đang dùng
+#   {seconds}  Thời hạn xác nhận (giây)
+#   {section}  Mục của trình chỉnh sửa ngôn ngữ
+#   {setting}  Tên cài đặt
+#   {status}  Dấu chọn
+#   {target}  Đối tượng của lựa chọn ngôn ngữ
+#   {type}  Kiểu tham số hoặc loại cổng
 #   {updated}  Thông báo được thay đổi bởi bản cập nhật ngôn ngữ
-#   {url}  URL công khai
-#   {uuid}  UUID đầy đủ
-#   {value}  giá trị hiện tại, mặc định hoặc thô
-#   {variables}  chỗ giữ chỗ hợp lệ
-#   {version}  phiên bản plugin
-#   {world}  thế giới
-#   {x}  tọa độ neo
-#   {y}  tọa độ neo
-#   {z}  tọa độ neo
+#   {url}  URL công khai của báo cáo
+#   {uuid}  UUID đầy đủ của cổng
+#   {value}  Giá trị hiện tại, mặc định hoặc thô
+#   {variables}  Biến dùng được trong thông báo đã chọn
+#   {version}  Phiên bản plugin
+#   {world}  Tên thế giới
+#   {x}  Tọa độ neo
+#   {y}  Tọa độ neo
+#   {z}  Tọa độ neo
 
 [runtime]
 prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
-player_only = "{prefix}&r &7› &7&cChỉ người chơi mới có thể sử dụng lệnh này.&r"
+player_only = "{prefix}&r &7› &7&cChỉ người chơi mới có thể dùng lệnh này.&r"
 
 [runtime.permission]
 denied = "{prefix}&r &7› &7&cBạn không có quyền thực hiện thao tác này.&r"
 
 [runtime.hot_reload]
-success = "{prefix}&r &7› &7&7Đã&7 áp dụng các thay đổi trong tệp cấu hình và ngôn ngữ.&r"
-failed = "{prefix}&r &7› &7&cĐã từ chối thay đổi tệp; các thiết lập hợp lệ gần nhất vẫn đang hoạt động.&r"
+success = "{prefix}&r &7› &7&aĐã áp dụng&7 các thay đổi trong tệp cấu hình và tệp ngôn ngữ.&r"
+failed = "{prefix}&r &7› &7&cĐã từ chối thay đổi tệp; các cài đặt hợp lệ gần nhất vẫn được giữ nguyên.&r"
 
 [command.feedback]
 version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
-failed = "{prefix}&r &7› &7&cKhông thể hoàn tất lệnh. Hãy xem bảng điều khiển để biết chi tiết.&r"
+failed = "{prefix}&r &7› &7&cKhông thể hoàn tất lệnh. Xem bảng điều khiển để biết chi tiết.&r"
 
 [command.feedback.config]
-opened = "{prefix}&r &7› &7&7Đã&7 mở trình chỉnh sửa cấu hình đầy đủ trong trò chơi.&r"
-saved = "{prefix}&r &7› &7&a{setting}&r &7đã đổi từ &f{old}&r &7thành &f{new}&r&7.&r"
+opened = "{prefix}&r &7› &7&aĐã mở&7 trình chỉnh sửa cấu hình đầy đủ trong trò chơi.&r"
+saved = "{prefix}&r &7› &7&f{setting}&r &ađã đổi&7 từ &f{old}&r &7thành &f{new}&r&7.&r"
 save_failed = "{prefix}&r &7› &7&cKhông thể áp dụng &f{setting}&r&c: {reason}&r"
 
 [command.feedback.debug]
-started = "{prefix}&r &7› &7&7Đang thu thập thông tin chẩn đoán máy chủ và {prefix}…&r"
-busy = "{prefix}&r &7› &7&eMột báo cáo chẩn đoán {prefix} đang được tạo.&r"
-saved = "{prefix}&r &7› &7&7Đã&7 lưu báo cáo chẩn đoán tại &f{path}&r&7.&r"
-uploaded = "{prefix}&r &7› &7&7Đã&7 tải báo cáo chẩn đoán lên:&r &b&n{url}&r"
-link_hover = "&7Mở báo cáo mclo.gs công khai.&r"
-upload_failed = "{prefix}&r &7› &7&eBáo cáo cục bộ đã được lưu nhưng không thể tải lên mclo.gs. Hãy xem bảng điều khiển để biết chi tiết.&r"
-failed = "{prefix}&r &7› &7&cKhông thể tạo báo cáo chẩn đoán. Hãy xem bảng điều khiển để biết chi tiết.&r"
+started = "{prefix}&r &7› &7&7Đang thu thập thông tin chẩn đoán của máy chủ và {prefix}…&r"
+busy = "{prefix}&r &7› &7&eĐã có một báo cáo chẩn đoán {prefix} đang được tạo.&r"
+saved = "{prefix}&r &7› &7&aĐã lưu&7 báo cáo chẩn đoán vào &f{path}&r&7.&r"
+uploaded = "{prefix}&r &7› &7&aĐã tải lên&7 báo cáo chẩn đoán:&r &b&n{url}&r"
+link_hover = "&7Mở báo cáo công khai trên mclo.gs.&r"
+upload_failed = "{prefix}&r &7› &7&eĐã lưu báo cáo cục bộ nhưng không thể tải lên mclo.gs. Xem bảng điều khiển để biết chi tiết.&r"
+failed = "{prefix}&r &7› &7&cKhông thể tạo báo cáo chẩn đoán. Xem bảng điều khiển để biết chi tiết.&r"
 
 [command.status]
-header = "{prefix}&r &7› &7&d&lTrạng thái {prefix}&r"
+header = "{prefix}&r &7› &7&7Thời gian chạy&r"
 config = "{prefix}&r &7› &7&7Tạo cổng:&r {enabled} &8|&r &7Ngôn ngữ:&r &f{language}&r &8|&r &7Tải lại tức thời:&r {hot_reload}"
-portals = "{prefix}&r &7› &7&7Cổng được quản lý:&r &f{portals}&r &8|&r &7Khối bên trong:&r &f{cells}&r"
-attempts = "{prefix}&r &7› &7&7Số lần thử:&r &f{attempts}&r &8|&r &7Đã tạo:&r &a{created}&r &8|&r &7Đã từ chối:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7Gói dựng:&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7Bộ lập lịch:&r &f{scheduler}&r"
+portals = "{prefix}&r &7› &7&7Cổng được quản lý:&r &f{portals}&r &8|&r &7Ô bên trong:&r &f{cells}&r"
+attempts = "{prefix}&r &7› &7&7Số lần thử:&r &f{attempts}&r &8|&r &7Đã tạo:&r &a{created}&r &8|&r &7Bị từ chối:&r &c{rejected}&r"
+compatibility = "{prefix}&r &7› &7&7Bản dựng:&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7Bộ lập lịch:&r &f{scheduler}&r"
 
 [command.description]
 version = "Hiển thị phiên bản {prefix} đã cài đặt"
@@ -111,73 +112,73 @@ root = "Trợ giúp và quản trị {prefix}"
 config = "Mở trình chỉnh sửa cấu hình đầy đủ trong trò chơi"
 language = "Chọn một ngôn ngữ {prefix} khả dụng"
 debug = "Công cụ chẩn đoán {prefix}"
-debug_dump = "Tạo báo cáo chẩn đoán {prefix} toàn diện"
-portals = "Liệt kê mọi cổng được quản lý và lối tắt dịch chuyển của chúng"
-teleport = "Dịch chuyển an toàn đến cạnh một cổng được quản lý hoặc liệt kê cổng nếu bỏ trống"
-status = "Hiển thị thống kê cổng được quản lý và số lần thử"
+debug_dump = "Tạo báo cáo chẩn đoán {prefix} đầy đủ"
+portals = "Liệt kê mọi cổng được quản lý kèm lối tắt dịch chuyển"
+teleport = "Dịch chuyển an toàn đến cạnh một cổng được quản lý, hoặc liệt kê các cổng nếu bỏ trống"
+status = "Hiển thị thống kê cổng được quản lý và số lần thử tạo"
 
 [command.parameter]
 locale = "Mã vùng ngôn ngữ khả dụng"
-page = "Trang danh sách cổng được đánh số từ một"
+page = "Trang danh sách cổng (bắt đầu từ 1)"
 portal = "UUID cổng, tiền tố duy nhất hoặc list"
-upload = "Tải báo cáo lên khi bật tải lên công khai"
+upload = "Tải báo cáo lên khi tính năng tải lên công khai được bật"
 
 [portal.notice]
-nether_created = "{prefix}&r &7› &7&7Đã&7 tạo một cổng tùy hình với &f{blocks}&7 khối bên trong.&r"
-end_created = "{prefix}&r &7› &7&7End&7&r &7Đã tạo một cổng tùy hình với &f{blocks}&7 khối bên trong.&r"
+nether_created = "{prefix}&r &7› &7&aĐã tạo&7 một cổng Nether hình dạng tùy chỉnh với &f{blocks}&7 khối bên trong.&r"
+end_created = "{prefix}&r &7› &7&aĐã tạo&7 một cổng End hình dạng tùy chỉnh với &f{blocks}&7 khối bên trong.&r"
 
 [portal.failure]
-cross_region = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: hình dạng trải qua các vùng Folia được quản lý độc lập.&r"
-too_large = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: phần bên trong vượt quá giới hạn số khối đã cấu hình.&r"
-too_wide = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: phần bên trong vượt quá giới hạn chiều rộng đã cấu hình.&r"
-too_tall = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: phần bên trong vượt quá giới hạn chiều cao đã cấu hình.&r"
-too_small = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: phần bên trong nhỏ hơn mức tối thiểu đã cấu hình.&r"
-ambiguous_axis = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: khung hợp lệ trên cả hai trục.&r"
-start_blocked = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: không còn có thể thay thế khối tại điểm châm lửa.&r"
-open_frame = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: khung chưa kín hoặc có ô bị chặn bên trong.&r"
-region_unavailable = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: vùng phụ trách không khả dụng.&r"
-wormholes_rejected = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: Wormholes đã từ chối tạo cổng.&r"
-event_cancelled = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: một plugin khác đã hủy việc tạo cổng.&r"
-block_denied = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: một plugin khác đã từ chối một hoặc nhiều khối của cổng.&r"
-frame_changed = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: khung đã thay đổi trong quá trình tạo.&r"
-overlapping_portal = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: hình dạng chồng lên một cổng được quản lý hiện có.&r"
-world_mutation_failed = "{prefix}&r &7› &7&cKhông thể tạo cổng có hình dạng tùy chỉnh từ khung này: việc thay đổi thế giới đã thất bại.&r"
+cross_region = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fhình dạng trải qua nhiều vùng Folia được quản lý độc lập&r&c.&r"
+too_large = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fphần bên trong vượt quá giới hạn số khối đã cấu hình&r&c.&r"
+too_wide = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fphần bên trong vượt quá giới hạn chiều rộng đã cấu hình&r&c.&r"
+too_tall = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fphần bên trong vượt quá giới hạn chiều cao đã cấu hình&r&c.&r"
+too_small = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fphần bên trong nhỏ hơn mức tối thiểu đã cấu hình&r&c.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fkhung hợp lệ trên cả hai trục&r&c.&r"
+start_blocked = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fkhối tại điểm châm lửa không còn thay thế được&r&c.&r"
+open_frame = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fkhung bị hở hoặc có ô bị chặn bên trong&r&c.&r"
+region_unavailable = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fvùng sở hữu không khả dụng&r&c.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fWormholes đã từ chối tạo cổng&r&c.&r"
+event_cancelled = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fmột plugin khác đã hủy việc tạo cổng&r&c.&r"
+block_denied = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fmột plugin khác đã từ chối một hoặc nhiều khối của cổng&r&c.&r"
+frame_changed = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fkhung đã thay đổi trong lúc tạo&r&c.&r"
+overlapping_portal = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fhình dạng chồng lên một cổng được quản lý hiện có&r&c.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cKhung này không thể trở thành cổng hình dạng tùy chỉnh: &fkhông thể thay đổi thế giới&r&c.&r"
 
 [portal.title]
 nether_created = "&5&lĐã tạo cổng Nether&r"
 end_created = "&5&lĐã tạo cổng End&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&r &7› &7&cKhông có vị trí đứng an toàn bên cạnh &f{portal}&r&c. &eNhấp lại vào cùng cổng trong vòng &f{seconds}&r&e giây để vẫn dịch chuyển vào bên trong.&r"
+unsafe = "{prefix}&r &7› &7&cKhông có chỗ đứng an toàn bên cạnh &f{portal}&r&c. &eNhấp lại vào cổng đó trong vòng &f{seconds}&r&e giây để vẫn dịch chuyển vào bên trong.&r"
 
 [portal.navigation.list]
 frame_policy_note = "&8  ⚠&r &eKhung hiện có dùng &f{materials}&r&e; các vật liệu này không thể tạo cổng mới.&r"
-empty = "&eChưa đăng ký cổng tùy hình được quản lý nào.&r"
-entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Vị trí:&r &f{x}, {y}, {z}&r &8•&r &7Trục:&r &f{axis}&r &8•&r &7Ô:&r &f{blocks}&r\n&8  └&r &7Người tạo:&r &f{creator}&r &8•&r &7Đã tạo:&r &f{created}&r"
+empty = "&eChưa có cổng hình dạng tùy chỉnh được quản lý nào được đăng ký.&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Loại:&r &f{type}&r\n&8  ├&r &7Vị trí:&r &f{x}, {y}, {z}&r &8•&r &7Trục:&r &f{axis}&r &8•&r &7Ô:&r &f{blocks}&r\n&8  └&r &7Người tạo:&r &f{creator}&r &8•&r &7Ngày tạo:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aNhấp để dịch chuyển đến cổng này.&r"
 
 [portal.navigation.error]
 not_found = "{prefix}&r &7› &7&cKhông có cổng được quản lý nào khớp với &f{portal}&r&c.&r"
 ambiguous = "{prefix}&r &7› &7&cTiền tố &f{portal}&r&c khớp với {matches} cổng. Hãy nhập thêm ký tự của UUID.&r"
 removed = "{prefix}&r &7› &7&cCổng đó không còn được đăng ký.&r"
-world_unavailable = "{prefix}&r &7› &7&cThế giới của cổng &f{world}&r&c hiện không khả dụng.&r"
+world_unavailable = "{prefix}&r &7› &7&cThế giới &f{world}&r&c của cổng hiện không khả dụng.&r"
 destination_unavailable = "{prefix}&r &7› &7&cĐiểm đến của cổng tạm thời không khả dụng.&r"
 inactive = "{prefix}&r &7› &7&cCổng đó không còn hoạt động. Việc kiểm tra tính toàn vẹn đã được đưa vào hàng đợi.&r"
 no_safe_landing = "{prefix}&r &7› &7&cKhông có chỗ đứng an toàn bên cạnh cổng đó.&r"
 
 [portal.navigation.teleport]
 preparing = "{prefix}&r &7› &7&7Đang chuẩn bị điểm đến cho &f{portal}&r&7…&r"
-success = "{prefix}&r &7› &7&7Đã&7 dịch chuyển đến cạnh &f{portal}&r&7 trong &f{world}&r&7.&r"
-failed = "{prefix}&r &7› &7&cQuá trình dịch chuyển đến cổng chưa hoàn tất. Có thể một phần bổ trợ khác đã hủy thao tác.&r"
+success = "{prefix}&r &7› &7&aĐã dịch chuyển&7 đến cạnh &f{portal}&r&7 trong &f{world}&r&7.&r"
+failed = "{prefix}&r &7› &7&cDịch chuyển qua cổng chưa hoàn tất. Có thể một plugin khác đã hủy thao tác này.&r"
 
 [hud]
-title = "{prefix}"
+title = "{prefix}&r"
 success = "&aThành công&r"
 failure = "&cThao tác thất bại&r"
-info = "{prefix}"
+info = "{prefix}&r"
 
 [gui.title]
-root = "&5Cấu hình {prefix}&r"
+root = "{prefix}&r &7› &7Cấu hình&r"
 category = "{prefix}&r &7› &7{category}"
 
 [gui.category]
@@ -186,7 +187,7 @@ portal = "&dQuy tắc cổng&r"
 effects = "&dHiệu ứng&r"
 hot_reload = "&dTải lại tức thời&r"
 integrity = "&dTính toàn vẹn&r"
-presentation = "&dTrình bày&r"
+presentation = "&dHiển thị&r"
 debug = "&dChẩn đoán&r"
 languages = "&dNgôn ngữ&r"
 
@@ -197,73 +198,73 @@ close = "&cĐóng&r"
 [gui.lore]
 state = "&7Hiện tại:&r {value}"
 toggle = "&8Nhấp để bật hoặc tắt.&r"
-number = "&8Trái +1, phải -1, shift ×10, thả để nhập.&r"
-text = "&8Nhấp để nhập giá trị mới trong trò chuyện.&r"
+number = "&8Chuột trái +1, chuột phải -1, Shift ×10, phím thả để nhập.&r"
+text = "&8Nhấp để nhập giá trị mới trong khung trò chuyện.&r"
 language = "&8Nhấp để chọn ngôn ngữ khả dụng hoặc nhập mã vùng.&r"
-category = "&8Nhấp để sửa mọi thiết lập trong mục này.&r"
+category = "&8Nhấp để chỉnh sửa mọi cài đặt trong danh mục này.&r"
 
 [gui.prompt]
-request = "{prefix}&r &7› &7&eNhập giá trị mới cho &f{setting}&r&e trong trò chuyện.&r"
+request = "{prefix}&r &7› &7&eNhập giá trị mới cho &f{setting}&r&e trong khung trò chuyện.&r"
 list = "{prefix}&r &7› &7&7Phân tách các mục bằng dấu phẩy. Nhập &fnone&r&7 để dùng danh sách trống.&r"
-cancel = "{prefix}&r &7› &7&7Nhập &fcancel&r&7 để dừng. Yêu cầu này hết hạn sau 60 giây.&r"
+cancel = "{prefix}&r &7› &7&7Nhập &fcancel&r&7 để dừng. Yêu cầu nhập này hết hạn sau 60 giây.&r"
 cancelled = "{prefix}&r &7› &7&eĐã hủy chỉnh sửa cấu hình.&r"
 timeout = "{prefix}&r &7› &7&eChỉnh sửa cấu hình đã hết hạn mà không thay đổi gì.&r"
 
 [gui.language]
-type = "&7Nhập tên mã vùng trong trò chuyện để tạo hoặc chọn mã đó.&r"
+type = "&7Nhập tên mã vùng trong khung trò chuyện để tạo hoặc chọn mã đó.&r"
 option = "{status} &f{locale}&r &8›&r &7{name}&r"
 hover = "&7Nhấp để chọn &f{locale}&r&7.&r"
-empty = "&eKhông tìm thấy ngôn ngữ khả dụng; hãy nhập tên mã vùng để tạo một ngôn ngữ.&r"
+empty = "&eKhông tìm thấy ngôn ngữ khả dụng; hãy nhập tên mã vùng để tạo ngôn ngữ mới.&r"
 current = "&7Giá trị hiện tại:&r {value}"
-variables = "&7Biến / chỗ giữ chỗ hiện tại:&r &f{variables}&r"
+variables = "&7Biến / chỗ giữ chỗ hiện có:&r &f{variables}&r"
 changed = "&f{old}&r &7đã đổi thành&r &f{new}&r"
 
 [gui.setting.general]
 update_notifications = "&dThông báo cập nhật GitHub&r"
 enabled = "&dTạo cổng&r"
 language = "&dMã vùng ngôn ngữ đang dùng&r"
-require_create_permission = "&dYêu cầu quyền tạo&r"
+require_create_permission = "&dYêu cầu quyền tạo cổng&r"
 failure_feedback = "&dPhản hồi khi tạo cổng thất bại&r"
 
 [gui.setting.metrics]
 enabled = "&dThống kê bStats ẩn danh&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dNether Số khối bên trong tối thiểu&r"
-maximum_interior_blocks = "&dNether Số khối bên trong tối đa&r"
-maximum_width = "&dNether Chiều rộng tối đa&r"
-maximum_height = "&dNether Chiều cao tối đa&r"
-frame_materials = "&dNether Vật liệu khung&r"
-interior_materials = "&dNether Vật liệu bên trong&r"
-ignition_causes = "&dNguyên nhân kích hoạt&r"
+minimum_interior_blocks = "&dSố khối bên trong tối thiểu (Nether)&r"
+maximum_interior_blocks = "&dSố khối bên trong tối đa (Nether)&r"
+maximum_width = "&dChiều rộng tối đa (Nether)&r"
+maximum_height = "&dChiều cao tối đa (Nether)&r"
+frame_materials = "&dVật liệu khung (Nether)&r"
+interior_materials = "&dVật liệu bên trong (Nether)&r"
+ignition_causes = "&dNguyên nhân châm lửa&r"
 allowed_worlds = "&dThế giới được phép&r"
-denied_worlds = "&dThế giới bị từ chối&r"
-deduplication_millis = "&dThời gian khử trùng lặp (mili giây)&r"
-end_portal_creation = "&dEnd Tạo cổng&r"
-end_minimum_interior_blocks = "&dEnd Số khối bên trong tối thiểu&r"
-end_maximum_interior_blocks = "&dEnd Số khối bên trong tối đa&r"
-end_maximum_width = "&dEnd Chiều rộng tối đa&r"
-end_maximum_length = "&dEnd Chiều rộng tối đa&r"
-end_interior_materials = "&dEnd Vật liệu bên trong&r"
+denied_worlds = "&dThế giới bị chặn&r"
+deduplication_millis = "&dChống xử lý trùng lặp (mili giây)&r"
+end_portal_creation = "&dTạo cổng End hình dạng tùy chỉnh&r"
+end_minimum_interior_blocks = "&dSố khối bên trong tối thiểu (End)&r"
+end_maximum_interior_blocks = "&dSố khối bên trong tối đa (End)&r"
+end_maximum_width = "&dChiều rộng tối đa (End)&r"
+end_maximum_length = "&dChiều dài tối đa (End)&r"
+end_interior_materials = "&dVật liệu bên trong (End)&r"
 
 [gui.setting.effects]
-creation_sound = "&dNether Âm thanh tạo cổng&r"
-creation_sound_type = "&dNether Loại âm thanh tạo cổng&r"
-creation_sound_volume = "&dNether Âm lượng tạo cổng&r"
-creation_sound_pitch = "&dNether Cao độ âm thanh tạo cổng&r"
-end_creation_sound = "&dEnd Âm thanh tạo cổng&r"
-end_creation_sound_type = "&dEnd Loại âm thanh tạo cổng&r"
-end_creation_sound_volume = "&dEnd Âm lượng tạo cổng&r"
-end_creation_sound_pitch = "&dEnd Cao độ âm thanh tạo cổng&r"
+creation_sound = "&dÂm thanh tạo cổng Nether&r"
+creation_sound_type = "&dLoại âm thanh tạo cổng Nether&r"
+creation_sound_volume = "&dÂm lượng tạo cổng Nether&r"
+creation_sound_pitch = "&dCao độ âm thanh tạo cổng Nether&r"
+end_creation_sound = "&dÂm thanh tạo cổng End&r"
+end_creation_sound_type = "&dLoại âm thanh tạo cổng End&r"
+end_creation_sound_volume = "&dÂm lượng tạo cổng End&r"
+end_creation_sound_pitch = "&dCao độ âm thanh tạo cổng End&r"
 
 [gui.setting.hot_reload]
 enabled = "&dTải lại tức thời&r"
 poll_interval_millis = "&dKhoảng thăm dò (mili giây)&r"
-cooldown_millis = "&dThời gian chờ lưu (mili giây)&r"
+cooldown_millis = "&dThời gian chờ sau khi lưu (mili giây)&r"
 notify_operators = "&dThông báo cho quản trị viên&r"
 
 [gui.setting.integrity]
-enabled = "&dDịch vụ toàn vẹn&r"
+enabled = "&dDịch vụ kiểm tra toàn vẹn&r"
 check_interval_ticks = "&dKhoảng kiểm tra (tick)&r"
 maximum_checks_per_cycle = "&dSố lần kiểm tra tối đa mỗi chu kỳ&r"
 
@@ -271,16 +272,16 @@ maximum_checks_per_cycle = "&dSố lần kiểm tra tối đa mỗi chu kỳ&r"
 splash_screen = "&dMàn hình chào khi khởi động&r"
 command_sounds = "&dÂm thanh lệnh&r"
 command_overlays = "&dLớp phủ lệnh&r"
-portal_notices = "&dKênh thông báo cổng&r"
-nether_creation_notices = "&dNether Kênh thông báo cổng&r"
-end_creation_notices = "&dEnd Kênh thông báo cổng&r"
+portal_notices = "&dKênh thông báo từ chối tạo cổng&r"
+nether_creation_notices = "&dKênh thông báo tạo cổng Nether&r"
+end_creation_notices = "&dKênh thông báo tạo cổng End&r"
 overlay_duration_ticks = "&dThời lượng lớp phủ (tick)&r"
 title_fade_in_ticks = "&dThời gian tiêu đề hiện dần (tick)&r"
-title_stay_ticks = "&dThời gian tiêu đề duy trì (tick)&r"
+title_stay_ticks = "&dThời gian tiêu đề hiển thị (tick)&r"
 title_fade_out_ticks = "&dThời gian tiêu đề mờ dần (tick)&r"
 
 [gui.setting.debug]
-upload_enabled = "&dTải báo cáo gỡ lỗi lên mclo.gs&r"
+upload_enabled = "&dTải báo cáo chẩn đoán lên mclo.gs&r"
 
 [director.help]
 category = "Danh mục lệnh"
@@ -317,16 +318,16 @@ default_parse_failed = "Không thể phân tích giá trị mặc định của 
 execution_failed = "Không thể thực thi lệnh {command}: {reason}"
 invalid_origin = "Không thể chạy lệnh này từ nguồn này."
 missing_argument = "Thiếu đối số \"{parameter}\" ({type})"
-unexpected_argument = "Đối số không mong đợi \"{argument}\". Các tham số tùy chọn phải được chỉ định bằng khóa, ví dụ seed=123"
+unexpected_argument = "Đối số ngoài dự kiến \"{argument}\". Các tham số tùy chọn phải được chỉ định kèm khóa, ví dụ seed=123"
 unclosed_group = "Thiếu dấu \"]\" đóng cho tham số {key}"
 unknown_parameter = "Khóa tham số không xác định: {key}"
 
 [language.menu]
 your_language = "Ngôn ngữ của bạn"
 reset_your_language = "Đặt lại ngôn ngữ của bạn"
-server_default = "Ngôn ngữ mặc định của máy chủ"
+server_default = "Mặc định của máy chủ"
 edit_messages = "Chỉnh sửa thông báo ngôn ngữ"
-use_server_default = "Dùng ngôn ngữ mặc định của máy chủ"
+use_server_default = "Dùng mặc định của máy chủ"
 current = "Hiện tại: {locale}"
 current_with_personal = "Hiện tại: {locale} (Của bạn: {personal})"
 your_description = "Chỉ thay đổi những thông báo bạn thấy."
@@ -335,47 +336,48 @@ server_description = "Thay đổi ngôn ngữ mặc định của máy chủ."
 edit_description = "Mở trình chỉnh sửa thông báo cho từng ngôn ngữ."
 select_description = "Nhấp để chọn ngôn ngữ này."
 remove_personal_description = "Xóa lựa chọn ngôn ngữ cá nhân của bạn."
-no_controls = "Bạn không có quyền dùng các tùy chọn ngôn ngữ."
-command = "Câu lệnh: {command}"
+no_controls = "Bạn không có tùy chọn ngôn ngữ nào khả dụng."
+command = "Lệnh: {command}"
 selected = "Đã chọn"
 all-volmit-plugins = "Tất cả plugin Volmit"
 
 [language.error]
-stopping = "{prefix}&r &7› &7&cKhông có khả năng chọn ngôn ngữ trong khi bổ sung đang dừng."
-editor-player-only = "{prefix}&r &7› &7&cMở trình soạn thảo ngôn ngữ trong trò chơi."
+stopping = "{prefix}&r &7› &7&cKhông thể chọn ngôn ngữ trong khi plugin đang dừng."
+editor-player-only = "{prefix}&r &7› &7&cHãy mở trình chỉnh sửa ngôn ngữ trong trò chơi."
 no-providers = "{prefix}&r &7› &7&cKhông có nhà cung cấp ngôn ngữ Volmit nào khả dụng."
-numeric-page = "{prefix}&r &7› &7&cNhập số trang bằng chữ số."
-personal-player-only = "{prefix}&r &7› &7&cBạn phải chọn ngôn ngữ cá nhân trong trò chơi."
+numeric-page = "{prefix}&r &7› &7&cHãy dùng số cho trang ngôn ngữ."
+personal-player-only = "{prefix}&r &7› &7&cNgôn ngữ cá nhân của người chơi phải được chọn trong trò chơi."
 personal-permission = "{prefix}&r &7› &7&cBạn không có quyền chọn ngôn ngữ của mình."
-plugin-personal-permission = "{prefix}&r &7› &7&cBạn không có quyền chọn ngôn ngữ cá nhân cho {prefix}."
+plugin-personal-permission = "{prefix}&r &7› &7&cBạn không có quyền chọn ngôn ngữ của mình cho {prefix}."
 plugin-server-permission = "{prefix}&r &7› &7&cBạn không có quyền thay đổi ngôn ngữ máy chủ cho {prefix}."
-server-locale-required = "{prefix}&r &7› &7&cChọn mã ngôn ngữ như en_US làm ngôn ngữ mặc định của máy chủ."
+server-locale-required = "{prefix}&r &7› &7&cHãy chọn một mã vùng như en_US làm mặc định của máy chủ."
 unavailable-for-all = "{prefix}&r &7› &7&cNgôn ngữ {locale} không khả dụng cho tất cả plugin đã chọn."
 
 [language.usage]
 editor = "{prefix}&r &7› &7&7Cách dùng: /{command} language server edit [locale]"
-selection = "{prefix}&r &7› &7&7Cách dùng: /{command} language self [locale|reset] or server [locale]"
+selection = "{prefix}&r &7› &7&7Cách dùng: /{command} language self [locale|reset] hoặc server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7Cách dùng: /volmit plugins languages [locale]"
 update = "{prefix}&r &7› &7&7Cách dùng: /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7Đang chuẩn bị ngôn ngữ {locale} cho {target}..."
-save-failed = "{prefix}&r &7› &7&ckhông thể lưu lựa chọn ngôn ngữ; hãy kiểm tra bảng điều khiển máy chủ."
+save-failed = "{prefix}&r &7› &7&cKhông thể lưu lựa chọn ngôn ngữ; hãy kiểm tra bảng điều khiển máy chủ."
 english-fallback = "{prefix}&r &7› &7&e{locale} không khả dụng; sẽ dùng tiếng Anh (en_US)."
-personal-selected = "{prefix}&r &7› &7&7ngôn ngữ của bạn hiện là {locale}."
-server-selected = "{prefix}&r &7› &7&7ngôn ngữ máy chủ hiện là {locale}."
-server-default-selected = "{prefix}&r &7› &7&7ngôn ngữ của bạn hiện theo ngôn ngữ mặc định của máy chủ."
+personal-selected = "{prefix}&r &7› &7&7Ngôn ngữ của bạn hiện là {locale}."
+server-selected = "{prefix}&r &7› &7&7Ngôn ngữ máy chủ hiện là {locale}."
+server-default-selected = "{prefix}&r &7› &7&7Ngôn ngữ của bạn hiện theo mặc định của máy chủ."
 
 [language.update]
 checking = "{prefix}&r &7› &7&7Đang kiểm tra thay đổi trong kho ngôn ngữ..."
 unchanged = "{prefix}&r &7› &7&7Các ngôn ngữ đã cài đặt đã khớp với kho."
-applied = "{prefix}&r &7› &7&7Đã cập nhật {locale} ({added} thêm, {updated} thay đổi, {kept} chỉnh sửa cục bộ được giữ)."
+applied = "{prefix}&r &7› &7&7Đã cập nhật {locale} ({added} được thêm, {updated} được thay đổi, giữ lại {kept} chỉnh sửa cục bộ)."
+cooldown = "{prefix}&r &7› &7&7Kho ngôn ngữ vừa được kiểm tra; hãy thử lại sau {remaining}."
 locale-failed = "{prefix}&r &7› &7&c{locale} chưa được cập nhật: {reason}"
 failed = "{prefix}&r &7› &7&cCập nhật ngôn ngữ thất bại: {reason}"
 
 [language.editor]
 title = "{prefix} › {section}"
-loading = "{prefix}&r &7› &7&7Đang tải tin nhắn cho {locale}..."
+loading = "{prefix}&r &7› &7&7Đang tải thông báo của {locale}..."
 
 [language.editor.section]
 languages = "Ngôn ngữ"
@@ -384,8 +386,8 @@ search-title = "{locale} / Tìm kiếm"
 group-title = "{locale} / {group}"
 
 [language.editor.prompt]
-search = "{prefix}&r &7› &7&7Tìm khóa hoặc nội dung tin nhắn. Nhập cancel để quay lại."
-value = "{prefix}&r &7› &7&7Nhập giá trị mới cho {key} trong trò chuyện."
+search = "{prefix}&r &7› &7&7Tìm theo khóa hoặc nội dung thông báo. Nhập cancel để quay lại."
+value = "{prefix}&r &7› &7&7Nhập giá trị mới cho {key} trong khung trò chuyện."
 current = "{prefix}&r &7› &7&7Giá trị hiện tại: {value}"
 variables = "{prefix}&r &7› &7&7Biến: {variables}"
 guidance = "{prefix}&r &7› &7&7Dùng \\n để xuống dòng, \\\\ để nhập dấu gạch chéo ngược, hoặc nhập cancel để quay lại."
@@ -399,26 +401,26 @@ unable-to-save = "{prefix}&r &7› &7&cKhông thể lưu: {reason}"
 back = "&eQuay lại&r"
 close = "&cĐóng&r"
 previous-page = "&eTrang trước&r"
-next-page = "&eTrang kế&r"
+next-page = "&eTrang sau&r"
 
 [language.editor.search]
-messages = "Tìm tin nhắn"
-messages-lore = "Nhấn vào để tìm kiếm mọi tin nhắn."
+messages = "Tìm thông báo"
+messages-lore = "Nhấp để tìm trong mọi thông báo."
 clear = "Xóa tìm kiếm"
 
 [language.editor.message]
-current-value = "&7Giá trị hiện có:&r"
+current-value = "&7Giá trị hiện tại:&r"
 variables = "&8{variables}&r"
 edit-plural = "&7Nhấp để chỉnh sửa một dạng số nhiều.&r"
 edit-lines = "&7Nhấp để chỉnh sửa từng dòng.&r"
-edit-chat = "&7Nhấp để chỉnh sửa trong trò chuyện.&r"
+edit-chat = "&7Nhấp để chỉnh sửa trong khung trò chuyện.&r"
 
 [language.editor.locale]
-open = "&8Nhấn vào để mở ngôn ngữ này.&r"
+open = "&8Nhấp để mở ngôn ngữ này.&r"
 
 [language.editor.category]
-message-count = "&7{count} tin nhắn&r"
-open = "&8Nhấn vào để mở phân loại này.&r"
+message-count = "&7{count} thông báo&r"
+open = "&8Nhấp để mở danh mục này.&r"
 
 [language.editor.error]
 no-permission = "{prefix}&r &7› &7&cBạn không có quyền chỉnh sửa ngôn ngữ của {prefix}."

@@ -47,6 +47,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -92,6 +93,10 @@ public final class LanguageService {
     }
 
     LanguageService(File dataFolder, Logger logger, URI apiRoot, URI rawRoot) {
+        this(dataFolder, logger, apiRoot, rawRoot, LanguageUpstreamSync.MINIMUM_CHECK_INTERVAL);
+    }
+
+    LanguageService(File dataFolder, Logger logger, URI apiRoot, URI rawRoot, Duration minimumCheckInterval) {
         languageDirectory = new File(dataFolder, "languages");
         directory = new LanguageDirectory(languageDirectory);
         preferenceFile = directory.root().resolve("language-preferences.properties");
@@ -119,7 +124,7 @@ public final class LanguageService {
                     this::noteUpstreamWrite,
                     this::applyUpstream,
                     logger
-            ));
+            ), minimumCheckInterval);
         } catch (RuntimeException exception) {
             failure = exception;
         }
@@ -249,7 +254,7 @@ public final class LanguageService {
                 return CompletableFuture.completedFuture(LanguageUpstreamSync.SyncReport.failed(
                         sourceDescription(), System.currentTimeMillis()));
             }
-            return sync.checkAsync(true).thenApply(this::logUpstreamReport);
+            return sync.checkAsync().thenApply(this::logUpstreamReport);
         };
     }
 
@@ -262,7 +267,7 @@ public final class LanguageService {
             return CompletableFuture.completedFuture(LanguageUpstreamSync.SyncReport.failed(
                     sourceDescription(), System.currentTimeMillis()));
         }
-        return sync.checkAsync(false).thenApply(this::logUpstreamReport);
+        return sync.checkAsync().thenApply(this::logUpstreamReport);
     }
 
     public CompletableFuture<String> requestInstall(String locale) {
@@ -511,7 +516,10 @@ public final class LanguageService {
             String source = locale.equals(CATALOG.englishLocale()) ? "the built-in catalog" : sourceDescription() + " (" + revision + ")";
             logger.info("Updated ShapedPortals language " + locale + " from " + source + ": " + result.summary() + ".");
         }
-        if (report.failure().isEmpty() && report.changedLocales().isEmpty() && report.failures().isEmpty()
+        if (report.coolingDown()) {
+            logger.info("ShapedPortals language source " + sourceDescription() + " was checked recently; the next check is allowed in "
+                    + report.cooldownRemaining() + ".");
+        } else if (report.failure().isEmpty() && report.changedLocales().isEmpty() && report.failures().isEmpty()
                 && report.revision().isPresent()) {
             logger.info("ShapedPortals languages match " + sourceDescription() + " (" + revision + ").");
         }
@@ -847,6 +855,7 @@ public final class LanguageService {
                         Map.entry("prefix", "Global runtime.prefix value; optional per message"),
                         Map.entry("reason", "Failure reason"),
                         Map.entry("rejected", "Rejected creation attempts"),
+                        Map.entry("remaining", "Time until the next language check is allowed"),
                         Map.entry("scheduler", "Scheduler implementation"),
                         Map.entry("seconds", "Confirmation window"),
                         Map.entry("section", "Language editor section"),

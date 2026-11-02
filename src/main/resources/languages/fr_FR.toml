@@ -2,7 +2,7 @@
 #
 # === Modifier le fichier ===
 # plugins/ShapedPortals/languages/fr_FR.toml
-# Ce fichier peut être modifié directement. Les modifications locales sont conservées ; les entrées manquantes ou invalides utilisent l’anglais intégré.
+# Ce fichier peut être modifié directement. Les modifications locales sont conservées ; l’anglais intégré remplace les entrées manquantes ou invalides.
 # /shapedportals language server edit fr_FR
 #
 # === Préfixe ===
@@ -15,91 +15,92 @@
 # === Variables ===
 # Conservez les noms des variables et utilisez uniquement celles du message concerné.
 #   {added}  Messages ajoutés par une mise à jour de langue
-#   {after}  Valeur après le changement
-#   {argument}  argument inattendu
-#   {attempts}  tentatives de création
-#   {axis}  axe
-#   {before}  Valeur avant la variation
-#   {blocks}  cellules du portail
-#   {category}  catégorie
-#   {cells}  toutes les cellules
-#   {command}  chemin de commande
-#   {count}  Nombre d'entrées correspondantes
-#   {created}  nombre créé ou date de création
-#   {creator}  créateur
-#   {enabled}  état de création
-#   {group}  Autorisation ou groupe de joueurs
-#   {hot_reload}  état du rechargement
-#   {id}  ID court
+#   {after}  Valeur après la modification
+#   {argument}  Argument de commande inattendu
+#   {attempts}  Tentatives de création de portail
+#   {axis}  Axe du portail
+#   {before}  Valeur avant la modification
+#   {blocks}  Cellules intérieures du portail
+#   {category}  Catégorie de l’éditeur
+#   {cells}  Toutes les cellules gérées
+#   {command}  Chemin de la commande
+#   {count}  Nombre de messages
+#   {created}  Nombre de portails créés ou date de création
+#   {creator}  Créateur
+#   {enabled}  État de la création de portails
+#   {group}  Nom de la catégorie de messages
+#   {hot_reload}  État du rechargement automatique
+#   {id}  ID court du portail
 #   {kept}  Modifications locales conservées par une mise à jour de langue
-#   {key}  clé du paramètre
-#   {language}  langue active
-#   {line}  Ligne source ou numéro de ligne
-#   {locale}  code régional
-#   {matches}  portails correspondants
-#   {materials}  matériaux de cadre enregistrés
+#   {key}  Clé du paramètre
+#   {language}  Langue active
+#   {line}  Numéro de ligne du message
+#   {locale}  Code de langue
+#   {matches}  Nombre de portails correspondants
+#   {materials}  Matériaux de cadre enregistrés
 #   {maximum}  Valeur maximale autorisée
-#   {name}  nom complet de la langue
-#   {new}  nouvelle valeur
-#   {old}  ancienne valeur
-#   {parameter}  nom du paramètre
-#   {path}  chemin du rapport local
-#   {permission}  permission requise
-#   {personal}  code régional personnel
-#   {portal}  identifiant
-#   {portals}  nombre géré
-#   {prefix}  Nom formaté du plugin défini par runtime.prefix ; le séparateur se trouve dans le message. Supprimez {prefix}&r &7› &7 pour masquer les deux.
-#   {reason}  motif de l’échec
-#   {rejected}  tentatives refusées
-#   {scheduler}  planificateur
-#   {seconds}  délai de confirmation en secondes
-#   {section}  Section de l’éditeur
-#   {setting}  nom du réglage
-#   {status}  marque de sélection
-#   {target}  Lecteur cible, entité ou valeur
-#   {type}  type
+#   {name}  Nom complet de la langue
+#   {new}  Nouvelle valeur
+#   {old}  Ancienne valeur
+#   {parameter}  Nom du paramètre
+#   {path}  Chemin du rapport local
+#   {permission}  Permission requise
+#   {personal}  Code de langue personnel, s’il diffère de celui du serveur
+#   {portal}  Identifiant du portail
+#   {portals}  Nombre de portails gérés
+#   {prefix}  Valeur de runtime.prefix ; facultative dans chaque message
+#   {reason}  Motif de l’échec
+#   {rejected}  Tentatives de création refusées
+#   {remaining}  Délai restant avant la prochaine vérification des langues
+#   {scheduler}  Implémentation du planificateur
+#   {seconds}  Délai de confirmation en secondes
+#   {section}  Section de l’éditeur de langue
+#   {setting}  Nom du réglage
+#   {status}  Marqueur de sélection
+#   {target}  Cible de la sélection de langue
+#   {type}  Type de paramètre ou de portail
 #   {updated}  Messages modifiés par une mise à jour de langue
-#   {url}  URL publique
-#   {uuid}  UUID complet
-#   {value}  valeur actuelle, par défaut ou brute
-#   {variables}  variables valides
-#   {version}  version du plugin
-#   {world}  monde
-#   {x}  coordonnées de l’ancre
-#   {y}  coordonnées de l’ancre
-#   {z}  coordonnées de l’ancre
+#   {url}  URL publique du rapport
+#   {uuid}  UUID complet du portail
+#   {value}  Valeur actuelle, par défaut ou brute
+#   {variables}  Variables valides pour le message sélectionné
+#   {version}  Version du plugin
+#   {world}  Nom du monde
+#   {x}  Coordonnées d’ancrage
+#   {y}  Coordonnées d’ancrage
+#   {z}  Coordonnées d’ancrage
 
 [runtime]
 prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
 player_only = "{prefix}&r &7› &7&cCette commande ne peut être utilisée que par un joueur.&r"
 
 [runtime.permission]
-denied = "{prefix}&r &7› &7&cVous n'avez pas la permission d'effectuer cette action.&r"
+denied = "{prefix}&r &7› &7&cVous n’avez pas la permission de faire cela.&r"
 
 [runtime.hot_reload]
-success = "{prefix}&r &7› &7&7Les&7 modifications de la configuration et des fichiers de langue ont été appliquées.&r"
-failed = "{prefix}&r &7› &7&cLes modifications de fichiers ont été refusées ; les derniers paramètres valides restent actifs.&r"
+success = "{prefix}&r &7› &7Les modifications de la configuration et des fichiers de langue ont été &aappliquées&7.&r"
+failed = "{prefix}&r &7› &7&cLes modifications de fichiers ont été rejetées ; les derniers réglages valides restent actifs.&r"
 
 [command.feedback]
 version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
-failed = "{prefix}&r &7› &7&cLa commande n'a pas pu être exécutée. Consultez la console pour plus de détails.&r"
+failed = "{prefix}&r &7› &7&cLa commande n’a pas pu être exécutée. Consultez la console pour plus de détails.&r"
 
 [command.feedback.config]
-opened = "{prefix}&r &7› &7&7L'éditeur&7 complet de configuration en jeu a été ouvert.&r"
-saved = "{prefix}&r &7› &7&a{setting}&r &7est passé de &f{old}&r &7à &f{new}&r&7.&r"
-save_failed = "{prefix}&r &7› &7&cImpossible d'appliquer &f{setting}&r&c : {reason}&r"
+opened = "{prefix}&r &7› &7L’éditeur de configuration complet en jeu a été &aouvert&7.&r"
+saved = "{prefix}&r &7› &7&f{setting}&r &aest passé&7 de &f{old}&r &7à &f{new}&r&7.&r"
+save_failed = "{prefix}&r &7› &7&cImpossible d’appliquer &f{setting}&r&c : {reason}&r"
 
 [command.feedback.debug]
 started = "{prefix}&r &7› &7&7Collecte des diagnostics du serveur et de {prefix}…&r"
-busy = "{prefix}&r &7› &7&eUn rapport de diagnostic {prefix} est déjà en cours de création.&r"
-saved = "{prefix}&r &7› &7&7Le&7 rapport de diagnostic a été enregistré dans &f{path}&r&7.&r"
-uploaded = "{prefix}&r &7› &7&7Rapport&7 de diagnostic envoyé :&r &b&n{url}&r"
-link_hover = "&7Ouvre le rapport public mclo.gs.&r"
+busy = "{prefix}&r &7› &7&eUn rapport de diagnostic de {prefix} est déjà en cours de création.&r"
+saved = "{prefix}&r &7› &7Rapport de diagnostic &aenregistré&7 dans &f{path}&r&7.&r"
+uploaded = "{prefix}&r &7› &7Rapport de diagnostic &aenvoyé&7 :&r &b&n{url}&r"
+link_hover = "&7Ouvrir le rapport public sur mclo.gs.&r"
 upload_failed = "{prefix}&r &7› &7&eLe rapport local a été enregistré, mais son envoi vers mclo.gs a échoué. Consultez la console pour plus de détails.&r"
-failed = "{prefix}&r &7› &7&cLe rapport de diagnostic n'a pas pu être créé. Consultez la console pour plus de détails.&r"
+failed = "{prefix}&r &7› &7&cLe rapport de diagnostic n’a pas pu être créé. Consultez la console pour plus de détails.&r"
 
 [command.status]
-header = "{prefix}&r &7› &7&d&lÉtat de {prefix}&r"
+header = "{prefix}&r &7› &7&7État d’exécution&r"
 config = "{prefix}&r &7› &7&7Création :&r {enabled} &8|&r &7Langue :&r &f{language}&r &8|&r &7Rechargement automatique :&r {hot_reload}"
 portals = "{prefix}&r &7› &7&7Portails gérés :&r &f{portals}&r &8|&r &7Cellules intérieures :&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7Tentatives :&r &f{attempts}&r &8|&r &7Créés :&r &a{created}&r &8|&r &7Refusés :&r &c{rejected}&r"
@@ -108,76 +109,76 @@ compatibility = "{prefix}&r &7› &7&7Artefact :&r &fJava 25 / Bukkit 26.1-26.3&
 [command.description]
 version = "Afficher la version installée de {prefix}"
 root = "Aide et administration de {prefix}"
-config = "Ouvrir l'éditeur complet de configuration en jeu"
-language = "Sélectionner une langue {prefix} disponible"
+config = "Ouvrir l’éditeur complet de configuration en jeu"
+language = "Sélectionner une langue disponible pour {prefix}"
 debug = "Outils de diagnostic de {prefix}"
-debug_dump = "Créer un rapport de diagnostic {prefix} complet"
-portals = "Répertorier tous les portails gérés et leur raccourci de téléportation"
-teleport = "Se téléporter en toute sécurité à côté d'un portail géré ou répertorier les portails si aucun n'est indiqué"
+debug_dump = "Créer un rapport de diagnostic complet de {prefix}"
+portals = "Lister tous les portails gérés et leur raccourci de téléportation"
+teleport = "Se téléporter en sécurité à côté d’un portail géré, ou lister les portails si aucun n’est indiqué"
 status = "Afficher les statistiques des portails gérés et des tentatives"
 
 [command.parameter]
-locale = "Code régional d’une langue disponible"
+locale = "Code de langue disponible"
 page = "Page de la liste des portails, numérotée à partir de un"
 portal = "UUID du portail, préfixe unique ou list"
-upload = "Téléverser le rapport lorsque les envois publics sont activés"
+upload = "Envoyer le rapport lorsque les envois publics sont activés"
 
 [portal.notice]
-nether_created = "{prefix}&r &7› &7&7Un&7 portail personnalisé de &f{blocks}&7 blocs intérieurs a été créé.&r"
-end_created = "{prefix}&r &7› &7&7End&7&r &7Un portail personnalisé de &f{blocks}&7 blocs intérieurs a été créé.&r"
+nether_created = "{prefix}&r &7› &7Un portail du Nether de forme libre avec &f{blocks}&7 blocs intérieurs a été &acréé&7.&r"
+end_created = "{prefix}&r &7› &7Un portail de l’End de forme libre avec &f{blocks}&7 blocs intérieurs a été &acréé&7.&r"
 
 [portal.failure]
-cross_region = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : la forme traverse plusieurs régions Folia gérées indépendamment.&r"
-too_large = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : l’intérieur dépasse la limite de blocs configurée.&r"
-too_wide = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : l’intérieur dépasse la largeur maximale configurée.&r"
-too_tall = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : l’intérieur dépasse la hauteur maximale configurée.&r"
-too_small = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : l’intérieur est plus petit que le minimum configuré.&r"
-ambiguous_axis = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : le cadre est valide sur les deux axes.&r"
-start_blocked = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : le bloc d’allumage ne peut plus être remplacé.&r"
-open_frame = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : le cadre est ouvert ou contient une case intérieure obstruée.&r"
-region_unavailable = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : la région responsable n’était pas disponible.&r"
-wormholes_rejected = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : Wormholes a refusé la création du portail.&r"
-event_cancelled = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : un autre plugin a annulé la création.&r"
-block_denied = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : un autre plugin a refusé un ou plusieurs blocs du portail.&r"
-frame_changed = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : le cadre a changé pendant la création.&r"
-overlapping_portal = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : la forme chevauche un portail géré existant.&r"
-world_mutation_failed = "{prefix}&r &7› &7&cCe cadre ne peut pas former un portail de forme personnalisée : la modification du monde a échoué.&r"
+cross_region = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fla forme s’étend sur plusieurs régions Folia gérées indépendamment&r&c.&r"
+too_large = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fl’intérieur dépasse la limite de blocs configurée&r&c.&r"
+too_wide = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fl’intérieur dépasse la largeur maximale configurée&r&c.&r"
+too_tall = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fl’intérieur dépasse la hauteur maximale configurée&r&c.&r"
+too_small = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fl’intérieur est plus petit que le minimum configuré&r&c.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fle cadre est valide sur les deux axes&r&c.&r"
+start_blocked = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fle bloc d’allumage ne peut plus être remplacé&r&c.&r"
+open_frame = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fle cadre est ouvert ou contient une cellule intérieure obstruée&r&c.&r"
+region_unavailable = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fla région propriétaire n’était pas disponible&r&c.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fWormholes a refusé la création du portail&r&c.&r"
+event_cancelled = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fun autre plugin a annulé la création&r&c.&r"
+block_denied = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fun autre plugin a refusé un ou plusieurs blocs du portail&r&c.&r"
+frame_changed = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fle cadre a changé pendant la création&r&c.&r"
+overlapping_portal = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fla forme chevauche un portail géré existant&r&c.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cCe cadre ne peut pas devenir un portail de forme libre : &fla modification du monde a échoué&r&c.&r"
 
 [portal.title]
 nether_created = "&5&lPortail du Nether créé&r"
 end_created = "&5&lPortail de l’End créé&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&r &7› &7&cAucun emplacement sûr n'existe à côté de &f{portal}&r&c. &eCliquez à nouveau sur le même portail dans les &f{seconds}&r&e secondes pour vous y téléporter malgré tout.&r"
+unsafe = "{prefix}&r &7› &7&cAucun emplacement sûr où se tenir n’existe à côté de &f{portal}&r&c. &eCliquez à nouveau sur le même portail dans les &f{seconds}&r&e secondes pour vous y téléporter quand même.&r"
 
 [portal.navigation.list]
-frame_policy_note = "&8  ⚠&r &eLe cadre existant utilise &f{materials}&r&e, qui ne peuvent plus créer de nouveaux portails.&r"
-empty = "&eAucun portail personnalisé géré n'est enregistré.&r"
-entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7Emplacement:&r &f{x}, {y}, {z}&r &8•&r &7Axe:&r &f{axis}&r &8•&r &7Cellules:&r &f{blocks}&r\n&8  └&r &7Créateur:&r &f{creator}&r &8•&r &7Créé:&r &f{created}&r"
+frame_policy_note = "&8  ⚠&r &eLe cadre existant utilise &f{materials}&r&e, qui ne permet pas de créer de nouveaux portails.&r"
+empty = "&eAucun portail de forme libre géré n’est enregistré.&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type :&r &f{type}&r\n&8  ├&r &7Emplacement :&r &f{x}, {y}, {z}&r &8•&r &7Axe :&r &f{axis}&r &8•&r &7Cellules :&r &f{blocks}&r\n&8  └&r &7Créateur :&r &f{creator}&r &8•&r &7Créé :&r &f{created}&r"
 hover = "&7UUID :&r &f{uuid}&r\n&aCliquez pour vous téléporter vers ce portail.&r"
 
 [portal.navigation.error]
 not_found = "{prefix}&r &7› &7&cAucun portail géré ne correspond à &f{portal}&r&c.&r"
-ambiguous = "{prefix}&r &7› &7&cLe préfixe &f{portal}&r&c correspond à {matches} portails. Saisissez davantage de caractères de l'UUID.&r"
-removed = "{prefix}&r &7› &7&cCe portail n'est plus enregistré.&r"
-world_unavailable = "{prefix}&r &7› &7&cLe monde du portail &f{world}&r&c n'est actuellement pas disponible.&r"
+ambiguous = "{prefix}&r &7› &7&cLe préfixe &f{portal}&r&c correspond à {matches} portails. Saisissez davantage de caractères de l’UUID.&r"
+removed = "{prefix}&r &7› &7&cCe portail n’est plus enregistré.&r"
+world_unavailable = "{prefix}&r &7› &7&cLe monde du portail &f{world}&r&c n’est actuellement pas disponible.&r"
 destination_unavailable = "{prefix}&r &7› &7&cLa destination du portail est temporairement indisponible.&r"
-inactive = "{prefix}&r &7› &7&cCe portail n'est plus actif. Son contrôle d'intégrité a été mis en attente.&r"
-no_safe_landing = "{prefix}&r &7› &7&cIl n'existe aucun emplacement sûr à côté de ce portail.&r"
+inactive = "{prefix}&r &7› &7&cCe portail n’est plus actif. Son contrôle d’intégrité a été mis en attente.&r"
+no_safe_landing = "{prefix}&r &7› &7&cIl n’existe aucun emplacement sûr à côté de ce portail.&r"
 
 [portal.navigation.teleport]
 preparing = "{prefix}&r &7› &7&7Préparation de la destination pour &f{portal}&r&7…&r"
-success = "{prefix}&r &7› &7&7Vous&7 avez été téléporté à côté de &f{portal}&r&7 dans &f{world}&r&7.&r"
-failed = "{prefix}&r &7› &7&cLa téléportation vers le portail n'a pas abouti. Elle a peut-être été annulée par un autre plugin.&r"
+success = "{prefix}&r &7› &7Vous avez été &atéléporté&7 à côté de &f{portal}&r&7 dans &f{world}&r&7.&r"
+failed = "{prefix}&r &7› &7&cLa téléportation vers le portail n’a pas abouti. Elle a peut-être été annulée par un autre plugin.&r"
 
 [hud]
-title = "{prefix}"
+title = "{prefix}&r"
 success = "&aRéussite&r"
-failure = "&cÉchec de l'action&r"
-info = "{prefix}"
+failure = "&cÉchec de l’action&r"
+info = "{prefix}&r"
 
 [gui.title]
-root = "&5Configuration de {prefix}&r"
+root = "{prefix}&r &7› &7Configuration&r"
 category = "{prefix}&r &7› &7{category}"
 
 [gui.category]
@@ -195,75 +196,75 @@ back = "&eRetour&r"
 close = "&cFermer&r"
 
 [gui.lore]
-state = "&7Valeur actuelle :&r {value}"
-toggle = "&8Cliquez pour basculer.&r"
-number = "&8Gauche +1, droite -1, Maj ×10, jeter pour saisir.&r"
+state = "&7Actuel :&r {value}"
+toggle = "&8Cliquez pour activer ou désactiver.&r"
+number = "&8Clic gauche +1, clic droit -1, Maj ×10, jeter pour saisir.&r"
 text = "&8Cliquez pour saisir une nouvelle valeur dans le chat.&r"
-language = "&8Cliquez pour choisir une langue disponible ou saisissez un code régional.&r"
-category = "&8Cliquez pour modifier tous les paramètres de cette catégorie.&r"
+language = "&8Cliquez pour choisir une langue disponible ou saisir un code de langue.&r"
+category = "&8Cliquez pour modifier tous les réglages de cette catégorie.&r"
 
 [gui.prompt]
 request = "{prefix}&r &7› &7&eSaisissez une nouvelle valeur pour &f{setting}&r&e dans le chat.&r"
 list = "{prefix}&r &7› &7&7Séparez les éléments de la liste par des virgules. Saisissez &fnone&r&7 pour une liste vide.&r"
-cancel = "{prefix}&r &7› &7&7Saisissez &fcancel&r&7 pour arrêter. Cette demande expire dans 60 secondes.&r"
+cancel = "{prefix}&r &7› &7&7Saisissez &fcancel&r&7 pour arrêter. Cette saisie expire dans 60 secondes.&r"
 cancelled = "{prefix}&r &7› &7&eModification de la configuration annulée.&r"
 timeout = "{prefix}&r &7› &7&eLa modification de la configuration a expiré sans aucun changement.&r"
 
 [gui.language]
-type = "&7Saisissez un code régional dans le chat pour le créer ou le sélectionner.&r"
+type = "&7Saisissez un code de langue dans le chat pour le créer ou le sélectionner.&r"
 option = "{status} &f{locale}&r &8›&r &7{name}&r"
 hover = "&7Cliquez pour sélectionner &f{locale}&r&7.&r"
-empty = "&eAucune langue disponible n’a été trouvée ; saisissez un code régional pour en créer une.&r"
+empty = "&eAucune langue disponible n’a été trouvée ; saisissez un code de langue pour en créer une.&r"
 current = "&7Valeur actuelle :&r {value}"
 variables = "&7Variables / espaces réservés actuels :&r &f{variables}&r"
 changed = "&f{old}&r &7a été remplacé par&r &f{new}&r"
 
 [gui.setting.general]
-update_notifications = "&dNotifications de mises à jour GitHub&r"
+update_notifications = "&dNotifications de mise à jour GitHub&r"
 enabled = "&dCréation de portails&r"
-language = "&dCode régional actif&r"
+language = "&dCode de langue actif&r"
 require_create_permission = "&dExiger la permission de création&r"
-failure_feedback = "&dRetour sur les échecs de portail&r"
+failure_feedback = "&dRetour en cas d’échec de portail&r"
 
 [gui.setting.metrics]
 enabled = "&dStatistiques bStats anonymes&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dNether Nombre minimal de blocs intérieurs&r"
-maximum_interior_blocks = "&dNether Nombre maximal de blocs intérieurs&r"
-maximum_width = "&dNether Largeur maximale&r"
-maximum_height = "&dNether Hauteur maximale&r"
-frame_materials = "&dNether Matériaux du cadre&r"
-interior_materials = "&dNether Matériaux intérieurs&r"
-ignition_causes = "&dCauses d'allumage&r"
+minimum_interior_blocks = "&dNether : nombre minimal de blocs intérieurs&r"
+maximum_interior_blocks = "&dNether : nombre maximal de blocs intérieurs&r"
+maximum_width = "&dNether : largeur maximale&r"
+maximum_height = "&dNether : hauteur maximale&r"
+frame_materials = "&dNether : matériaux du cadre&r"
+interior_materials = "&dNether : matériaux intérieurs&r"
+ignition_causes = "&dCauses d’allumage&r"
 allowed_worlds = "&dMondes autorisés&r"
 denied_worlds = "&dMondes interdits&r"
 deduplication_millis = "&dDéduplication en millisecondes&r"
-end_portal_creation = "&dEnd Création de portails&r"
-end_minimum_interior_blocks = "&dEnd Nombre minimal de blocs intérieurs&r"
-end_maximum_interior_blocks = "&dEnd Nombre maximal de blocs intérieurs&r"
-end_maximum_width = "&dEnd Largeur maximale&r"
-end_maximum_length = "&dEnd Largeur maximale&r"
-end_interior_materials = "&dEnd Matériaux intérieurs&r"
+end_portal_creation = "&dCréation de portails de l’End de forme libre&r"
+end_minimum_interior_blocks = "&dEnd : nombre minimal de blocs intérieurs&r"
+end_maximum_interior_blocks = "&dEnd : nombre maximal de blocs intérieurs&r"
+end_maximum_width = "&dEnd : largeur maximale&r"
+end_maximum_length = "&dEnd : longueur maximale&r"
+end_interior_materials = "&dEnd : matériaux intérieurs&r"
 
 [gui.setting.effects]
-creation_sound = "&dNether Son de création&r"
-creation_sound_type = "&dNether Type du son de création&r"
-creation_sound_volume = "&dNether Volume du son de création&r"
-creation_sound_pitch = "&dNether Hauteur du son de création&r"
-end_creation_sound = "&dEnd Son de création&r"
-end_creation_sound_type = "&dEnd Type du son de création&r"
-end_creation_sound_volume = "&dEnd Volume du son de création&r"
-end_creation_sound_pitch = "&dEnd Hauteur du son de création&r"
+creation_sound = "&dNether : son de création&r"
+creation_sound_type = "&dNether : type du son de création&r"
+creation_sound_volume = "&dNether : volume du son de création&r"
+creation_sound_pitch = "&dNether : hauteur du son de création&r"
+end_creation_sound = "&dEnd : son de création&r"
+end_creation_sound_type = "&dEnd : type du son de création&r"
+end_creation_sound_volume = "&dEnd : volume du son de création&r"
+end_creation_sound_pitch = "&dEnd : hauteur du son de création&r"
 
 [gui.setting.hot_reload]
 enabled = "&dRechargement automatique&r"
 poll_interval_millis = "&dIntervalle de vérification en millisecondes&r"
-cooldown_millis = "&dDélai d'enregistrement en millisecondes&r"
+cooldown_millis = "&dDélai après enregistrement en millisecondes&r"
 notify_operators = "&dNotifier les opérateurs&r"
 
 [gui.setting.integrity]
-enabled = "&dService d'intégrité&r"
+enabled = "&dService d’intégrité&r"
 check_interval_ticks = "&dIntervalle de contrôle en ticks&r"
 maximum_checks_per_cycle = "&dNombre maximal de contrôles par cycle&r"
 
@@ -271,16 +272,16 @@ maximum_checks_per_cycle = "&dNombre maximal de contrôles par cycle&r"
 splash_screen = "&dÉcran de démarrage&r"
 command_sounds = "&dSons des commandes&r"
 command_overlays = "&dAffichages des commandes&r"
-portal_notices = "&dCanaux d'avis des portails&r"
-nether_creation_notices = "&dNether Canaux d'avis des portails&r"
-end_creation_notices = "&dEnd Canaux d'avis des portails&r"
-overlay_duration_ticks = "&dDurée de l'affichage en ticks&r"
+portal_notices = "&dCanaux des avis de refus&r"
+nether_creation_notices = "&dNether : canaux des avis de création&r"
+end_creation_notices = "&dEnd : canaux des avis de création&r"
+overlay_duration_ticks = "&dDurée d’affichage en ticks&r"
 title_fade_in_ticks = "&dApparition du titre en ticks&r"
 title_stay_ticks = "&dMaintien du titre en ticks&r"
 title_fade_out_ticks = "&dDisparition du titre en ticks&r"
 
 [gui.setting.debug]
-upload_enabled = "&dEnvoyer les rapports de débogage vers mclo.gs&r"
+upload_enabled = "&dEnvoyer les rapports de diagnostic vers mclo.gs&r"
 
 [director.help]
 category = "Catégorie de commandes"
@@ -304,7 +305,7 @@ hover = "Revenir au groupe de commandes parent"
 hover = "Page précédente"
 
 [director.help.parameter]
-default = "Vaut \"{value}\" par défaut si non défini."
+default = "Vaut « {value} » par défaut si non défini."
 optional = "Ce paramètre est facultatif."
 required = "Ce paramètre est obligatoire."
 type = "Ce paramètre est de type {type}."
@@ -312,13 +313,13 @@ type = "Ce paramètre est de type {type}."
 [director.runtime]
 
 [director.runtime.error]
-conversion_failed = "Impossible de convertir \"{value}\" en {type} pour {parameter}"
-default_parse_failed = "Impossible d'analyser la valeur par défaut du paramètre {parameter}"
-execution_failed = "Échec de l'exécution de la commande {command} : {reason}"
+conversion_failed = "Impossible de convertir « {value} » en {type} pour {parameter}"
+default_parse_failed = "Impossible d’analyser la valeur par défaut du paramètre {parameter}"
+execution_failed = "Échec de l’exécution de la commande {command} : {reason}"
 invalid_origin = "Cette commande ne peut pas être exécutée depuis cette origine."
-missing_argument = "Argument manquant \"{parameter}\" ({type})"
-unexpected_argument = "Argument inattendu \"{argument}\". Les paramètres facultatifs doivent être nommés, par ex. seed=123"
-unclosed_group = "Crochet fermant \"]\" manquant pour le paramètre {key}"
+missing_argument = "Argument manquant « {parameter} » ({type})"
+unexpected_argument = "Argument inattendu « {argument} ». Les paramètres facultatifs doivent être nommés, par ex. seed=123"
+unclosed_group = "Crochet fermant « ] » manquant pour le paramètre {key}"
 unknown_parameter = "Clé de paramètre inconnue : {key}"
 
 [language.menu]
@@ -328,54 +329,55 @@ server_default = "Langue par défaut du serveur"
 edit_messages = "Modifier les messages de langue"
 use_server_default = "Utiliser la langue par défaut du serveur"
 current = "Langue actuelle : {locale}"
-current_with_personal = "Langue actuelle : {locale} (La vôtre : {personal})"
-your_description = "Modifiez uniquement les messages que vous voyez."
-reset_description = "Utilisez la langue par défaut du serveur."
-server_description = "Modifiez la langue par défaut du serveur."
-edit_description = "Ouvrez l’éditeur de messages pour chaque langue."
+current_with_personal = "Langue actuelle : {locale} (la vôtre : {personal})"
+your_description = "Modifier uniquement les messages que vous voyez."
+reset_description = "Utiliser la langue par défaut du serveur."
+server_description = "Modifier la langue par défaut du serveur"
+edit_description = "Ouvrir l’éditeur de messages pour chaque langue."
 select_description = "Cliquez pour sélectionner cette langue."
-remove_personal_description = "Supprimez votre choix de langue personnel."
+remove_personal_description = "Supprimer votre choix de langue personnel."
 no_controls = "Aucune option de langue ne vous est accessible."
-command = "Commande: {command}"
-selected = "sélectionné"
-all-volmit-plugins = "Tous les plugins Volmit"
+command = "Commande : {command}"
+selected = "sélectionnée"
+all-volmit-plugins = "tous les plugins Volmit"
 
 [language.error]
-stopping = "{prefix}&r &7› &7&cLa sélection de la langue est indisponible pendant que le plugin s'arrête."
-editor-player-only = "{prefix}&r &7› &7&cOuvrez l'éditeur de langue dans le jeu."
+stopping = "{prefix}&r &7› &7&cLa sélection de la langue est indisponible pendant l’arrêt du plugin."
+editor-player-only = "{prefix}&r &7› &7&cOuvrez l’éditeur de langue en jeu."
 no-providers = "{prefix}&r &7› &7&cAucun fournisseur de langue Volmit n’est disponible."
-numeric-page = "{prefix}&r &7› &7&cSaisissez un numéro de page."
-personal-player-only = "{prefix}&r &7› &7&cLes préférences linguistiques du joueur doivent être sélectionnées dans le jeu."
-personal-permission = "{prefix}&r &7› &7&cVous n'avez pas la permission de sélectionner votre langue."
+numeric-page = "{prefix}&r &7› &7&cIndiquez un numéro de page de langue."
+personal-player-only = "{prefix}&r &7› &7&cLes préférences de langue personnelles doivent être choisies en jeu."
+personal-permission = "{prefix}&r &7› &7&cVous n’avez pas la permission de sélectionner votre langue."
 plugin-personal-permission = "{prefix}&r &7› &7&cVous n’avez pas la permission de choisir votre langue pour {prefix}."
 plugin-server-permission = "{prefix}&r &7› &7&cVous n’avez pas la permission de changer la langue du serveur pour {prefix}."
-server-locale-required = "{prefix}&r &7› &7&cChoisissez un code de langue comme en_US pour la langue par défaut du serveur."
+server-locale-required = "{prefix}&r &7› &7&cChoisissez un code de langue tel que en_US comme langue par défaut du serveur."
 unavailable-for-all = "{prefix}&r &7› &7&cLa langue {locale} n’est pas disponible pour tous les plugins sélectionnés."
 
 [language.usage]
-editor = "{prefix}&r &7› &7&7Utilisation: /{command} language server edit [locale]"
-selection = "{prefix}&r &7› &7&7Utilisation: /{command} language self [locale|reset] or server [locale]"
-volmit-selection = "{prefix}&r &7› &7&7Utilisation: /volmit plugins languages [locale]"
-update = "{prefix}&r &7› &7&7Utilisation: /{command} language update"
+editor = "{prefix}&r &7› &7&7Utilisation : /{command} language server edit [locale]"
+selection = "{prefix}&r &7› &7&7Utilisation : /{command} language self [locale|reset] ou server [locale]"
+volmit-selection = "{prefix}&r &7› &7&7Utilisation : /volmit plugins languages [locale]"
+update = "{prefix}&r &7› &7&7Utilisation : /{command} language update"
 
 [language.selection]
 preparing = "{prefix}&r &7› &7&7Préparation de la langue {locale} pour {target}..."
-save-failed = "{prefix}&r &7› &7&c{prefix} : impossible d’enregistrer le choix de langue ; consultez la console du serveur."
-english-fallback = "{prefix}&r &7› &7&e{prefix} : {locale} est indisponible ; l’anglais (en_US) est utilisé."
-personal-selected = "{prefix}&r &7› &7&7votre langue est maintenant {locale}."
-server-selected = "{prefix}&r &7› &7&7la langue du serveur est maintenant {locale}."
-server-default-selected = "{prefix}&r &7› &7&7{prefix} : votre langue suit désormais la langue par défaut du serveur."
+save-failed = "{prefix}&r &7› &7&cImpossible d’enregistrer le choix de langue ; consultez la console du serveur."
+english-fallback = "{prefix}&r &7› &7&e{locale} est indisponible ; l’anglais (en_US) est utilisé."
+personal-selected = "{prefix}&r &7› &7&7Votre langue est maintenant {locale}."
+server-selected = "{prefix}&r &7› &7&7La langue du serveur est maintenant {locale}."
+server-default-selected = "{prefix}&r &7› &7&7Votre langue suit désormais la langue par défaut du serveur."
 
 [language.update]
-checking = "{prefix}&r &7› &7&7Vérification des modifications du dépôt de langues..."
+checking = "{prefix}&r &7› &7&7Recherche de modifications dans le dépôt de langues..."
 unchanged = "{prefix}&r &7› &7&7Les langues installées correspondent déjà au dépôt."
 applied = "{prefix}&r &7› &7&7{locale} mis à jour ({added} ajoutés, {updated} modifiés, {kept} modifications locales conservées)."
+cooldown = "{prefix}&r &7› &7&7Le dépôt de langues a été vérifié récemment ; réessayez dans {remaining}."
 locale-failed = "{prefix}&r &7› &7&c{locale} n’a pas été mis à jour : {reason}"
 failed = "{prefix}&r &7› &7&cLa mise à jour des langues a échoué : {reason}"
 
 [language.editor]
 title = "{prefix} › {section}"
-loading = "{prefix}&r &7› &7&7Chargement des messages en {locale}..."
+loading = "{prefix}&r &7› &7&7Chargement des messages de {locale}..."
 
 [language.editor.section]
 languages = "Langues"
@@ -407,7 +409,7 @@ messages-lore = "Cliquez pour rechercher parmi tous les messages."
 clear = "Effacer la recherche"
 
 [language.editor.message]
-current-value = "&7Valeur actuelle:&r"
+current-value = "&7Valeur actuelle :&r"
 variables = "&8{variables}&r"
 edit-plural = "&7Cliquez pour modifier une forme plurielle.&r"
 edit-lines = "&7Cliquez pour modifier les lignes individuellement.&r"
@@ -446,14 +448,14 @@ already-preparing-short = "{prefix}&r &7› &7&cUn rapport de diagnostic est dé
 schedule-failed = "{prefix}&r &7› &7&cImpossible de planifier la création du rapport de diagnostic."
 provider-closed = "{prefix}&r &7› &7&cLe fournisseur de diagnostics est fermé."
 closed-before-capture = "{prefix}&r &7› &7&cLe fournisseur de diagnostics a été fermé avant la collecte des données du rapport."
-writer-schedule-failed = "{prefix}&r &7› &7&cImpossible de planifier l'écriture du rapport de diagnostic."
+writer-schedule-failed = "{prefix}&r &7› &7&cImpossible de planifier l’écriture du rapport de diagnostic."
 capture-failed = "{prefix}&r &7› &7&cImpossible de collecter les données du rapport de diagnostic. Consultez la console du serveur."
-closed-before-write = "{prefix}&r &7› &7&cLe fournisseur de diagnostics a été fermé avant l'écriture du rapport."
-write-failed = "{prefix}&r &7› &7&cImpossible d'écrire le rapport de diagnostic. Consultez la console du serveur."
+closed-before-write = "{prefix}&r &7› &7&cLe fournisseur de diagnostics a été fermé avant l’écriture du rapport."
+write-failed = "{prefix}&r &7› &7&cImpossible d’écrire le rapport de diagnostic. Consultez la console du serveur."
 
 [debug.upload]
-interrupted = "{prefix}&r &7› &7&7L'envoi du rapport de diagnostic a été interrompu. Le rapport local est enregistré."
-failed = "{prefix}&r &7› &7&cL'envoi du rapport de diagnostic a échoué. Le rapport local est enregistré."
+interrupted = "{prefix}&r &7› &7&7L’envoi du rapport de diagnostic a été interrompu. Le rapport local est enregistré."
+failed = "{prefix}&r &7› &7&cL’envoi du rapport de diagnostic a échoué. Le rapport local est enregistré."
 completed = "{prefix}&r &7› &7&7Envoyé sous le nom VolmitSoftware - {prefix} - v{version}."
 
 [debug.action]

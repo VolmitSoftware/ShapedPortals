@@ -2,72 +2,74 @@
 #
 # === עריכת הקובץ ===
 # plugins/ShapedPortals/languages/he_IL.toml
-# אפשר לערוך קובץ זה ישירות. שינויים מקומיים נשמרים; ערכים חסרים או לא תקינים משתמשים באנגלית המובנית.
+# אפשר לערוך קובץ זה ישירות. שינויים מקומיים נשמרים; במקום ערכים חסרים או לא תקינים מוצג הטקסט המובנה באנגלית.
 # /shapedportals language server edit he_IL
 #
 # === קידומת ===
-# {prefix}  שם התוסף המעוצב מתוך runtime.prefix; המפריד נמצא בהודעה. יש להסיר את {prefix}&r &7› &7 כדי להסתיר את שניהם.
+# {prefix}  שם התוסף המעוצב מגיע מ-runtime.prefix. תבניות הצ׳אט מוסיפות את המפריד האפור ›.
+# כדי להסתיר את השם ואת המפריד, הסירו את {prefix}&r &7› &7 מתחילת ההודעה.
 #
 # === עיצוב ===
-# צבעים: &0-&f, &k-&r, &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B וגם [RRGGBB]. ניתן להשתמש גם ב-MiniMessage לעיצוב מותאם.
-# כדי להציג & או [ כלשונם, יש להוסיף לפניהם לוכסן הפוך.
+# צבעים וסגנונות: &0-&f, &k-&r. צבעי RGB: &#RRGGBB, &xRRGGBB, &x&R&R&G&G&B&B וגם [RRGGBB]. אפשר להשתמש גם ב-MiniMessage לעיצוב מותאם.
+# כדי להציג & או [ כפי שהם, הוסיפו לפניהם לוכסן הפוך.
 #
 # === משתנים ===
-# יש לשמור על שמות המשתנים ולהשתמש רק במשתנים הקיימים בכל הודעה.
+# אל תשנו את שמות המשתנים, והשתמשו בכל הודעה רק במשתנים השייכים לה.
 #   {added}  הודעות שנוספו בעדכון שפה
-#   {after}  ערך לאחר השינוי
-#   {argument}  ארגומנט לא צפוי
-#   {attempts}  ניסיונות יצירה
-#   {axis}  ציר
-#   {before}  ערך לפני השינוי
-#   {blocks}  תאי פורטל
-#   {category}  קטגוריה
-#   {cells}  כל התאים
-#   {command}  נתיב פקודה
-#   {count}  מספר הערכים
-#   {created}  כמות שנוצרה או זמן יצירה
-#   {creator}  יוצר
-#   {enabled}  מצב יצירה
-#   {group}  Permission או שחקן
-#   {hot_reload}  מצב טעינה חמה
-#   {id}  מזהה קצר
+#   {after}  הערך לאחר השינוי
+#   {argument}  ארגומנט פקודה לא צפוי
+#   {attempts}  ניסיונות ליצירת פורטל
+#   {axis}  ציר הפורטל
+#   {before}  הערך לפני השינוי
+#   {blocks}  התאים הפנימיים של הפורטל
+#   {category}  קטגוריה בעורך
+#   {cells}  כל התאים המנוהלים
+#   {command}  נתיב הפקודה
+#   {count}  מספר ההודעות
+#   {created}  מספר הפורטלים שנוצרו או זמן היצירה
+#   {creator}  זהות היוצר
+#   {enabled}  מצב יצירת הפורטלים
+#   {group}  שם קטגוריית ההודעות
+#   {hot_reload}  מצב הטעינה החמה
+#   {id}  מזהה פורטל מקוצר
 #   {kept}  עריכות מקומיות שנשמרו בעדכון שפה
-#   {key}  מפתח פרמטר
-#   {language}  שפה פעילה
-#   {line}  מקור או קו מספר
-#   {locale}  אזור שפה
-#   {matches}  פורטלים תואמים
+#   {key}  מפתח הפרמטר
+#   {language}  השפה הפעילה
+#   {line}  מספר השורה בהודעה
+#   {locale}  מזהה אזור השפה
+#   {matches}  מספר הפורטלים התואמים
 #   {materials}  חומרי המסגרת שנרשמו
-#   {maximum}  ערך מותר מקסימלי
+#   {maximum}  הערך המרבי המותר
 #   {name}  שם השפה המלא
 #   {new}  הערך החדש
 #   {old}  הערך הקודם
-#   {parameter}  שם פרמטר
-#   {path}  נתיב דוח מקומי
+#   {parameter}  שם הפרמטר
+#   {path}  נתיב הדוח המקומי
 #   {permission}  ההרשאה הנדרשת
-#   {personal}  אזור השפה האישי
-#   {portal}  מזהה
-#   {portals}  כמות מנוהלת
-#   {prefix}  שם התוסף המעוצב מתוך runtime.prefix; המפריד נמצא בהודעה. יש להסיר את {prefix}&r &7› &7 כדי להסתיר את שניהם.
-#   {reason}  סיבת כשל
-#   {rejected}  ניסיונות שנדחו
-#   {scheduler}  מתזמן
-#   {seconds}  חלון אישור בשניות
-#   {section}  מקטע בעורך
-#   {setting}  שם הגדרה
-#   {status}  סימן בחירה
-#   {target}  שחקן היעד, הישות או הערך
-#   {type}  סוג
+#   {personal}  אזור השפה האישי, אם הוא שונה מברירת המחדל של השרת
+#   {portal}  מזהה הפורטל
+#   {portals}  מספר הפורטלים המנוהלים
+#   {prefix}  ערך runtime.prefix הכללי; אופציונלי בכל הודעה
+#   {reason}  סיבת הכשל
+#   {rejected}  ניסיונות יצירה שנדחו
+#   {remaining}  הזמן שנותר עד שתותר בדיקת השפות הבאה
+#   {scheduler}  מימוש המתזמן
+#   {seconds}  חלון האישור
+#   {section}  מקטע בעורך השפה
+#   {setting}  שם ההגדרה
+#   {status}  סימן הבחירה
+#   {target}  יעד בחירת השפה
+#   {type}  סוג הפרמטר או סוג הפורטל
 #   {updated}  הודעות ששונו בעדכון שפה
-#   {url}  כתובת דוח ציבורית
-#   {uuid}  UUID מלא
-#   {value}  ערך נוכחי, ברירת מחדל או גולמי
-#   {variables}  מצייני מקום תקינים
+#   {url}  כתובת הדוח הציבורית
+#   {uuid}  ה-UUID המלא של הפורטל
+#   {value}  ערך נוכחי, ברירת מחדל או ערך גולמי
+#   {variables}  מצייני המקום התקפים בהודעה שנבחרה
 #   {version}  גרסת התוסף
-#   {world}  עולם
-#   {x}  קואורדינטות עוגן
-#   {y}  קואורדינטות עוגן
-#   {z}  קואורדינטות עוגן
+#   {world}  שם העולם
+#   {x}  קואורדינטות העוגן
+#   {y}  קואורדינטות העוגן
+#   {z}  קואורדינטות העוגן
 
 [runtime]
 prefix = "<bold><gradient:#6f35c5:#35135f>ShapedPortals</gradient></bold>"
@@ -77,7 +79,7 @@ player_only = "{prefix}&r &7› &7&cרק שחקן יכול להשתמש בפקו
 denied = "{prefix}&r &7› &7&cאין לך הרשאה לבצע פעולה זו.&r"
 
 [runtime.hot_reload]
-success = "{prefix}&r &7› &7&7השינויים&7 בקובצי התצורה והשפה הוחלו.&r"
+success = "{prefix}&r &7› &7&aהוחלו&7 השינויים בקובצי התצורה והשפה.&r"
 failed = "{prefix}&r &7› &7&cהשינויים בקבצים נדחו; ההגדרות התקינות האחרונות נשארו פעילות.&r"
 
 [command.feedback]
@@ -85,31 +87,31 @@ version = "<gradient:#6f35c5:#35135f>{prefix} v{version}</gradient>"
 failed = "{prefix}&r &7› &7&cלא ניתן להשלים את הפקודה. פרטים נוספים מופיעים במסוף.&r"
 
 [command.feedback.config]
-opened = "{prefix}&r &7› &7&7עורך&7 התצורה המלא בתוך המשחק נפתח.&r"
-saved = "{prefix}&r &7› &7&a{setting}&r &7שונה מ-&f{old}&r &7ל-&f{new}&r&7.&r"
+opened = "{prefix}&r &7› &7&aנפתח&7 עורך התצורה המלא בתוך המשחק.&r"
+saved = "{prefix}&r &7› &7&f{setting}&r &aשונה&7 מ-&f{old}&r &7ל-&f{new}&r&7.&r"
 save_failed = "{prefix}&r &7› &7&cלא ניתן להחיל את &f{setting}&r&c: {reason}&r"
 
 [command.feedback.debug]
 started = "{prefix}&r &7› &7&7נאספים נתוני אבחון של השרת ושל {prefix}…&r"
 busy = "{prefix}&r &7› &7&eדוח אבחון של {prefix} כבר נמצא בתהליך יצירה.&r"
-saved = "{prefix}&r &7› &7&7דוח&7 האבחון נשמר במיקום &f{path}&r&7.&r"
-uploaded = "{prefix}&r &7› &7&7דוח&7 האבחון הועלה:&r &b&n{url}&r"
+saved = "{prefix}&r &7› &7&aנשמר&7 דוח האבחון במיקום &f{path}&r&7.&r"
+uploaded = "{prefix}&r &7› &7&aהועלה&7 דוח האבחון:&r &b&n{url}&r"
 link_hover = "&7פתיחת דוח mclo.gs הציבורי.&r"
 upload_failed = "{prefix}&r &7› &7&eהדוח המקומי נשמר, אך ההעלאה אל mclo.gs נכשלה. פרטים נוספים מופיעים במסוף.&r"
 failed = "{prefix}&r &7› &7&cלא ניתן ליצור את דוח האבחון. פרטים נוספים מופיעים במסוף.&r"
 
 [command.status]
-header = "{prefix}&r &7› &7&d&lמצב הפעולה של {prefix}&r"
+header = "{prefix}&r &7› &7&7זמן ריצה&r"
 config = "{prefix}&r &7› &7&7יצירה:&r {enabled} &8|&r &7שפה:&r &f{language}&r &8|&r &7טעינה חמה:&r {hot_reload}"
-portals = "{prefix}&r &7› &7&7פורטלים מנוהלים:&r &f{portals}&r &8|&r &7בלוקים פנימיים:&r &f{cells}&r"
+portals = "{prefix}&r &7› &7&7פורטלים מנוהלים:&r &f{portals}&r &8|&r &7תאים פנימיים:&r &f{cells}&r"
 attempts = "{prefix}&r &7› &7&7ניסיונות:&r &f{attempts}&r &8|&r &7נוצרו:&r &a{created}&r &8|&r &7נדחו:&r &c{rejected}&r"
-compatibility = "{prefix}&r &7› &7&7קובץ בנוי:&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7מתזמן:&r &f{scheduler}&r"
+compatibility = "{prefix}&r &7› &7&7תוצר בנייה:&r &fJava 25 / Bukkit 26.1-26.3&r &8|&r &7מתזמן:&r &f{scheduler}&r"
 
 [command.description]
 version = "הצגת הגרסה המותקנת של {prefix}"
 root = "עזרה וניהול של {prefix}"
 config = "פתיחת עורך התצורה המלא בתוך המשחק"
-language = "בחירת שפת {prefix} זמינה"
+language = "בחירת שפה זמינה עבור {prefix}"
 debug = "כלי האבחון של {prefix}"
 debug_dump = "יצירת דוח אבחון מקיף של {prefix}"
 portals = "הצגת כל הפורטלים המנוהלים וקיצורי ההשתגרות אליהם"
@@ -118,42 +120,42 @@ status = "הצגת נתונים סטטיסטיים של פורטלים מנוה�
 
 [command.parameter]
 locale = "אזור שפה זמין"
-page = "עמוד רשימת פורטלים שמספרו מתחיל באחד"
+page = "מספר עמוד ברשימת הפורטלים, החל מ-1"
 portal = "UUID של פורטל, תחילית ייחודית או list"
 upload = "העלאת הדוח כאשר העלאות ציבוריות מופעלות"
 
 [portal.notice]
-nether_created = "{prefix}&r &7› &7&7נוצר&7 פורטל מעוצב עם &f{blocks}&7 בלוקים פנימיים.&r"
-end_created = "{prefix}&r &7› &7&7End&7&r &7נוצר פורטל מעוצב עם &f{blocks}&7 בלוקים פנימיים.&r"
+nether_created = "{prefix}&r &7› &7&aנוצר&7 פורטל ל-Nether בצורה חופשית עם &f{blocks}&7 בלוקים פנימיים.&r"
+end_created = "{prefix}&r &7› &7&aנוצר&7 פורטל ל-End בצורה חופשית עם &f{blocks}&7 בלוקים פנימיים.&r"
 
 [portal.failure]
-cross_region = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: הצורה חוצה אזורי Folia שמנוהלים בנפרד.&r"
-too_large = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: מספר הבלוקים בחלל הפנימי חורג מהמגבלה שהוגדרה.&r"
-too_wide = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: רוחב החלל הפנימי חורג מהמגבלה שהוגדרה.&r"
-too_tall = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: גובה החלל הפנימי חורג מהמגבלה שהוגדרה.&r"
-too_small = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: החלל הפנימי קטן מהמינימום שהוגדר.&r"
-ambiguous_axis = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: המסגרת תקינה בשני הצירים.&r"
-start_blocked = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: כבר לא ניתן להחליף את הבלוק בנקודת ההצתה.&r"
-open_frame = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: המסגרת פתוחה או שיש תא חסום בחלל הפנימי.&r"
-region_unavailable = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: האזור האחראי לא היה זמין.&r"
-wormholes_rejected = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: Wormholes דחה את יצירת הפורטל.&r"
-event_cancelled = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: תוסף אחר ביטל את היצירה.&r"
-block_denied = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: תוסף אחר חסם בלוק אחד או יותר של הפורטל.&r"
-frame_changed = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: המסגרת השתנתה במהלך היצירה.&r"
-overlapping_portal = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: הצורה חופפת לפורטל מנוהל קיים.&r"
-world_mutation_failed = "{prefix}&r &7› &7&cלא ניתן ליצור פורטל בצורה מותאמת מהמסגרת הזו: שינוי העולם נכשל.&r"
+cross_region = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fהצורה חוצה אזורי Folia בבעלות נפרדת&r&c.&r"
+too_large = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fהחלל הפנימי חורג ממגבלת הבלוקים שהוגדרה&r&c.&r"
+too_wide = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fהחלל הפנימי חורג ממגבלת הרוחב שהוגדרה&r&c.&r"
+too_tall = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fהחלל הפנימי חורג ממגבלת הגובה שהוגדרה&r&c.&r"
+too_small = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fהחלל הפנימי קטן מהמינימום שהוגדר&r&c.&r"
+ambiguous_axis = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fהמסגרת תקינה בשני הצירים&r&c.&r"
+start_blocked = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fכבר לא ניתן להחליף את בלוק ההצתה&r&c.&r"
+open_frame = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fהמסגרת פתוחה או שיש תא חסום בחלל הפנימי&r&c.&r"
+region_unavailable = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fהאזור האחראי לא היה זמין&r&c.&r"
+wormholes_rejected = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fWormholes דחה את יצירת הפורטל&r&c.&r"
+event_cancelled = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fתוסף אחר ביטל את היצירה&r&c.&r"
+block_denied = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fתוסף אחר חסם בלוק אחד או יותר של הפורטל&r&c.&r"
+frame_changed = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fהמסגרת השתנתה במהלך היצירה&r&c.&r"
+overlapping_portal = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fהצורה חופפת לפורטל מנוהל קיים&r&c.&r"
+world_mutation_failed = "{prefix}&r &7› &7&cלא ניתן להפוך את המסגרת הזו לפורטל בצורה חופשית: &fשינוי העולם נכשל&r&c.&r"
 
 [portal.title]
-nether_created = "&5&lנוצר שער לנתר&r"
-end_created = "&5&lנוצר שער לאנד&r"
+nether_created = "&5&lנוצר פורטל ל-Nether&r"
+end_created = "&5&lנוצר פורטל ל-End&r"
 
 [portal.navigation.confirm]
-unsafe = "{prefix}&r &7› &7&cאין מקום בטוח לעמוד ליד &f{portal}&r&c. &eלחצו שוב על אותו פורטל בתוך &f{seconds}&r&e שניות כדי להשתגר לתוכו בכל זאת.&r"
+unsafe = "{prefix}&r &7› &7&cאין מקום בטוח לעמידה ליד &f{portal}&r&c. &eלחצו שוב על אותו פורטל בתוך &f{seconds}&r&e שניות כדי להשתגר לתוכו בכל זאת.&r"
 
 [portal.navigation.list]
-frame_policy_note = "&8  ⚠&r &eהמסגרת הקיימת משתמשת ב-&f{materials}&r&e, שלא ניתן ליצור מהם שערים חדשים.&r"
-empty = "&eלא רשומים פורטלים מעוצבים מנוהלים.&r"
-entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7Type:&r &f{type}&r\n&8  ├&r &7מיקום:&r &f{x}, {y}, {z}&r &8•&r &7ציר:&r &f{axis}&r &8•&r &7תאים:&r &f{blocks}&r\n&8  └&r &7יוצר:&r &f{creator}&r &8•&r &7נוצר:&r &f{created}&r"
+frame_policy_note = "&8  ⚠&r &eהמסגרת הקיימת עשויה מ-&f{materials}&r&e, ולא ניתן ליצור מהם פורטלים חדשים.&r"
+empty = "&eלא רשומים פורטלים מנוהלים בצורה חופשית.&r"
+entry = "&d{id}&r &8›&r &f{world}&r &8•&r &7סוג:&r &f{type}&r\n&8  ├&r &7מיקום:&r &f{x}, {y}, {z}&r &8•&r &7ציר:&r &f{axis}&r &8•&r &7תאים:&r &f{blocks}&r\n&8  └&r &7יוצר:&r &f{creator}&r &8•&r &7נוצר:&r &f{created}&r"
 hover = "&7UUID:&r &f{uuid}&r\n&aלחצו כדי להשתגר אל פורטל זה.&r"
 
 [portal.navigation.error]
@@ -167,17 +169,17 @@ no_safe_landing = "{prefix}&r &7› &7&cאין מקום בטוח לעמוד לי
 
 [portal.navigation.teleport]
 preparing = "{prefix}&r &7› &7&7היעד עבור &f{portal}&r&7 בהכנה…&r"
-success = "{prefix}&r &7› &7&7השתגרת&7 ליד &f{portal}&r&7 בעולם &f{world}&r&7.&r"
+success = "{prefix}&r &7› &7&aהשתגרת&7 ליד &f{portal}&r&7 בעולם &f{world}&r&7.&r"
 failed = "{prefix}&r &7› &7&cההשתגרות לפורטל לא הושלמה. ייתכן שתוסף אחר ביטל אותה.&r"
 
 [hud]
-title = "{prefix}"
+title = "{prefix}&r"
 success = "&aהצלחה&r"
 failure = "&cהפעולה נכשלה&r"
-info = "{prefix}"
+info = "{prefix}&r"
 
 [gui.title]
-root = "&5תצורת {prefix}&r"
+root = "{prefix}&r &7› &7תצורה&r"
 category = "{prefix}&r &7› &7{category}"
 
 [gui.category]
@@ -205,7 +207,7 @@ category = "&8לחצו כדי לערוך כל הגדרה בקטגוריה זו.&
 [gui.prompt]
 request = "{prefix}&r &7› &7&eהקלידו בצ׳אט ערך חדש עבור &f{setting}&r&e.&r"
 list = "{prefix}&r &7› &7&7הפרידו פריטי רשימה בפסיקים. הקלידו &fnone&r&7 עבור רשימה ריקה.&r"
-cancel = "{prefix}&r &7› &7&7הקלידו &fcancel&r&7 כדי לעצור. הבקשה תפוג בתוך 60 שניות.&r"
+cancel = "{prefix}&r &7› &7&7הקלידו &fcancel&r&7 כדי לעצור. ההנחיה תפוג בעוד 60 שניות.&r"
 cancelled = "{prefix}&r &7› &7&eעריכת התצורה בוטלה.&r"
 timeout = "{prefix}&r &7› &7&eזמן עריכת התצורה פג מבלי ששונה דבר.&r"
 
@@ -216,7 +218,7 @@ hover = "&7לחצו כדי לבחור את &f{locale}&r&7.&r"
 empty = "&eלא נמצאו שפות זמינות; הקלידו שם אזור שפה כדי ליצור אחת.&r"
 current = "&7ערך נוכחי:&r {value}"
 variables = "&7משתנים / מצייני מקום נוכחיים:&r &f{variables}&r"
-changed = "&f{old}&r &7שונה ל-&r &f{new}&r"
+changed = "&f{old}&r &7שונה אל&r &f{new}&r"
 
 [gui.setting.general]
 update_notifications = "&dהתראות עדכונים מ-GitHub&r"
@@ -229,32 +231,32 @@ failure_feedback = "&dמשוב על כשל בפורטל&r"
 enabled = "&dמדדי bStats אנונימיים&r"
 
 [gui.setting.portal]
-minimum_interior_blocks = "&dNether מספר בלוקים פנימיים מזערי&r"
-maximum_interior_blocks = "&dNether מספר בלוקים פנימיים מרבי&r"
-maximum_width = "&dNether רוחב מרבי&r"
-maximum_height = "&dNether גובה מרבי&r"
-frame_materials = "&dNether חומרי מסגרת&r"
-interior_materials = "&dNether חומרים פנימיים&r"
+minimum_interior_blocks = "&dNether: מספר בלוקים פנימיים מזערי&r"
+maximum_interior_blocks = "&dNether: מספר בלוקים פנימיים מרבי&r"
+maximum_width = "&dNether: רוחב מרבי&r"
+maximum_height = "&dNether: גובה מרבי&r"
+frame_materials = "&dNether: חומרי מסגרת&r"
+interior_materials = "&dNether: חומרים פנימיים&r"
 ignition_causes = "&dגורמי הצתה&r"
 allowed_worlds = "&dעולמות מותרים&r"
 denied_worlds = "&dעולמות אסורים&r"
 deduplication_millis = "&dאלפיות שנייה למניעת כפילויות&r"
-end_portal_creation = "&dEnd יצירת פורטלים&r"
-end_minimum_interior_blocks = "&dEnd מספר בלוקים פנימיים מזערי&r"
-end_maximum_interior_blocks = "&dEnd מספר בלוקים פנימיים מרבי&r"
-end_maximum_width = "&dEnd רוחב מרבי&r"
-end_maximum_length = "&dEnd רוחב מרבי&r"
-end_interior_materials = "&dEnd חומרים פנימיים&r"
+end_portal_creation = "&dיצירת פורטלים ל-End בצורה חופשית&r"
+end_minimum_interior_blocks = "&dEnd: מספר בלוקים פנימיים מזערי&r"
+end_maximum_interior_blocks = "&dEnd: מספר בלוקים פנימיים מרבי&r"
+end_maximum_width = "&dEnd: רוחב מרבי&r"
+end_maximum_length = "&dEnd: אורך מרבי&r"
+end_interior_materials = "&dEnd: חומרים פנימיים&r"
 
 [gui.setting.effects]
-creation_sound = "&dNether צליל יצירה&r"
-creation_sound_type = "&dNether סוג צליל היצירה&r"
-creation_sound_volume = "&dNether עוצמת צליל היצירה&r"
-creation_sound_pitch = "&dNether גובה צליל היצירה&r"
-end_creation_sound = "&dEnd צליל יצירה&r"
-end_creation_sound_type = "&dEnd סוג צליל היצירה&r"
-end_creation_sound_volume = "&dEnd עוצמת צליל היצירה&r"
-end_creation_sound_pitch = "&dEnd גובה צליל היצירה&r"
+creation_sound = "&dNether: צליל יצירה&r"
+creation_sound_type = "&dNether: סוג צליל היצירה&r"
+creation_sound_volume = "&dNether: עוצמת צליל היצירה&r"
+creation_sound_pitch = "&dNether: גובה צליל היצירה&r"
+end_creation_sound = "&dEnd: צליל יצירה&r"
+end_creation_sound_type = "&dEnd: סוג צליל היצירה&r"
+end_creation_sound_volume = "&dEnd: עוצמת צליל היצירה&r"
+end_creation_sound_pitch = "&dEnd: גובה צליל היצירה&r"
 
 [gui.setting.hot_reload]
 enabled = "&dטעינה חמה&r"
@@ -270,17 +272,17 @@ maximum_checks_per_cycle = "&dמספר בדיקות מרבי במחזור&r"
 [gui.setting.presentation]
 splash_screen = "&dמסך פתיחה בהפעלה&r"
 command_sounds = "&dצלילי פקודות&r"
-command_overlays = "&dשכבות פקודה&r"
-portal_notices = "&dערוצי הודעות פורטל&r"
-nether_creation_notices = "&dNether ערוצי הודעות פורטל&r"
-end_creation_notices = "&dEnd ערוצי הודעות פורטל&r"
-overlay_duration_ticks = "&dמשך שכבה בטיקים&r"
+command_overlays = "&dשכבות-על של פקודות&r"
+portal_notices = "&dערוצי הודעות על דחיית פורטל&r"
+nether_creation_notices = "&dNether: ערוצי הודעות יצירה&r"
+end_creation_notices = "&dEnd: ערוצי הודעות יצירה&r"
+overlay_duration_ticks = "&dמשך שכבת-על בטיקים&r"
 title_fade_in_ticks = "&dהופעת כותרת בטיקים&r"
 title_stay_ticks = "&dמשך הצגת כותרת בטיקים&r"
 title_fade_out_ticks = "&dהיעלמות כותרת בטיקים&r"
 
 [gui.setting.debug]
-upload_enabled = "&dהעלאת דוחות ניפוי שגיאות אל mclo.gs&r"
+upload_enabled = "&dהעלאת דוחות אבחון אל mclo.gs&r"
 
 [director.help]
 category = "קטגוריית פקודות"
@@ -288,7 +290,7 @@ command_group = "קבוצת פקודות. לחצו כדי לפתוח."
 no_description = "לא סופק תיאור"
 no_parameters = "אין פרמטרים. לחצו כדי למלא את הפקודה מראש."
 no_subcommands = "אין פקודות משנה בעמוד זה."
-parameters_hover = "רחפו מעל הפרמטרים כדי ללמוד עוד."
+parameters_hover = "רחפו מעל הפרמטרים כדי לקבל מידע נוסף."
 
 [director.help.navigation]
 back = "חזרה"
@@ -305,7 +307,7 @@ hover = "העמוד הקודם"
 
 [director.help.parameter]
 default = "ברירת המחדל היא \"{value}\" אם לא הוגדר."
-optional = "פרמטר זה הוא אופציונלי."
+optional = "פרמטר זה אופציונלי."
 required = "פרמטר זה הוא חובה."
 type = "פרמטר זה הוא מסוג {type}."
 
@@ -329,24 +331,24 @@ edit_messages = "עריכת הודעות השפה"
 use_server_default = "שימוש בברירת המחדל של השרת"
 current = "נוכחית: {locale}"
 current_with_personal = "נוכחית: {locale} (שלך: {personal})"
-your_description = "שנה רק את ההודעות שאתה רואה."
-reset_description = "השתמש בשפת ברירת המחדל של השרת."
-server_description = "שנה את שפת ברירת המחדל של השרת."
-edit_description = "פתח את עורך ההודעות לכל שפה."
-select_description = "לחץ כדי לבחור בשפה זו."
-remove_personal_description = "הסר את בחירת השפה האישית שלך."
+your_description = "שינוי ההודעות שמוצגות לך בלבד."
+reset_description = "שימוש בשפת ברירת המחדל של השרת."
+server_description = "שינוי שפת ברירת המחדל של השרת."
+edit_description = "פתיחת עורך ההודעות לכל שפה."
+select_description = "לחצו כדי לבחור בשפה זו."
+remove_personal_description = "הסרת בחירת השפה האישית שלך."
 no_controls = "אין לך גישה להגדרות שפה."
 command = "פקודה: {command}"
 selected = "נבחר"
 all-volmit-plugins = "כל תוספי Volmit"
 
 [language.error]
-stopping = "{prefix}&r &7› &7&cבחירת שפה אינה זמינה בזמן שהתוסף מפסיק."
-editor-player-only = "{prefix}&r &7› &7&cפתח את עורך השפה במשחק."
+stopping = "{prefix}&r &7› &7&cבחירת שפה אינה זמינה בזמן שהתוסף נעצר."
+editor-player-only = "{prefix}&r &7› &7&cפתחו את עורך השפה מתוך המשחק."
 no-providers = "{prefix}&r &7› &7&cאין ספקי שפה זמינים של Volmit."
-numeric-page = "{prefix}&r &7› &7&cיש להזין מספר עמוד."
+numeric-page = "{prefix}&r &7› &7&cיש להזין מספר עמוד שפה."
 personal-player-only = "{prefix}&r &7› &7&cיש לבחור העדפות שפה של שחקן במשחק."
-personal-permission = "{prefix}&r &7› &7&cאין לך רשות לבחור את השפה שלך."
+personal-permission = "{prefix}&r &7› &7&cאין לך הרשאה לבחור את השפה שלך."
 plugin-personal-permission = "{prefix}&r &7› &7&cאין לך הרשאה לבחור שפה אישית עבור {prefix}."
 plugin-server-permission = "{prefix}&r &7› &7&cאין לך הרשאה לשנות את שפת השרת עבור {prefix}."
 server-locale-required = "{prefix}&r &7› &7&cיש לבחור קוד שפה כגון en_US כשפת ברירת המחדל של השרת."
@@ -354,28 +356,29 @@ unavailable-for-all = "{prefix}&r &7› &7&cהשפה {locale} אינה זמינ�
 
 [language.usage]
 editor = "{prefix}&r &7› &7&7שימוש: /{command} language server edit [locale]"
-selection = "{prefix}&r &7› &7&7שימוש: /{command} language self [locale|reset] or server [locale]"
+selection = "{prefix}&r &7› &7&7שימוש: /{command} language self [locale|reset] או server [locale]"
 volmit-selection = "{prefix}&r &7› &7&7שימוש: /volmit plugins languages [locale]"
 update = "{prefix}&r &7› &7&7שימוש: /{command} language update"
 
 [language.selection]
-preparing = "{prefix}&r &7› &7&7מכין את השפה {locale} עבור {target}..."
+preparing = "{prefix}&r &7› &7&7השפה {locale} בהכנה עבור {target}..."
 save-failed = "{prefix}&r &7› &7&cלא ניתן לשמור את בחירת השפה; יש לבדוק את מסוף השרת."
 english-fallback = "{prefix}&r &7› &7&eהשפה {locale} אינה זמינה; נעשה שימוש באנגלית (en_US)."
-personal-selected = "{prefix}&r &7› &7&7השפה שלך עכשיו {locale}."
-server-selected = "{prefix}&r &7› &7&7שפת השרת עכשיו {locale}."
-server-default-selected = "{prefix}&r &7› &7&7השפה שלך תואמת כעת לשפת ברירת המחדל של השרת."
+personal-selected = "{prefix}&r &7› &7&7השפה שלך היא כעת {locale}."
+server-selected = "{prefix}&r &7› &7&7שפת השרת היא כעת {locale}."
+server-default-selected = "{prefix}&r &7› &7&7השפה שלך משתמשת כעת בברירת המחדל של השרת."
 
 [language.update]
-checking = "{prefix}&r &7› &7&7בודק שינויים במאגר השפות..."
+checking = "{prefix}&r &7› &7&7מתבצעת בדיקת שינויים במאגר השפות..."
 unchanged = "{prefix}&r &7› &7&7השפות המותקנות כבר תואמות למאגר."
 applied = "{prefix}&r &7› &7&7{locale} עודכן ({added} נוספו, {updated} שונו, {kept} עריכות מקומיות נשמרו)."
+cooldown = "{prefix}&r &7› &7&7מאגר השפות נבדק לאחרונה; נסו שוב בעוד {remaining}."
 locale-failed = "{prefix}&r &7› &7&c{locale} לא עודכן: {reason}"
 failed = "{prefix}&r &7› &7&cעדכון השפות נכשל: {reason}"
 
 [language.editor]
 title = "{prefix} › {section}"
-loading = "{prefix}&r &7› &7&7טוען הודעות עבור {locale}..."
+loading = "{prefix}&r &7› &7&7טעינת ההודעות של {locale}..."
 
 [language.editor.section]
 languages = "שפות"
@@ -384,11 +387,11 @@ search-title = "{locale} / חיפוש"
 group-title = "{locale} / {group}"
 
 [language.editor.prompt]
-search = "{prefix}&r &7› &7&7יש לחפש מפתח הודעה או טקסט. לחזרה, יש להקליד cancel."
-value = "{prefix}&r &7› &7&7יש להקליד בצ׳אט ערך חדש עבור {key}."
+search = "{prefix}&r &7› &7&7חפשו מפתח הודעה או טקסט. הקלידו cancel כדי לחזור."
+value = "{prefix}&r &7› &7&7הקלידו בצ׳אט ערך חדש עבור {key}."
 current = "{prefix}&r &7› &7&7ערך נוכחי: {value}"
 variables = "{prefix}&r &7› &7&7משתנים: {variables}"
-guidance = "{prefix}&r &7› &7&7יש להשתמש ב־\\n לשורה חדשה וב־\\\\ ללוכסן הפוך, או להקליד cancel כדי לחזור."
+guidance = "{prefix}&r &7› &7&7השתמשו ב־\\n לשורה חדשה וב־\\\\ ללוכסן הפוך, או הקלידו cancel כדי לחזור."
 
 [language.editor.input]
 expired = "{prefix}&r &7› &7&eזמן ההזנה בעורך השפה פג."
@@ -397,28 +400,28 @@ unable-to-save = "{prefix}&r &7› &7&cלא ניתן לשמור: {reason}"
 
 [language.editor.navigation]
 back = "&eחזרה&r"
-close = "&cסגור&r"
+close = "&cסגירה&r"
 previous-page = "&eהעמוד הקודם&r"
-next-page = "&eדף הבא&r"
+next-page = "&eהעמוד הבא&r"
 
 [language.editor.search]
 messages = "חיפוש הודעות"
-messages-lore = "לחיצה לחיפוש בכל ההודעות."
+messages-lore = "לחצו כדי לחפש בכל ההודעות."
 clear = "ניקוי החיפוש"
 
 [language.editor.message]
 current-value = "&7ערך נוכחי:&r"
 variables = "&8{variables}&r"
-edit-plural = "&7לחיצה לעריכת צורת רבים.&r"
-edit-lines = "&7לחיצה לעריכת שורות בודדות.&r"
-edit-chat = "&7לחיצה לעריכה בצ׳אט.&r"
+edit-plural = "&7לחצו כדי לערוך צורת רבים.&r"
+edit-lines = "&7לחצו כדי לערוך שורות בודדות.&r"
+edit-chat = "&7לחצו כדי לערוך בצ׳אט.&r"
 
 [language.editor.locale]
-open = "&8לחץ לפתוח את השפה.&r"
+open = "&8לחצו כדי לפתוח שפה זו.&r"
 
 [language.editor.category]
 message-count = "&7{count} הודעות&r"
-open = "&8לחץ לפתוח קטגוריה זו.&r"
+open = "&8לחצו כדי לפתוח קטגוריה זו.&r"
 
 [language.editor.error]
 no-permission = "{prefix}&r &7› &7&cאין לך הרשאה לערוך את השפות של {prefix}."
@@ -448,7 +451,7 @@ closed-before-write = "{prefix}&r &7› &7&cספק האבחון נסגר לפנ�
 write-failed = "{prefix}&r &7› &7&cלא ניתן לכתוב את דוח האבחון; יש לבדוק את מסוף השרת."
 
 [debug]
-preparing = "{prefix}&r &7› &7&7מכין דוח אבחון של {prefix}..."
+preparing = "{prefix}&r &7› &7&7דוח אבחון של {prefix} בהכנה..."
 saved = "{prefix}&r &7› &7&7דוח האבחון של {prefix} נשמר בנתיב {path}."
 
 [debug.upload]

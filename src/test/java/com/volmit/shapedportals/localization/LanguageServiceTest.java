@@ -646,7 +646,8 @@ class LanguageServiceTest {
 
         private LanguageService service(Path dataFolder) {
             URI root = URI.create("http://127.0.0.1:" + server.getAddress().getPort() + "/");
-            return new LanguageService(dataFolder.toFile(), TEST_LOGGER, root.resolve("api/"), root.resolve("raw/"));
+            return new LanguageService(dataFolder.toFile(), TEST_LOGGER, root.resolve("api/"), root.resolve("raw/"),
+                    java.time.Duration.ZERO);
         }
 
         private void close() {
